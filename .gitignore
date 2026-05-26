@@ -1,0 +1,34 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Large data: videos and extracted keyframes
+video/
+output/
+
+# Local debug artifacts
+_calibrate_polygons.png
+_template_grid.png
+_t_axes.png
+_t_blank.png
+_t_line.png
+_test_plot.py
+_inspect_template.py
+_calibrate_polygons.py
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Claude Code local config (keep team config tracked if desired)
+.claude/settings.local.json
