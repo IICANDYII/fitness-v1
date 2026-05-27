@@ -31,10 +31,13 @@ IMAGE_DETAIL = "low"                     # 节省 token
 # 抽帧 / 分段算法参数
 # ---------------------------------------------------------------------------
 
-SAMPLING_INTERVAL_S = 3                  # 每 3 秒抽一帧
-KEYFRAME_MAX_DIM = 640                   # 关键帧缩放后最大边长，节省传输
+SAMPLING_INTERVAL_S = 0.5                # 抽帧间隔（秒）；0.5 = 2 fps
+KEYFRAME_MAX_DIM = 400                   # 关键帧缩放后最大边长（像素）
+KEYFRAME_JPEG_QUALITY = 50               # JPEG 编码质量（0-100），与 MAX_DIM 一起把单张控制在 ~10KB
 
-SET_BREAK_MIN_FRAMES = 2                 # 段内连续 ≥2 帧 rest（即 ≥6s）→ 一次组间休息
+# 段内 ≥SET_BREAK_MIN_FRAMES 个连续 rest 帧 → 一次组间休息
+# 目标语义"≥6 秒静止"，根据当前 SAMPLING_INTERVAL_S 自动换算
+SET_BREAK_MIN_FRAMES = max(2, int(round(6.0 / SAMPLING_INTERVAL_S)))
 INTRA_EXERCISE_REST_MAX_S = 180          # ≤180s 的 rest 段被合并入相邻 exercise（v2.1 放宽）
 
 LOW_CONFIDENCE_THRESHOLD = 0.5           # 低于此值标为 unknown

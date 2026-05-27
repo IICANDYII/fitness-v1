@@ -1,4 +1,4 @@
-"""关键帧抽取：每 3 秒一帧，缩放到 ≤640 像素，编码为 JPEG。
+"""关键帧抽取：每1秒两帧，缩放到 ≤640 像素，编码为 JPEG。
 
 输入：视频路径 + 输出目录
 输出：frames/ 子目录下的 keyframe_{index:04d}.jpg + 内存中的元数据列表
@@ -116,7 +116,10 @@ def extract_keyframes(video_path: Path, frames_dir: Path) -> tuple[VideoInfo, li
         out_path = frames_dir / filename
 
         if not out_path.exists():
-            ok, buf = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 85])
+            ok, buf = cv2.imencode(
+                ".jpg", frame,
+                [int(cv2.IMWRITE_JPEG_QUALITY), config.KEYFRAME_JPEG_QUALITY],
+            )
             if ok:
                 out_path.write_bytes(buf.tobytes())
 

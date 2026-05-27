@@ -35,16 +35,20 @@ from .models import KeyframeLabel
 # 网格合成：把 N 张关键帧拼成一张大图，每个 cell 标 frame index
 # ---------------------------------------------------------------------------
 
-def _compute_grid_layout(n: int, max_canvas_w: int = 2200) -> tuple[int, int, int, int]:
+def _compute_grid_layout(n: int, min_cell_w: int = 110, max_canvas_w: int = 4400) -> tuple[int, int, int, int]:
     """计算 (cols, rows, cell_w, cell_h)。
 
-    目标：网格 ≈ 16:9 宽高比，单个 cell 尽量 ≥ 160x90，整张画布宽度 ≤ max_canvas_w。
+    目标：单个 cell 至少 min_cell_w × min_cell_w*9/16 像素（保证 AI 能看清动作细节）；
+    网格 ≈ 16:9 宽高比；整张画布宽度允许放大到 max_canvas_w 以容纳更多帧。
+
+    对大批量帧（如 600+），网格会变得很大。GPT-5 视觉对 4000+px 宽的图像处理良好。
     """
-    # 16:9 = 1.78：cols / rows ≈ 1.78 × cell_h/cell_w，cell_w/h 也是 16:9 → cols/rows ≈ 1.78²
-    ratio = (16 / 9) * (16 / 9) / 2  # 大约 ~1.58，给行一点空间
+    # 优先满足 cell 大小，列数据由 cell 决定
+    ratio = (16 / 9) * (16 / 9) / 2  # ≈ 1.58
     cols = max(1, round(math.sqrt(n * ratio)))
+    # 在不超过画布上限的前提下，cell 尽量大
+    cell_w = min(220, max(min_cell_w, max_canvas_w // cols))
     rows = math.ceil(n / cols)
-    cell_w = min(220, max_canvas_w // cols)
     cell_h = int(cell_w * 9 / 16)
     return cols, rows, cell_w, cell_h
 
@@ -109,15 +113,71 @@ def _build_movements_block() -> str:
     return "\n".join(lines)
 
 
-def _build_full_context_prompt(n_frames: int) -> str:
-    equipment_names = "、".join(f'"{n}"' for n in config.EQUIPMENT_NAMES)
+def _format_training_plan(training_plan: dict | None) -> tuple[str, int]:
+    """把训练计划 JSON 格式化成 prompt 友好的文本。
+
+    返回 (人类可读的计划文本, 动作总数)。
+    """
+    if not training_plan:
+        return "（本次训练未提供训练计划）", 0
+
+    lines = []
+    name = training_plan.get("name") or training_plan.get("planName") or "未命名"
+    lines.append(f"计划名称：{name}")
+    date = training_plan.get("date") or training_plan.get("targetDate")
+    if date:
+        lines.append(f"计划日期：{date}")
+
+    n_exercises = 0
+    phases = training_plan.get("phases", [])
+    if phases:
+        for phase in phases:
+            phase_name = phase.get("phaseName", "")
+            phase_lines = []
+            for ex in phase.get("exercises", []):
+                n_exercises += 1
+                order = ex.get("order", n_exercises)
+                ex_name = ex.get("exerciseName") or ex.get("movementName") or "未命名动作"
+                eq = ex.get("equipmentId") or ex.get("equipmentName") or ""
+                tail = f"（{eq}）" if eq else ""
+                phase_lines.append(f"  动作 {order}. {ex_name}{tail}")
+            if phase_lines:
+                lines.append(f"\n【{phase_name} 阶段】")
+                lines.extend(phase_lines)
+    else:
+        # 兼容 v2.1 规格中扁平的 plannedExercises 数组
+        for ex in training_plan.get("plannedExercises", []):
+            n_exercises += 1
+            order = ex.get("order", n_exercises)
+            ex_name = ex.get("movementName") or ex.get("exerciseName") or "未命名动作"
+            eq = ex.get("equipmentId") or ex.get("equipmentName") or ""
+            tail = f"（{eq}）" if eq else ""
+            lines.append(f"  动作 {order}. {ex_name}{tail}")
+
+    return "\n".join(lines), n_exercises
+
+
+def _build_full_context_prompt(
+    n_frames: int,
+    interval_s: float,
+    total_duration_s: float,
+    training_plan: dict | None = None,
+) -> str:
+    equipment_names = "、".join(f'"{nm}"' for nm in config.EQUIPMENT_NAMES)
     movements_block = _build_movements_block()
+    n_equipment = len(config.EQUIPMENT_NAMES)
+    plan_text, n_planned = _format_training_plan(training_plan)
+    # 期望段数：考虑动作之间会有 transition / rest，2-3 倍是合理估计
+    min_expected = max(3, n_planned + 2) if n_planned else 3
+    max_expected = max(8, n_planned * 4 + 2) if n_planned else 20
+
+    # 注意：JSON 示例里的 {} 用 {{}} 转义，避免 f-string 解释
     return f"""你是一名专业的健身视频时间线标注员。你的任务是分析一组按时间顺序排列的关键帧截图，将它们划分成多个连续的时间段。
 
 ## 输入说明
 
 你收到的是一段健身房训练视频的 {n_frames} 张关键帧，按时间顺序排列，编号从 0 到 {n_frames - 1}。
-相邻两帧间隔 {interval} 秒。视频总时长约 {total_duration} 秒。
+相邻两帧间隔 {interval_s} 秒。视频总时长约 {total_duration_s:.1f} 秒。
 视频为训练者**第一人称视角**（可穿戴相机），画面中**通常看不到训练者本人**，主要看到器械、健身房环境、显示屏等。
 
 ## ⚠️ 核心要求：根据训练计划对照视频，识别每个动作段
@@ -127,7 +187,7 @@ def _build_full_context_prompt(n_frames: int) -> str:
 
 ### 本次训练计划
 
-{training_plan}
+{plan_text}
 
 ### 你应该怎么用这份计划
 
@@ -139,7 +199,7 @@ def _build_full_context_prompt(n_frames: int) -> str:
 
 ### 期望的分段结构
 
-根据计划，本次训练有 {n_planned_exercises} 个动作。加上每个动作之间的休息和移动，你的分段结果**大约**在 {min_expected_segments} 到 {max_expected_segments} 段之间。
+根据计划，本次训练有 {n_planned} 个动作。加上每个动作之间的休息和移动，你的分段结果**大约**在 {min_expected} 到 {max_expected} 段之间。
 这只是参考范围，实际多一些少一些都正常——关键是你的分段要有画面证据支撑。
 
 ## 你的工作流程（必须严格按此执行）
@@ -175,7 +235,7 @@ def _build_full_context_prompt(n_frames: int) -> str:
 - 连续的 T 帧 → 合并为一个 transition 段
 - 连续的 R 帧 → 合并为一个 rest 段
 
-**去噪规则**：如果某个段只有 1 帧（仅 {interval} 秒），且前后段类型相同 → 将这 1 帧归入前一段（视为噪声）。
+**去噪规则**：如果某个段只有 1 帧（仅 {interval_s} 秒），且前后段类型相同 → 将这 1 帧归入前一段（视为噪声）。
 
 ### 第四步：对每个 exercise 段识别器械和动作
 
@@ -230,10 +290,10 @@ def _build_full_context_prompt(n_frames: int) -> str:
 严格输出 JSON，不要输出任何其他文字：
 
 ```json
-{
+{{
   "frame_labels": "EEEEERRRTTTEEEEEERRREEEE...",
   "segments": [
-    {
+    {{
       "startFrameIndex": 0,
       "endFrameIndex": 5,
       "status": "exercise",
@@ -242,20 +302,20 @@ def _build_full_context_prompt(n_frames: int) -> str:
       "confidence": 0.85,
       "plannedOrder": 1,
       "note": "可见杠铃杆在上下推动，配重片可见，对应计划第1个动作"
-    },
-    {
+    }},
+    {{
       "startFrameIndex": 6,
       "endFrameIndex": 8,
       "status": "rest",
       "note": "画面静止，坐在卧推凳上调息"
-    },
-    {
+    }},
+    {{
       "startFrameIndex": 9,
       "endFrameIndex": 11,
       "status": "transition",
       "note": "画面在移动，从卧推区走向龙门架"
-    },
-    {
+    }},
+    {{
       "startFrameIndex": 12,
       "endFrameIndex": 20,
       "status": "exercise",
@@ -264,14 +324,14 @@ def _build_full_context_prompt(n_frames: int) -> str:
       "confidence": 0.78,
       "plannedOrder": null,
       "note": "绳索被拉紧配重在动，计划中未包含此动作（计划外）"
-    }
+    }}
   ],
-  "planCoverage": {
+  "planCoverage": {{
     "matched": [1, 2, 3],
     "missed": [4],
     "unplanned": ["绳索夹胸"]
-  }
-}
+  }}
+}}
 ```
 
 ### 输出规则
@@ -292,7 +352,7 @@ def _build_full_context_prompt(n_frames: int) -> str:
 - [ ] segments 是否覆盖了从 0 到 {n_frames - 1} 的所有帧？
 - [ ] 对照训练计划，每个计划中的动作是否都尝试在视频中找到了对应段？找不到的是否确认为"跳过"？
 - [ ] 每个 exercise 段的 note 里是否描述了你看到的操作证据？（不能仅因为计划里有这个动作就标注）
-- [ ] 是否有 exercise 段超过 40 帧（120 秒）？如果有，请检查中间是否包含了组间休息——真实训练中一组通常 20-60 秒，之后会有 30-120 秒的休息
+- [ ] 是否有 exercise 段超过 40 帧？如果有，请检查中间是否包含了组间休息——真实训练中一组通常 20-60 秒，之后会有 30-120 秒的休息
 - [ ] 两个不同器械的 exercise 段之间，是否有 transition 或 rest 段隔开？（用户不可能瞬间从一台器械跳到另一台）
 """
 
@@ -306,6 +366,7 @@ def _classify_all_frames(
     frames: list[FrameMeta],
     motions: list[float],
     frames_dir: Path,
+    training_plan: dict | None = None,
     max_retries: int = 3,
 ) -> tuple[list[dict[str, Any]], bytes, tuple[int, int, int, int]]:
     """一次性把所有帧丢给 LLM。
@@ -313,10 +374,18 @@ def _classify_all_frames(
     实现：把 N 帧合成为一张大网格图（每个 cell 标 frame index），作为单张图发给 API
     （网关限制每次最多 20 个文件，单张大图能绕过这限制并保持"全量上下文"语义）。
 
+    training_plan：可选的训练计划 JSON dict，会被格式化进 prompt 帮 AI 缩小识别范围。
+
     返回 (segments 列表, 网格图 bytes, 网格元数据 (cols, rows, cell_w, cell_h))。
     """
     n = len(frames)
-    system_prompt = _build_full_context_prompt(n)
+    total_duration_s = (n - 1) * config.SAMPLING_INTERVAL_S if n > 0 else 0.0
+    system_prompt = _build_full_context_prompt(
+        n_frames=n,
+        interval_s=config.SAMPLING_INTERVAL_S,
+        total_duration_s=total_duration_s,
+        training_plan=training_plan,
+    )
 
     # 合成网格大图
     composite_bytes, cols, rows, cell_w, cell_h = _create_grid_composite(frames, frames_dir)
@@ -479,11 +548,13 @@ def classify_keyframes_full_context(
     frames_dir: Path,
     frames_subpath: str = "frames",
     composite_out_path: Path | None = None,
+    training_plan: dict | None = None,
     progress: bool = True,
 ) -> tuple[list[KeyframeLabel], list[dict[str, Any]]]:
     """全量上下文版分类。
 
     把所有帧合成一张网格图发给 LLM，返回 (KeyframeLabel 列表, 原始段列表)。
+    training_plan：可选的训练计划 dict，会被纳入 prompt 帮 AI 对照识别。
     composite_out_path：可选的网格图存盘位置，便于人工核对 AI 看到的输入。
     """
     if progress:
@@ -491,6 +562,7 @@ def classify_keyframes_full_context(
     client = _make_openai_client()
     segments_raw, composite_bytes, grid_meta = _classify_all_frames(
         client, frames, motions, frames_dir,
+        training_plan=training_plan,
     )
     if composite_out_path is not None:
         composite_out_path.write_bytes(composite_bytes)

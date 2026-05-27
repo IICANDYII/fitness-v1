@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 import uuid
 from datetime import datetime
 from pathlib import Path
@@ -72,8 +73,22 @@ def _find_heart_rate_csv(video_path: Path) -> Path | None:
     return candidate if candidate.exists() else None
 
 
+def _find_training_plan(video_path: Path) -> Path | None:
+    """按 {视频名}_training_plan.json 在视频同目录寻找。找不到返回 None。"""
+    candidate = video_path.parent / f"{video_path.stem}_training_plan.json"
+    return candidate if candidate.exists() else None
+
+
 def _save_json(data, path: Path) -> None:
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _fmt_duration(seconds: float) -> str:
+    """秒 → 人类可读字符串，如 '1 分 23 秒' 或 '2.3 秒'。"""
+    if seconds < 60:
+        return f"{seconds:.1f} 秒"
+    m, s = divmod(int(round(seconds)), 60)
+    return f"{m} 分 {s} 秒"
 
 
 def _load_keyframes_cache(path: Path) -> list[KeyframeLabel]:
@@ -114,6 +129,8 @@ def run_pipeline(
 
     profile = _load_user_profile()
     suffix = "_full_context" if full_context else ""
+    timings: dict[str, float] = {}
+    t_start = time.perf_counter()
 
     out_dir = config.OUTPUT_DIR / video_path.stem
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -123,14 +140,31 @@ def run_pipeline(
 
     # ── 1. 抽帧
     print(f"\n[1/8] 抽帧 {video_path.name} ...")
+    t0 = time.perf_counter()
     info, frames = extract_keyframes(video_path, frames_dir)
-    print(f"  视频 {info.resolution} @ {info.fps}fps，时长 {info.durationSeconds}s，抽出 {len(frames)} 帧")
+    timings["1_extract_keyframes"] = time.perf_counter() - t0
+    print(f"  视频 {info.resolution} @ {info.fps}fps，时长 {info.durationSeconds}s，"
+          f"抽出 {len(frames)} 帧  耗时 {_fmt_duration(timings['1_extract_keyframes'])}")
 
     # ── 2. motion 计算
     print(f"[2/8] 计算 motion 分数 ...")
+    t0 = time.perf_counter()
     motions = compute_motion_scores(frames, frames_dir)
+    timings["2_motion"] = time.perf_counter() - t0
+    print(f"  耗时 {_fmt_duration(timings['2_motion'])}")
 
     # ── 3. GPT 分类
+    t0 = time.perf_counter()
+    training_plan_dict: dict | None = None
+    if full_context:
+        plan_path = _find_training_plan(video_path)
+        if plan_path:
+            try:
+                training_plan_dict = json.loads(plan_path.read_text(encoding="utf-8"))
+                print(f"[3/8] 加载到训练计划：{plan_path.name}")
+            except Exception as e:
+                print(f"  警告：训练计划加载失败 ({e})，继续无计划模式")
+
     if skip_classify and keyframes_json_path.exists():
         print(f"[3/8] 跳过 GPT 分类，加载 {keyframes_json_path.name} ...")
         labels = _load_keyframes_cache(keyframes_json_path)
@@ -143,6 +177,7 @@ def run_pipeline(
             frames, motions, frames_dir,
             frames_subpath="frames",
             composite_out_path=composite_path,
+            training_plan=training_plan_dict,
         )
         _save_json({
             "totalCount": len(labels),
@@ -159,9 +194,12 @@ def run_pipeline(
             "keyframes": [lbl.to_dict() for lbl in labels],
         }, keyframes_json_path)
         print(f"  → {keyframes_json_path}")
+    timings["3_classify"] = time.perf_counter() - t0
+    print(f"  分类总耗时 {_fmt_duration(timings['3_classify'])}")
 
     # ── 4. 心率加载
     print(f"[4/8] 加载心率数据 ...")
+    t0 = time.perf_counter()
     hr_csv = _find_heart_rate_csv(video_path)
     if hr_csv:
         hr_data, sync_offset = load_heart_rate_csv(hr_csv)
@@ -170,10 +208,13 @@ def run_pipeline(
         hr_data = []
         sync_offset = 0.0
         print(f"  未找到心率 CSV（约定路径：{video_path.stem}_heart_rate_data.csv）→ MET 法估算")
+    timings["4_heart_rate"] = time.perf_counter() - t0
 
     # ── 5. 分段
     print(f"[5/8] 合并时间线 ...")
+    t0 = time.perf_counter()
     segments = build_timeline(labels)
+    timings["5_segments"] = time.perf_counter() - t0
     print(f"  得到 {len(segments)} 个段（"
           f"exercise={sum(1 for s in segments if s.type=='exercise')}, "
           f"transition={sum(1 for s in segments if s.type=='transition')}, "
@@ -181,16 +222,21 @@ def run_pipeline(
 
     # ── 6. 组数检测
     print(f"[6/8] 组数 + 次数估算 ...")
+    t0 = time.perf_counter()
     detect_all_sets(segments, labels, hr_data)
+    timings["6_sets"] = time.perf_counter() - t0
 
     # ── 7. 卡路里 + 心率区间
     print(f"[7/8] 计算卡路里 + 心率区间 ...")
+    t0 = time.perf_counter()
     cal_summary = calculate_session_calories(segments, profile, hr_data)
     hr_zones = calculate_heart_rate_zones(hr_data, profile)
+    timings["7_calories"] = time.perf_counter() - t0
     print(f"  总卡路里 {cal_summary.totalCalories:.0f} kcal")
 
     # ── 8. 组装 WorkoutSession + 出图 + 出报告
     print(f"[8/8] 渲染图表 + 报告 ...")
+    t0 = time.perf_counter()
     now_iso = datetime.now().isoformat(timespec="seconds")
     mtime = datetime.fromtimestamp(video_path.stat().st_mtime)
     session = WorkoutSession(
@@ -230,11 +276,33 @@ def run_pipeline(
     # 生成 MD
     report_path = out_dir / f"report{suffix}.md"
     generate_report(session, report_path, image_suffix=suffix)
+    timings["8_render"] = time.perf_counter() - t0
 
-    print(f"\n✓ 完成！")
+    total_elapsed = time.perf_counter() - t_start
+    timings["total"] = total_elapsed
+
+    # 保存耗时记录
+    timing_path = out_dir / f"timings{suffix}.json"
+    _save_json({
+        "mode": "full_context" if full_context else "batched",
+        "video": str(video_path),
+        "frameCount": len(frames),
+        "timestamp": datetime.now().isoformat(timespec="seconds"),
+        "perStageSeconds": {k: round(v, 2) for k, v in timings.items()},
+        "totalSeconds": round(total_elapsed, 2),
+        "totalDisplay": _fmt_duration(total_elapsed),
+    }, timing_path)
+
+    print(f"\n✓ 完成！总耗时 {_fmt_duration(total_elapsed)}")
     print(f"  报告: {report_path}")
     print(f"  数据: {session_path}")
     print(f"  关键帧: {keyframes_json_path}")
+    print(f"  耗时: {timing_path}")
+    print(f"\n阶段耗时分布：")
+    for k, v in timings.items():
+        if k == "total":
+            continue
+        print(f"  {k:18s}  {_fmt_duration(v)}")
     return report_path
 
 
