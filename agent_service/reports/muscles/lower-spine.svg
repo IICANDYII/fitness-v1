@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 660.46 1206.46" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialgradient id="jointradial2" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+    <stop offset="0%" style="stop-color: rgb(254, 91, 127); stop-opacity: 1;"/>
+    <stop offset="100%" style="stop-color: rgb(231, 236, 239); stop-opacity: 1;"/>
+  </radialgradient>
+</defs>
+<g id="lower-spine" class="hidden">
+  <ellipse cx="330.26" cy="491.77" rx="12.44" ry="12.3" fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.52"/>
+</g>
+</svg>

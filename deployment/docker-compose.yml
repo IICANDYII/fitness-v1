@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  perception_service:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile.perception
+    ports:
+      - "8765:8765"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
+
+  agent_service:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile.agent
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql://fitness:666666@postgres:5432/fitness
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: fitness
+      POSTGRES_PASSWORD: 666666
+      POSTGRES_DB: fitness
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
