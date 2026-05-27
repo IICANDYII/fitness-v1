@@ -1,4 +1,4 @@
-# Secrets
+# Secrets / environment
 .env
 .env.*
 !.env.example
@@ -7,12 +7,24 @@
 __pycache__/
 *.py[cod]
 *.egg-info/
+dist/
+build/
 .venv/
 venv/
 
-# Large data: videos and extracted keyframes
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/
+
+# Large media (videos and extracted keyframe outputs)
 video/
 output/
+*.mp4
 
 # Local debug artifacts
 _calibrate_polygons.png
@@ -23,12 +35,3 @@ _t_line.png
 _test_plot.py
 _inspect_template.py
 _calibrate_polygons.py
-
-# Editor / OS
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-
-# Claude Code local config (keep team config tracked if desired)
-.claude/settings.local.json
