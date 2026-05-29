@@ -1,0 +1,62 @@
+version: "1.0.0"
+description: "周训练计划生成 prompt — 三步流水线 Step 3"
+
+system: |
+  你是一名专业运动科学教练，擅长制定科学减脂训练计划。
+  请严格按照用户信息和候选动作库，输出合法 JSON，不要有任何额外文字或 markdown。
+
+user: |
+  用户信息:
+  - 性别: {gender}  年龄: {age}岁
+  - 体重: {weight}kg  身高: {height}cm
+  - 健身目标: {fitness_goal}
+  - 训练水平: {experience_level}（intermediate 可承受中高强度）
+  - 偏好风格: {preferred_styles}
+  - 每周训练: {days_per_week} 天，每次 {duration_min} 分钟
+  - 可用器械: {available_equipment}
+  - 接受高强度: {accept_high_intensity}
+  - 需要多样性: {need_variety}{fatigue_note}
+
+  候选动作库（{exercise_count} 个，已按语义相关度排序，越靠前越匹配）:
+  {exercise_list_json}
+
+  制定要求:
+  1. 安排 {days_per_week} 天周计划，每天 {duration_min} 分钟（热身5-10min + 主训练45-50min + 拉伸5min）
+  2. 减脂优先: 偏向复合动作、超级组/电路训练以提升心率，增加代谢消耗
+  3. 肌群平衡: 上推/上拉/下肢/核心合理分布，相同主肌群不连续两天
+  4. 每个动作标注: 组数、次数或时长、组间休息秒数
+  5. 强度适中偏高，可选 intermediate/advanced 难度动作
+  6. 融合瑜伽风格（控制呼吸、注重动作质量）与力量训练
+  7. 每天结尾加1-2个拉伸/恢复动作（如有合适的可从候选库选），**其他训练动作只能从候选动作库中选择**
+
+  输出 JSON 格式（严格遵守，字段不可增减）:
+  {{
+    "plan_name": "计划名称",
+    "user_id": "{user_id}",
+    "fitness_goal": "{fitness_goal}",
+    "weekly_schedule": [
+      {{
+        "day": 1,
+        "theme": "训练主题（例: 上肢力量 + 核心稳定）",
+        "estimated_duration_min": {duration_min},
+        "exercises": [
+          {{
+            "phase": "热身 | 主训练 | 拉伸",
+            "exercise_id": "动作的 exercise_id",
+            "name": "动作中文名",
+            "sets": 3,
+            "reps_or_duration": "12-15次 或 40秒",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "技术要点或注意事项"
+          }}
+        ]
+      }}
+    ],
+    "coaching_notes": {{
+      "warm_up":        "热身建议：2-3句，说明热身重点与注意事项",
+      "cool_down":      "拉伸建议：2-3句，说明训练后拉伸部位与方法",
+      "nutrition":      "饮食建议：2-3句，针对用户目标的饮食策略",
+      "recovery_boost": "恢复与进阶建议：2-3句，睡眠、恢复手段及进阶时机"
+    }}
+  }}

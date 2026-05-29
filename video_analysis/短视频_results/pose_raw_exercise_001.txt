@@ -1,0 +1,9 @@
+[
+  {
+    "equipmentId": "leg_curl_machine",
+    "equipmentName": "俯卧腿屈伸机",
+    "movementName": "俯卧腿屈伸",
+    "status": "exercise",
+    "confidence": 0.92
+  }
+]

@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>心率详情分析</title>
+<style>
+/* ─── Reset & base ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:        #0d0f1a;
+  --bg-card:   #151828;
+  --bg-card2:  #1c1f35;
+  --line:      rgba(255,255,255,0.06);
+  --border:    rgba(255,255,255,0.08);
+  --text:      #e2e8f0;
+  --muted:     #7c85a8;
+  --accent:    #ff3d72;
+  --accent2:   #ff7aa8;
+  --green:     #34d399;
+  --blue:      #60a5fa;
+  --orange:    #fb923c;
+  --purple:    #a78bfa;
+  --yellow:    #fbbf24;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* ─── Header ────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px 14px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(13,15,26,0.92);
+  backdrop-filter: blur(12px);
+  z-index: 99;
+}
+.btn-back {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 7px 14px;
+  color: var(--text);
+  font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+  text-decoration: none;
+}
+.btn-back:hover { background: #242847; }
+.header-title {
+  flex: 1;
+  font-size: 18px; font-weight: 700;
+  color: var(--text);
+}
+.header-date {
+  font-size: 13px; color: var(--muted);
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 12px;
+}
+
+/* ─── Page layout ───────────────────────────────────────────────── */
+.page { max-width: 1200px; margin: 0 auto; padding: 20px 20px 0; }
+
+/* ─── Key metrics row ───────────────────────────────────────────── */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.metric-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.metric-label {
+  font-size: 11px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-bottom: 8px;
+}
+.metric-value {
+  font-size: 32px; font-weight: 800;
+  line-height: 1;
+  display: flex; align-items: baseline; gap: 5px;
+}
+.metric-unit { font-size: 13px; font-weight: 500; color: var(--muted); }
+.metric-sub  { font-size: 11px; color: var(--muted); margin-top: 5px; }
+.metric-card.accent  .metric-value { color: var(--accent); }
+.metric-card.green   .metric-value { color: var(--green); }
+.metric-card.blue    .metric-value { color: var(--blue); }
+.metric-card.orange  .metric-value { color: var(--orange); }
+
+/* ─── Chart card ────────────────────────────────────────────────── */
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 20px 12px;
+  margin-bottom: 20px;
+}
+.chart-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.chart-header h2 { font-size: 15px; font-weight: 700; }
+.chart-legend {
+  display: flex; gap: 16px; align-items: center;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; color: var(--muted);
+}
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+.chart-wrap { position: relative; }
+#hrCanvas { display: block; width: 100%; border-radius: 8px; }
+
+/* ─── Bottom section ────────────────────────────────────────────── */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* ─── HR Zones ──────────────────────────────────────────────────── */
+.zones-card, .exercise-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+}
+.section-title {
+  font-size: 14px; font-weight: 700;
+  margin-bottom: 16px;
+}
+.zone-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px; cursor: pointer; border-radius: 8px;
+  padding: 4px 6px; transition: background .15s, opacity .2s;
+}
+.zone-row:hover { background: rgba(255,255,255,0.04); }
+.zone-row.active { background: rgba(255,255,255,0.06); }
+.zone-row.dimmed { opacity: 0.3; }
+.zone-label {
+  font-size: 11px; font-weight: 700;
+  width: 36px; flex-shrink: 0;
+}
+.zone-range { font-size: 10px; color: var(--muted); width: 72px; flex-shrink: 0; }
+.zone-bar-wrap { flex: 1; background: rgba(255,255,255,0.05); border-radius: 4px; height: 7px; overflow: hidden; }
+.zone-bar-fill { height: 100%; border-radius: 4px; transition: width .6s ease; }
+.zone-time { font-size: 12px; font-weight: 700; width: 44px; text-align: right; flex-shrink: 0; }
+.zone-pct  { font-size: 11px; color: var(--muted); width: 32px; text-align: right; flex-shrink: 0; }
+
+/* ─── Zone Strips (below HR chart) ─────────────────────────────── */
+/* pL=14px spacer + track + 80px right — mirrors canvas pL/pR exactly */
+.zone-strips {
+  padding: 8px 0 4px;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+.zone-strip-row {
+  display: flex; align-items: center; gap: 0;
+  margin-bottom: 6px; cursor: pointer;
+  border-radius: 6px; transition: background .15s;
+}
+.zone-strip-row:hover { background: rgba(255,255,255,0.03); }
+.zone-strip-row.active { background: rgba(255,255,255,0.05); }
+.zone-strip-row.dimmed .zone-seg { opacity: 0.1; }
+/* 14px left spacer — matches canvas pL */
+.zone-strip-spacer { width: 14px; flex-shrink: 0; }
+.zone-strip-track {
+  flex: 1; height: 12px; position: relative;
+  background: rgba(255,255,255,0.04); border-radius: 3px; overflow: hidden;
+}
+.zone-seg {
+  position: absolute; top: 0; height: 100%; border-radius: 2px;
+  transition: opacity .25s;
+}
+/* 80px right panel — matches canvas pR, shows label + time */
+.zone-strip-right {
+  width: 80px; flex-shrink: 0;
+  display: flex; align-items: center; gap: 5px;
+  padding-left: 8px;
+}
+.zone-strip-label { font-size: 11px; font-weight: 700; }
+.zone-strip-time  { font-size: 10px; color: var(--muted); }
+
+/* ─── Exercise timeline ─────────────────────────────────────────── */
+.ex-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  margin-bottom: 14px;
+}
+.ex-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent); margin-top: 4px; flex-shrink: 0;
+}
+.ex-time  { font-size: 11px; color: var(--muted); white-space: nowrap; margin-top: 2px; }
+.ex-name  { font-size: 13px; font-weight: 700; }
+.ex-meta  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.ex-score {
+  margin-left: auto; flex-shrink: 0;
+  font-size: 12px; font-weight: 700;
+  padding: 2px 7px; border-radius: 6px;
+  background: rgba(52,211,153,0.12); color: var(--green);
+}
+.ex-hr-tag {
+  font-size: 11px; font-weight: 600; color: var(--accent2);
+  background: rgba(255,61,114,0.10); border-radius: 5px; padding: 1px 6px;
+  margin-left: 6px;
+}
+
+/* ─── AI Analysis ───────────────────────────────────────────────── */
+.analysis-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+}
+.analysis-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.analysis-badge {
+  font-size: 11px; font-weight: 600;
+  padding: 3px 10px; border-radius: 20px;
+  background: rgba(167,139,250,0.15); color: var(--purple);
+  border: 1px solid rgba(167,139,250,0.25);
+}
+#ai-loading {
+  display: flex; gap: 12px; align-items: center;
+  padding: 20px; color: var(--muted); font-size: 14px;
+}
+.spinner {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.1);
+  border-top-color: var(--purple);
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+#ai-content {
+  font-size: 14px; line-height: 1.75; color: var(--text);
+  min-height: 80px;
+}
+#ai-content .ai-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+#ai-content .ai-card {
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 14px 12px;
+}
+#ai-content .ai-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#ai-content .ai-card-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+#ai-content .ai-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255,61,114,0.16);
+  color: var(--accent2);
+  border: 1px solid rgba(255,61,114,0.25);
+}
+#ai-content .ai-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 10px;
+  margin-top: 10px;
+}
+#ai-content .ai-metric {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+#ai-content .ai-metric label {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+#ai-content .ai-metric .ai-value {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+}
+#ai-content .ai-list {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+#ai-content .ai-list span {
+  display: block;
+}
+#ai-content .ai-summary {
+  grid-column: span 2;
+  background: rgba(96,165,250,0.08);
+  border: 1px solid rgba(96,165,250,0.2);
+}
+#ai-content .ai-recos {
+  grid-column: span 2;
+}
+#ai-content .ai-recos li {
+  margin: 6px 0;
+}
+@media (max-width: 900px) {
+  #ai-content .ai-cards { grid-template-columns: 1fr; }
+  #ai-content .ai-summary, #ai-content .ai-recos { grid-column: span 1; }
+}
+#ai-content .section-h {
+  font-size: 14px; font-weight: 700; color: var(--accent2);
+  margin: 16px 0 6px;
+  display: flex; align-items: center; gap: 6px;
+}
+#ai-content .section-h:first-child { margin-top: 0; }
+#ai-content .dim { color: var(--muted); }
+
+/* score pill */
+.score-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,61,114,0.12);
+  border: 1px solid rgba(255,61,114,0.25);
+  border-radius: 12px; padding: 8px 16px;
+  margin: 12px 0 6px;
+}
+.score-num { font-size: 28px; font-weight: 900; color: var(--accent); }
+.score-lbl { font-size: 12px; color: var(--muted); }
+
+/* error state */
+.error-box {
+  background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 10px; padding: 14px 16px; color: #f87171; font-size: 13px;
+  display: none;
+}
+
+/* ─── Skeleton loader ───────────────────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-card2) 25%, #1f2340 50%, var(--bg-card2) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 6px;
+}
+</style>
+</head>
+<body>
+
+<!-- ══ Header ══════════════════════════════════════════════════════ -->
+<div class="header">
+  <a class="btn-back" href="training_dashboard.html">← 返回</a>
+  <div class="header-title">心率分析</div>
+  <div class="header-date" id="header-date">加载中…</div>
+</div>
+
+<div class="page">
+
+  <!-- ══ Key Metrics ════════════════════════════════════════════════ -->
+  <div class="metrics-row">
+    <div class="metric-card accent">
+      <div class="metric-label">平均心率</div>
+      <div class="metric-value" id="m-avg">--<span class="metric-unit">bpm</span></div>
+      <div class="metric-sub" id="m-avg-sub">—</div>
+    </div>
+    <div class="metric-card green">
+      <div class="metric-label">峰值心率</div>
+      <div class="metric-value" id="m-max">--<span class="metric-unit">bpm</span></div>
+      <div class="metric-sub" id="m-max-sub">—</div>
+    </div>
+    <div class="metric-card blue">
+      <div class="metric-label">有效训练时长</div>
+      <div class="metric-value" id="m-dur">--<span class="metric-unit">min</span></div>
+      <div class="metric-sub" id="m-dur-sub">—</div>
+    </div>
+    <div class="metric-card orange">
+      <div class="metric-label">消耗热量</div>
+      <div class="metric-value" id="m-cal">--<span class="metric-unit">kcal</span></div>
+      <div class="metric-sub" id="m-cal-sub">—</div>
+    </div>
+  </div>
+
+  <!-- ══ HR Chart ═══════════════════════════════════════════════════ -->
+  <div class="chart-card">
+    <div class="chart-header">
+      <h2>训练心率曲线</h2>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>心率 (bpm)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,0.2);width:2px;height:14px;border-radius:1px"></div>动作</div>
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="hrCanvas"></canvas>
+    </div>
+    <div class="zone-strips" id="zone-strips"></div>
+  </div>
+
+  <!-- ══ Zones + Timeline ═══════════════════════════════════════════ -->
+  <div class="bottom-grid">
+
+    <!-- HR Zones -->
+    <div class="zones-card">
+      <div class="section-title">心率区间分布</div>
+      <div id="zones-list">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Exercise Timeline -->
+    <div class="exercise-card">
+      <div class="section-title">训练动作时间线</div>
+      <div id="exercise-list">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ AI Analysis ════════════════════════════════════════════════ -->
+  <div class="analysis-card">
+    <div class="analysis-header">
+      <div class="section-title" style="margin-bottom:0">AI 训练分析</div>
+      <div class="analysis-badge">Claude · 运动科学视角</div>
+    </div>
+    <div id="ai-loading">
+      <div class="spinner"></div>
+      正在结合心率数据与训练记录进行分析…
+    </div>
+    <div id="ai-content" style="display:none"></div>
+    <div class="error-box" id="ai-error"></div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+'use strict';
+
+/* ════════════════════════════════════════════════
+   Config
+   ════════════════════════════════════════════════ */
+var API       = 'http://localhost:8000/api';
+var AI_URL    = 'https://api.zchat.tech/v1/chat/completions';
+var AI_KEY    = 'sk-G90J2FGkwO4sEPBNmaJs8XwzNCuFLat372D95AbuEQSpIhqS';
+var AI_MODEL  = 'claude-sonnet-4-5';
+var RESTING_HR = 67;
+var MAX_HR     = 195;
+
+/* User profile */
+var USER = { age: 25, weight: 75, gender: '男', level: '中级', goal: '增肌' };
+
+/* Zone definitions: [min%, max%, label, color] */
+var ZONES = [
+  [0.50, 0.60, '热身', '#60a5fa'],
+  [0.60, 0.70, '燃脂', '#34d399'],
+  [0.70, 0.80, '有氧', '#fbbf24'],
+  [0.80, 0.90, '无氧', '#fb923c'],
+  [0.90, 1.00, '极限', '#ff3d72'],
+];
+
+/* ════════════════════════════════════════════════
+   Date from URL query
+   ════════════════════════════════════════════════ */
+function getDateParam() {
+  var m = location.search.match(/[?&]date=([^&]+)/);
+  return m ? m[1] : '';
+}
+
+/* ════════════════════════════════════════════════
+   Build workout-only HR series
+   (only biometric data within session window)
+   ════════════════════════════════════════════════ */
+function buildWorkoutPoints(biometrics, sessions) {
+  if (!sessions.length) return [];
+
+  var windows = sessions.map(function(s) {
+    return { start: timeToMin(s.start_time), end: timeToMin(s.end_time) };
+  });
+
+  var pts = biometrics
+    .map(function(b) {
+      return { m: timeToMin(b.timestamp), hr: b.heart_rate, raw: b };
+    })
+    .filter(function(p) {
+      return windows.some(function(w) { return p.m >= w.start && p.m <= w.end; });
+    });
+
+  pts.sort(function(a, b) { return a.m - b.m; });
+  return pts;
+}
+
+function timeToMin(isoStr) {
+  var d = new Date(isoStr);
+  return d.getHours() * 60 + d.getMinutes();
+}
+
+/* ════════════════════════════════════════════════
+   Zone selection state
+   ════════════════════════════════════════════════ */
+var selectedZone = -1;
+
+function selectZone(zi) {
+  selectedZone = (selectedZone === zi) ? -1 : zi;
+  updateZoneHighlight();
+}
+
+function updateZoneHighlight() {
+  document.querySelectorAll('.zone-strip-row').forEach(function(row, i) {
+    row.classList.toggle('active', i === selectedZone);
+    row.classList.toggle('dimmed', selectedZone >= 0 && i !== selectedZone);
+  });
+  document.querySelectorAll('.zone-row').forEach(function(row, i) {
+    row.classList.toggle('active', i === selectedZone);
+    row.classList.toggle('dimmed', selectedZone >= 0 && i !== selectedZone);
+  });
+  if (window._pts) drawHRChart(window._pts, window._exercises, window._sessions, selectedZone);
+}
+
+/* ════════════════════════════════════════════════
+   Draw HR chart
+   ════════════════════════════════════════════════ */
+function drawHRChart(pts, exercises, sessions, selectedZoneIdx) {
+  if (selectedZoneIdx === undefined) selectedZoneIdx = -1;
+  var canvas = document.getElementById('hrCanvas');
+  var dpr    = window.devicePixelRatio || 1;
+  var W      = canvas.parentElement.clientWidth;
+  var H      = 240;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+
+  var ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  ctx.fillStyle = '#151828';
+  ctx.fillRect(0, 0, W, H);
+
+  var pL = 14, pR = 80, pT = 18, pB = 28;
+  var cW = W - pL - pR;
+  var cH = H - pT - pB;
+
+  var minHR = 20, maxHR = 220;
+
+  var minMinute = sessions.length
+    ? Math.min.apply(null, sessions.map(function(s) { return timeToMin(s.start_time); }))
+    : (pts[0] ? pts[0].m : 0);
+  var maxMinute = sessions.length
+    ? Math.max.apply(null, sessions.map(function(s) { return timeToMin(s.end_time); }))
+    : (pts[pts.length - 1] ? pts[pts.length - 1].m : 1440);
+  var spanMinute = Math.max(1, maxMinute - minMinute);
+
+  function xPos(minute) { return pL + ((minute - minMinute) / spanMinute) * cW; }
+  function yPos(hr)     { return pT + (1 - (hr - minHR) / (maxHR - minHR)) * cH; }
+
+  // ── Zone background bands ────────────────────────────────────────
+  ZONES.forEach(function(z, i) {
+    var y1 = yPos(z[1] * MAX_HR);
+    var y2 = yPos(z[0] * MAX_HR);
+    var isSelected = selectedZoneIdx === i;
+    var alpha = isSelected ? 0.10 : (selectedZoneIdx >= 0 ? 0.02 : 0.04);
+    ctx.fillStyle = hexToRgba(z[3], alpha);
+    ctx.fillRect(pL, y1, cW, y2 - y1);
+  });
+
+  // ── Zone right-side labels ───────────────────────────────────────
+  ctx.font = '10px "PingFang SC", sans-serif';
+  ctx.textAlign = 'left';
+  ZONES.forEach(function(z, i) {
+    var yMid = (yPos(z[1] * MAX_HR) + yPos(z[0] * MAX_HR)) / 2;
+    var isActive = selectedZoneIdx < 0 || selectedZoneIdx === i;
+    ctx.fillStyle = isActive ? hexToRgba(z[3], 0.9) : hexToRgba(z[3], 0.25);
+    ctx.fillText(z[2], W - pR + 6, yMid + 3.5);
+    ctx.fillStyle = isActive ? 'rgba(124,133,168,0.6)' : 'rgba(124,133,168,0.15)';
+    ctx.fillText(Math.round(z[0]*MAX_HR) + '–' + Math.round(z[1]*MAX_HR), W - pR + 6, yMid + 14.5);
+  });
+
+  // ── Grid lines ──────────────────────────────────────────────────
+  ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 6]);
+  ZONES.forEach(function(z) {
+    var yLine = yPos(z[0] * MAX_HR);
+    ctx.beginPath(); ctx.moveTo(pL, yLine); ctx.lineTo(pL + cW, yLine); ctx.stroke();
+  });
+  ctx.setLineDash([]);
+
+  // ── Session highlight bands ──────────────────────────────────────
+  sessions.forEach(function(s) {
+    var x1 = xPos(timeToMin(s.start_time));
+    var x2 = xPos(timeToMin(s.end_time));
+    ctx.fillStyle = 'rgba(255,61,114,0.03)';
+    ctx.fillRect(x1, pT, x2 - x1, cH);
+  });
+
+  if (!pts.length) return;
+
+  // ── Gradient fill ────────────────────────────────────────────────
+  var baseColor = selectedZoneIdx >= 0 ? ZONES[selectedZoneIdx][3] : '#ff3d72';
+  var grad = ctx.createLinearGradient(0, pT, 0, pT + cH);
+  grad.addColorStop(0,   hexToRgba(baseColor, 0.28));
+  grad.addColorStop(0.7, hexToRgba(baseColor, 0.04));
+  grad.addColorStop(1,   hexToRgba(baseColor, 0));
+
+  ctx.beginPath();
+  ctx.moveTo(xPos(pts[0].m), yPos(pts[0].hr));
+  for (var i = 1; i < pts.length; i++) ctx.lineTo(xPos(pts[i].m), yPos(pts[i].hr));
+  ctx.lineTo(xPos(pts[pts.length-1].m), pT + cH);
+  ctx.lineTo(xPos(pts[0].m), pT + cH);
+  ctx.closePath();
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // ── HR line: base (dim when zone selected) ───────────────────────
+  if (selectedZoneIdx >= 0) {
+    ctx.beginPath();
+    ctx.moveTo(xPos(pts[0].m), yPos(pts[0].hr));
+    for (var j = 1; j < pts.length; j++) ctx.lineTo(xPos(pts[j].m), yPos(pts[j].hr));
+    ctx.strokeStyle = 'rgba(255,61,114,0.18)';
+    ctx.lineWidth   = 1.2;
+    ctx.lineJoin    = 'round';
+    ctx.stroke();
+
+    // ── Highlighted segments — interpolate exact zone crossings ──
+    var zMin   = ZONES[selectedZoneIdx][0] * MAX_HR;
+    var zMax   = ZONES[selectedZoneIdx][1] * MAX_HR;
+    var zColor = ZONES[selectedZoneIdx][3];
+
+    // Clip a linear segment [hr1→hr2] to the band [lo, hi].
+    // Returns [t0, t1] ∈ [0,1] of the in-band portion, or null.
+    function clipToZone(hr1, hr2, lo, hi) {
+      var dhr = hr2 - hr1;
+      if (Math.abs(dhr) < 0.001) {
+        return (hr1 >= lo && hr1 <= hi) ? [0, 1] : null;
+      }
+      var tLo = (lo - hr1) / dhr;
+      var tHi = (hi - hr1) / dhr;
+      var tA  = Math.max(0, Math.min(tLo, tHi));
+      var tB  = Math.min(1, Math.max(tLo, tHi));
+      return tA < tB ? [tA, tB] : null;
+    }
+
+    ctx.lineWidth = 2.4;
+    ctx.lineJoin  = 'round';
+    ctx.lineCap   = 'round';
+    ctx.strokeStyle = zColor;
+    for (var k = 0; k < pts.length - 1; k++) {
+      var m1 = pts[k].m,   hr1 = pts[k].hr;
+      var m2 = pts[k+1].m, hr2 = pts[k+1].hr;
+      var clip = clipToZone(hr1, hr2, zMin, zMax);
+      if (!clip) continue;
+      var t0 = clip[0], t1 = clip[1];
+      ctx.beginPath();
+      ctx.moveTo(xPos(m1 + t0 * (m2 - m1)), yPos(hr1 + t0 * (hr2 - hr1)));
+      ctx.lineTo(xPos(m1 + t1 * (m2 - m1)), yPos(hr1 + t1 * (hr2 - hr1)));
+      ctx.stroke();
+    }
+  } else {
+    // ── Normal full line ─────────────────────────────────────────
+    ctx.beginPath();
+    ctx.moveTo(xPos(pts[0].m), yPos(pts[0].hr));
+    for (var j2 = 1; j2 < pts.length; j2++) ctx.lineTo(xPos(pts[j2].m), yPos(pts[j2].hr));
+    ctx.strokeStyle = '#ff3d72';
+    ctx.lineWidth   = 1.6;
+    ctx.lineJoin    = 'round';
+    ctx.stroke();
+  }
+
+  // ── Exercise markers ─────────────────────────────────────────────
+  exercises.forEach(function(e) {
+    var mx = xPos(timeToMin(e.timestamp));
+    ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+    ctx.lineWidth   = 1;
+    ctx.setLineDash([3, 4]);
+    ctx.beginPath(); ctx.moveTo(mx, pT); ctx.lineTo(mx, pT + cH); ctx.stroke();
+    ctx.setLineDash([]);
+  });
+
+  // ── X-axis labels ────────────────────────────────────────────────
+  ctx.fillStyle   = 'rgba(124,133,168,0.8)';
+  ctx.font        = '10px "PingFang SC", sans-serif';
+  ctx.textAlign   = 'center';
+  [0, 0.25, 0.5, 0.75, 1].forEach(function(pct) {
+    var m  = Math.round(minMinute + spanMinute * pct);
+    var hh = String(Math.floor(m / 60)).padStart(2, '0');
+    var mm = String(m % 60).padStart(2, '0');
+    ctx.fillText(hh + ':' + mm, xPos(m), pT + cH + 16);
+  });
+}
+
+/* hex color → rgba string */
+function hexToRgba(hex, alpha) {
+  var r = parseInt(hex.slice(1,3),16);
+  var g = parseInt(hex.slice(3,5),16);
+  var b = parseInt(hex.slice(5,7),16);
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+}
+
+/* ════════════════════════════════════════════════
+   Compute HR Zones
+   Returns [{ label, color, minutes, pct }]
+   ════════════════════════════════════════════════ */
+function computeZones(biometrics) {
+  var zoneMinutes = ZONES.map(function() { return 0; });
+  var intervalMin = 10;  // each biometric point represents 10 min
+  biometrics.forEach(function(b) {
+    var hr = b.heart_rate;
+    ZONES.forEach(function(z, i) {
+      if (hr >= z[0] * MAX_HR && hr < z[1] * MAX_HR) zoneMinutes[i] += intervalMin;
+    });
+  });
+  var total = biometrics.length * intervalMin || 1;
+  return ZONES.map(function(z, i) {
+    return {
+      label:   z[2],
+      color:   z[3],
+      minutes: zoneMinutes[i],
+      pct:     Math.round(zoneMinutes[i] / total * 100),
+      hrRange: Math.round(z[0]*MAX_HR) + '–' + Math.round(z[1]*MAX_HR) + 'bpm',
+    };
+  });
+}
+
+/* ════════════════════════════════════════════════
+   Render Zones (percentage summary, clickable)
+   ════════════════════════════════════════════════ */
+function renderZones(zones) {
+  var el = document.getElementById('zones-list');
+  el.innerHTML = zones.map(function(z, i) {
+    return [
+      '<div class="zone-row" onclick="selectZone(' + i + ')">',
+        '<div class="zone-label" style="color:' + z.color + '">' + z.label + '</div>',
+        '<div class="zone-range">' + z.hrRange + '</div>',
+        '<div class="zone-bar-wrap">',
+          '<div class="zone-bar-fill" style="width:' + z.pct + '%;background:' + z.color + '"></div>',
+        '</div>',
+        '<div class="zone-time" style="color:' + z.color + '">' + z.minutes + '<span style="font-size:10px;color:var(--muted)"> min</span></div>',
+        '<div class="zone-pct">' + z.pct + '%</div>',
+      '</div>',
+    ].join('');
+  }).join('');
+}
+
+/* ════════════════════════════════════════════════
+   Render Zone Strips (segmented timeline below chart)
+   ════════════════════════════════════════════════ */
+function renderZoneStrips(pts, zones, sessions) {
+  var el = document.getElementById('zone-strips');
+  if (!pts.length) { el.style.display = 'none'; return; }
+
+  /* Use the SAME x-axis domain as drawHRChart so segments align pixel-perfectly */
+  var minM = sessions && sessions.length
+    ? Math.min.apply(null, sessions.map(function(s) { return timeToMin(s.start_time); }))
+    : pts[0].m;
+  var maxM = sessions && sessions.length
+    ? Math.max.apply(null, sessions.map(function(s) { return timeToMin(s.end_time); }))
+    : pts[pts.length - 1].m;
+  var span = Math.max(1, maxM - minM);
+
+  el.innerHTML = zones.map(function(z, zi) {
+    var zMinHR = ZONES[zi][0] * MAX_HR;
+    var zMaxHR = ZONES[zi][1] * MAX_HR;
+
+    // Clip each segment to zone band, then MERGE touching runs into one block
+    function stripClip(hr1, hr2, lo, hi) {
+      var dhr = hr2 - hr1;
+      if (Math.abs(dhr) < 0.001) return (hr1 >= lo && hr1 <= hi) ? [0, 1] : null;
+      var tLo = (lo - hr1) / dhr, tHi = (hi - hr1) / dhr;
+      var tA = Math.max(0, Math.min(tLo, tHi)), tB = Math.min(1, Math.max(tLo, tHi));
+      return tA < tB ? [tA, tB] : null;
+    }
+    var merged = [];
+    for (var i = 0; i < pts.length - 1; i++) {
+      var m1s = pts[i].m,   hr1s = pts[i].hr;
+      var m2s = pts[i+1].m, hr2s = pts[i+1].hr;
+      var clip = stripClip(hr1s, hr2s, zMinHR, zMaxHR);
+      if (!clip) continue;
+      var segStart = m1s + clip[0] * (m2s - m1s);
+      var segEnd   = m1s + clip[1] * (m2s - m1s);
+      // Extend the last block if this one touches it, otherwise start a new block
+      if (merged.length && segStart <= merged[merged.length - 1].end + 0.01) {
+        merged[merged.length - 1].end = Math.max(merged[merged.length - 1].end, segEnd);
+      } else {
+        merged.push({ start: segStart, end: segEnd });
+      }
+    }
+    var segs = merged.map(function(blk) {
+      var left  = ((blk.start - minM) / span * 100).toFixed(3);
+      var width = Math.max(0.3, ((blk.end - blk.start) / span * 100)).toFixed(3);
+      return '<div class="zone-seg" style="left:' + left + '%;width:' + width + '%;background:' + z.color + '"></div>';
+    });
+
+    return [
+      '<div class="zone-strip-row" data-zone="' + zi + '" onclick="selectZone(' + zi + ')">',
+        '<div class="zone-strip-spacer"></div>',
+        '<div class="zone-strip-track">' + segs.join('') + '</div>',
+        '<div class="zone-strip-right">',
+          '<span class="zone-strip-label" style="color:' + z.color + '">' + z.label + '</span>',
+          '<span class="zone-strip-time">' + z.minutes + 'm</span>',
+        '</div>',
+      '</div>',
+    ].join('');
+  }).join('');
+}
+
+/* ════════════════════════════════════════════════
+   Render Exercise Timeline
+   ════════════════════════════════════════════════ */
+function renderExercises(exercises, biometrics) {
+  var el = document.getElementById('exercise-list');
+  // build a map: minute → heart_rate
+  var hrMap = {};
+  biometrics.forEach(function(b) { hrMap[timeToMin(b.timestamp)] = b.heart_rate; });
+
+  el.innerHTML = exercises.map(function(e) {
+    var min  = timeToMin(e.timestamp);
+    var hr   = hrMap[min] || '';
+    var time = e.timestamp.slice(11, 16);
+    var hrTag = hr ? '<span class="ex-hr-tag">' + hr + 'bpm</span>' : '';
+    var score = e.quality_score ? Math.round(e.quality_score * 10) : '';
+    var scoreHtml = score ? '<div class="ex-score">' + score + '/100</div>' : '';
+    return [
+      '<div class="ex-item">',
+        '<div class="ex-dot"></div>',
+        '<div style="flex:1;min-width:0">',
+          '<div style="display:flex;align-items:center;gap:4px">',
+            '<span class="ex-name">' + e.exercise_name + '</span>',
+            hrTag,
+          '</div>',
+          '<div class="ex-meta">' + e.sets + '组 × ' + e.reps + '次',
+            (e.tempo ? '　节奏 ' + e.tempo : ''),
+          '</div>',
+        '</div>',
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0">',
+          '<div class="ex-time">' + time + '</div>',
+          scoreHtml,
+        '</div>',
+      '</div>',
+    ].join('');
+  }).join('');
+}
+
+/* ════════════════════════════════════════════════
+   Compute stats for metrics row
+   ════════════════════════════════════════════════ */
+function setMetrics(biometrics, sessions) {
+  if (!biometrics.length || !sessions.length) return;
+  var hrs = biometrics.map(function(b) { return b.heart_rate; });
+  var avg = Math.round(hrs.reduce(function(s, v) { return s + v; }, 0) / hrs.length);
+  var max = Math.max.apply(null, hrs);
+  var session = sessions[0];
+
+  // Max HR % of theoretical max
+  var maxPct = Math.round(max / MAX_HR * 100);
+
+  document.getElementById('m-avg').innerHTML = avg + '<span class="metric-unit"> bpm</span>';
+  document.getElementById('m-avg-sub').textContent = '静息 ' + RESTING_HR + ' bpm';
+
+  document.getElementById('m-max').innerHTML = max + '<span class="metric-unit"> bpm</span>';
+  document.getElementById('m-max-sub').textContent = '最大心率 ' + maxPct + '%';
+
+  document.getElementById('m-dur').innerHTML = session.duration_min + '<span class="metric-unit"> min</span>';
+  document.getElementById('m-dur-sub').textContent = '完成率 ' + Math.round(session.completion_rate * 100) + '%';
+
+  document.getElementById('m-cal').innerHTML = Math.round(session.calories) + '<span class="metric-unit"> kcal</span>';
+  document.getElementById('m-cal-sub').textContent = '容量 ' + Math.round(session.total_volume) + ' kg·rep';
+}
+
+/* ════════════════════════════════════════════════
+   Build AI prompt
+   ════════════════════════════════════════════════ */
+function buildPrompt(dateStr, biometrics, exercises, sessions) {
+  var session   = sessions[0] || {};
+  var hrs       = biometrics.map(function(b) { return b.heart_rate; });
+  var avgHR     = Math.round(hrs.reduce(function(s,v){return s+v;},0) / (hrs.length||1));
+  var maxHR_val = Math.max.apply(null, hrs.concat([0]));
+  var zones     = computeZones(biometrics);
+
+  var hrRows = biometrics.map(function(b) {
+    return b.timestamp.slice(11,16) + '  ' + b.heart_rate + 'bpm  HRV=' + b.hrv.toFixed(1) + 'ms  疲劳=' + b.fatigue_score.toFixed(1);
+  }).join('\n');
+
+  var exRows = exercises.map(function(e) {
+    return e.exercise_name + '（' + e.sets + '组×' + e.reps + '次，节奏' + (e.tempo||'—') + '，ROM=' + (e.rom||0).toFixed(0) + '%，质量分=' + (e.quality_score||0).toFixed(1) + '）';
+  }).join('\n');
+
+  var zoneRows = zones.map(function(z) {
+    return z.label + ' (' + z.hrRange + ')：' + z.minutes + ' 分钟 (' + z.pct + '%)';
+  }).join('\n');
+
+  return '你是一位专业运动健身教练与运动生理学专家（具备运动科学分析与训练周期规划能力）。\n' +
+'你的任务是基于用户训练数据，输出【严格JSON格式】的结构化心率分析结果。\n\n' +
+
+'【强制要求】\n' +
+'1. 只允许输出JSON，不允许任何额外文本（包括解释、Markdown、代码块）\n' +
+'2. 所有字段必须完整，禁止缺失字段\n' +
+'3. 所有判断必须基于输入数据，不允许猜测\n' +
+'4. 每个结论必须有数据依据字段 support\n' +
+'5. 不允许输出 null（必须用字符串或数值替代）\n\n' +
+
+'【用户信息】\n' +
+'性别：' + USER.gender + '，年龄：' + USER.age + '，体重：' + USER.weight + '，' +
+'静息心率：' + RESTING_HR + '，最大心率：' + MAX_HR + '，等级：' + USER.level + '\n\n' +
+
+'【训练数据】\n' +
+'训练时长：' + (session.duration_min||0) + '\n' +
+'平均心率：' + avgHR + '\n' +
+'峰值心率：' + maxHR_val + '\n' +
+'热量：' + Math.round(session.calories||0) + '\n' +
+'完成率：' + Math.round((session.completion_rate||0)*100) + '\n\n' +
+
+'【心率区间】\n' + zoneRows + '\n\n' +
+'【动作序列】\n' + exRows + '\n\n' +
+'【心率序列】\n' + hrRows + '\n\n' +
+
+'【输出任务】\n' +
+'必须输出以下JSON结构：\n\n' +
+
+'{\n' +
+'  "training_type": {\n' +
+'    "label": "增肌|有氧|HIIT|混合",\n' +
+'    "confidence": 0-100,\n' +
+'    "support": ["判断依据1", "判断依据2"]\n' +
+'  },\n\n' +
+
+'  "training_quality": {\n' +
+'    "score": 0-100,\n' +
+'    "summary": "",\n' +
+'    "support": ["数据依据1", "数据依据2"]\n' +
+'  },\n\n' +
+
+'  "fat_burn": {\n' +
+'    "effective_zone2_min": 0,\n' +
+'    "effective_zone3_min": 0,\n' +
+'    "fat_burn_score": 0-100,\n' +
+'    "energy_system": "fat|carb|mixed",\n' +
+'    "support": ["Zone分布", "心率区间依据"]\n' +
+'  },\n\n' +
+
+'  "cardio": {\n' +
+'    "recovery_rate": "fast|normal|slow",\n' +
+'    "hr_recovery_note": "",\n' +
+'    "support": ["恢复心率变化", "峰值恢复情况"]\n' +
+'  },\n\n' +
+
+'  "training_rhythm": {\n' +
+'    "fatigue_point_minute": 0,\n' +
+'    "break_issues": true,\n' +
+'    "support": ["心率拐点", "节奏变化"]\n' +
+'  },\n\n' +
+
+'  "overtraining_risk": {\n' +
+'    "risk_level": "low|medium|high",\n' +
+'    "reason": "",\n' +
+'    "support": ["静息心率对比", "心率异常变化"]\n' +
+'  },\n\n' +
+
+'  "summary": {\n' +
+'    "training_score": 0-100,\n' +
+'    "comment": "",\n' +
+'    "key_insight": ""\n' +
+'  },\n\n' +
+
+'  "recommendations": [\n' +
+'    "建议1",\n' +
+'    "建议2"\n' +
+'  ]\n' +
+'}';
+}
+
+/* ════════════════════════════════════════════════
+   Call AI with streaming
+   ════════════════════════════════════════════════ */
+async function runAnalysis(prompt) {
+  var loadEl    = document.getElementById('ai-loading');
+  var contentEl = document.getElementById('ai-content');
+  var errorEl   = document.getElementById('ai-error');
+
+  function parseAnalysisJson(textRaw) {
+    if (!textRaw) return null;
+    var raw = String(textRaw).trim().replace(/^\uFEFF/, '');
+    raw = raw.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/, '');
+
+    var start = raw.indexOf('{');
+    var end = raw.lastIndexOf('}');
+    if (start !== -1 && end !== -1 && end > start) {
+      raw = raw.slice(start, end + 1);
+    }
+
+    try {
+      return JSON.parse(raw);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  try {
+    // 非流式调用；Connection: close 确保响应后立即释放 TCP 连接
+    var resp = await fetch(AI_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + AI_KEY,
+        'Connection':    'close',
+      },
+      body: JSON.stringify({
+        model:    AI_MODEL,
+        stream:   false,
+        messages: [
+          { role: 'system', content: '你是专业健身教练和运动生理学专家，用中文给出简洁专业的心率训练分析。' },
+          { role: 'user',   content: prompt },
+        ],
+      }),
+    });
+
+    var rawText = await resp.text();     // read body as text first, fully draining the socket
+    if (!resp.ok) throw new Error('HTTP ' + resp.status + ': ' + rawText.slice(0, 120));
+
+    var data = JSON.parse(rawText);
+    var text = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+    if (!text) throw new Error('响应格式异常');
+
+    var parsed = parseAnalysisJson(text);
+
+    loadEl.style.display    = 'none';
+    contentEl.style.display = 'block';
+    contentEl.innerHTML     = parsed ? renderAnalysisFromJson(parsed) : formatAnalysis(text);
+
+  } catch (err) {
+    loadEl.style.display  = 'none';
+    errorEl.style.display = 'block';
+    errorEl.textContent   = '分析请求失败：' + err.message;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   Format AI text to HTML
+   ════════════════════════════════════════════════ */
+function formatAnalysis(text) {
+  function esc(val) {
+    return String(val || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function normalize(textRaw) {
+    return textRaw.replace(/\r\n/g, '\n').trim();
+  }
+
+  function applyInline(textRaw) {
+    return textRaw
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>');
+  }
+
+  function buildCards(textRaw) {
+    var blocks = normalize(textRaw).split(/\n\s*\n+/);
+    var cards = ['<div class="ai-cards">'];
+
+    blocks.forEach(function(block) {
+      var lines = block.split('\n').filter(function(l) { return l.trim(); });
+      if (!lines.length) return;
+
+      var title = lines[0];
+      var bodyLines = lines.slice(1);
+
+      var scoreHtml = '';
+      var scoreMatch = title.match(/(\d{1,3})\/100/);
+      if (scoreMatch) {
+        var score = scoreMatch[1];
+        title = title.replace(/\s*\d{1,3}\/100\s*/, '');
+        scoreHtml = '<div class="score-pill">' +
+          '<span class="score-num">' + score + '</span>' +
+          '<span class="score-lbl">/ 100</span>' +
+          '</div>';
+      }
+
+      var contentHtml = bodyLines.length
+        ? '<div class="ai-list">' + bodyLines.map(function(l) {
+            return '<span>• ' + applyInline(esc(l)) + '</span>';
+          }).join('') + '</div>'
+        : '<div class="ai-list"><span>—</span></div>';
+
+      cards.push(
+        '<div class="ai-card">' +
+          '<div class="ai-card-title">' + applyInline(esc(title)) + '</div>' +
+          scoreHtml +
+          contentHtml +
+        '</div>'
+      );
+    });
+
+    if (cards.length === 1) {
+      cards.push(
+        '<div class="ai-card">' +
+          '<div class="ai-card-title">训练分析</div>' +
+          '<div class="ai-list"><span>• ' + applyInline(esc(textRaw)) + '</span></div>' +
+        '</div>'
+      );
+    }
+
+    cards.push('</div>');
+    return cards.join('');
+  }
+
+  return buildCards(text);
+}
+
+function renderAnalysisFromJson(data) {
+  function escapeHtml(val) {
+    return String(val || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function levelLabel(val) {
+    var map = { low: '低', medium: '中', high: '高' };
+    return map[val] || val || '—';
+  }
+
+  function energyLabel(val) {
+    var map = { fat: '脂肪供能', carb: '糖原供能', mixed: '混合供能' };
+    return map[val] || val || '—';
+  }
+
+  function recoveryLabel(val) {
+    var map = { fast: '快', normal: '正常', slow: '慢' };
+    return map[val] || val || '—';
+  }
+
+  function tfBool(val) {
+    return val ? '是' : '否';
+  }
+
+  function listLines(arr) {
+    if (!arr || !arr.length) return '<span>—</span>';
+    return arr.map(function(s) { return '<span>• ' + escapeHtml(s) + '</span>'; }).join('');
+  }
+
+  var html = ['<div class="ai-cards">'];
+
+  var trainingType = data.training_type || {};
+  html.push(
+    '<div class="ai-card">' +
+      '<div class="ai-card-title">训练类型<span class="ai-pill">' + escapeHtml(trainingType.confidence || 0) + '%</span></div>' +
+      '<div class="ai-card-sub">' + escapeHtml(trainingType.label || '—') + '</div>' +
+      '<div class="ai-list">' + listLines(trainingType.support) + '</div>' +
+    '</div>'
+  );
+
+  var quality = data.training_quality || {};
+  html.push(
+    '<div class="ai-card">' +
+      '<div class="ai-card-title">训练质量<span class="ai-pill">' + escapeHtml(quality.score || 0) + '/100</span></div>' +
+      '<div class="ai-card-sub">' + escapeHtml(quality.summary || '—') + '</div>' +
+      '<div class="ai-list">' + listLines(quality.support) + '</div>' +
+    '</div>'
+  );
+
+  var fat = data.fat_burn || {};
+  html.push(
+    '<div class="ai-card">' +
+      '<div class="ai-card-title">燃脂与供能</div>' +
+      '<div class="ai-grid">' +
+        '<div class="ai-metric"><label>Zone2</label><div class="ai-value">' + escapeHtml(fat.effective_zone2_min || 0) + ' min</div></div>' +
+        '<div class="ai-metric"><label>Zone3</label><div class="ai-value">' + escapeHtml(fat.effective_zone3_min || 0) + ' min</div></div>' +
+        '<div class="ai-metric"><label>燃脂评分</label><div class="ai-value">' + escapeHtml(fat.fat_burn_score || 0) + '</div></div>' +
+        '<div class="ai-metric"><label>供能方式</label><div class="ai-value">' + escapeHtml(energyLabel(fat.energy_system)) + '</div></div>' +
+      '</div>' +
+      '<div class="ai-list">' + listLines(fat.support) + '</div>' +
+    '</div>'
+  );
+
+  var cardio = data.cardio || {};
+  html.push(
+    '<div class="ai-card">' +
+      '<div class="ai-card-title">心肺恢复</div>' +
+      '<div class="ai-grid">' +
+        '<div class="ai-metric"><label>恢复速度</label><div class="ai-value">' + escapeHtml(recoveryLabel(cardio.recovery_rate)) + '</div></div>' +
+        '<div class="ai-metric"><label>恢复说明</label><div class="ai-value">' + escapeHtml(cardio.hr_recovery_note || '—') + '</div></div>' +
+      '</div>' +
+      '<div class="ai-list">' + listLines(cardio.support) + '</div>' +
+    '</div>'
+  );
+
+  var rhythm = data.training_rhythm || {};
+  html.push(
+    '<div class="ai-card">' +
+      '<div class="ai-card-title">训练节奏</div>' +
+      '<div class="ai-grid">' +
+        '<div class="ai-metric"><label>疲劳拐点</label><div class="ai-value">' + escapeHtml(rhythm.fatigue_point_minute || 0) + ' min</div></div>' +
+        '<div class="ai-metric"><label>间歇问题</label><div class="ai-value">' + escapeHtml(tfBool(rhythm.break_issues)) + '</div></div>' +
+      '</div>' +
+      '<div class="ai-list">' + listLines(rhythm.support) + '</div>' +
+    '</div>'
+  );
+
+  var risk = data.overtraining_risk || {};
+  html.push(
+    '<div class="ai-card">' +
+      '<div class="ai-card-title">过度训练风险<span class="ai-pill">' + escapeHtml(levelLabel(risk.risk_level)) + '</span></div>' +
+      '<div class="ai-card-sub">' + escapeHtml(risk.reason || '—') + '</div>' +
+      '<div class="ai-list">' + listLines(risk.support) + '</div>' +
+    '</div>'
+  );
+
+  var summary = data.summary || {};
+  html.push(
+    '<div class="ai-card ai-summary">' +
+      '<div class="ai-card-title">总览<span class="ai-pill">' + escapeHtml(summary.training_score || 0) + '/100</span></div>' +
+      '<div class="ai-card-sub">' + escapeHtml(summary.comment || '—') + '</div>' +
+      '<div class="ai-list">' + listLines([summary.key_insight || '—']) + '</div>' +
+    '</div>'
+  );
+
+  var recos = data.recommendations || [];
+  html.push(
+    '<div class="ai-card ai-recos">' +
+      '<div class="ai-card-title">关键建议</div>' +
+      '<ol class="ai-list">' + (recos.length ? recos.map(function(s) {
+        return '<li>' + escapeHtml(s) + '</li>';
+      }).join('') : '<li>—</li>') + '</ol>' +
+    '</div>'
+  );
+
+  html.push('</div>');
+  return html.join('');
+}
+
+/* ════════════════════════════════════════════════
+   Main
+   ════════════════════════════════════════════════ */
+async function init() {
+  var dateParam = getDateParam();
+  var apiUrl    = API + '/hr_detail' + (dateParam ? '?date=' + dateParam : '');
+
+  var data;
+  try {
+    var resp = await fetch(apiUrl);
+    if (!resp.ok) throw new Error('API ' + resp.status);
+    data = await resp.json();
+  } catch (e) {
+    // Show error in AI area
+    document.getElementById('ai-loading').style.display = 'none';
+    document.getElementById('ai-error').style.display   = 'block';
+    document.getElementById('ai-error').textContent = '无法连接到后端 API（' + e.message + '）。请确认 uvicorn 服务已启动于 port 8003。';
+    document.getElementById('header-date').textContent  = dateParam || '数据加载失败';
+    return;
+  }
+
+  var { date, biometrics, exercises, sessions } = data;
+
+  // Header date
+  document.getElementById('header-date').textContent = date;
+
+  // Metrics row
+  setMetrics(biometrics, sessions);
+
+  // Workout-only data
+  var pts = buildWorkoutPoints(biometrics, sessions);
+
+  // Store globally for zone-highlight redraws
+  window._pts       = pts;
+  window._exercises = exercises;
+  window._sessions  = sessions;
+
+  // Draw chart
+  drawHRChart(pts, exercises, sessions, -1);
+  var _resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(_resizeTimer);
+    _resizeTimer = setTimeout(function() { drawHRChart(pts, exercises, sessions, selectedZone); }, 200);
+  });
+
+  // HR Zones
+  var zones = computeZones(biometrics);
+  renderZones(zones);
+  renderZoneStrips(pts, zones, sessions);
+
+  // Exercise timeline
+  renderExercises(exercises, biometrics);
+
+  // AI analysis
+  if (biometrics.length && sessions.length) {
+    var prompt = buildPrompt(date, biometrics, exercises, sessions);
+    runAnalysis(prompt);
+  } else {
+    document.getElementById('ai-loading').style.display = 'none';
+    document.getElementById('ai-error').style.display   = 'block';
+    document.getElementById('ai-error').textContent     = '该日期暂无训练数据。';
+  }
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+Keys and their values:
+  key='难度'  unicode=['0x96be', '0x5ea6']  values=['Advanced', 'Beginner', 'Intermediate', 'Novice']
+  key='衡量'  unicode=['0x8861', '0x91cf']  values=['duration', 'reps', 'weight/duration', 'weight/reps']
+  key='系列'  unicode=['0x7cfb', '0x5217']  values=['1x12', '1x8-12', '2x4-10', '3x10', '3x12']
+  key='发力'  unicode=['0x53d1', '0x529b']  values=['Hold', 'Pull', 'Push']
+  key='握法'  unicode=['0x63e1', '0x6cd5']  values=['Neutral', 'None', 'Overhand', 'Overhand, Neutral', 'Overhand, Underhand, Mixed']
+  key='机制'  unicode=['0x673a', '0x5236']  values=['Compound', 'Isolation']
+  key='时长'  unicode=['0x65f6', '0x957f']  values=['3x10', '3x15s', '3x30s', '3x60']

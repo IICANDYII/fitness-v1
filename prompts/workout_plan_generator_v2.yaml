@@ -1,0 +1,69 @@
+version: "2.0.0"
+description: "周训练计划生成 prompt v2 — 新增同天动作语义多样性约束"
+
+system: |
+  你是一名专业运动科学教练，擅长制定科学减脂训练计划。
+  请严格按照用户信息和候选动作库，输出合法 JSON，不要有任何额外文字或 markdown。
+
+user: |
+  用户信息:
+  - 性别: {gender}  年龄: {age}岁
+  - 体重: {weight}kg  身高: {height}cm
+  - 健身目标: {fitness_goal}
+  - 训练水平: {experience_level}（intermediate 可承受中高强度）
+  - 偏好风格: {preferred_styles}
+  - 每周训练: {days_per_week} 天，每次 {duration_min} 分钟
+  - 可用器械: {available_equipment}
+  - 接受高强度: {accept_high_intensity}
+  - 需要多样性: {need_variety}{fatigue_note}
+
+  候选动作库（{exercise_count} 个，已经过语义相关性 + MMR 多样性双重筛选排序）:
+  {exercise_list_json}
+
+  制定要求:
+  1. 安排 {days_per_week} 天周计划，每天 {duration_min} 分钟（热身5-10min + 主训练45-50min + 拉伸5min）
+  2. 减脂优先: 偏向复合动作、超级组/电路训练以提升心率，增加代谢消耗
+  3. 肌群平衡: 上推/上拉/下肢/核心合理分布，相同主肌群不连续两天
+  4. 每个动作标注: 组数、次数或时长、组间休息秒数
+  5. 强度适中偏高，可选 intermediate/advanced 难度动作
+  6. 融合瑜伽风格（控制呼吸、注重动作质量）与力量训练
+  7. 每天结尾加1-2个拉伸/恢复动作（如有合适的可从候选库选），**其他训练动作只能从候选动作库中选择**
+
+  【v2 同天语义多样性约束 — 严格遵守】
+  8. 同一天内，所有主训练动作必须覆盖至少 3 种不同的 movement_pattern（例如：push / hinge / squat / pull / carry / rotation / isometric 中选3+）
+  9. 同一天内，不得连续安排两个 primary_muscles 完全相同的动作；即使肌群有重叠，也需要中间插入针对不同肌群的动作
+  10. 同一天内，相邻两个主训练动作的"训练目标(goals)"不得完全相同；若两个动作 goals 的交集 ≥ 2 项，视为过于相似，必须在它们之间插入 goals 差异化的动作
+  11. 同一天内，exercise_type 须混搭: compound 动作和 isolation 动作交替出现（不得连续排列 3 个以上相同 type 的动作）
+  12. 若某天 {duration_min} 分钟内动作数量充足（≥6个主训练动作），至少包含 2 种不同的 equipment 类型
+
+  输出 JSON 格式（严格遵守，字段不可增减）:
+  {{
+    "plan_name": "计划名称",
+    "user_id": "{user_id}",
+    "fitness_goal": "{fitness_goal}",
+    "weekly_schedule": [
+      {{
+        "day": 1,
+        "theme": "训练主题（例: 上肢力量 + 核心稳定）",
+        "estimated_duration_min": {duration_min},
+        "exercises": [
+          {{
+            "phase": "热身 | 主训练 | 拉伸",
+            "exercise_id": "动作的 exercise_id",
+            "name": "动作中文名",
+            "sets": 3,
+            "reps_or_duration": "12-15次 或 40秒",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "技术要点或注意事项"
+          }}
+        ]
+      }}
+    ],
+    "coaching_notes": [
+      "warm_up": "热身建议",
+      "cool_down": "拉伸建议",
+      "nutrition": "饮食建议",
+      "recovery_boost": "恢复与进阶建议"
+    ]
+  }}

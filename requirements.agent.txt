@@ -1,9 +1,0 @@
-fastapi>=0.110
-uvicorn>=0.29
-openai>=1.30
-redis>=5.0
-psycopg2-binary>=2.9
-pgvector>=0.2
-pydantic>=2.0
-pydantic-settings>=2.0
-numpy>=1.24

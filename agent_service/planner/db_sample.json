@@ -1,0 +1,111 @@
+﻿Exercises with empty primary_muscles:
+  situp_001 | Situp | ��������
+
+============================================================
+FULL RECORD EXAMPLE (Barbell Bench Press):
+============================================================
+{
+  "exercise_id": "barbell_bench_press_001",
+  "name": "Barbell Bench Press",
+  "name_cn": "����ƽ����",
+  "primary_muscles": [
+    "���Ǽ�ǰ��",
+    "�ش�",
+    "���Ǽ�����",
+    "����ͷ��",
+    "���Ǽ�����"
+  ],
+  "secondary_muscles": [
+    "ǰ�⼡",
+    "���ļ�Ⱥ",
+    "ǰ�ۼ�Ⱥ"
+  ],
+  "movement_pattern": "push",
+  "equipment": [
+    "����",
+    "ѵ����"
+  ],
+  "difficulty": "intermediate",
+  "training_goals": [
+    "����",
+    "��������"
+  ],
+  "exercise_type": "compound",
+  "recommended_rep_range": {
+    "strength": "3-6",
+    "endurance": "15-20",
+    "hypertrophy": "8-12"
+  },
+  "risk_level": "medium",
+  "common_mistakes": [
+    "���Ź��ȵ����β��뿪����",
+    "��������λ�ù��ߣ��������ǣ�",
+    "���������չ����90�ȼнǣ�",
+    "���������ȷ���"
+  ],
+  "safety_tips": [
+    "ȷ��˫�Ž��ƽ����������ṩ�ȶ�֧��",
+    "����ʱ���ƽ��࣬����������ط���",
+    "�������ñ����߻��ڰ�ȫ���ڽ���ѵ��"
+  ],
+  "estimated_mets": 6.0,
+  "fatigue_score": {
+    "������": 7,
+    "Ŀ�꼡Ⱥ": 8
+  },
+  "contraindications": [
+    "���ؼ�������",
+    "��������ؽ���",
+    "�ش����˻ָ���"
+  ]
+}
+
+============================================================
+FULL RECORD EXAMPLE (Dumbbell Curl):
+============================================================
+{
+  "exercise_id": "dumbbell_curl_001",
+  "name": "Dumbbell Curl",
+  "name_cn": "�������",
+  "primary_muscles": [
+    "�Ŷ�ͷ��"
+  ],
+  "secondary_muscles": [
+    "ǰ�ۼ�Ⱥ",
+    "���Ǽ�ǰ��"
+  ],
+  "movement_pattern": "pull",
+  "equipment": [
+    "����"
+  ],
+  "difficulty": "beginner",
+  "training_goals": [
+    "����",
+    "����"
+  ],
+  "exercise_type": "isolation",
+  "recommended_rep_range": {
+    "strength": "3-6",
+    "endurance": "15-20",
+    "hypertrophy": "8-12"
+  },
+  "risk_level": "low",
+  "common_mistakes": [
+    "����ǰ��ζ�����",
+    "���������������",
+    "�·�ʱ�ٶȹ���ʧȥ����"
+  ],
+  "safety_tips": [
+    "���ִ�۹̶�����������",
+    "�����ս����ȶ�����"
+  ],
+  "estimated_mets": 3.0,
+  "fatigue_score": {
+    "������": 3,
+    "�Ŷ�ͷ��": 5
+  },
+  "contraindications": [
+    "��������ؽ�����",
+    "�������߶������⼱����"
+  ]
+}

@@ -1,0 +1,4 @@
+<svg viewBox="0 0 660.46 1206.46" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><radialgradient cx="50%" cy="50%" fx="50%" fy="50%" id="jointradial" r="50%"><stop offset="0%" style="stop-color: rgb(254, 91, 127); stop-opacity: 1;"></stop><stop offset="100%" style="stop-color: rgb(231, 236, 239); stop-opacity: 1;"></stop></radialgradient></defs>
+<g class="hidden" id="elbow"><ellipse cx="134.9" cy="396.71" fill="url(#jointradial)" opacity="1" rx="26.19" ry="25.49" stroke-width="0"></ellipse><ellipse cx="525.68" cy="396.71" fill="url(#jointradial)" opacity="1" rx="26.19" ry="25.49" stroke-width="0"></ellipse><ellipse cx="525.68" cy="396.71" fill="currentColor" rx="12.76" ry="12.42" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.58"></ellipse><ellipse cx="134.9" cy="396.71" fill="currentColor" rx="12.76" ry="12.42" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.58"></ellipse></g>
+</svg>

@@ -1,0 +1,17 @@
+{
+  "equipment": "跑步机",
+  "exercise": "跑步机慢跑",
+  "confidence": 0.95,
+  "stats": {
+    "totalDuration": 165.0,
+    "estimatedSets": 1,
+    "estimatedRepsPerSet": null,
+    "avgSetDuration": 130.0,
+    "note": "识别为有氧运动，用户在37.5s至202.5s期间主要在跑步机上进行慢跑，其中约130秒为实际运动时间，其余为上机准备与下机离开时间。"
+  },
+  "planMatching": {
+    "status": "matched",
+    "matchedExercise": "跑步机慢跑",
+    "deviationNote": "实际动作与计划中热身阶段（warmup）的跑步机慢跑完全吻合。"
+  }
+}

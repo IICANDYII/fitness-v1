@@ -1,0 +1,9 @@
+[
+  {
+    "equipmentId": "cable_machine",
+    "equipmentName": "龙门架",
+    "movementName": "引体向上",
+    "status": "exercise",
+    "confidence": 0.95
+  }
+]

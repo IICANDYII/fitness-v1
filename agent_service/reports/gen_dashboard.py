@@ -1,9 +1,89 @@
 import re
 from pathlib import Path
 
-_HERE = Path(__file__).parent
+_HERE        = Path(__file__).parent
+_MUSCLES_DIR = _HERE / 'muscles'
 
-# ── Load and process SVGs ────────────────────────────────────────────
+SVG_DEFS = (
+    '<defs><radialGradient id="jointradial" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">'
+    '<stop offset="0%" style="stop-color: rgb(254, 91, 127); stop-opacity: 1;"/>'
+    '<stop offset="100%" style="stop-color: rgb(231, 236, 239); stop-opacity: 1;"/>'
+    '</radialGradient></defs>'
+)
+
+# 女性正面肌群文件（文件名 → 最终 id）
+FEMALE_FRONT_MUSCLES = [
+    ('body.svg',           None),           # 骨架，不是 bodymap
+    ('abdominals.svg',     'abdominals'),
+    ('biceps.svg',         'biceps'),
+    ('calves-front.svg',   'calves'),
+    ('chest.svg',          'chest'),
+    ('forearms-front.svg', 'forearms'),
+    ('front-shoulders.svg','front-shoulders'),
+    ('hands-front.svg',    'hands'),
+    ('obliques.svg',       'obliques'),
+    ('quads.svg',          'quads'),
+    ('traps-front.svg',    'traps'),
+]
+
+# 女性背面肌群文件（ID 会被加 "b-" 前缀）
+FEMALE_BACK_MUSCLES = [
+    ('body-back.svg',      None),
+    ('calves-back.svg',    'calves'),
+    ('forearms-back.svg',  'forearms'),
+    ('glutes.svg',         'glutes'),
+    ('hamstrings.svg',     'hamstrings'),
+    ('hands-back.svg',     'hands'),
+    ('lats.svg',           'lats'),
+    ('lowerback.svg',      'lowerback'),
+    ('rear-shoulders.svg', 'rear-shoulders'),
+    ('traps-back.svg',     'traps'),
+    ('traps-middle.svg',   'traps-middle'),
+    ('triceps.svg',        'triceps'),
+]
+
+
+def _extract_g(svg_text: str, target_id: str | None) -> str:
+    """
+    从单个 SVG 文件中提取目标 <g> 元素的完整 XML 字符串。
+    target_id=None 时提取 class="body-map__model" 的骨架 <g>。
+    """
+    svg_text = re.sub(r'<\?xml[^?]*\?>', '', svg_text).strip()
+    if target_id is None:
+        # 骨架
+        m = re.search(r'<g[^>]+class="body-map__model"[^>]*>.*?</g>', svg_text, re.DOTALL)
+    else:
+        m = re.search(rf'<g[^>]+id="{re.escape(target_id)}"[^>]*>.*?</g>', svg_text, re.DOTALL)
+    return m.group(0) if m else ''
+
+
+def _build_female_svg(muscle_list: list[tuple[str, str | None]], prefix_back: bool = False) -> str:
+    """合成女性正面或背面 SVG。"""
+    groups = []
+    for filename, muscle_id in muscle_list:
+        path = _MUSCLES_DIR / 'female' / filename
+        if not path.exists():
+            continue
+        raw = path.read_text(encoding='utf-8')
+        g   = _extract_g(raw, muscle_id)
+        if not g:
+            continue
+        if prefix_back and muscle_id is not None:
+            # 重命名 id 与 url(#...) 避免与正面 DOM ID 冲突
+            old_id = muscle_id
+            new_id = 'b-' + old_id
+            g = g.replace(f'id="{old_id}"', f'id="{new_id}"')
+            g = g.replace(f'url(#{old_id})', f'url(#{new_id})')
+        groups.append(g)
+
+    inner = '\n'.join(groups)
+    return (
+        f'<svg viewBox="0 0 660.46 1206.46" fill="none" xmlns="http://www.w3.org/2000/svg">'
+        f'{SVG_DEFS}\n{inner}\n</svg>'
+    )
+
+
+# ── Load and process male SVGs ────────────────────────────────────────
 front_svg = (_HERE / 'front_body.svg').read_text(encoding='utf-8')
 back_svg  = (_HERE / 'back_body.svg').read_text(encoding='utf-8')
 
@@ -20,6 +100,10 @@ for id_val in sorted(ids_back, key=len, reverse=True):
     back_svg = back_svg.replace(f'id="{id_val}"',    f'id="b-{id_val}"')
     back_svg = back_svg.replace(f'url(#{id_val})',   f'url(#b-{id_val})')
     back_svg = back_svg.replace(f'href="#{id_val}"', f'href="#b-{id_val}"')
+
+# ── Build female composite SVGs ───────────────────────────────────────
+female_front_svg = _build_female_svg(FEMALE_FRONT_MUSCLES, prefix_back=False)
+female_back_svg  = _build_female_svg(FEMALE_BACK_MUSCLES,  prefix_back=True)
 
 # ── HTML Template ────────────────────────────────────────────────────
 HTML_TEMPLATE = r'''<!DOCTYPE html>
@@ -114,11 +198,18 @@ body {
 .viz-body {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 8px;
   flex: 1;
+  min-height: 0;
 }
-.viz-svgwrap svg { display: block; height: 260px; width: auto; }
+.viz-svgwrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.viz-svgwrap svg { display: block; width: 100%; height: 100%; }
 .viz-legend {
   display: flex;
   flex-direction: column;
@@ -193,12 +284,29 @@ body {
 /* ════════════════════════════
    SVG Bodymap
    ════════════════════════════ */
+.viz-svgwrap {
+  background: rgb(205,206,214);
+  border-radius: 14px;
+  padding: 6px 4px 4px;
+}
+/* color drives fill="currentColor" on SVG paths;
+   fill rule overrides any remaining SVG presentation attribute */
+.bodymap {
+  color: rgb(100, 108, 135);
+}
 .bodymap path, .bodymap circle, .bodymap ellipse, .bodymap polygon, .bodymap rect {
-  fill: rgb(184,188,204);
+  fill: rgb(100, 108, 135);
   transition: fill .35s ease;
 }
 /* joint marker groups stay invisible */
 .hidden { display: none !important; }
+
+/* ════════════════════════════
+   Gender body-map toggle
+   ════════════════════════════ */
+.viz-svgwrap[data-gender="female"] { display: none; }
+#viz-body-wrap.show-female .viz-svgwrap[data-gender="female"] { display: flex; }
+#viz-body-wrap.show-female .viz-svgwrap[data-gender="male"]   { display: none; }
 </style>
 </head>
 <body>
@@ -234,13 +342,15 @@ body {
   <!-- ══ Card 2: 训练部位可视化 ══ -->
   <div class="card">
     <div class="card-title">训练部位可视化</div>
-    <div class="viz-body">
-      <div class="viz-svgwrap" id="viz-front">FRONT_SVG_PLACEHOLDER</div>
-      <div class="viz-svgwrap" id="viz-back">BACK_SVG_PLACEHOLDER</div>
+    <div class="viz-body" id="viz-body-wrap">
+      <div class="viz-svgwrap" data-gender="male"   id="viz-male-front">FRONT_SVG_PLACEHOLDER</div>
+      <div class="viz-svgwrap" data-gender="male"   id="viz-male-back">BACK_SVG_PLACEHOLDER</div>
+      <div class="viz-svgwrap" data-gender="female" id="viz-female-front">FEMALE_FRONT_SVG_PLACEHOLDER</div>
+      <div class="viz-svgwrap" data-gender="female" id="viz-female-back">FEMALE_BACK_SVG_PLACEHOLDER</div>
       <div class="viz-legend">
-        <div class="legend-row"><div class="legend-dot" style="background:#F04034"></div>高</div>
-        <div class="legend-row"><div class="legend-dot" style="background:#52C41A"></div>中</div>
-        <div class="legend-row"><div class="legend-dot" style="background:#9FC6FF"></div>低</div>
+        <div class="legend-row"><div class="legend-dot" style="background:rgb(116,121,159)"></div>高</div>
+        <div class="legend-row"><div class="legend-dot" style="background:rgb(141,144,175)"></div>中</div>
+        <div class="legend-row"><div class="legend-dot" style="background:rgb(163,168,192)"></div>低</div>
       </div>
     </div>
   </div>
@@ -278,7 +388,7 @@ body {
 <script>
 var API = 'http://localhost:8002/api';
 
-var HEAT_COLORS = { high: '#F04034', medium: '#52C41A', low: '#9FC6FF', none: 'rgb(184,188,204)' };
+var HEAT_COLORS = { high: 'rgba(72,75,128,0.60)', medium: 'rgba(72,75,128,0.38)', low: 'rgba(72,75,128,0.18)', none: 'rgb(183,189,203)' };
 
 // Each muscle group gets a fixed palette color (index order)
 var BAR_PALETTE = ['#F786A9', '#52C41A', '#E6A23C', '#409EFF', '#722ED1', '#13C2C2'];
@@ -421,15 +531,29 @@ function trendHtml(pct) {
   return '<span class="trend-flat">--</span>';
 }
 
+/* ── Gender body-map switch ──────────────────────────────────────── */
+function applyGender(gender) {
+  var wrap = document.getElementById('viz-body-wrap');
+  if (!wrap) return;
+  if (gender === 'female') {
+    wrap.classList.add('show-female');
+  } else {
+    wrap.classList.remove('show-female');
+  }
+}
+
 /* ── Main init (parallel API fetch) ─────────────────────────────── */
 async function init() {
   try {
-    var [daily, weekly, musclesData, calendar] = await Promise.all([
+    var [daily, weekly, musclesData, calendar, userInfo] = await Promise.all([
       fetch(API + '/daily').then(function(r)   { return r.json(); }),
       fetch(API + '/weekly').then(function(r)  { return r.json(); }),
       fetch(API + '/muscles').then(function(r) { return r.json(); }),
       fetch(API + '/calendar').then(function(r){ return r.json(); }),
+      fetch(API + '/user').then(function(r)    { return r.json(); }),
     ]);
+
+    applyGender(userInfo.gender || 'male');
 
     // Card 1: stats
     document.getElementById('s-duration').innerHTML = daily.duration_min + '<span class="stat-unit"> min</span>';
@@ -462,8 +586,10 @@ init();
 </html>'''
 
 html = HTML_TEMPLATE \
-    .replace('FRONT_SVG_PLACEHOLDER', front_svg) \
-    .replace('BACK_SVG_PLACEHOLDER',  back_svg)
+    .replace('FRONT_SVG_PLACEHOLDER',        front_svg) \
+    .replace('BACK_SVG_PLACEHOLDER',         back_svg) \
+    .replace('FEMALE_FRONT_SVG_PLACEHOLDER', female_front_svg) \
+    .replace('FEMALE_BACK_SVG_PLACEHOLDER',  female_back_svg)
 
 with open(_HERE / 'training_dashboard.html', 'w', encoding='utf-8') as f:
     f.write(html)

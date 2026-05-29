@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>训练计划 · 用户画像</title>
+<style>
+  /* ── Reset & Base ───────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:       #0f1117;
+    --surface:  #1a1d27;
+    --card:     #21253a;
+    --border:   #2e334d;
+    --accent:   #6c63ff;
+    --accent2:  #ff6584;
+    --green:    #43e97b;
+    --yellow:   #f9d423;
+    --text:     #e8eaf0;
+    --muted:    #7b80a0;
+    --radius:   14px;
+    --shadow:   0 4px 24px rgba(0,0,0,.45);
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px 60px;
+  }
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  .page { max-width: 1100px; margin: 0 auto; }
+  header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 32px;
+  }
+  header .avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: grid; place-items: center;
+    font-size: 26px; flex-shrink: 0;
+  }
+  header h1 { font-size: 1.5rem; font-weight: 700; }
+  header p  { font-size: .85rem; color: var(--muted); margin-top: 2px; }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 800px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  /* ── Card ───────────────────────────────────────────────── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-size: .7rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  /* ── Profile stats ──────────────────────────────────────── */
+  .stat-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .9rem;
+  }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-row .label { color: var(--muted); }
+  .stat-row .value { font-weight: 600; }
+
+  /* ── Pill tags ──────────────────────────────────────────── */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .pill {
+    background: rgba(108,99,255,.15);
+    border: 1px solid rgba(108,99,255,.35);
+    color: #a09cf9;
+    border-radius: 20px;
+    padding: 4px 13px;
+    font-size: .78rem; font-weight: 500;
+  }
+  .pill.green  { background: rgba(67,233,123,.12); border-color: rgba(67,233,123,.3); color: #43e97b; }
+  .pill.yellow { background: rgba(249,212,35,.12); border-color: rgba(249,212,35,.3); color: #f9d423; }
+
+  /* ── Radar chart placeholder ────────────────────────────── */
+  #radar-wrap { position: relative; width: 100%; aspect-ratio: 1; max-width: 260px; margin: 0 auto; }
+
+  /* ── Goal ring ──────────────────────────────────────────── */
+  .goal-ring-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    padding: 10px 0;
+  }
+  .goal-ring-wrap canvas { display: block; }
+  .goal-label { font-size: .85rem; color: var(--muted); }
+  .goal-value { font-size: 1.8rem; font-weight: 800; color: var(--accent); margin-top: -6px; }
+
+  /* ── Schedule tabs ──────────────────────────────────────── */
+  .day-tabs {
+    display: flex; gap: 8px; overflow-x: auto;
+    padding-bottom: 4px; margin-bottom: 20px;
+    scrollbar-width: none;
+  }
+  .day-tabs::-webkit-scrollbar { display: none; }
+  .day-tab {
+    flex-shrink: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-size: .85rem; font-weight: 600;
+    color: var(--muted);
+    transition: all .2s;
+  }
+  .day-tab:hover { border-color: var(--accent); color: var(--text); }
+  .day-tab.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* ── Exercise timeline ──────────────────────────────────── */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 9px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+  .tl-item { position: relative; margin-bottom: 16px; }
+  .tl-dot {
+    position: absolute; left: -28px; top: 6px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+  .tl-dot.warmup  { background: var(--yellow); }
+  .tl-dot.stretch { background: var(--green);  }
+  .tl-dot.superset{ background: var(--accent2);}
+
+  .ex-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    transition: border-color .2s;
+  }
+  .ex-card:hover { border-color: var(--accent); }
+  .ex-card.warmup  { border-left: 3px solid var(--yellow); }
+  .ex-card.stretch { border-left: 3px solid var(--green); }
+  .ex-card.superset{ border-left: 3px solid var(--accent2); }
+
+  /* ── Muscle mini diagram ────────────────────────────────── */
+  .muscle-mini {
+    display: flex; gap: 4px; align-items: center;
+    flex-shrink: 0; margin-left: 8px;
+  }
+  /* ── Muscle mini (inline SVG, dashboard style) ─────────── */
+  .muscle-mini {
+    flex-shrink: 0;
+    width: 28px; height: 52px;
+    position: relative;
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+  .muscle-mini svg {
+    width: 28px; height: 52px;
+    display: block;
+    overflow: visible;
+  }
+  /* base gray for all bodymap paths */
+  .muscle-mini .bodymap path,
+  .muscle-mini .bodymap circle,
+  .muscle-mini .bodymap ellipse { fill: #2e334d; }
+  /* body outline: very dim */
+  .muscle-mini #body path,
+  .muscle-mini #body line { stroke: rgba(120,128,180,0.25); fill: none !important; }
+  /* hide joints */
+  .muscle-mini #shoulders,
+  .muscle-mini #elbow,
+  .muscle-mini #wrist,
+  .muscle-mini #hips,
+  .muscle-mini #knees,
+  .muscle-mini #ankles,
+  .muscle-mini [id^="hover"]  { display: none; }
+
+  /* ── Coaching notes ─────────────────────────────────────── */
+  .coaching-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  @media (max-width: 600px) { .coaching-grid { grid-template-columns: 1fr; } }
+  .coaching-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 15px;
+    display: flex;
+    gap: 10px;
+  }
+  .coaching-item-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .coaching-item-title {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .coaching-item-body {
+    font-size: .82rem;
+    line-height: 1.6;
+    color: #bec3e0;
+  }
+
+  .ex-header {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 12px;
+  }
+  .ex-name { font-weight: 700; font-size: .95rem; }
+  .ex-phase {
+    font-size: .68rem; font-weight: 700; letter-spacing: .05em;
+    text-transform: uppercase; border-radius: 6px;
+    padding: 3px 9px; flex-shrink: 0;
+    background: rgba(108,99,255,.2); color: #a09cf9;
+  }
+  .ex-phase.warmup  { background: rgba(249,212,35,.15); color: var(--yellow); }
+  .ex-phase.stretch { background: rgba(67,233,123,.15); color: var(--green); }
+  .ex-phase.superset{ background: rgba(255,101,132,.15); color: var(--accent2); }
+
+  .ex-meta {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    margin-top: 8px; font-size: .82rem; color: var(--muted);
+  }
+  .ex-meta span { display: flex; align-items: center; gap: 5px; }
+  .ex-notes {
+    margin-top: 10px; font-size: .8rem; color: #8e93b2;
+    line-height: 1.55; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Coaching notes ─────────────────────────────────────── */
+  .notes-box {
+    background: rgba(108,99,255,.08);
+    border: 1px solid rgba(108,99,255,.25);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    font-size: .88rem; line-height: 1.7;
+    color: #bec3e0;
+    white-space: pre-wrap;
+    margin-top: 20px;
+  }
+
+  /* ── Summary chips ──────────────────────────────────────── */
+  .summary-chips {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 18px;
+    text-align: center;
+  }
+  .chip .cv { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
+  .chip .cl { font-size: .72rem; color: var(--muted); margin-top: 2px; }
+
+  /* ── Loading ─────────────────────────────────────────────── */
+  #loading {
+    position: fixed; inset: 0;
+    background: var(--bg);
+    display: grid; place-items: center;
+    z-index: 999;
+    font-size: 1.1rem; color: var(--muted);
+  }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin: 0 auto 14px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Error ───────────────────────────────────────────────── */
+  .error-box {
+    background: rgba(255,101,132,.1);
+    border: 1px solid rgba(255,101,132,.3);
+    color: var(--accent2);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 20px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- Hidden SVG template containers (dashboard pattern) -->
+<div id="svg-front-tpl" style="display:none;position:absolute;pointer-events:none"></div>
+<div id="svg-back-tpl"  style="display:none;position:absolute;pointer-events:none"></div>
+
+<div id="loading">
+  <div>
+    <div class="spinner"></div>
+    <div>加载用户数据中…</div>
+  </div>
+</div>
+
+<div class="page" id="app" style="display:none">
+  <header>
+    <div class="avatar" id="avatar-icon">🏃</div>
+    <div>
+      <h1 id="plan-name">训练计划</h1>
+      <p id="plan-meta"></p>
+    </div>
+  </header>
+
+  <div class="grid-2">
+    <!-- ── 左栏: 用户画像 ── -->
+    <div>
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-title">用户长期画像</div>
+        <div id="profile-stats"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-title">训练偏好</div>
+        <div id="profile-tags"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">每周安排</div>
+        <canvas id="radarChart" width="260" height="260"></canvas>
+      </div>
+    </div>
+
+    <!-- ── 右栏: 训练计划 ── -->
+    <div>
+      <div class="card">
+        <div class="card-title">本周训练安排</div>
+        <div class="summary-chips" id="summary-chips"></div>
+        <div class="day-tabs" id="day-tabs"></div>
+        <div class="timeline" id="day-detail"></div>
+        <div id="coaching-notes"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// Data fetch
+// ════════════════════════════════════════════════════════════
+const API = '';  // same-origin; change if backend on different port
+
+async function fetchData() {
+  const [profileRes, planRes, musclesRes, frontSvgRes, backSvgRes] = await Promise.all([
+    fetch(`${API}/api/plan-viewer/profile`),
+    fetch(`${API}/api/plan-viewer/latest-plan`),
+    fetch(`${API}/api/plan-viewer/muscles-map`),
+    fetch(`${API}/svg/front_body.svg`),
+    fetch(`${API}/svg/back_body.svg`),
+  ]);
+  if (!profileRes.ok || !planRes.ok) throw new Error('API 请求失败');
+  return {
+    profile:   await profileRes.json(),
+    plan:      await planRes.json(),
+    muscleMap: musclesRes.ok ? await musclesRes.json() : {},
+    frontSvg:  frontSvgRes.ok ? await frontSvgRes.text() : '',
+    backSvg:   backSvgRes.ok  ? await backSvgRes.text()  : '',
+  };
+}
+
+// ════════════════════════════════════════════════════════════
+// Muscle diagram — mirrors dashboard Card 2 applyHeatmap logic
+// ════════════════════════════════════════════════════════════
+
+// Muscle highlight colors
+const HEAT_NONE      = '#2e334d';            // matches card background (invisible base)
+const HEAT_PRIMARY   = 'rgb(238,122,90)';    // orange-red for primary muscles
+const HEAT_SECONDARY = 'rgba(238,122,90,0.45)'; // dimmer for secondary
+
+// Chinese muscle name → {side, svgId}
+// front SVG: plain IDs; back SVG: "b-" prefixed IDs (matching back_body.svg)
+const MUSCLE_SVG_MAP = {
+  // ── Front ──────────────────────────────────────────────────
+  '股四头肌':   { side: 'front', id: 'quads' },
+  '腹直肌':     { side: 'front', id: 'abdominals' },
+  '腹斜肌':     { side: 'front', id: 'obliques' },
+  '胸大肌':     { side: 'front', id: 'chest' },
+  '三角肌前束': { side: 'front', id: 'front-shoulders' },
+  '三角肌中束': { side: 'front', id: 'front-shoulders' },
+  '肱二头肌':   { side: 'front', id: 'biceps' },
+  '腓肠肌':     { side: 'front', id: 'calves' },
+  '前臂肌群':   { side: 'front', id: 'forearms' },
+  // ── Back ───────────────────────────────────────────────────
+  '背阔肌':     { side: 'back', id: 'b-lats' },
+  '臀大肌':     { side: 'back', id: 'b-glutes' },
+  '腘绳肌':     { side: 'back', id: 'b-hamstrings' },
+  '竖脊肌':     { side: 'back', id: 'b-lowerback' },
+  '斜方肌':     { side: 'back', id: 'b-traps' },
+  '斜方肌中部': { side: 'back', id: 'b-traps-middle' },
+  '三角肌后束': { side: 'back', id: 'b-rear-shoulders' },
+  '肱三头肌':   { side: 'back', id: 'b-triceps' },
+};
+
+// Inline SVG DOM references (set once after SVGs are fetched+injected)
+let _frontSvgEl = null, _backSvgEl = null;
+
+// Inject both SVGs as hidden templates into the page
+function injectSvgTemplates(frontText, backText) {
+  const parser = new DOMParser();
+
+  function prepare(text, containerId) {
+    const doc = parser.parseFromString(text, 'image/svg+xml');
+    const svg = doc.querySelector('svg');
+    // Strip heavy decorations that don't render well at small size
+    svg.querySelectorAll('#body path, #body line').forEach(el => {
+      el.style.strokeOpacity = '0.2';
+      el.style.stroke = '#6668a0';
+    });
+    // Pre-set all bodymap paths to base gray
+    svg.querySelectorAll('.bodymap path, .bodymap circle, .bodymap ellipse').forEach(p => {
+      p.style.fill = HEAT_NONE;
+    });
+    // Remove class-based Tailwind hover rules that don't apply here
+    svg.removeAttribute('class');
+    svg.setAttribute('viewBox', svg.getAttribute('viewBox') || '0 0 660 1206');
+    svg.style.cssText = '';
+
+    const wrap = document.getElementById(containerId);
+    wrap.innerHTML = '';
+    wrap.appendChild(document.adoptNode(svg));
+    return wrap.querySelector('svg');
+  }
+
+  _frontSvgEl = prepare(frontText, 'svg-front-tpl');
+  _backSvgEl  = prepare(backText,  'svg-back-tpl');
+}
+
+// Apply muscle colors to a CLONED inline SVG (dashboard applyHeatmap pattern)
+function applyMuscleColors(svgEl, primaryIds, secondaryIds) {
+  // Reset all to base gray
+  svgEl.querySelectorAll('.bodymap path, .bodymap circle, .bodymap ellipse').forEach(p => {
+    p.style.fill = HEAT_NONE;
+  });
+  // Primary → full purple
+  primaryIds.forEach(id => {
+    svgEl.querySelectorAll(`[id="${id}"] path, [id="${id}"] ellipse, [id="${id}"] circle`).forEach(p => {
+      p.style.fill = HEAT_PRIMARY;
+    });
+  });
+  // Secondary → mid purple
+  secondaryIds.forEach(id => {
+    if (primaryIds.includes(id)) return;
+    svgEl.querySelectorAll(`[id="${id}"] path, [id="${id}"] ellipse, [id="${id}"] circle`).forEach(p => {
+      p.style.fill = HEAT_SECONDARY;
+    });
+  });
+}
+
+function buildMuscleMini(exerciseId, muscleMap) {
+  if (!_frontSvgEl || !_backSvgEl) return '';
+  const info = muscleMap[exerciseId];
+  if (!info) return '';
+
+  const primary   = info.primary   || [];
+  const secondary = info.secondary || [];
+
+  const frontPrimary = [], frontSecondary = [];
+  const backPrimary  = [], backSecondary  = [];
+
+  for (const m of primary) {
+    const map = MUSCLE_SVG_MAP[m];
+    if (!map) continue;
+    (map.side === 'front' ? frontPrimary : backPrimary).push(map.id);
+  }
+  for (const m of secondary) {
+    const map = MUSCLE_SVG_MAP[m];
+    if (!map) continue;
+    (map.side === 'front' ? frontSecondary : backSecondary).push(map.id);
+  }
+
+  const hasFront = frontPrimary.length || frontSecondary.length;
+  const hasBack  = backPrimary.length  || backSecondary.length;
+  if (!hasFront && !hasBack) return '';
+
+  // Front-first: show back only when no front muscles involved
+  const useFront = hasFront;
+  const useBack  = !hasFront && hasBack;
+
+  const srcEl   = useFront ? _frontSvgEl : _backSvgEl;
+  const primIds = useFront ? frontPrimary   : backPrimary;
+  const secIds  = useFront ? frontSecondary : backSecondary;
+
+  // Clone the template SVG and apply colors
+  const clone = srcEl.cloneNode(true);
+  applyMuscleColors(clone, primIds, secIds);
+  clone.setAttribute('width', '28');
+  clone.setAttribute('height', '52');
+
+  // Tooltip
+  const allNames = [...primary, ...secondary].filter(m => MUSCLE_SVG_MAP[m]);
+  const tip = [
+    primary.filter(m => MUSCLE_SVG_MAP[m]).length   ? '主: ' + primary.filter(m => MUSCLE_SVG_MAP[m]).join('、')   : '',
+    secondary.filter(m => MUSCLE_SVG_MAP[m]).length ? '辅: ' + secondary.filter(m => MUSCLE_SVG_MAP[m]).join('、') : '',
+  ].filter(Boolean).join('\n');
+
+  const wrap = document.createElement('div');
+  wrap.className = 'muscle-mini';
+  wrap.title = tip;
+  wrap.appendChild(clone);
+  return wrap.outerHTML;
+}
+
+// ════════════════════════════════════════════════════════════
+// Render helpers
+// ════════════════════════════════════════════════════════════
+function phaseKey(phase) {
+  if (!phase) return 'main';
+  const p = phase.toLowerCase();
+  if (p.includes('热身') || p.includes('warm')) return 'warmup';
+  if (p.includes('拉伸') || p.includes('stretch') || p.includes('恢复')) return 'stretch';
+  return 'main';
+}
+
+function icon(pk) {
+  return { warmup: '🌡️', stretch: '🧘', main: '💪' }[pk] || '💪';
+}
+
+function renderProfile(profile) {
+  const bmi = (profile.weight / ((profile.height / 100) ** 2)).toFixed(1);
+  const rows = [
+    ['性别',   profile.gender === 'female' ? '女' : '男'],
+    ['年龄',   `${profile.age} 岁`],
+    ['身高',   `${profile.height} cm`],
+    ['体重',   `${profile.weight} kg`],
+    ['BMI',    bmi],
+    ['睡眠',   `${profile.sleep_hours} 小时 / 天`],
+    ['训练目标', profile.fitness_goal],
+    ['训练水平', profile.experience_level],
+    ['每周天数', `${profile.available_schedule?.days_per_week || '-'} 天`],
+    ['每次时长', `${profile.available_schedule?.daily_duration_min || '-'} 分钟`],
+  ];
+  document.getElementById('profile-stats').innerHTML = rows.map(([l, v]) =>
+    `<div class="stat-row"><span class="label">${l}</span><span class="value">${v}</span></div>`
+  ).join('');
+
+  const styles = profile.preferred_training_style || [];
+  const equip  = profile.available_equipment || [];
+  document.getElementById('profile-tags').innerHTML = `
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:8px">训练风格</p>
+    <div class="pill-row">${styles.map(s=>`<span class="pill">${s}</span>`).join('')}</div>
+    <p style="font-size:.78rem;color:var(--muted);margin:14px 0 8px">可用器械</p>
+    <div class="pill-row">${equip.map(e=>`<span class="pill green">${e}</span>`).join('')}</div>
+    <p style="font-size:.78rem;color:var(--muted);margin:14px 0 8px">训练时段</p>
+    <div class="pill-row">${(profile.available_schedule?.free_time_slots||[]).map(t=>`<span class="pill yellow">${t}</span>`).join('')}</div>
+  `;
+}
+
+function renderSummary(schedule) {
+  const totalEx = schedule.reduce((s,d)=>s+d.exercises.length,0);
+  const totalMin = schedule.reduce((s,d)=>s+(d.estimated_duration_min||60),0);
+  const phases = schedule.flatMap(d=>d.exercises.map(e=>e.phase||''));
+  const warmupCount = phases.filter(p=>phaseKey(p)==='warmup').length;
+
+  document.getElementById('summary-chips').innerHTML = [
+    [schedule.length, '训练天数'],
+    [totalEx, '总动作数'],
+    [totalMin + ' min', '总时长'],
+    [warmupCount, '热身动作'],
+  ].map(([v,l])=>`<div class="chip"><div class="cv">${v}</div><div class="cl">${l}</div></div>`).join('');
+}
+
+function renderDayTabs(schedule, onSelect) {
+  const container = document.getElementById('day-tabs');
+  container.innerHTML = schedule.map((d,i) =>
+    `<button class="day-tab${i===0?' active':''}" data-i="${i}">Day ${d.day}<br>
+     <span style="font-size:.72rem;font-weight:400;color:inherit;opacity:.8">${d.theme||''}</span></button>`
+  ).join('');
+  container.querySelectorAll('.day-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.day-tab').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      onSelect(+btn.dataset.i);
+    });
+  });
+}
+
+let _currentMuscleMap = {};
+
+function renderDayDetail(day) {
+  const container = document.getElementById('day-detail');
+  container.innerHTML = day.exercises.map(ex => {
+    const pk = phaseKey(ex.phase);
+    const isSS = ex.superset_group && ex.superset_group !== 'null';
+    const dotClass = isSS ? 'superset' : pk;
+    const cardClass = isSS ? 'superset' : pk;
+    const phaseLabel = isSS ? `超级组 ${ex.superset_group}` : (ex.phase || '主训练');
+    const phaseCls   = isSS ? 'superset' : pk;
+    const miniSvg    = buildMuscleMini(ex.exercise_id, _currentMuscleMap);
+
+    return `
+    <div class="tl-item">
+      <div class="tl-dot ${dotClass}"></div>
+      <div class="ex-card ${cardClass}">
+        <div class="ex-header">
+          <span class="ex-name">${icon(isSS?'main':pk)} ${ex.name}</span>
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+            ${miniSvg}
+            <span class="ex-phase ${phaseCls}">${phaseLabel}</span>
+          </div>
+        </div>
+        <div class="ex-meta">
+          ${ex.sets ? `<span>📦 ${ex.sets} 组</span>` : ''}
+          ${ex.reps_or_duration ? `<span>🔁 ${ex.reps_or_duration}</span>` : ''}
+          ${ex.rest_sec ? `<span>⏸ 休息 ${ex.rest_sec}s</span>` : ''}
+        </div>
+        ${ex.notes ? `<div class="ex-notes">${ex.notes}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Radar chart (純 Canvas) ──────────────────────────────────
+function drawRadar(profile) {
+  const canvas = document.getElementById('radarChart');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2, r = Math.min(W,H)/2 - 36;
+
+  // 维度: 力量, 柔韧, 耐力, 核心, 平衡, 恢复
+  const dims = ['力量', '柔韧', '耐力', '核心', '平衡', '恢复'];
+  // 根据用户画像计算得分 (0-1)
+  const lvlMap = { beginner: 0.35, intermediate: 0.65, advanced: 0.9 };
+  const base = lvlMap[profile.experience_level] || 0.5;
+  const styles = profile.preferred_training_style || [];
+  const hasYoga = styles.some(s => s.includes('瑜伽'));
+  const hasStr  = styles.some(s => s.includes('力量'));
+  const goalFat = profile.fitness_goal === '减脂';
+
+  const scores = [
+    Math.min(1, base + (hasStr ? .15 : 0)),              // 力量
+    Math.min(1, base + (hasYoga ? .2 : 0)),              // 柔韧
+    Math.min(1, base + (goalFat ? .15 : 0)),             // 耐力
+    Math.min(1, base + .05),                             // 核心
+    Math.min(1, base + (hasYoga ? .1 : 0)),              // 平衡
+    Math.min(1, (profile.sleep_hours || 7) / 10),        // 恢复
+  ];
+
+  const n = dims.length;
+  const angleStep = (2 * Math.PI) / n;
+  const startAngle = -Math.PI / 2;
+
+  const toXY = (i, val) => ({
+    x: cx + r * val * Math.cos(startAngle + i * angleStep),
+    y: cy + r * val * Math.sin(startAngle + i * angleStep),
+  });
+
+  // Grid rings
+  ctx.clearRect(0, 0, W, H);
+  [.25,.5,.75,1].forEach(ring => {
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+      const {x,y} = toXY(i, ring);
+      i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(255,255,255,.08)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  });
+
+  // Spokes
+  for (let i = 0; i < n; i++) {
+    const {x,y} = toXY(i, 1);
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(x, y);
+    ctx.strokeStyle = 'rgba(255,255,255,.1)';
+    ctx.stroke();
+  }
+
+  // Data polygon
+  ctx.beginPath();
+  scores.forEach((s, i) => {
+    const {x,y} = toXY(i, s);
+    i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  });
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(108,99,255,.25)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(108,99,255,.85)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Dots
+  scores.forEach((s, i) => {
+    const {x,y} = toXY(i, s);
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, 2*Math.PI);
+    ctx.fillStyle = '#6c63ff';
+    ctx.fill();
+  });
+
+  // Labels
+  ctx.font = '13px PingFang SC, system-ui, sans-serif';
+  ctx.fillStyle = '#7b80a0';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  dims.forEach((label, i) => {
+    const {x,y} = toXY(i, 1.22);
+    ctx.fillText(label, x, y);
+  });
+}
+
+// ════════════════════════════════════════════════════════════
+// Coaching notes renderer
+// ════════════════════════════════════════════════════════════
+function renderCoachingNotes(notes) {
+  const el = document.getElementById('coaching-notes');
+  if (!notes) { el.style.display = 'none'; return; }
+
+  // Support both structured {warm_up, cool_down, ...} and plain string
+  const sections = [
+    { key: 'warm_up',        icon: '🌡️', title: '热身建议' },
+    { key: 'cool_down',      icon: '🧘', title: '拉伸放松' },
+    { key: 'nutrition',      icon: '🥗', title: '饮食建议' },
+    { key: 'recovery_boost', icon: '⚡', title: '恢复 & 进阶' },
+  ];
+
+  if (typeof notes === 'object' && notes !== null) {
+    const items = sections
+      .filter(s => notes[s.key])
+      .map(s => `
+        <div class="coaching-item">
+          <div class="coaching-item-icon">${s.icon}</div>
+          <div>
+            <div class="coaching-item-title">${s.title}</div>
+            <div class="coaching-item-body">${notes[s.key]}</div>
+          </div>
+        </div>`).join('');
+    el.innerHTML = `<div class="coaching-grid">${items}</div>`;
+  } else {
+    // Fallback: plain string — wrap in a simple styled box
+    el.innerHTML = `<div class="notes-box" style="margin-top:20px;white-space:pre-wrap">${notes}</div>`;
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// Boot
+// ════════════════════════════════════════════════════════════
+(async () => {
+  try {
+    const { profile, plan, muscleMap, frontSvg, backSvg } = await fetchData();
+    const schedule = plan.weekly_schedule || [];
+
+    _currentMuscleMap = muscleMap;
+    injectSvgTemplates(frontSvg, backSvg);
+
+    document.getElementById('plan-name').textContent = plan.plan_name || '训练计划';
+    document.getElementById('plan-meta').textContent =
+      `目标: ${plan.fitness_goal || profile.fitness_goal}  ·  ${schedule.length} 天 / 周  ·  生成于 ${new Date().toLocaleDateString('zh-CN')}`;
+    document.getElementById('avatar-icon').textContent =
+      profile.gender === 'female' ? '🧘‍♀️' : '🏋️';
+
+    renderProfile(profile);
+    renderSummary(schedule);
+    renderDayTabs(schedule, i => renderDayDetail(schedule[i]));
+    if (schedule.length > 0) renderDayDetail(schedule[0]);
+
+    renderCoachingNotes(plan.coaching_notes);
+
+    drawRadar(profile);
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  } catch (err) {
+    document.getElementById('loading').innerHTML =
+      `<div class="error-box">⚠️ ${err.message}<br><small>请确认后端 API 已启动</small></div>`;
+  }
+})();
+</script>
+</body>
+</html>
