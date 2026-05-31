@@ -144,7 +144,7 @@ def filter_exercises_by_rules(profile: dict) -> list[dict]:
             difficulty, training_goals, exercise_type,
             recommended_rep_range, risk_level,
             estimated_mets, fatigue_score,
-            embedding::text AS embedding
+            embedding
         FROM exercises
         WHERE ({eq_clauses})
           AND difficulty = ANY(%s)
@@ -253,9 +253,10 @@ def _save_embeddings_to_db(pairs: list[tuple[str, list[float]]]):
     with get_conn(dict_cursor=False) as conn:
         with conn.cursor() as cur:
             for exercise_id, vec in pairs:
+                import json as _json
                 cur.execute(
-                    "UPDATE exercises SET embedding = %s::vector WHERE exercise_id = %s",
-                    (vec, exercise_id),
+                    "UPDATE exercises SET embedding = %s WHERE exercise_id = %s",
+                    (_json.dumps(vec), exercise_id),
                 )
         conn.commit()
 

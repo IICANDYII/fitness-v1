@@ -260,6 +260,16 @@ def daily(date: str | None = None):
         for r in executions
     ]
 
+    # Card 2 heatmap: each SVG muscle ID → its group's 0-100 pct from Card 1 bars.
+    # All muscles in every group are included (0 for untrained groups) so the
+    # frontend can reset inactive muscles to grey without a separate pass.
+    muscle_heatmap: dict[str, int] = {}
+    for label, group_muscles in MAJOR_GROUPS.items():
+        pct = muscle_distribution.get(label, 0)
+        for m in group_muscles:
+            muscle_heatmap[m] = pct          # front SVG key
+            muscle_heatmap["b-" + m] = pct   # back SVG key
+
     return {
         "date":              session["start_time"].date().isoformat(),
         "duration_min":      int(session["duration_min"]),
@@ -269,6 +279,7 @@ def daily(date: str | None = None):
         "total_volume":      int(session["total_volume"] or 0),
         "muscle_distribution": muscle_distribution,
         "muscle_trend":        muscle_trend,
+        "muscle_heatmap":      muscle_heatmap,
         "exercises":           exercises_list,
     }
 
@@ -570,7 +581,8 @@ def plan_viewer_latest_plan():
     row = cur.fetchone()
     conn.close()
     if not row:
-        raise HTTPException(status_code=404, detail="暂无训练计划")
+        return {"weekly_schedule": [], "plan_name": "暂无训练计划", "coaching_notes": [],
+                "fitness_goal": None, "plan_id": None, "date": None, "_empty": True}
     plan = dict(row["plan_json"])
     plan["plan_id"] = str(row["plan_id"])
     plan["date"]    = row["date"].isoformat() if row.get("date") else None
@@ -639,7 +651,8 @@ def serve_plan_viewer():
 
 @app.get("/svg/{filename}", include_in_schema=False)
 def serve_svg(filename: str):
-    allowed = {"front_body.svg", "back_body.svg"}
+    allowed = {"front_body.svg", "back_body.svg",
+               "female_front_body.svg", "female_back_body.svg"}
     if filename not in allowed:
         raise HTTPException(status_code=404)
     return FileResponse(_REPORTS_DIR / filename, media_type="image/svg+xml")

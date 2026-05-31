@@ -472,7 +472,7 @@ body {
 var API       = 'http://localhost:8000/api';
 var AI_URL    = 'https://api.zchat.tech/v1/chat/completions';
 var AI_KEY    = 'sk-G90J2FGkwO4sEPBNmaJs8XwzNCuFLat372D95AbuEQSpIhqS';
-var AI_MODEL  = 'claude-sonnet-4-5';
+var AI_MODEL  = 'grok-3';
 var RESTING_HR = 67;
 var MAX_HR     = 195;
 
@@ -1035,7 +1035,6 @@ async function runAnalysis(prompt) {
       },
       body: JSON.stringify({
         model:    AI_MODEL,
-        stream:   false,
         messages: [
           { role: 'system', content: '你是专业健身教练和运动生理学专家，用中文给出简洁专业的心率训练分析。' },
           { role: 'user',   content: prompt },

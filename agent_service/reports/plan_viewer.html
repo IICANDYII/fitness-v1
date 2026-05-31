@@ -154,37 +154,34 @@
     border-radius: 10px;
     padding: 14px 16px;
     transition: border-color .2s;
+    display: flex; align-items: flex-end; gap: 10px;
   }
+  .ex-card-body { flex: 1; min-width: 0; }
   .ex-card:hover { border-color: var(--accent); }
   .ex-card.warmup  { border-left: 3px solid var(--yellow); }
   .ex-card.stretch { border-left: 3px solid var(--green); }
   .ex-card.superset{ border-left: 3px solid var(--accent2); }
 
-  /* ── Muscle mini diagram ────────────────────────────────── */
-  .muscle-mini {
-    display: flex; gap: 4px; align-items: center;
-    flex-shrink: 0; margin-left: 8px;
-  }
-  /* ── Muscle mini (inline SVG, dashboard style) ─────────── */
+  /* ── Muscle mini (inline SVG) ──────────────────────────── */
   .muscle-mini {
     flex-shrink: 0;
-    width: 28px; height: 52px;
+    align-self: stretch;                 /* match .ex-card-body height */
+    aspect-ratio: 660.46 / 1206.46;      /* width follows the stretched height */
     position: relative;
-    align-self: flex-start;
-    margin-top: 2px;
+    overflow: hidden;                    /* stay inside the card box */
   }
   .muscle-mini svg {
-    width: 28px; height: 52px;
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
     display: block;
-    overflow: visible;
   }
-  /* base gray for all bodymap paths */
+  /* base: light gray fill so body shape shows */
   .muscle-mini .bodymap path,
   .muscle-mini .bodymap circle,
-  .muscle-mini .bodymap ellipse { fill: #2e334d; }
+  .muscle-mini .bodymap ellipse { fill: rgb(184,189,204); }
   /* body outline: very dim */
   .muscle-mini #body path,
-  .muscle-mini #body line { stroke: rgba(120,128,180,0.25); fill: none !important; }
+  .muscle-mini #body line { stroke: rgb(184,189,204); stroke-opacity: .85; stroke-width: 6; fill: none !important; }
   /* hide joints */
   .muscle-mini #shoulders,
   .muscle-mini #elbow,
@@ -373,12 +370,22 @@
 const API = '';  // same-origin; change if backend on different port
 
 async function fetchData() {
+  // Determine gender first so we load the matching body SVGs
+  let gender = 'male';
+  try {
+    const u = await fetch(`${API}/api/user`);
+    if (u.ok) gender = (await u.json()).gender === 'female' ? 'female' : 'male';
+  } catch (e) { /* default male */ }
+
+  const frontFile = gender === 'female' ? 'female_front_body.svg' : 'front_body.svg';
+  const backFile  = gender === 'female' ? 'female_back_body.svg'  : 'back_body.svg';
+
   const [profileRes, planRes, musclesRes, frontSvgRes, backSvgRes] = await Promise.all([
     fetch(`${API}/api/plan-viewer/profile`),
     fetch(`${API}/api/plan-viewer/latest-plan`),
     fetch(`${API}/api/plan-viewer/muscles-map`),
-    fetch(`${API}/svg/front_body.svg`),
-    fetch(`${API}/svg/back_body.svg`),
+    fetch(`${API}/svg/${frontFile}`),
+    fetch(`${API}/svg/${backFile}`),
   ]);
   if (!profileRes.ok || !planRes.ok) throw new Error('API 请求失败');
   return {
@@ -395,7 +402,7 @@ async function fetchData() {
 // ════════════════════════════════════════════════════════════
 
 // Muscle highlight colors
-const HEAT_NONE      = '#2e334d';            // matches card background (invisible base)
+const HEAT_NONE      = 'rgb(184,189,204)';   // light gray base so body shape shows
 const HEAT_PRIMARY   = 'rgb(238,122,90)';    // orange-red for primary muscles
 const HEAT_SECONDARY = 'rgba(238,122,90,0.45)'; // dimmer for secondary
 
@@ -435,8 +442,9 @@ function injectSvgTemplates(frontText, backText) {
     const svg = doc.querySelector('svg');
     // Strip heavy decorations that don't render well at small size
     svg.querySelectorAll('#body path, #body line').forEach(el => {
-      el.style.strokeOpacity = '0.2';
-      el.style.stroke = '#6668a0';
+      el.style.strokeOpacity = '0.85';
+      el.style.stroke = 'rgb(184,189,204)';
+      el.style.strokeWidth = '6';
     });
     // Pre-set all bodymap paths to base gray
     svg.querySelectorAll('.bodymap path, .bodymap circle, .bodymap ellipse').forEach(p => {
@@ -515,8 +523,8 @@ function buildMuscleMini(exerciseId, muscleMap) {
   // Clone the template SVG and apply colors
   const clone = srcEl.cloneNode(true);
   applyMuscleColors(clone, primIds, secIds);
-  clone.setAttribute('width', '28');
-  clone.setAttribute('height', '52');
+  clone.removeAttribute('width');
+  clone.removeAttribute('height');
 
   // Tooltip
   const allNames = [...primary, ...secondary].filter(m => MUSCLE_SVG_MAP[m]);
@@ -623,19 +631,19 @@ function renderDayDetail(day) {
     <div class="tl-item">
       <div class="tl-dot ${dotClass}"></div>
       <div class="ex-card ${cardClass}">
-        <div class="ex-header">
-          <span class="ex-name">${icon(isSS?'main':pk)} ${ex.name}</span>
-          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-            ${miniSvg}
+        <div class="ex-card-body">
+          <div class="ex-header">
+            <span class="ex-name">${icon(isSS?'main':pk)} ${ex.name}</span>
             <span class="ex-phase ${phaseCls}">${phaseLabel}</span>
           </div>
+          <div class="ex-meta">
+            ${ex.sets ? `<span>📦 ${ex.sets} 组</span>` : ''}
+            ${ex.reps_or_duration ? `<span>🔁 ${ex.reps_or_duration}</span>` : ''}
+            ${ex.rest_sec ? `<span>⏸ 休息 ${ex.rest_sec}s</span>` : ''}
+          </div>
+          ${ex.notes ? `<div class="ex-notes">${ex.notes}</div>` : ''}
         </div>
-        <div class="ex-meta">
-          ${ex.sets ? `<span>📦 ${ex.sets} 组</span>` : ''}
-          ${ex.reps_or_duration ? `<span>🔁 ${ex.reps_or_duration}</span>` : ''}
-          ${ex.rest_sec ? `<span>⏸ 休息 ${ex.rest_sec}s</span>` : ''}
-        </div>
-        ${ex.notes ? `<div class="ex-notes">${ex.notes}</div>` : ''}
+        ${miniSvg}
       </div>
     </div>`;
   }).join('');
@@ -772,6 +780,13 @@ function renderCoachingNotes(notes) {
 (async () => {
   try {
     const { profile, plan, muscleMap, frontSvg, backSvg } = await fetchData();
+    if (plan._empty) {
+      document.getElementById('loading').innerHTML =
+        `<div class="error-box" style="background:#1a1d27;border:1px solid #2e334d;color:#e8eaf0;padding:32px;border-radius:12px;text-align:center">
+          📋 暂无训练计划<br><small style="color:#7b80a0">请先通过 plan_generator.py 生成计划</small>
+        </div>`;
+      return;
+    }
     const schedule = plan.weekly_schedule || [];
 
     _currentMuscleMap = muscleMap;
