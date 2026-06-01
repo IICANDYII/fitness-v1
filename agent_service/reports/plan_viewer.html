@@ -195,14 +195,10 @@
   /* body skeleton outline — thicker for visibility */
   .muscle-mini #body path,
   .muscle-mini #body line { stroke: rgba(255,255,255,0.70); stroke-opacity: 1; stroke-width: 12; fill: none !important; }
-  /* hide joints */
-  .muscle-mini #shoulders,
-  .muscle-mini #elbow,
-  .muscle-mini #wrist,
-  .muscle-mini #hips,
-  .muscle-mini #knees,
-  .muscle-mini #ankles,
-  .muscle-mini [id^="hover"]  { display: none; }
+  .muscle-mini #shoulders, .muscle-mini #elbow, .muscle-mini #wrist,
+  .muscle-mini #hips, .muscle-mini #knees, .muscle-mini #ankles,
+  .muscle-mini #upper-spine, .muscle-mini #lower-spine, .muscle-mini #scapula,
+  .muscle-mini [id^="hover"] { display: none; }
 
   /* ── Coaching notes ─────────────────────────────────────── */
   .coaching-grid {
@@ -480,11 +476,6 @@ function injectSvgTemplates(frontText, backText) {
     svg.querySelectorAll('[id^="b-"]').forEach(el => { el.id = el.id.slice(2); });
     // Remove class-based Tailwind hover rules that don't apply here
     svg.removeAttribute('class');
-    // Unhide joint indicator groups (class="hidden" from Tailwind hides them)
-    svg.querySelectorAll('.hidden').forEach(el => {
-      el.classList.remove('hidden');
-      el.style.display = '';
-    });
     svg.setAttribute('viewBox', svg.getAttribute('viewBox') || '0 0 660 1206');
     svg.style.cssText = '';
 
