@@ -46,15 +46,28 @@ FEMALE_BACK_MUSCLES = [
 def _extract_g(svg_text: str, target_id: str | None) -> str:
     """
     从单个 SVG 文件中提取目标 <g> 元素的完整 XML 字符串。
-    target_id=None 时提取 class="body-map__model" 的骨架 <g>。
+    target_id=None 时提取骨架 <g>：
+      优先找 class="body-map__model"，
+      找不到时取第一个裸 <g>（如 body-back.svg）并注入 id="body" class="body-map__model"。
     """
     svg_text = re.sub(r'<\?xml[^?]*\?>', '', svg_text).strip()
     if target_id is None:
-        # 骨架
+        # 优先：有 body-map__model 标记的骨架
         m = re.search(r'<g[^>]+class="body-map__model"[^>]*>.*?</g>', svg_text, re.DOTALL)
+        if m:
+            return m.group(0)
+        # 回退：取第一个 <g> 并添加 id/class（body-back.svg 无标记的情况）
+        m2 = re.search(r'<g(\s[^>]*)?>.*?</g>', svg_text, re.DOTALL)
+        if m2:
+            raw = m2.group(0)
+            # 注入 id="body" class="body-map__model"（不重复添加）
+            if 'id="body"' not in raw:
+                raw = raw.replace('<g', '<g id="body" class="body-map__model"', 1)
+            return raw
+        return ''
     else:
         m = re.search(rf'<g[^>]+id="{re.escape(target_id)}"[^>]*>.*?</g>', svg_text, re.DOTALL)
-    return m.group(0) if m else ''
+        return m.group(0) if m else ''
 
 
 def _build_female_svg(muscle_list: list[tuple[str, str | None]], prefix_back: bool = False) -> str:

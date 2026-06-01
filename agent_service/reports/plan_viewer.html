@@ -154,7 +154,8 @@
     border-radius: 10px;
     padding: 14px 16px;
     transition: border-color .2s;
-    display: flex; align-items: flex-end; gap: 10px;
+    /* align-items: stretch (默认) 让 .muscle-mini 与 .ex-card-body 同高 */
+    display: flex; align-items: stretch; gap: 10px;
   }
   .ex-card-body { flex: 1; min-width: 0; }
   .ex-card:hover { border-color: var(--accent); }
@@ -165,23 +166,35 @@
   /* ── Muscle mini (inline SVG) ──────────────────────────── */
   .muscle-mini {
     flex-shrink: 0;
-    align-self: stretch;                 /* match .ex-card-body height */
-    aspect-ratio: 660.46 / 1206.46;      /* width follows the stretched height */
+    align-self: stretch;
+    width: 72px;
+    background: rgb(26,29,39);           /* 外层深色背景 */
+    border-radius: 10px;
+    border: 1.5px solid rgba(255,255,255,0.08); /* 细边框，与 ex-card 区分 */
+    padding: 6px;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .muscle-mini-inner {
+    flex: 1;
     position: relative;
-    overflow: hidden;                    /* stay inside the card box */
+    overflow: hidden;
+    background: rgb(26,29,39);           /* 与外层 .muscle-mini 同色 */
+    border-radius: 6px;
   }
   .muscle-mini svg {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     display: block;
   }
-  /* base: light gray fill so body shape shows */
+  /* base: subtle white — body shape barely visible on dark bg (overridden by inline style) */
   .muscle-mini .bodymap path,
   .muscle-mini .bodymap circle,
-  .muscle-mini .bodymap ellipse { fill: rgb(184,189,204); }
-  /* body outline: very dim */
+  .muscle-mini .bodymap ellipse { fill: rgba(255,255,255,0.10); }
+  /* body skeleton outline — thicker for visibility */
   .muscle-mini #body path,
-  .muscle-mini #body line { stroke: rgb(184,189,204); stroke-opacity: .85; stroke-width: 6; fill: none !important; }
+  .muscle-mini #body line { stroke: rgba(255,255,255,0.70); stroke-opacity: 1; stroke-width: 12; fill: none !important; }
   /* hide joints */
   .muscle-mini #shoulders,
   .muscle-mini #elbow,
@@ -370,26 +383,28 @@
 const API = '';  // same-origin; change if backend on different port
 
 async function fetchData() {
-  // Determine gender first so we load the matching body SVGs
-  let gender = 'male';
-  try {
-    const u = await fetch(`${API}/api/user`);
-    if (u.ok) gender = (await u.json()).gender === 'female' ? 'female' : 'male';
-  } catch (e) { /* default male */ }
-
-  const frontFile = gender === 'female' ? 'female_front_body.svg' : 'front_body.svg';
-  const backFile  = gender === 'female' ? 'female_back_body.svg'  : 'back_body.svg';
-
-  const [profileRes, planRes, musclesRes, frontSvgRes, backSvgRes] = await Promise.all([
+  // Stage 1: fetch profile + plan + muscle map in parallel
+  const [profileRes, planRes, musclesRes] = await Promise.all([
     fetch(`${API}/api/plan-viewer/profile`),
     fetch(`${API}/api/plan-viewer/latest-plan`),
     fetch(`${API}/api/plan-viewer/muscles-map`),
+  ]);
+  if (!profileRes.ok || !planRes.ok) throw new Error('API 请求失败');
+
+  const profile = await profileRes.json();
+
+  // Stage 2: use profile.gender (plan-viewer 用户的真实性别) 选择身体图
+  const isFemale  = profile.gender === 'female' || profile.gender === '女';
+  const frontFile = isFemale ? 'female_front_body.svg' : 'front_body.svg';
+  const backFile  = isFemale ? 'female_back_body.svg'  : 'back_body.svg';
+
+  const [frontSvgRes, backSvgRes] = await Promise.all([
     fetch(`${API}/svg/${frontFile}`),
     fetch(`${API}/svg/${backFile}`),
   ]);
-  if (!profileRes.ok || !planRes.ok) throw new Error('API 请求失败');
+
   return {
-    profile:   await profileRes.json(),
+    profile,
     plan:      await planRes.json(),
     muscleMap: musclesRes.ok ? await musclesRes.json() : {},
     frontSvg:  frontSvgRes.ok ? await frontSvgRes.text() : '',
@@ -401,33 +416,42 @@ async function fetchData() {
 // Muscle diagram — mirrors dashboard Card 2 applyHeatmap logic
 // ════════════════════════════════════════════════════════════
 
-// Muscle highlight colors
-const HEAT_NONE      = 'rgb(184,189,204)';   // light gray base so body shape shows
-const HEAT_PRIMARY   = 'rgb(238,122,90)';    // orange-red for primary muscles
-const HEAT_SECONDARY = 'rgba(238,122,90,0.45)'; // dimmer for secondary
+// Muscle highlight colors (background = rgb(40,37,43) dark)
+const HEAT_NONE      = 'rgba(255,255,255,0.10)'; // subtle white: body shape visible on dark bg
+const HEAT_PRIMARY   = 'rgb(238,122,90)';         // deep orange: primary muscle highlight
+const HEAT_SECONDARY = 'rgba(238,122,90,0.38)';   // light orange: secondary muscle
 
 // Chinese muscle name → {side, svgId}
-// front SVG: plain IDs; back SVG: "b-" prefixed IDs (matching back_body.svg)
+// 注意: plan_viewer 直接 fetch 原始 SVG 文件，ID 无 "b-" 前缀
+// （"b-" 前缀仅在 gen_dashboard.py 内联合并时才会加）
 const MUSCLE_SVG_MAP = {
   // ── Front ──────────────────────────────────────────────────
-  '股四头肌':   { side: 'front', id: 'quads' },
-  '腹直肌':     { side: 'front', id: 'abdominals' },
-  '腹斜肌':     { side: 'front', id: 'obliques' },
-  '胸大肌':     { side: 'front', id: 'chest' },
-  '三角肌前束': { side: 'front', id: 'front-shoulders' },
-  '三角肌中束': { side: 'front', id: 'front-shoulders' },
-  '肱二头肌':   { side: 'front', id: 'biceps' },
-  '腓肠肌':     { side: 'front', id: 'calves' },
-  '前臂肌群':   { side: 'front', id: 'forearms' },
+  '股四头肌':    { side: 'front', id: 'quads' },
+  '腹直肌':      { side: 'front', id: 'abdominals' },
+  '腹斜肌':      { side: 'front', id: 'obliques' },
+  '胸大肌':      { side: 'front', id: 'chest' },
+  '三角肌前束':  { side: 'front', id: 'front-shoulders' },
+  '三角肌中束':  { side: 'front', id: 'front-shoulders' },
+  '肱二头肌':    { side: 'front', id: 'biceps' },
+  '腓肠肌':      { side: 'front', id: 'calves' },
+  '前臂肌群':    { side: 'front', id: 'forearms' },
+  '前臂屈肌群':  { side: 'front', id: 'forearms' },
+  '髋屈肌群':    { side: 'front', id: 'quads' },
   // ── Back ───────────────────────────────────────────────────
-  '背阔肌':     { side: 'back', id: 'b-lats' },
-  '臀大肌':     { side: 'back', id: 'b-glutes' },
-  '腘绳肌':     { side: 'back', id: 'b-hamstrings' },
-  '竖脊肌':     { side: 'back', id: 'b-lowerback' },
-  '斜方肌':     { side: 'back', id: 'b-traps' },
-  '斜方肌中部': { side: 'back', id: 'b-traps-middle' },
-  '三角肌后束': { side: 'back', id: 'b-rear-shoulders' },
-  '肱三头肌':   { side: 'back', id: 'b-triceps' },
+  '背阔肌':      { side: 'back', id: 'lats' },
+  '臀大肌':      { side: 'back', id: 'glutes' },
+  '臀中肌':      { side: 'back', id: 'glutes' },
+  '腘绳肌':      { side: 'back', id: 'hamstrings' },
+  '竖脊肌':      { side: 'back', id: 'lowerback' },
+  '下背部':      { side: 'back', id: 'lowerback' },
+  '斜方肌':      { side: 'back', id: 'traps' },
+  '斜方肌中部':  { side: 'back', id: 'traps-middle' },
+  '三角肌后束':  { side: 'back', id: 'rear-shoulders' },
+  '三角肌':      { side: 'back', id: 'rear-shoulders' },
+  '肱三头肌':    { side: 'back', id: 'triceps' },
+  '菱形肌':      { side: 'back', id: 'traps-middle' },
+  '小圆肌':      { side: 'back', id: 'rear-shoulders' },
+  '冈下肌':      { side: 'back', id: 'rear-shoulders' },
 };
 
 // Inline SVG DOM references (set once after SVGs are fetched+injected)
@@ -440,16 +464,34 @@ function injectSvgTemplates(frontText, backText) {
   function prepare(text, containerId) {
     const doc = parser.parseFromString(text, 'image/svg+xml');
     const svg = doc.querySelector('svg');
-    // Strip heavy decorations that don't render well at small size
+    // Body skeleton: thicker stroke for visibility on dark background
     svg.querySelectorAll('#body path, #body line').forEach(el => {
-      el.style.strokeOpacity = '0.85';
-      el.style.stroke = 'rgb(184,189,204)';
-      el.style.strokeWidth = '6';
+      el.style.strokeOpacity = '1';
+      el.style.stroke = 'rgba(255,255,255,0.70)';
+      el.style.strokeWidth = '12';
+      el.style.fill = 'none';
     });
-    // Pre-set all bodymap paths to base gray
+    // Pre-set all bodymap paths to HEAT_NONE (overridden per-muscle by applyMuscleColors)
+    const isBack = containerId === 'svg-back-tpl';
     svg.querySelectorAll('.bodymap path, .bodymap circle, .bodymap ellipse').forEach(p => {
       p.style.fill = HEAT_NONE;
     });
+    if (isBack) {
+      // Back SVG bodymap shapes form the visible silhouette; match front #body stroke exactly
+      svg.querySelectorAll('.bodymap path, .bodymap circle, .bodymap ellipse').forEach(p => {
+        p.style.stroke = 'rgba(255,255,255,0.70)';
+        p.style.strokeWidth = '12';
+        p.style.paintOrder = 'stroke fill';
+        p.style.strokeLinejoin = 'round';
+      });
+      // Hide complex fill-detail paths that contain mixed contour+detail lines and
+      // render as visual noise when fill:none is applied (they are only useful as fills)
+      svg.querySelectorAll('#body .body-fill-detail').forEach(p => {
+        p.style.display = 'none';
+      });
+    }
+    // Normalize IDs: female_back_body.svg uses "b-" prefix; strip it so MUSCLE_SVG_MAP matches
+    svg.querySelectorAll('[id^="b-"]').forEach(el => { el.id = el.id.slice(2); });
     // Remove class-based Tailwind hover rules that don't apply here
     svg.removeAttribute('class');
     svg.setAttribute('viewBox', svg.getAttribute('viewBox') || '0 0 660 1206');
@@ -512,31 +554,35 @@ function buildMuscleMini(exerciseId, muscleMap) {
   const hasBack  = backPrimary.length  || backSecondary.length;
   if (!hasFront && !hasBack) return '';
 
-  // Front-first: show back only when no front muscles involved
-  const useFront = hasFront;
-  const useBack  = !hasFront && hasBack;
+  // Tooltip
+  const tip = [
+    primary.filter(m => MUSCLE_SVG_MAP[m]).length
+      ? '主: ' + primary.filter(m => MUSCLE_SVG_MAP[m]).join('、') : '',
+    secondary.filter(m => MUSCLE_SVG_MAP[m]).length
+      ? '辅: ' + secondary.filter(m => MUSCLE_SVG_MAP[m]).join('、') : '',
+  ].filter(Boolean).join('\n');
 
-  const srcEl   = useFront ? _frontSvgEl : _backSvgEl;
-  const primIds = useFront ? frontPrimary   : backPrimary;
-  const secIds  = useFront ? frontSecondary : backSecondary;
+  // 以主肌群所在面为优先：主肌群正面多 → 正面SVG；主肌群背面多 → 背面SVG
+  // 主肌群相同时退而看辅肌群，最终默认正面
+  const useFront = frontPrimary.length >= backPrimary.length
+    ? (frontPrimary.length > 0 || frontSecondary.length >= backSecondary.length)
+    : false;
+  const src  = useFront ? _frontSvgEl  : _backSvgEl;
+  const prim = useFront ? frontPrimary : backPrimary;
+  const sec  = useFront ? frontSecondary : backSecondary;
 
-  // Clone the template SVG and apply colors
-  const clone = srcEl.cloneNode(true);
-  applyMuscleColors(clone, primIds, secIds);
+  const clone = src.cloneNode(true);
+  applyMuscleColors(clone, prim, sec);
   clone.removeAttribute('width');
   clone.removeAttribute('height');
 
-  // Tooltip
-  const allNames = [...primary, ...secondary].filter(m => MUSCLE_SVG_MAP[m]);
-  const tip = [
-    primary.filter(m => MUSCLE_SVG_MAP[m]).length   ? '主: ' + primary.filter(m => MUSCLE_SVG_MAP[m]).join('、')   : '',
-    secondary.filter(m => MUSCLE_SVG_MAP[m]).length ? '辅: ' + secondary.filter(m => MUSCLE_SVG_MAP[m]).join('、') : '',
-  ].filter(Boolean).join('\n');
-
-  const wrap = document.createElement('div');
+  const wrap  = document.createElement('div');
   wrap.className = 'muscle-mini';
   wrap.title = tip;
-  wrap.appendChild(clone);
+  const inner = document.createElement('div');
+  inner.className = 'muscle-mini-inner';
+  inner.appendChild(clone);
+  wrap.appendChild(inner);
   return wrap.outerHTML;
 }
 

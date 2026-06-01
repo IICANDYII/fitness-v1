@@ -470,9 +470,9 @@ body {
    Config
    ════════════════════════════════════════════════ */
 var API       = 'http://localhost:8000/api';
-var AI_URL    = 'https://api.zchat.tech/v1/chat/completions';
-var AI_KEY    = 'sk-G90J2FGkwO4sEPBNmaJs8XwzNCuFLat372D95AbuEQSpIhqS';
-var AI_MODEL  = 'grok-3';
+var AI_URL    = 'https://nextrouter.cc/v1/chat/completions';
+var AI_KEY    = 'sk-gxBoLiZEqsQnwPweg2mlV6AWz0gpQJzlbtFz2rzRBYova4Fc';
+var AI_MODEL  = 'claude-sonnet-4-6';
 var RESTING_HR = 67;
 var MAX_HR     = 195;
 
@@ -1278,7 +1278,7 @@ async function init() {
     // Show error in AI area
     document.getElementById('ai-loading').style.display = 'none';
     document.getElementById('ai-error').style.display   = 'block';
-    document.getElementById('ai-error').textContent = '无法连接到后端 API（' + e.message + '）。请确认 uvicorn 服务已启动于 port 8003。';
+    document.getElementById('ai-error').textContent = '无法连接到后端 API（' + e.message + '）。请确认 uvicorn 服务已启动于 port 8000。';
     document.getElementById('header-date').textContent  = dateParam || '数据加载失败';
     return;
   }
