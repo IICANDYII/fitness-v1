@@ -178,7 +178,14 @@ body {
 /* ════════════════════════════
    CARD 4 — 月历视图
    ════════════════════════════ */
-.cal-month { text-align: center; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 8px; }
+.cal-nav  { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 8px; }
+.cal-nav-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 20px; line-height: 1; color: #374151;
+  padding: 0 6px; border-radius: 6px; transition: background .15s;
+}
+.cal-nav-btn:hover { background: #f4f6fc; }
+.cal-month { font-size: 13px; font-weight: 600; color: #374151; flex: 1; text-align: center; }
 .cal-grid  { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; }
 .cal-wd    { font-size: 10px; color: #9ca3af; padding: 2px 0 5px; font-weight: 600; }
 .cal-day {
@@ -192,11 +199,14 @@ body {
   margin: 0 auto;
   color: #374151;
   font-weight: 500;
+  cursor: pointer;
 }
-.cal-day.partial { border: 2px solid #10b981; color: #10b981; font-weight: 700; }
-.cal-day.full    { background: #10b981; color: #fff; font-weight: 700; }
-.cal-day.today   { background: #3b82f6; color: #fff; font-weight: 700; }
-.cal-day.empty   { visibility: hidden; }
+.cal-day:not(.empty):hover { background: #e9ecf5; }
+.cal-day.partial  { border: 2px solid #10b981; color: #10b981; font-weight: 700; }
+.cal-day.full     { background: #10b981; color: #fff; font-weight: 700; }
+.cal-day.today    { background: #3b82f6; color: #fff; font-weight: 700; }
+.cal-day.selected { outline: 2px solid #f59e0b; outline-offset: 1px; font-weight: 700; }
+.cal-day.empty    { visibility: hidden; cursor: default; }
 
 /* ════════════════════════════
    SVG Bodymap
@@ -213,6 +223,8 @@ body {
 }
 .bodymap path, .bodymap circle, .bodymap ellipse, .bodymap polygon, .bodymap rect {
   fill: #c8cad6;
+  stroke: rgb(249, 249, 249);
+  stroke-width: 0.6px;
   transition: fill .35s ease;
 }
 /* joint marker groups stay invisible */
@@ -300,7 +312,11 @@ body {
   <!-- ══ Card 4: 月历视图 ══ -->
   <div class="card">
     <div class="card-title">月历视图</div>
-    <div class="cal-month" id="cal-month">-- 年 -- 月</div>
+    <div class="cal-nav">
+      <button class="cal-nav-btn" id="cal-prev">&#8249;</button>
+      <div class="cal-month" id="cal-month">-- 年 -- 月</div>
+      <button class="cal-nav-btn" id="cal-next">&#8250;</button>
+    </div>
     <div class="cal-grid" id="calGrid"></div>
   </div>
 
@@ -427,8 +443,11 @@ function drawChart(data, labels) {
   });
 }
 
+/* ── Calendar state ───────────────────────────────────────────────── */
+var calState = { year: null, month: null, days: {}, selectedDate: null };
+
 /* ── Calendar ─────────────────────────────────────────────────────── */
-function renderCalendar(year, month, workoutDays) {
+function renderCalendar(year, month, workoutDays, selectedDate) {
   var CN_MONTHS = ['一','二','三','四','五','六','七','八','九','十','十一','十二'];
   document.getElementById('cal-month').textContent = year + '年 ' + CN_MONTHS[month - 1] + '月';
   var grid = document.getElementById('calGrid');
@@ -452,13 +471,68 @@ function renderCalendar(year, month, workoutDays) {
     var ds = year + '-' + String(month).padStart(2, '0') + '-' + String(d).padStart(2, '0');
     var isToday = (today.getFullYear() === year && (today.getMonth() + 1) === month && today.getDate() === d);
     var status = workoutDays[ds];
-    if (isToday)                cell.className = 'cal-day today';
-    else if (status === 'full') cell.className = 'cal-day full';
-    else if (status === 'partial') cell.className = 'cal-day partial';
-    else                        cell.className = 'cal-day';
+    var cls = 'cal-day';
+    if (isToday)               cls = 'cal-day today';
+    else if (status === 'full')    cls = 'cal-day full';
+    else if (status === 'partial') cls = 'cal-day partial';
+    if (selectedDate === ds)   cls += ' selected';
+    cell.className = cls;
     cell.textContent = d;
+    cell.dataset.date = ds;
+    cell.addEventListener('click', function() { onCalDayClick(this.dataset.date); });
     grid.appendChild(cell);
   }
+}
+
+/* ── Load calendar for a given month ─────────────────────────────── */
+async function loadCalendar(year, month) {
+  // Always trust the requested year/month; only take days from the response
+  calState.year  = year;
+  calState.month = month;
+  calState.days  = {};
+  try {
+    var r = await fetch(API + '/calendar?year=' + year + '&month=' + month);
+    if (r.ok) {
+      var data = await r.json();
+      calState.days = data.days || {};
+    }
+  } catch (e) { /* keep empty days */ }
+  renderCalendar(calState.year, calState.month, calState.days, calState.selectedDate);
+}
+
+/* ── Load & render daily data (Card 1 + Card 2) for a date ──────── */
+async function loadDailyForDate(date) {
+  try {
+    var r = await fetch(API + '/daily?date=' + date);
+    var daily = r.ok ? await r.json() : {};
+    renderDailyData(daily);
+  } catch (e) {
+    renderDailyData({});
+  }
+}
+
+function safeVal(v, fallback) {
+  return (v != null && v !== '') ? v : (fallback !== undefined ? fallback : '--');
+}
+
+function renderDailyData(daily) {
+  document.getElementById('s-duration').innerHTML = safeVal(daily.duration_min) + '<span class="stat-unit"> min</span>';
+  document.getElementById('s-calories').innerHTML = safeVal(daily.calories) + '<span class="stat-unit">kcal</span>';
+  document.getElementById('s-hr').innerHTML = safeVal(daily.avg_hr) + '<span class="stat-unit">bpm</span>';
+  document.getElementById('s-rate').innerHTML = safeVal(daily.completion_rate) + '<span class="stat-unit">%</span>';
+  renderMuscleBars(daily.muscle_distribution || {});
+  renderExercises(daily.exercises || []);
+  // Reset heatmap then apply new data
+  document.querySelectorAll('.bodymap path, .bodymap circle, .bodymap ellipse, .bodymap polygon, .bodymap rect')
+    .forEach(function(el) { el.style.fill = HEAT_NONE; });
+  applyHeatmap(daily.muscle_heatmap || {});
+}
+
+/* ── Calendar day click ───────────────────────────────────────────── */
+function onCalDayClick(date) {
+  calState.selectedDate = date;
+  renderCalendar(calState.year, calState.month, calState.days, calState.selectedDate);
+  loadDailyForDate(date);
 }
 
 /* ── Muscle bar list (Card 1) ─────────────────────────────────────── */
@@ -510,24 +584,19 @@ async function init() {
 
     applyGender(userInfo.gender || 'male');
 
-    // Card 1: stats
-    document.getElementById('s-duration').innerHTML = daily.duration_min + '<span class="stat-unit"> min</span>';
-    document.getElementById('s-calories').innerHTML = daily.calories + '<span class="stat-unit">kcal</span>';
-    document.getElementById('s-hr').innerHTML = (daily.avg_hr || '--') + '<span class="stat-unit">bpm</span>';
-    document.getElementById('s-rate').innerHTML = daily.completion_rate + '<span class="stat-unit">%</span>';
-    renderMuscleBars(daily.muscle_distribution || {});
-    renderExercises(daily.exercises || []);
-
-    // Card 2: muscle heatmap — same session data as Card 1
-    applyHeatmap(daily.muscle_heatmap || {});
+    // Card 1 + Card 2
+    renderDailyData(daily);
 
     // Card 3: weekly KPIs + chart
     document.getElementById('w-sets').innerHTML = weekly.total_sets + ' ' + trendHtml(weekly.sets_trend_pct);
     document.getElementById('w-kcal').innerHTML = weekly.total_calories + ' ' + trendHtml(weekly.calories_trend_pct);
     drawChart(weekly.daily_sets, weekly.day_labels);
 
-    // Card 4: calendar
-    renderCalendar(calendar.year, calendar.month, calendar.days || {});
+    // Card 4: calendar — init state then render
+    calState.year  = calendar.year;
+    calState.month = calendar.month;
+    calState.days  = calendar.days || {};
+    renderCalendar(calState.year, calState.month, calState.days, calState.selectedDate);
 
   } catch (err) {
     console.error('API error:', err);
@@ -535,6 +604,18 @@ async function init() {
     document.getElementById('cal-month').textContent = '⚠ 后端未启动 (port 8002)';
   }
 }
+
+/* ── Calendar prev / next wiring ─────────────────────────────────── */
+document.getElementById('cal-prev').addEventListener('click', function() {
+  var m = calState.month - 1, y = calState.year;
+  if (m < 1) { m = 12; y--; }
+  loadCalendar(y, m);
+});
+document.getElementById('cal-next').addEventListener('click', function() {
+  var m = calState.month + 1, y = calState.year;
+  if (m > 12) { m = 1; y++; }
+  loadCalendar(y, m);
+});
 
 initGradLegend();
 init();

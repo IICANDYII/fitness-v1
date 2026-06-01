@@ -508,13 +508,30 @@ def hr_detail(date: str | None = None):
 
 
 @app.get("/api/calendar")
-def calendar():
-    """当月每日训练状态：full(完整)/partial(部分)/rest(休息)"""
+def calendar(year: int | None = None, month: int | None = None):
+    """每日训练状态：full(完整)/partial(部分)。默认为最近一次训练所在月份。"""
     conn = get_conn()
     cur  = conn.cursor()
 
-    today       = date.today()
-    month_start = today.replace(day=1)
+    # 若未指定年月，取最近一次训练所在月份
+    if year is None or month is None:
+        cur.execute(
+            "SELECT DATE(start_time) AS day FROM workout_session "
+            "WHERE user_id = %s ORDER BY start_time DESC LIMIT 1",
+            (USER_ID,),
+        )
+        latest = cur.fetchone()
+        ref = latest["day"] if latest else date.today()
+        year  = year  or ref.year
+        month = month or ref.month
+
+    month_start = date(year, month, 1)
+    # last day of month
+    if month == 12:
+        month_end = date(year + 1, 1, 1) - timedelta(days=1)
+    else:
+        month_end = date(year, month + 1, 1) - timedelta(days=1)
+
     cur.execute("""
         SELECT DATE(start_time) AS day, completion_rate
         FROM workout_session
@@ -522,7 +539,7 @@ def calendar():
           AND DATE(start_time) >= %s
           AND DATE(start_time) <= %s
         ORDER BY start_time
-    """, (USER_ID, month_start, today))
+    """, (USER_ID, month_start, month_end))
     rows = cur.fetchall()
     conn.close()
 
@@ -533,8 +550,8 @@ def calendar():
         result[day_str] = "full" if rate >= 0.95 else "partial"
 
     return {
-        "year":  today.year,
-        "month": today.month,
+        "year":  year,
+        "month": month,
         "days":  result,
     }
 

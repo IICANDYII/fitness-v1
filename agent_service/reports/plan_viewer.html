@@ -465,7 +465,7 @@ function injectSvgTemplates(frontText, backText) {
     const doc = parser.parseFromString(text, 'image/svg+xml');
     const svg = doc.querySelector('svg');
     // Body skeleton: thicker stroke for visibility on dark background
-    svg.querySelectorAll('#body path, #body line').forEach(el => {
+    svg.querySelectorAll('#body path, #body line, #body-head path').forEach(el => {
       el.style.strokeOpacity = '1';
       el.style.stroke = 'rgba(255,255,255,0.70)';
       el.style.strokeWidth = '12';
@@ -474,26 +474,17 @@ function injectSvgTemplates(frontText, backText) {
     // Pre-set all bodymap paths to HEAT_NONE (overridden per-muscle by applyMuscleColors)
     const isBack = containerId === 'svg-back-tpl';
     svg.querySelectorAll('.bodymap path, .bodymap circle, .bodymap ellipse').forEach(p => {
-      p.style.fill = HEAT_NONE;
+      p.style.fill = isBack ? HEAT_NONE : HEAT_NONE;
     });
-    if (isBack) {
-      // Back SVG bodymap shapes form the visible silhouette; match front #body stroke exactly
-      svg.querySelectorAll('.bodymap path, .bodymap circle, .bodymap ellipse').forEach(p => {
-        p.style.stroke = 'rgba(255,255,255,0.70)';
-        p.style.strokeWidth = '12';
-        p.style.paintOrder = 'stroke fill';
-        p.style.strokeLinejoin = 'round';
-      });
-      // Hide complex fill-detail paths that contain mixed contour+detail lines and
-      // render as visual noise when fill:none is applied (they are only useful as fills)
-      svg.querySelectorAll('#body .body-fill-detail').forEach(p => {
-        p.style.display = 'none';
-      });
-    }
     // Normalize IDs: female_back_body.svg uses "b-" prefix; strip it so MUSCLE_SVG_MAP matches
     svg.querySelectorAll('[id^="b-"]').forEach(el => { el.id = el.id.slice(2); });
     // Remove class-based Tailwind hover rules that don't apply here
     svg.removeAttribute('class');
+    // Unhide joint indicator groups (class="hidden" from Tailwind hides them)
+    svg.querySelectorAll('.hidden').forEach(el => {
+      el.classList.remove('hidden');
+      el.style.display = '';
+    });
     svg.setAttribute('viewBox', svg.getAttribute('viewBox') || '0 0 660 1206');
     svg.style.cssText = '';
 
@@ -508,10 +499,18 @@ function injectSvgTemplates(frontText, backText) {
 }
 
 // Apply muscle colors to a CLONED inline SVG (dashboard applyHeatmap pattern)
-function applyMuscleColors(svgEl, primaryIds, secondaryIds) {
-  // Reset all to base gray
+const HEAT_NONE_BACK = 'rgba(255,255,255,0.22)';
+
+function applyMuscleColors(svgEl, primaryIds, secondaryIds, isBack) {
+  const base = isBack ? HEAT_NONE_BACK : HEAT_NONE;
   svgEl.querySelectorAll('.bodymap path, .bodymap circle, .bodymap ellipse').forEach(p => {
-    p.style.fill = HEAT_NONE;
+    p.style.fill = base;
+    if (isBack) {
+      p.style.stroke = 'rgba(255,255,255,0.45)';
+      p.style.strokeWidth = '2';
+      p.style.paintOrder = 'stroke fill';
+      p.style.strokeLinejoin = 'round';
+    }
   });
   // Primary → full purple
   primaryIds.forEach(id => {
@@ -572,7 +571,7 @@ function buildMuscleMini(exerciseId, muscleMap) {
   const sec  = useFront ? frontSecondary : backSecondary;
 
   const clone = src.cloneNode(true);
-  applyMuscleColors(clone, prim, sec);
+  applyMuscleColors(clone, prim, sec, !useFront);
   clone.removeAttribute('width');
   clone.removeAttribute('height');
 
