@@ -878,9 +878,9 @@ def main():
     ranked = rank_by_vector(filtered, profile, dynamic, history, top_k=40)
     print(f"   OK 取 Top-{len(ranked)} 语义最相关动作\n")
 
-    # ── Step 3 ────────────────────────────────────────────────
-    print("④ [Step 3] LLM 生成周训练计划...")
-    plan = generate_plan_with_llm(ranked, profile, dynamic)
+    # ── Step 3 (V3 Pipeline) ────────────────────────────────
+    print("④ [V3] 分天排布 → LLM 生成 → LLM 校验...")
+    plan = generate_plan_v3(ranked, profile, dynamic)
     print(f"   OK 计划生成: {plan.get('plan_name', '(无名称)')}\n")
 
     # ── 保存 ──────────────────────────────────────────────────

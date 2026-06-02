@@ -1,0 +1,466 @@
+{
+  "version": "v2",
+  "generated_at": "2026-06-02T14:12:12",
+  "plan": {
+    "plan_name": "中级5天哑铃与史密斯机高效增肌计划",
+    "user_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+    "fitness_goal": "增肌",
+    "fitt_vp_summary": {
+      "frequency": "每周训练5天，每次90分钟，确保目标肌群得到充分刺激与恢复。",
+      "intensity": "中高强度，复合动作采用75%-85% 1RM（每组8-12次接近力竭），孤立动作注重泵感与离心控制。",
+      "time": "每次90分钟（热身10分钟 + 主训练75分钟 + 拉伸5分）。",
+      "type": "抗阻力力量训练，结合史密斯机（多关节复合动作）与哑铃（自由重量与孤立刺激）。",
+      "volume": "每个动作安排3-4组，主训练日包含6个动作，确保单次训练总容量充足。",
+      "progression": "渐进性超负荷原则：当连续两次训练能以标准动作超额完成目标次数时，下一次训练该动作负荷增加2%-10%。"
+    },
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "theme": "胸肩三头推系强化",
+        "estimated_duration_min": 90,
+        "fitt_vp_focus": "以史密斯大重量推举奠定强度基础，交替进行哑铃孤立刺激，强化上肢推侧肌群。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "dynamic_warmup_001",
+            "name": "动态关节活动与肩袖激活",
+            "sets": 1,
+            "reps_or_duration": "10分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "重点激活肩关节、手腕及胸椎活动度。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "smith_machine_bench_press_001",
+            "name": "史密斯平板卧推",
+            "sets": 4,
+            "reps_or_duration": "8-10次",
+            "rest_sec": 150,
+            "superset_group": null,
+            "notes": "控制离心慢下，感受胸大肌拉伸，推起时避免肘关节锁死。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_wood_chopper_001",
+            "name": "哑铃伐木",
+            "sets": 3,
+            "reps_or_duration": "12次/侧",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "核心收紧，利用身体旋转带动哑铃，控制动作轨迹。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_arnold_press_001",
+            "name": "哑铃阿诺德推举",
+            "sets": 4,
+            "reps_or_duration": "8-12次",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "底部旋转手腕，推至顶端时手臂与身体呈一直线。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_internally_rotated_incline_chest_fly_001",
+            "name": "哑铃内旋斜板飞鸟",
+            "sets": 3,
+            "reps_or_duration": "10-12次",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "斜板角度30度，顶峰收缩时手腕微内旋以加深胸肌上部刺激。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "smith_machine_close_grip_bench_press_001",
+            "name": "史密斯窄距卧推",
+            "sets": 3,
+            "reps_or_duration": "8-12次",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "握距与肩同宽，下放时肘关节贴紧身体两侧，主导三头肌发力。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_russian_twist_001",
+            "name": "哑铃俄罗斯转体",
+            "sets": 3,
+            "reps_or_duration": "15次/侧",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "保持躯干稳定，用腹斜肌力量控制左右旋转。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "static_stretch_001",
+            "name": "胸肩及三头肌静态拉伸",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "每个拉伸动作保持20-30秒，深呼吸放松。"
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "theme": "背部与肱二头肌拉系强化",
+        "estimated_duration_min": 90,
+        "fitt_vp_focus": "主攻背部厚度与宽度，结合二头肌孤立训练，提升拉类动作的整体力量与维度。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "dynamic_warmup_002",
+            "name": "猫式伸展与背部激活",
+            "sets": 1,
+            "reps_or_duration": "10分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "激活背阔肌、斜方肌及核心，为大重量拉类动作做准备。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "smith_machine_bent_over_row_001",
+            "name": "史密斯俯身划船",
+            "sets": 4,
+            "reps_or_duration": "8-10次",
+            "rest_sec": 150,
+            "superset_group": null,
+            "notes": "躯干保持稳定，手肘贴身体向后上方拉起，挤压背部。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_bicep_curl_001",
+            "name": "哑铃弯举",
+            "sets": 3,
+            "reps_or_duration": "10-12次",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "大臂固定在身体两侧，避免身体晃动借力，顶峰收缩1秒。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_staggered_deadlift_001",
+            "name": "哑铃前后分腿硬拉",
+            "sets": 4,
+            "reps_or_duration": "8-12次/侧",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "保持脊柱中立，臀部向后推，感受前侧腿腘绳肌和臀大肌的强烈拉伸。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_pullover_001",
+            "name": "哑铃仰卧拉起",
+            "sets": 3,
+            "reps_or_duration": "10-12次",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "微屈肘关节，利用背阔肌力量将哑铃拉回至胸口上方。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "smith_machine_overhead_press_001",
+            "name": "史密斯坐姿推举",
+            "sets": 3,
+            "reps_or_duration": "8-12次",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "靠背角度约80度，杠铃杆下放至锁骨高度后爆发力推起。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_hammer_curl_001",
+            "name": "哑铃锤式弯举",
+            "sets": 3,
+            "reps_or_duration": "12次",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "对握哑铃，强化肱桡肌与肱肌，提升手臂整体厚度。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "static_stretch_002",
+            "name": "背部与二头肌静态拉伸",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "重点拉伸背阔肌、肱二头肌，缓解肌肉紧张。"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "theme": "下肢臀腿全面塑造",
+        "estimated_duration_min": 90,
+        "fitt_vp_focus": "高强度腿部训练，通过复合动作与单侧动作结合，全面刺激股四头肌、臀大肌及腘绳肌。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "dynamic_warmup_003",
+            "name": "下肢关节滑液分泌与动态拉伸",
+            "sets": 1,
+            "reps_or_duration": "10分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "重点激活髋、膝、踝关节，进行自重深蹲过渡。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "smith_machine_squat_001",
+            "name": "史密斯深蹲",
+            "sets": 4,
+            "reps_or_duration": "8-10次",
+            "rest_sec": 180,
+            "superset_group": null,
+            "notes": "双脚略微前移，下蹲至大腿平行于地面或更低，膝盖与脚尖方向一致。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_calf_raise_001",
+            "name": "哑铃提踵",
+            "sets": 3,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "顶峰收缩停顿1-2秒，下放时充分拉伸小腿三头肌。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_bulgarian_split_squat_001",
+            "name": "哑铃保加利亚单腿蹲",
+            "sets": 3,
+            "reps_or_duration": "10次/侧",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "后脚垫高，前脚全脚掌着地，躯干微前倾以增加臀部受力。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_russian_twist_001",
+            "name": "哑铃俄罗斯转体",
+            "sets": 3,
+            "reps_or_duration": "15次/侧",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "双脚微悬空，保持核心收紧，控制转体节奏。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_single_leg_heels_elevated_hip_thrust_001",
+            "name": "哑铃单腿足跟抬高臀推",
+            "sets": 3,
+            "reps_or_duration": "10-12次/侧",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "足跟垫高，单腿发力将髋部推至最高点，顶峰夹紧臀部。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_lying_hamstring_curl_001",
+            "name": "哑铃俯卧腿弯举",
+            "sets": 3,
+            "reps_or_duration": "12次",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "双脚夹紧哑铃，俯卧于平板，控制离心慢放，避免臀部抬起。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "static_stretch_003",
+            "name": "下肢臀腿静态拉伸",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "重点拉伸股四头肌、腘绳肌与臀部，促进疲劳消除。"
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "theme": "上肢综合维度突破",
+        "estimated_duration_min": 90,
+        "fitt_vp_focus": "高强度上肢复合训练，通过断头台卧推等进阶动作，深度撕裂胸、背、肩纤维。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "dynamic_warmup_004",
+            "name": "上肢综合动态激活",
+            "sets": 1,
+            "reps_or_duration": "10分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "包含空杆推举、弹力带拉伸，全面激活上肢关节。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_guillotine_bench_press_001",
+            "name": "哑铃断头台卧推",
+            "sets": 4,
+            "reps_or_duration": "8-10次",
+            "rest_sec": 150,
+            "superset_group": null,
+            "notes": "哑铃下放轨迹偏向锁骨方向，动作需高度控制，切勿使用过重重量。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_rolling_tricep_extension_001",
+            "name": "哑铃滚动臂屈伸",
+            "sets": 3,
+            "reps_or_duration": "10-12次",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "在肘屈伸的基础上加入肩关节微幅后摆，增加三头肌长头拉伸感。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "smith_machine_bent_over_row_001",
+            "name": "史密斯俯身划船",
+            "sets": 4,
+            "reps_or_duration": "8-12次",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "采用反握，更多动员下背部与肱二头肌，保持躯干角度不变。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_internally_rotated_incline_chest_fly_001",
+            "name": "哑铃内旋斜板飞鸟",
+            "sets": 3,
+            "reps_or_duration": "12次",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "保持肘关节微屈，专注胸肌上部边缘的挤压感。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_arnold_press_001",
+            "name": "哑铃阿诺德推举",
+            "sets": 3,
+            "reps_or_duration": "10-12次",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "全程控制，下放时手心转向自己，推起时手心朝前。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_wood_chopper_001",
+            "name": "哑铃伐木",
+            "sets": 3,
+            "reps_or_duration": "12次/侧",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "利用核心旋转，保持双臂微直，控制哑铃斜向轨迹。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "static_stretch_004",
+            "name": "上肢综合静态拉伸",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "针对胸、背、肩进行深度静态拉伸，降低酸痛感。"
+          }
+        ]
+      },
+      {
+        "day": 5,
+        "theme": "下肢与核心强化",
+        "estimated_duration_min": 90,
+        "fitt_vp_focus": "侧重于单侧下肢力量与核心旋转力量的整合，提高下肢稳定性并最大化肌肥大效果。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "dynamic_warmup_005",
+            "name": "下肢与核心动态激活",
+            "sets": 1,
+            "reps_or_duration": "10分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "重点激活骨盆稳定性、臀中肌及腹部深层核心。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_bulgarian_split_squat_001",
+            "name": "哑铃保加利亚单腿蹲",
+            "sets": 4,
+            "reps_or_duration": "8-10次/侧",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "手持重哑铃，保持躯干挺直，专注单侧股四头肌与臀肌的离心控制。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_russian_twist_001",
+            "name": "哑铃俄罗斯转体",
+            "sets": 3,
+            "reps_or_duration": "15次/侧",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "转体时目光随哑铃移动，确保胸椎充分旋转。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_staggered_deadlift_001",
+            "name": "哑铃前后分腿硬拉",
+            "sets": 4,
+            "reps_or_duration": "10-12次/侧",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "后脚仅作平衡支撑，90%重量压在前脚，髋部水平后移。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_calf_raise_001",
+            "name": "哑铃提踵",
+            "sets": 3,
+            "reps_or_duration": "15次",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "站立于台阶边缘以获得更大的拉伸幅度，慢起慢落。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "smith_machine_squat_001",
+            "name": "史密斯深蹲",
+            "sets": 3,
+            "reps_or_duration": "10-12次",
+            "rest_sec": 150,
+            "superset_group": null,
+            "notes": "采用较宽站距，侧重刺激大腿内收肌群与臀大肌。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_wood_chopper_001",
+            "name": "哑铃伐木",
+            "sets": 3,
+            "reps_or_duration": "12次/侧",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "由下往上爆发力拉起，慢速控制下放，强化核心抗旋转能力。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "static_stretch_005",
+            "name": "下肢与核心静态拉伸",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "充分拉伸髂腰肌、臀肌及腹外斜肌，促进下肢血液循环。"
+          }
+        ]
+      }
+    ],
+    "coaching_notes": {
+      "warm_up": "每次训练前必须进行10分钟动态热身。重点在于提高核心温度、滑润关节并激活目标肌群（如使用轻重量哑铃进行肩袖激活或空杆深蹲）。",
+      "cool_down": "训练后进行5分钟静态拉伸。针对当天训练的靶肌肉进行20-30秒的持续拉伸，配合深呼吸，降低交感神经兴奋度，加速乳酸清除。",
+      "nutrition": "增肌期需保证热量盈余（每日摄入热量 = 基础代谢 * 1.5 + 300~500 kcal）。每日蛋白质摄入量应达到 1.6 - 2.0g/kg 体重（约120g-150g），碳水化合物与优质脂肪比例合理，训练后30分钟内补充快速碳水与乳清蛋白。",
+      "recovery_boost": "鉴于当前疲劳度为 medium，且近期训练负荷较高（82），每周5天高强度训练后，必须保证每天7-8小时的高质量睡眠。若连续两次训练出现力量下降或关节不适，应主动降低10%的训练负荷进行一周的减载（Deload）。"
+    },
+    "_pipeline_version": "v2"
+  }
+}

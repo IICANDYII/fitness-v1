@@ -427,6 +427,34 @@
   }
   .regen-overlay .spinner { margin: 0; }
 
+  /* ── User selector ───────────────────────────────────────── */
+  .user-selector-bar {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .user-selector-bar label {
+    font-size: .78rem; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .user-select {
+    flex: 1; max-width: 420px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: .88rem;
+    padding: 7px 12px;
+    outline: none;
+    cursor: pointer;
+  }
+  .user-select:focus { border-color: var(--accent); }
+  .user-select option { background: var(--card); color: var(--text); }
+
   /* ── Loading ─────────────────────────────────────────────── */
   #loading {
     position: fixed; inset: 0;
@@ -455,122 +483,6 @@
     margin: 20px 0;
   }
 
-  /* ── Prompt version toggle bar ──────────────────────────── */
-  .prompt-bar {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 16px;
-    padding: 10px 14px;
-    background: rgba(108,99,255,.07);
-    border: 1px solid rgba(108,99,255,.2);
-    border-radius: 10px;
-    flex-wrap: wrap;
-  }
-  .prompt-bar-label {
-    font-size: .7rem; font-weight: 700; letter-spacing: .08em;
-    text-transform: uppercase; color: var(--muted);
-    flex-shrink: 0;
-  }
-  .version-toggle {
-    display: flex; gap: 4px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 3px;
-  }
-  .version-btn {
-    background: none; border: none; cursor: pointer;
-    padding: 4px 14px; border-radius: 6px;
-    font-size: .78rem; font-weight: 600; color: var(--muted);
-    transition: all .18s;
-    white-space: nowrap;
-  }
-  .version-btn.active {
-    background: var(--accent);
-    color: #fff;
-  }
-  .version-btn:not(.active):hover { color: var(--text); }
-  .prompt-desc {
-    font-size: .75rem; color: var(--muted);
-    flex: 1; min-width: 0;
-  }
-  .btn-view-prompt {
-    background: rgba(108,99,255,.12);
-    border: 1px solid rgba(108,99,255,.3);
-    color: #a09cf9;
-    border-radius: 7px;
-    padding: 4px 11px;
-    font-size: .72rem; font-weight: 600;
-    cursor: pointer;
-    transition: all .18s;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .btn-view-prompt:hover { background: rgba(108,99,255,.25); color: #fff; }
-
-  /* ── Prompt content drawer ──────────────────────────────── */
-  .prompt-drawer {
-    display: none;
-    margin-bottom: 16px;
-    background: #13151f;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  .prompt-drawer.open { display: block; }
-  .prompt-drawer-tabs {
-    display: flex; gap: 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .prompt-drawer-tab {
-    background: none; border: none; cursor: pointer;
-    padding: 8px 16px;
-    font-size: .72rem; font-weight: 600; letter-spacing: .05em;
-    text-transform: uppercase; color: var(--muted);
-    border-bottom: 2px solid transparent;
-    transition: all .15s;
-  }
-  .prompt-drawer-tab.active {
-    color: var(--accent); border-bottom-color: var(--accent);
-  }
-  .prompt-panel { display: none; padding: 14px 16px; }
-  .prompt-panel.active { display: block; }
-  .prompt-pre {
-    font-family: 'Consolas', 'Monaco', monospace;
-    font-size: .75rem; line-height: 1.6;
-    color: #c5c8e0;
-    white-space: pre-wrap; word-break: break-word;
-    max-height: 320px; overflow-y: auto;
-  }
-  .prompt-pre::-webkit-scrollbar { width: 5px; }
-  .prompt-pre::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-  /* ── Pregenerate button & cache status ──────────────────── */
-  .btn-pregen {
-    background: rgba(67,233,123,.12);
-    border: 1px solid rgba(67,233,123,.35);
-    color: #43e97b;
-    border-radius: 7px;
-    padding: 4px 11px;
-    font-size: .72rem; font-weight: 600;
-    cursor: pointer;
-    transition: all .18s;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .btn-pregen:hover { background: rgba(67,233,123,.25); color: #fff; }
-  .btn-pregen:disabled { opacity: .45; cursor: not-allowed; }
-  .cache-dots {
-    display: flex; gap: 5px; align-items: center;
-    flex-shrink: 0;
-  }
-  .cache-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--border);
-    title: attr(title);
-  }
-  .cache-dot.ready   { background: var(--green); }
-  .cache-dot.running { background: var(--yellow); animation: pulse .8s ease-in-out infinite alternate; }
-  @keyframes pulse { from { opacity: .4; } to { opacity: 1; } }
 
   /* ── Validation issues badge ─────────────────────────────── */
   .validation-badge {
@@ -614,6 +526,12 @@
 </div>
 
 <div class="page" id="app" style="display:none">
+  <!-- User selector -->
+  <div class="user-selector-bar">
+    <label>选择用户</label>
+    <select class="user-select" id="user-select" onchange="switchUser(this.value)"></select>
+  </div>
+
   <header>
     <div class="avatar" id="avatar-icon">🏃</div>
     <div>
@@ -653,33 +571,6 @@
 
     <!-- ── 右栏: 训练计划 ── -->
     <div>
-      <!-- Prompt version toggle bar -->
-      <div class="prompt-bar" id="prompt-bar">
-        <span class="prompt-bar-label">Prompt 版本</span>
-        <div class="version-toggle">
-          <button class="version-btn" data-v="v2" onclick="switchVersion('v2')">V1 标准</button>
-          <button class="version-btn" data-v="v3" onclick="switchVersion('v3')">V2 FITT-VP</button>
-        </div>
-        <span class="prompt-desc" id="prompt-desc"></span>
-        <div class="cache-dots" id="cache-dots" title="缓存状态：v1 / v2">
-          <span style="font-size:.68rem;color:var(--muted)">缓存</span>
-          <span class="cache-dot" id="dot-v2" title="V1 缓存"></span>
-          <span class="cache-dot" id="dot-v3" title="V2 缓存"></span>
-        </div>
-        <button class="btn-pregen" id="btn-pregen" onclick="pregenBoth()">预生成双版本</button>
-        <button class="btn-view-prompt" onclick="togglePromptDrawer()">查看提示词</button>
-      </div>
-
-      <!-- Prompt content drawer -->
-      <div class="prompt-drawer" id="prompt-drawer">
-        <div class="prompt-drawer-tabs">
-          <button class="prompt-drawer-tab active" data-tab="system" onclick="switchPromptTab('system')">System</button>
-          <button class="prompt-drawer-tab" data-tab="user"   onclick="switchPromptTab('user')">User</button>
-        </div>
-        <div class="prompt-panel active" id="pp-system"><pre class="prompt-pre" id="pp-system-text">加载中…</pre></div>
-        <div class="prompt-panel"        id="pp-user">  <pre class="prompt-pre" id="pp-user-text">加载中…</pre></div>
-      </div>
-
       <div class="card">
         <div class="card-title">本周训练安排</div>
         <div class="summary-chips" id="summary-chips"></div>
@@ -697,13 +588,21 @@
 // Data fetch
 // ════════════════════════════════════════════════════════════
 const API = '';  // same-origin; change if backend on different port
+let _currentUserId = '';  // set after user list loads
+
+function _uq(extra = '') {
+  const parts = [];
+  if (_currentUserId) parts.push(`user_id=${encodeURIComponent(_currentUserId)}`);
+  if (extra) parts.push(extra);
+  return parts.length ? '?' + parts.join('&') : '';
+}
 
 async function fetchData() {
   // Stage 1: fetch profile + plan + muscle map in parallel
   const [profileRes, planRes, musclesRes] = await Promise.all([
-    fetch(`${API}/api/plan-viewer/profile`),
-    fetch(`${API}/api/plan-viewer/latest-plan?version=${_currentVersion}`),
-    fetch(`${API}/api/plan-viewer/muscles-map`),
+    fetch(`${API}/api/plan-viewer/profile${_uq()}`),
+    fetch(`${API}/api/plan-viewer/latest-plan${_uq(`version=${_currentVersion}`)}`),
+    fetch(`${API}/api/plan-viewer/muscles-map${_uq()}`),
   ]);
   if (!profileRes.ok || !planRes.ok) throw new Error('API 请求失败');
 
@@ -1198,7 +1097,7 @@ async function saveStats() {
   }
 
   try {
-    const res = await fetch('/api/plan-viewer/profile', {
+    const res = await fetch(`/api/plan-viewer/profile${_uq()}`, {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data),
@@ -1321,7 +1220,7 @@ async function saveTags() {
   const schedUpdate = Object.assign({}, _profile.available_schedule || {}, { free_time_slots: slots });
 
   try {
-    const res = await fetch('/api/plan-viewer/profile', {
+    const res = await fetch(`/api/plan-viewer/profile${_uq()}`, {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -1360,8 +1259,8 @@ function exitEditTags() {
 async function reloadSchedule(version) {
   const ver = version || _currentVersion;
   const [planRes, musclesRes] = await Promise.all([
-    fetch(`/api/plan-viewer/latest-plan?version=${ver}`),
-    fetch('/api/plan-viewer/muscles-map'),
+    fetch(`/api/plan-viewer/latest-plan${_uq(`version=${ver}`)}`),
+    fetch(`/api/plan-viewer/muscles-map${_uq()}`),
   ]);
   if (!planRes.ok) throw new Error('计划加载失败');
   const plan = await planRes.json();
@@ -1386,7 +1285,7 @@ function showScheduleLoading() {
 async function triggerPlanRegeneration() {
   showScheduleLoading();
   try {
-    const res = await fetch('/api/plan-viewer/regenerate-plan', { method: 'POST' });
+    const res = await fetch(`/api/plan-viewer/regenerate-plan${_uq()}`, { method: 'POST' });
     const { job_id } = await res.json();
     await pollRegenJob(job_id);
   } catch (e) {
@@ -1436,149 +1335,9 @@ function showToast(msg, isError = false) {
 }
 
 // ════════════════════════════════════════════════════════════
-// Prompt version toggle
+// Plan version (fixed v3)
 // ════════════════════════════════════════════════════════════
-const VERSION_DESC = {
-  v2: '三步流水线：规则初筛 → 向量语义排序(MMR) → LLM 生成',
-  v3: 'FITT-VP 流水线：分天排布 → 规则库前置知识 → LLM → LLM校验器(+重试)',
-};
-
-let _currentVersion = 'v2';
-let _promptCache = {};  // version → {system, user}
-
-function applyVersionUI(version) {
-  _currentVersion = version;
-  document.querySelectorAll('.version-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.v === version);
-  });
-  document.getElementById('prompt-desc').textContent = VERSION_DESC[version] || '';
-}
-
-function updateCacheDots(status) {
-  // status: { v2: {generated_at} | null, v3: ... , pregen_jobs: {v2:{status}, v3:{status}} }
-  const jobs = status.pregen_jobs || {};
-  ['v2', 'v3'].forEach(ver => {
-    const dot = document.getElementById(`dot-${ver}`);
-    if (!dot) return;
-    const running = jobs[ver] && jobs[ver].status === 'running';
-    const cached  = !!status[ver];
-    dot.className = 'cache-dot' + (running ? ' running' : cached ? ' ready' : '');
-    const ts = status[ver] && status[ver].generated_at ? ` (${status[ver].generated_at.replace('T',' ')})` : '';
-    dot.title = `${ver.toUpperCase()} 缓存${cached ? '就绪'+ts : running ? '生成中…' : '：未缓存'}`;
-  });
-}
-
-async function refreshCacheStatus() {
-  try {
-    const res = await fetch('/api/plan-viewer/cache-status');
-    const data = await res.json();
-    updateCacheDots(data);
-    return data;
-  } catch (_) { return {}; }
-}
-
-async function switchVersion(version) {
-  if (version === _currentVersion) return;
-  try {
-    const res = await fetch('/api/plan-viewer/prompt-version', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ version }),
-    });
-    if (!res.ok) throw new Error(await res.text());
-    applyVersionUI(version);
-    _promptCache = {};
-    if (document.getElementById('prompt-drawer').classList.contains('open')) {
-      await loadPromptContent(version);
-    }
-
-    // 尝试从缓存直接加载，避免重新生成
-    const cacheStatus = await refreshCacheStatus();
-    if (cacheStatus[version]) {
-      showToast(`已切换到 ${version.toUpperCase()}，从缓存加载计划…`);
-      await reloadSchedule(version);
-    } else {
-      showToast(`已切换到 ${version.toUpperCase()}，缓存不存在，正在生成…`);
-      triggerPlanRegeneration();
-    }
-  } catch (e) {
-    showToast('切换失败: ' + e.message, true);
-  }
-}
-
-async function pregenBoth() {
-  const btn = document.getElementById('btn-pregen');
-  btn.disabled = true;
-  btn.textContent = '生成中…';
-  try {
-    const res = await fetch('/api/plan-viewer/pregenerate-all', { method: 'POST' });
-    const { v2: jid_v2, v3: jid_v3 } = await res.json();
-    showToast('开始预生成 V2 + V3 双版本计划，请稍候…');
-
-    // Poll both jobs until both done
-    const poll = async (jid) => {
-      while (true) {
-        await new Promise(r => setTimeout(r, 4000));
-        const s = await fetch(`/api/plan-viewer/regen-status/${jid}`).then(r=>r.json());
-        if (s.status !== 'running') return s;
-        await refreshCacheStatus();
-      }
-    };
-    const [r2, r3] = await Promise.all([poll(jid_v2), poll(jid_v3)]);
-    await refreshCacheStatus();
-
-    const ok2 = r2.status === 'done', ok3 = r3.status === 'done';
-    if (ok2 && ok3) {
-      showToast('V2 + V3 双版本计划已预生成 ✓');
-      await reloadSchedule(_currentVersion);
-    } else {
-      const msg = (!ok2 ? `V2失败: ${r2.error} ` : '') + (!ok3 ? `V3失败: ${r3.error}` : '');
-      showToast(msg.trim(), true);
-    }
-  } catch (e) {
-    showToast('预生成失败: ' + e.message, true);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '预生成双版本';
-  }
-}
-
-async function loadPromptContent(version) {
-  if (_promptCache[version]) {
-    renderPromptContent(_promptCache[version]);
-    return;
-  }
-  document.getElementById('pp-system-text').textContent = '加载中…';
-  document.getElementById('pp-user-text').textContent   = '加载中…';
-  try {
-    const res  = await fetch(`/api/plan-viewer/prompt-content/${version}`);
-    const data = await res.json();
-    _promptCache[version] = data;
-    renderPromptContent(data);
-  } catch (e) {
-    document.getElementById('pp-system-text').textContent = '加载失败: ' + e.message;
-  }
-}
-
-function renderPromptContent(data) {
-  document.getElementById('pp-system-text').textContent = data.system || '(空)';
-  document.getElementById('pp-user-text').textContent   = data.user   || '(空)';
-}
-
-function togglePromptDrawer() {
-  const drawer = document.getElementById('prompt-drawer');
-  const isOpen = drawer.classList.toggle('open');
-  if (isOpen) loadPromptContent(_currentVersion);
-}
-
-function switchPromptTab(tab) {
-  document.querySelectorAll('.prompt-drawer-tab').forEach(t => {
-    t.classList.toggle('active', t.dataset.tab === tab);
-  });
-  document.querySelectorAll('.prompt-panel').forEach(p => {
-    p.classList.toggle('active', p.id === `pp-${tab}`);
-  });
-}
+const _currentVersion = 'v3';
 
 function renderValidationIssues(plan) {
   const area = document.getElementById('validation-area');
@@ -1609,9 +1368,43 @@ function renderValidationIssues(plan) {
 }
 
 // ════════════════════════════════════════════════════════════
-// Boot
+// User selector
 // ════════════════════════════════════════════════════════════
-(async () => {
+let _userList = [];
+
+async function loadUserList() {
+  const res = await fetch(`${API}/api/plan-viewer/users`);
+  _userList = await res.json();
+  const sel = document.getElementById('user-select');
+  sel.innerHTML = _userList.map(u => {
+    const desc = `${u.label} · ${u.gender === 'female' ? '女' : '男'} · ${u.age}岁 · ${u.fitness_goal}`;
+    return `<option value="${u.user_id}">${desc}</option>`;
+  }).join('');
+  // Default: first user or from URL param
+  const params = new URLSearchParams(location.search);
+  const fromUrl = params.get('user_id');
+  if (fromUrl && _userList.some(u => u.user_id === fromUrl)) {
+    _currentUserId = fromUrl;
+  } else if (_userList.length) {
+    _currentUserId = _userList[0].user_id;
+  }
+  sel.value = _currentUserId;
+}
+
+async function switchUser(uid) {
+  if (uid === _currentUserId) return;
+  _currentUserId = uid;
+  // Update URL without reload
+  const url = new URL(location);
+  url.searchParams.set('user_id', uid);
+  history.replaceState(null, '', url);
+  // Re-render everything
+  await renderAllForCurrentUser();
+}
+
+async function renderAllForCurrentUser() {
+  document.getElementById('loading').style.display = 'grid';
+  document.getElementById('app').style.display = 'none';
   try {
     const { profile, plan, muscleMap, frontSvg, backSvg } = await fetchData();
     if (plan._empty) {
@@ -1640,21 +1433,27 @@ function renderValidationIssues(plan) {
 
     renderCoachingNotes(plan.coaching_notes);
     renderValidationIssues(plan);
-
     drawRadar(profile);
 
-    // Load prompt version state + cache status
-    try {
-      const [vRes] = await Promise.all([
-        fetch('/api/plan-viewer/prompt-version'),
-      ]);
-      const vData = await vRes.json();
-      applyVersionUI(vData.version || 'v2');
-    } catch (_) { applyVersionUI('v2'); }
-    refreshCacheStatus();  // non-blocking, updates dots
 
+    document.getElementById('user-select').value = _currentUserId;
     document.getElementById('loading').style.display = 'none';
     document.getElementById('app').style.display = 'block';
+  } catch (err) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('day-detail').innerHTML =
+      `<div class="error-box">⚠️ ${err.message}<br><small>请确认后端 API 已启动</small></div>`;
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// Boot
+// ════════════════════════════════════════════════════════════
+(async () => {
+  try {
+    await loadUserList();
+    await renderAllForCurrentUser();
   } catch (err) {
     document.getElementById('loading').innerHTML =
       `<div class="error-box">⚠️ ${err.message}<br><small>请确认后端 API 已启动</small></div>`;

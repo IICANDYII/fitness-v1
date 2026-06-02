@@ -564,14 +564,48 @@ def calendar(year: int | None = None, month: int | None = None):
 # ── Plan Viewer endpoints ─────────────────────────────────────────────────────
 PLAN_VIEWER_USER = "b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12"
 
+
+def _resolve_viewer_user(user_id: str | None) -> str:
+    return user_id if user_id else PLAN_VIEWER_USER
+
+
+@app.get("/api/plan-viewer/users")
+def plan_viewer_users():
+    """Return all users in user_profile_long_term for the selector dropdown."""
+    conn = get_conn()
+    cur  = conn.cursor()
+    cur.execute(
+        "SELECT user_id, gender, age, fitness_goal FROM user_profile_long_term ORDER BY id"
+    )
+    rows = cur.fetchall()
+    conn.close()
+    result = []
+    for r in rows:
+        uid = str(r["user_id"])
+        label = uid
+        visitor_match = uid.replace("-", "")
+        if visitor_match.startswith("0" * 20):
+            num = visitor_match[20:].lstrip("0") or "0"
+            label = f"访客 {num}"
+        result.append({
+            "user_id": uid,
+            "label":   label,
+            "gender":  r["gender"],
+            "age":     r["age"],
+            "fitness_goal": r["fitness_goal"],
+        })
+    return result
+
+
 @app.get("/api/plan-viewer/profile")
-def plan_viewer_profile():
+def plan_viewer_profile(user_id: str | None = None):
     """Long-term user profile for the plan viewer page."""
+    uid  = _resolve_viewer_user(user_id)
     conn = get_conn()
     cur  = conn.cursor()
     cur.execute(
         "SELECT * FROM user_profile_long_term WHERE user_id = %s",
-        (PLAN_VIEWER_USER,)
+        (uid,)
     )
     row = cur.fetchone()
     conn.close()
@@ -599,8 +633,9 @@ class ProfileUpdateRequest(BaseModel):
 
 
 @app.put("/api/plan-viewer/profile")
-def update_plan_viewer_profile(body: ProfileUpdateRequest):
+def update_plan_viewer_profile(body: ProfileUpdateRequest, user_id: str | None = None):
     """Update editable fields of the plan-viewer user's long-term profile."""
+    uid = _resolve_viewer_user(user_id)
     fields: list[str] = []
     values: list[Any] = []
 
@@ -629,7 +664,7 @@ def update_plan_viewer_profile(body: ProfileUpdateRequest):
         raise HTTPException(status_code=400, detail="没有需要更新的字段")
 
     fields.append("updated_at = NOW()")
-    values.append(PLAN_VIEWER_USER)
+    values.append(uid)
 
     conn = get_conn()
     cur  = conn.cursor()
@@ -643,7 +678,7 @@ def update_plan_viewer_profile(body: ProfileUpdateRequest):
 
 
 @app.get("/api/plan-viewer/latest-plan")
-def plan_viewer_latest_plan(version: str | None = None):
+def plan_viewer_latest_plan(version: str | None = None, user_id: str | None = None):
     """
     返回指定版本（v2/v3）的最新计划。
     优先从文件缓存加载（毫秒级）；缓存不存在时回退到数据库最新记录。
@@ -651,14 +686,15 @@ def plan_viewer_latest_plan(version: str | None = None):
     """
     from agent_service.planner.plan_generator import load_plan_cache, plan_cache_meta
 
+    uid = _resolve_viewer_user(user_id)
     ver = version or _prompt_version
 
     # 1. 尝试文件缓存
-    cached = load_plan_cache(PLAN_VIEWER_USER, ver)
+    cached = load_plan_cache(uid, ver)
     if cached:
         plan = dict(cached)
         plan.setdefault("_source", "cache")
-        meta = plan_cache_meta(PLAN_VIEWER_USER, ver) or {}
+        meta = plan_cache_meta(uid, ver) or {}
         plan["_cached_at"] = meta.get("generated_at")
         return plan
 
@@ -673,7 +709,7 @@ def plan_viewer_latest_plan(version: str | None = None):
         ORDER BY date DESC
         LIMIT 1
         """,
-        (PLAN_VIEWER_USER,)
+        (uid,)
     )
     row = cur.fetchone()
     conn.close()
@@ -689,8 +725,9 @@ def plan_viewer_latest_plan(version: str | None = None):
 
 # ── Exercise muscle map for plan viewer ───────────────────────────────────────
 @app.get("/api/plan-viewer/muscles-map")
-def plan_viewer_muscles_map():
+def plan_viewer_muscles_map(user_id: str | None = None):
     """Return {exercise_id: {primary, secondary}} for all exercises in the latest plan."""
+    uid  = _resolve_viewer_user(user_id)
     conn = get_conn()
     cur  = conn.cursor()
 
@@ -701,7 +738,7 @@ def plan_viewer_muscles_map():
         WHERE user_id = %s
         ORDER BY date DESC LIMIT 1
         """,
-        (PLAN_VIEWER_USER,)
+        (uid,)
     )
     row = cur.fetchone()
     if not row:
@@ -825,13 +862,14 @@ def _run_regen(job_id: str, user_id: str, version: str = "v2"):
 
 
 @app.post("/api/plan-viewer/regenerate-plan")
-def regenerate_plan():
+def regenerate_plan(user_id: str | None = None):
     """Start async plan regeneration using the current prompt version; returns a job_id to poll."""
+    uid = _resolve_viewer_user(user_id)
     job_id = str(_uuid.uuid4())
     _regen_jobs[job_id] = {"status": "running"}
     threading.Thread(
         target=_run_regen,
-        args=(job_id, PLAN_VIEWER_USER, _prompt_version),
+        args=(job_id, uid, _prompt_version),
         daemon=True,
     ).start()
     return {"job_id": job_id}
@@ -850,11 +888,12 @@ _pregen_jobs: dict[str, dict] = {}   # "v2" / "v3" → job_id
 
 
 @app.post("/api/plan-viewer/pregenerate-all")
-def pregenerate_all():
+def pregenerate_all(user_id: str | None = None):
     """
     同时启动 v2 + v3 两个后台生成任务。
     各自写入文件缓存；返回 {v2: job_id, v3: job_id}。
     """
+    uid = _resolve_viewer_user(user_id)
     jid_v2 = str(_uuid.uuid4())
     jid_v3 = str(_uuid.uuid4())
     _regen_jobs[jid_v2] = {"status": "running", "version": "v2"}
@@ -863,7 +902,7 @@ def pregenerate_all():
     _pregen_jobs["v3"] = {"job_id": jid_v3, "status": "running"}
 
     def _watch(jid: str, ver: str):
-        _run_regen(jid, PLAN_VIEWER_USER, ver)
+        _run_regen(jid, uid, ver)
         _pregen_jobs[ver]["status"] = _regen_jobs[jid]["status"]
 
     threading.Thread(target=_watch, args=(jid_v2, "v2"), daemon=True).start()
@@ -872,12 +911,13 @@ def pregenerate_all():
 
 
 @app.get("/api/plan-viewer/cache-status")
-def cache_status():
+def cache_status(user_id: str | None = None):
     """返回 v2/v3 文件缓存的生成时间（供 UI 展示预生成状态）。"""
     from agent_service.planner.plan_generator import plan_cache_meta
+    uid = _resolve_viewer_user(user_id)
     return {
-        "v2": plan_cache_meta(PLAN_VIEWER_USER, "v2"),
-        "v3": plan_cache_meta(PLAN_VIEWER_USER, "v3"),
+        "v2": plan_cache_meta(uid, "v2"),
+        "v3": plan_cache_meta(uid, "v3"),
         "pregen_jobs": _pregen_jobs,
     }
 

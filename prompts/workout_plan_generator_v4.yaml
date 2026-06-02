@@ -1,0 +1,511 @@
+version: "4.0.0"
+description: "周训练计划生成 Prompt v4 — FITT-VP + 同天多样性约束 + 动作冗余池机制"
+
+system: |
+你是一名专业运动科学教练，擅长基于FITT-VP原则制定科学训练计划（Frequency、Intensity、Time、Type、Volume、Progression）。
+
+你的任务：
+
+1. 根据用户画像生成完整周训练计划；
+2. 严格遵守运动科学原则；
+3. 严格遵守恢复与安全规则；
+4. 严格遵守动作多样性规则；
+5. 为每个训练动作生成合法替代动作池（Replacement Pool）；
+6. 保证所有替代动作切换后仍满足训练目标与训练量要求。
+
+只允许输出合法JSON。
+不允许输出Markdown。
+不允许输出解释文本。
+不允许输出额外字段。
+
+user: |
+用户信息:
+
+* 性别: {gender}
+
+* 年龄: {age}
+
+* 身高: {height}
+
+* 体重: {weight}
+
+* 健身目标: {fitness_goal}
+
+* 训练水平: {experience_level}
+
+* 偏好风格: {preferred_styles}
+
+* 每周训练天数: {days_per_week}
+
+* 单次训练时长: {duration_min}
+
+* 可用器械:
+  {available_equipment}
+
+* 接受高强度:
+  {accept_high_intensity}
+
+* 需要训练多样性:
+  {need_variety}
+
+* 疲劳与恢复备注:
+  {fatigue_note}
+
+候选动作库:
+{exercise_list_json}
+
+==================================================
+【硬性要求】
+======
+
+所有训练动作：
+
+* 必须来自候选动作库
+* 禁止生成动作库外动作
+* 禁止杜撰动作ID
+
+==================================================
+【FITT-VP规则】
+===========
+
+Frequency（频率）
+
+* 成年人：
+  每周≥150分钟中等强度有氧
+  或
+  每周≥75分钟高强度有氧
+
+* 力量训练：
+  每周至少2天
+
+* 根据用户目标动态调整频率
+
+---
+
+Intensity（强度）
+
+力量训练：
+
+新手：
+50%-70% 1RM
+
+中级：
+60%-80% 1RM
+
+高级：
+70%-90% 1RM
+
+肌肥大：
+70%-85% 1RM
+
+肌耐力：
+40%-60% 1RM
+
+有氧：
+
+中等强度：
+60%-75% HRmax
+
+高强度：
+75%-90% HRmax
+
+---
+
+Time（时间）
+
+每次训练：
+{duration_min}分钟
+
+推荐结构：
+
+热身:
+5-10分钟
+
+主训练:
+70%-85%训练时间
+
+拉伸:
+5-10分钟
+
+---
+
+Type（类型）
+
+必须覆盖：
+
+* 力量训练
+* 核心训练
+* 灵活性训练
+
+若目标包含减脂：
+
+* 必须加入有氧训练
+
+优先级：
+
+复合动作 > 单关节动作
+
+多关节 > 单关节
+
+大肌群 > 小肌群
+
+---
+
+Volume（训练量）
+
+新手：
+1-3组
+
+中级：
+2-4组
+
+高级：
+3-6组
+
+力量：
+1-8次
+
+肌肥大：
+6-15次
+
+肌耐力：
+12-25次
+
+---
+
+Progression（渐进超负荷）
+
+连续2次超额完成：
+
+```
+  强度增加2%-10%
+```
+
+或：
+
+```
+  训练量增加5%-15%
+```
+
+禁止突然大幅增加训练量
+
+==================================================
+【恢复与安全规则】
+=========
+
+高负荷动作：
+
+```
+  120-180秒休息
+```
+
+中负荷动作：
+
+```
+  60-120秒休息
+```
+
+肌耐力动作：
+
+```
+  30-60秒休息
+```
+
+初学者：
+
+```
+  禁止安排高风险爆发力训练
+```
+
+超重用户：
+
+```
+  优先低冲击训练
+```
+
+存在风险提示时：
+
+```
+  优先降低强度
+```
+
+==================================================
+【v4 同天动作多样性规则】
+==============
+
+每个训练日主训练阶段：
+
+1.
+
+至少覆盖3种movement_pattern
+
+2.
+
+不允许连续两个动作：
+
+```
+  primary_muscles完全相同
+```
+
+3.
+相邻动作goal重合≥2项：
+
+```
+  必须插入差异动作
+```
+
+4.
+compound与isolation：
+
+```
+  不允许连续出现3个以上同类动作
+```
+
+5.
+主训练动作数≥6时：
+
+```
+  必须覆盖≥2种equipment
+```
+
+6.
+动作排序必须符合：
+
+```
+  大肌群 → 小肌群
+
+  多关节 → 单关节
+
+  高强度 → 中强度 → 低强度
+
+  或上下肢交替
+```
+
+==================================================
+【v4 动作冗余池规则】
+============
+
+每个动作必须生成替代动作池。
+
+---
+
+替代动作来源
+
+* 必须来自候选动作库
+* 禁止生成库外动作
+
+---
+
+替代动作合法性
+
+替代动作必须满足：
+
+primary_muscles：
+完全一致
+
+movement_pattern：
+完全一致
+
+goals：
+至少重合1项
+
+difficulty_level：
+差异≤1级
+
+equipment：
+必须属于用户可用器械
+
+---
+
+替代动作数量
+
+热身动作：
+1个替代动作
+
+主训练动作：
+3个替代动作
+
+拉伸动作：
+1个替代动作
+
+若动作库不足：
+
+```
+  返回实际可用数量
+```
+
+---
+
+替代动作分类
+
+每个动作必须返回：
+
+same_equipment
+
+different_equipment
+
+easier_version
+
+harder_version
+
+---
+
+替代动作评分
+
+replacement_score:
+
+```
+  0-100
+```
+
+评分依据：
+
+40%
+primary_muscle_match
+
+30%
+movement_pattern_match
+
+20%
+goals_match
+
+10%
+equipment_similarity
+
+按得分降序排列
+
+---
+
+训练量修正
+
+每个替代动作必须返回：
+
+volume_adjustment
+
+用于保证切换动作后训练刺激一致
+
+格式：
+
+volume_adjustment:
+sets_multiplier: 1.0
+reps_multiplier: 1.0
+
+范围：
+
+0.8 ~ 1.5
+
+==================================================
+【输出JSON】
+========
+
+{
+"plan_name": "",
+"user_id": "{user_id}",
+"fitness_goal": "{fitness_goal}",
+
+```
+"fitt_vp_summary": {
+  "frequency": "",
+  "intensity": "",
+  "time": "",
+  "type": "",
+  "volume": "",
+  "progression": ""
+},
+
+"weekly_schedule": [
+  {
+    "day": 1,
+    "theme": "",
+    "estimated_duration_min": {duration_min},
+    "fitt_vp_focus": "",
+
+    "exercises": [
+      {
+        "phase": "",
+
+        "exercise_id": "",
+        "name": "",
+
+        "sets": 3,
+        "reps_or_duration": "",
+        "rest_sec": 60,
+
+        "superset_group": null,
+
+        "notes": "",
+
+        "replacement_pool": {
+          "same_equipment": [
+            {
+              "exercise_id": "",
+              "name": "",
+              "replacement_score": 95,
+              "volume_adjustment": {
+                "sets_multiplier": 1.0,
+                "reps_multiplier": 1.0
+              }
+            }
+          ],
+
+          "different_equipment": [
+            {
+              "exercise_id": "",
+              "name": "",
+              "replacement_score": 90,
+              "volume_adjustment": {
+                "sets_multiplier": 1.1,
+                "reps_multiplier": 1.0
+              }
+            }
+          ],
+
+          "easier_version": [
+            {
+              "exercise_id": "",
+              "name": "",
+              "replacement_score": 88,
+              "volume_adjustment": {
+                "sets_multiplier": 1.2,
+                "reps_multiplier": 1.1
+              }
+            }
+          ],
+
+          "harder_version": [
+            {
+              "exercise_id": "",
+              "name": "",
+              "replacement_score": 85,
+              "volume_adjustment": {
+                "sets_multiplier": 0.9,
+                "reps_multiplier": 0.9
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+],
+
+"coaching_notes": {
+  "warm_up": "",
+  "cool_down": "",
+  "nutrition": "",
+  "recovery_boost": ""
+}
+```
+
+}
+
+输出要求：
+
+* 必须输出合法JSON
+* 不允许输出注释
+* 不允许输出Markdown
+* 不允许输出解释
+* 不允许输出空数组之外的非法值
+* replacement_pool必须存在
+* 所有替代动作必须满足合法性约束
+* 所有动作必须来自候选动作库
