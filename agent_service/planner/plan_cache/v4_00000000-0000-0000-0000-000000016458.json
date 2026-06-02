@@ -1,0 +1,104 @@
+{
+  "version": "v4",
+  "generated_at": "2026-06-02T19:21:53",
+  "plan": {
+    "plan_name": "增肌减脂进阶训练计划",
+    "user_id": "00000000-0000-0000-0000-000000016458",
+    "fitness_goal": "增肌+减脂",
+    "fitt_vp_summary": {
+      "frequency": "每周5天",
+      "intensity": "60%-80% 1RM",
+      "time": "70分钟/天",
+      "type": "力量+核心+有氧",
+      "volume": "3-4组/动作，8-12次/组",
+      "progression": "每两周增加5%负荷"
+    },
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "theme": "胸部与爆发力",
+        "estimated_duration_min": 70,
+        "fitt_vp_focus": "肌肥大与减脂",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "burpee_001",
+            "name": "波比跳",
+            "sets": 2,
+            "reps_or_duration": "15",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "全身性动态热身",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_pushup_001",
+            "name": "弹力带俯卧撑",
+            "sets": 4,
+            "reps_or_duration": "12",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "控制离心过程",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [
+                {
+                  "exercise_id": "kettlebell_walkover_pushup_001",
+                  "name": "壶铃跨越俯卧撑",
+                  "replacement_score": 90,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.8
+                  }
+                }
+              ],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "hollow_hold_001",
+            "name": "空心身体支撑",
+            "sets": 3,
+            "reps_or_duration": "45秒",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "核心拉伸与激活",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      }
+    ],
+    "coaching_notes": {
+      "warm_up": "动态拉伸与低强度有氧激活",
+      "cool_down": "静态拉伸与呼吸调整",
+      "nutrition": "高蛋白饮食，训练前后补充碳水",
+      "recovery_boost": "保证7-8小时睡眠，使用泡沫轴放松"
+    },
+    "_pipeline_version": "v4",
+    "_validation": {
+      "is_valid": false,
+      "score": 2,
+      "issues": [
+        "频率违规：计划仅包含1天训练，未达到用户设定的每周5天要求。",
+        "总量违规：每日主训练动作数量不足（仅1个，要求3-12个）。",
+        "类型违规：每日主训练未覆盖至少2种不同的运动模式（Movement Patterns）。",
+        "时间违规：单日训练总时长无法达到70分钟要求。",
+        "类型违规：主训练缺乏复合动作（Compound Exercises）的多样性。"
+      ],
+      "suggestions": "整体评价：计划严重偏离FITT-VP规范。请补充剩余4天的训练内容，增加主训练动作数量至3-12个，并确保每个训练日包含至少2种不同的运动模式（如推、拉、蹲、铰链、核心），以满足70分钟的训练时长需求。"
+    }
+  }
+}

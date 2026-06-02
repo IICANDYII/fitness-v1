@@ -1,0 +1,245 @@
+{
+  "version": "v4",
+  "generated_at": "2026-06-02T19:21:13",
+  "plan": {
+    "plan_name": "耐力提升综合训练计划",
+    "user_id": "b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12",
+    "fitness_goal": "提高耐力",
+    "fitt_vp_summary": {
+      "frequency": "每周4天",
+      "intensity": "中等强度 (60%-75% HRmax)",
+      "time": "60分钟/次",
+      "type": "力量训练+核心训练+灵活性训练",
+      "volume": "每动作3组，每组15-20次",
+      "progression": "每两周增加5%训练量"
+    },
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "theme": "胸肩耐力与核心稳定",
+        "estimated_duration_min": 60,
+        "fitt_vp_focus": "肌耐力",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "hollow_hold_001",
+            "name": "空心身体支撑",
+            "sets": 2,
+            "reps_or_duration": "45秒",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "激活核心",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_pushup_001",
+            "name": "弹力带俯卧撑",
+            "sets": 3,
+            "reps_or_duration": "18",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "推类复合动作",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "kettlebell_walkover_pushup_001",
+                  "name": "壶铃跨越俯卧撑",
+                  "replacement_score": 85,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.8
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "elevated_pike_press_001",
+                  "name": "脚垫高折刀俯卧撑",
+                  "replacement_score": 80,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "dumbbell_guillotine_bench_press_001",
+                  "name": "哑铃断头台卧推",
+                  "replacement_score": 75,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "dumbbell_guillotine_incline_bench_press_001",
+                  "name": "哑铃断头台斜板卧推",
+                  "replacement_score": 70,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_arnold_press_001",
+            "name": "哑铃阿诺德推举",
+            "sets": 3,
+            "reps_or_duration": "15",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "推类复合动作",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "plate_full_lateral_raise_001",
+                  "name": "杠铃片全程侧平举",
+                  "replacement_score": 82,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.2
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "band_skullcrusher_001",
+                  "name": "弹力带仰卧臂屈伸",
+                  "replacement_score": 70,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "dumbbell_rolling_tricep_extension_001",
+                  "name": "哑铃滚动臂屈伸",
+                  "replacement_score": 65,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "dumbbell_incline_skullover_001",
+                  "name": "哑铃斜板仰卧拉伸臂屈伸",
+                  "replacement_score": 60,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.8
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "side_plank_reach_through_001",
+            "name": "侧板支撑穿针式",
+            "sets": 3,
+            "reps_or_duration": "15",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "拉类隔离动作",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "band_crunch_001",
+                  "name": "弹力带卷腹",
+                  "replacement_score": 88,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "dumbbell_wood_chopper_001",
+                  "name": "哑铃伐木",
+                  "replacement_score": 80,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "weighted_forearm_plank_001",
+                  "name": "负重前臂平板支撑",
+                  "replacement_score": 75,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.2
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "band_wood_chopper_001",
+                  "name": "弹力带伐木式",
+                  "replacement_score": 90,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "dumbbell_internally_rotated_incline_chest_fly_001",
+            "name": "哑铃内旋斜板飞鸟",
+            "sets": 2,
+            "reps_or_duration": "20",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "胸部静态拉伸",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      }
+    ],
+    "coaching_notes": {
+      "warm_up": "进行5分钟动态拉伸，重点活动肩关节与胸椎。",
+      "cool_down": "进行5分钟静态拉伸，重点针对胸大肌与三角肌。",
+      "nutrition": "训练后补充适量碳水化合物与蛋白质以促进恢复。",
+      "recovery_boost": "保证每日7-8小时睡眠，训练日增加水分摄入。"
+    },
+    "_pipeline_version": "v4",
+    "_validation": {
+      "is_valid": false,
+      "score": 3,
+      "issues": [
+        "频率违规：计划仅包含1天训练，未达到用户设定的每周4天训练要求。",
+        "类型违规：主训练动作模式单一，缺乏拉类（Pull）动作，未满足覆盖至少2种不同 movement_pattern 的要求。",
+        "结构违规：拉伸阶段包含“哑铃内旋斜板飞鸟”属于抗阻训练动作，不应归类为拉伸阶段。",
+        "总量违规：仅提供1天计划，未满足每周4天训练的总量要求。"
+      ],
+      "suggestions": "整体评价：计划未达到每周4天的训练频率要求，且主训练动作模式缺乏平衡（缺乏拉类动作）。请补充剩余3天的训练内容，并确保每天主训练包含至少2种不同的动作模式（如推、拉、蹲、铰链、核心）。请将抗阻训练动作从拉伸阶段移除，确保拉伸阶段仅包含静态或动态拉伸动作。"
+    }
+  }
+}

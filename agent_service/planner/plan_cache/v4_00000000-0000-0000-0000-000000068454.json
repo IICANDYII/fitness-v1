@@ -1,0 +1,565 @@
+{
+  "version": "v4",
+  "generated_at": "2026-06-02T19:21:21",
+  "plan": {
+    "plan_name": "增肌减脂新手三日循环计划",
+    "user_id": "00000000-0000-0000-0000-000000068454",
+    "fitness_goal": "增肌+减脂",
+    "fitt_vp_summary": {
+      "frequency": "每周3次训练，隔天进行",
+      "intensity": "力量训练60%-75% 1RM，有氧心率控制在60%-75% HRmax",
+      "time": "每次30分钟",
+      "type": "力量训练、核心训练、有氧训练",
+      "volume": "每动作3组，每组8-12次",
+      "progression": "每两周增加5%负荷或增加1组"
+    },
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "theme": "推与核心",
+        "estimated_duration_min": 30,
+        "fitt_vp_focus": "肌肥大与核心稳定性",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "push_up_001",
+            "name": "俯卧撑",
+            "sets": 2,
+            "reps_or_duration": "15",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "动态热身，激活胸部与肩部",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "band_pushup_001",
+                  "name": "弹力带俯卧撑",
+                  "replacement_score": 95,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "burpee_001",
+                  "name": "波比跳",
+                  "replacement_score": 80,
+                  "volume_adjustment": {
+                    "sets_multiplier": 0.8,
+                    "reps_multiplier": 0.8
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "bodyweight_knee_push_ups_001",
+                  "name": "自重跪姿俯卧撑",
+                  "replacement_score": 90,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.2
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "decline_push_up_001",
+                  "name": "下斜俯卧撑",
+                  "replacement_score": 85,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "elevated_pike_press_001",
+            "name": "脚垫高折刀俯卧撑",
+            "sets": 3,
+            "reps_or_duration": "10",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "针对肩部肌肥大",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "plate_full_lateral_raise_001",
+                  "name": "杠铃片全程侧平举",
+                  "replacement_score": 85,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "bodyweight_diamond_knee_push_ups_001",
+                  "name": "跪姿钻石俯卧撑",
+                  "replacement_score": 75,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "incline_push_up_001",
+                  "name": "上斜俯卧撑",
+                  "replacement_score": 80,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.2
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "burpee_001",
+                  "name": "波比跳",
+                  "replacement_score": 70,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.8
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "hand_side_plank_001",
+            "name": "手撑侧板支撑",
+            "sets": 2,
+            "reps_or_duration": "45s",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "侧重核心稳定",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "hand_plank_001",
+                  "name": "手撑平板支撑",
+                  "replacement_score": 90,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "cable_rope_kneeling_oblique_crunch_001",
+                  "name": "绳索跪姿侧卷腹",
+                  "replacement_score": 85,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "crunches_001",
+                  "name": "仰卧卷腹",
+                  "replacement_score": 80,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "dumbbell_elbow_side_plank_001",
+                  "name": "哑铃肘撑侧板式",
+                  "replacement_score": 95,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "theme": "拉与核心",
+        "estimated_duration_min": 30,
+        "fitt_vp_focus": "背部肌肥大与核心耐力",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "hand_plank_001",
+            "name": "手撑平板支撑",
+            "sets": 2,
+            "reps_or_duration": "45s",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "核心激活",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "weighted_forearm_plank_001",
+                  "name": "负重前臂平板支撑",
+                  "replacement_score": 95,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "hanging_knee_raises_001",
+                  "name": "悬垂提膝",
+                  "replacement_score": 80,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "hollow_hold_001",
+                  "name": "空心身体支撑",
+                  "replacement_score": 85,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "band_crunch_001",
+                  "name": "弹力带卷腹",
+                  "replacement_score": 75,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.1
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "narrow_pulldown_001",
+            "name": "窄距下拉",
+            "sets": 3,
+            "reps_or_duration": "12",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "背部肌肥大",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "inverted_row_001",
+                  "name": "反向划船",
+                  "replacement_score": 90,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "bodyweight_standing_inverted_row_001",
+                  "name": "站姿自重反向划船",
+                  "replacement_score": 85,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "bodyweight_standing_inverted_row_001",
+                  "name": "站姿自重反向划船",
+                  "replacement_score": 80,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.2
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "inverted_row_001",
+                  "name": "反向划船",
+                  "replacement_score": 95,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "supermans_001",
+            "name": "超人起伏",
+            "sets": 2,
+            "reps_or_duration": "15",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "背部伸展",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "situp_001",
+                  "name": "仰卧起坐",
+                  "replacement_score": 70,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "hanging_knee_raises_001",
+                  "name": "悬垂提膝",
+                  "replacement_score": 60,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "crunches_001",
+                  "name": "仰卧卷腹",
+                  "replacement_score": 65,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "band_crunch_001",
+                  "name": "弹力带卷腹",
+                  "replacement_score": 75,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "theme": "下肢与有氧",
+        "estimated_duration_min": 30,
+        "fitt_vp_focus": "下肢力量与心肺耐力",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "bodyweight_squat_001",
+            "name": "自重深蹲",
+            "sets": 2,
+            "reps_or_duration": "20",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "下肢动态激活",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "split_squat_001",
+                  "name": "分腿蹲",
+                  "replacement_score": 95,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "cardio_skater_001",
+                  "name": "侧向滑步跳",
+                  "replacement_score": 85,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "glute_bridge_001",
+                  "name": "臀桥",
+                  "replacement_score": 80,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.2
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "forward_lunges_001",
+                  "name": "前跨步箭步蹲",
+                  "replacement_score": 90,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "cardio_in_and_out_forward_001",
+            "name": "前后进退跳",
+            "sets": 3,
+            "reps_or_duration": "20",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "高心率减脂",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "cardio_skater_001",
+                  "name": "侧向滑步跳",
+                  "replacement_score": 95,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "mountain_climber_001",
+                  "name": "登山者",
+                  "replacement_score": 90,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "bodyweight_squat_001",
+                  "name": "自重深蹲",
+                  "replacement_score": 75,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.2
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "lateral_lunge_001",
+                  "name": "侧跨步蹲",
+                  "replacement_score": 85,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "calf_raises_001",
+            "name": "站姿提踵",
+            "sets": 2,
+            "reps_or_duration": "20",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "小腿肌肉放松",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "glute_bridge_001",
+                  "name": "臀桥",
+                  "replacement_score": 60,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "laying_leg_raises_001",
+                  "name": "仰卧抬腿",
+                  "replacement_score": 55,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "glute_bridge_001",
+                  "name": "臀桥",
+                  "replacement_score": 65,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "single_legged_romanian_deadlifts_001",
+                  "name": "单腿罗马尼亚硬拉",
+                  "replacement_score": 70,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.8
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "coaching_notes": {
+      "warm_up": "每个训练日开始前进行5分钟动态拉伸，重点活动肩关节与髋关节。",
+      "cool_down": "训练结束后进行5分钟静态拉伸，针对训练部位进行深度拉伸，保持每组30秒。",
+      "nutrition": "增肌期增加蛋白质摄入（每公斤体重1.6-2g），减脂期控制碳水摄入总量，增加蔬菜比例。",
+      "recovery_boost": "保证每天7-8小时睡眠，训练日之间安排休息日，避免连续高强度训练。"
+    },
+    "_pipeline_version": "v4",
+    "_validation": {
+      "is_valid": false,
+      "score": 4,
+      "issues": [
+        "类型违规：每日主训练仅包含1个动作，未达到至少覆盖2种不同运动模式（Movement Pattern）的要求。",
+        "总量违规：每日主训练动作数量仅为1个，未达到3-12个动作的最低标准。",
+        "结构违规：热身阶段（俯卧撑、平板支撑、自重深蹲）均为力量训练动作，非动态热身；拉伸阶段（侧板支撑、超人起伏、提踵）均为力量训练动作，非静态拉伸。",
+        "强度违规：新手训练计划中包含“前后进退跳”此类高冲击力动作，存在安全隐患。"
+      ],
+      "suggestions": "整体评价：计划未通过审核。主要问题在于结构混乱，将力量动作误置于热身与拉伸阶段，且主训练容量严重不足，无法满足增肌需求。建议：1. 调整结构，热身应使用关节活动度练习，拉伸应使用静态拉伸；2. 增加主训练动作数量至3-5个，确保覆盖推、拉、蹲、铰链等多种运动模式；3. 移除高冲击力跳跃动作，替换为更稳定的基础力量动作。"
+    }
+  }
+}

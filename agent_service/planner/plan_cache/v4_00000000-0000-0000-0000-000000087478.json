@@ -1,0 +1,214 @@
+{
+  "version": "v4",
+  "generated_at": "2026-06-02T19:22:12",
+  "plan": {
+    "plan_name": "新手减脂耐力优化计划",
+    "user_id": "00000000-0000-0000-0000-000000087478",
+    "fitness_goal": "减脂",
+    "fitt_vp_summary": {
+      "frequency": "每周3次训练",
+      "intensity": "中低强度，心率维持在最大心率的60%-75%",
+      "time": "每次严格控制在1分钟内（高密度循环）",
+      "type": "力量、核心、有氧耐力结合",
+      "volume": "每动作1组，每组15-20次",
+      "progression": "每两周增加5%训练量或缩短10%休息时间"
+    },
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "theme": "推与核心耐力",
+        "estimated_duration_min": 1,
+        "fitt_vp_focus": "肌耐力与心率提升",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "bodyweight_knee_push_ups_001",
+            "name": "自重跪姿俯卧撑",
+            "sets": 1,
+            "reps_or_duration": "15",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "轻快节奏，激活胸部",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "push_up_001",
+                  "name": "俯卧撑",
+                  "replacement_score": 95,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "band_pushup_001",
+                  "name": "弹力带俯卧撑",
+                  "replacement_score": 90,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "incline_push_up_001",
+                  "name": "上斜俯卧撑",
+                  "replacement_score": 98,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "decline_push_up_001",
+                  "name": "下斜俯卧撑",
+                  "replacement_score": 85,
+                  "volume_adjustment": {
+                    "sets_multiplier": 0.9,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "hand_side_plank_001",
+            "name": "手撑侧板支撑",
+            "sets": 1,
+            "reps_or_duration": "20s",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "保持核心收紧",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "hand_plank_001",
+                  "name": "手撑平板支撑",
+                  "replacement_score": 95,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "dumbbell_elbow_side_plank_001",
+                  "name": "哑铃肘撑侧板式",
+                  "replacement_score": 90,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "hand_plank_001",
+                  "name": "手撑平板支撑",
+                  "replacement_score": 85,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "weighted_forearm_plank_001",
+                  "name": "负重前臂平板支撑",
+                  "replacement_score": 80,
+                  "volume_adjustment": {
+                    "sets_multiplier": 0.9,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "supermans_001",
+            "name": "超人起伏",
+            "sets": 1,
+            "reps_or_duration": "15",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "缓慢拉伸背部",
+            "replacement_pool": {
+              "same_equipment": [
+                {
+                  "exercise_id": "situp_001",
+                  "name": "仰卧起坐",
+                  "replacement_score": 70,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "different_equipment": [
+                {
+                  "exercise_id": "hanging_knee_raises_001",
+                  "name": "悬垂提膝",
+                  "replacement_score": 60,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "easier_version": [
+                {
+                  "exercise_id": "situp_001",
+                  "name": "仰卧起坐",
+                  "replacement_score": 75,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "hanging_knee_raises_001",
+                  "name": "悬垂提膝",
+                  "replacement_score": 80,
+                  "volume_adjustment": {
+                    "sets_multiplier": 0.9,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "coaching_notes": {
+      "warm_up": "动态拉伸为主，确保关节活动度。",
+      "cool_down": "静态拉伸，重点针对胸部与核心肌群。",
+      "nutrition": "控制碳水摄入，增加蛋白质比例以促进减脂。",
+      "recovery_boost": "保证每日7-8小时睡眠，训练日后增加水分补充。"
+    },
+    "_pipeline_version": "v4",
+    "_validation": {
+      "is_valid": false,
+      "score": 3,
+      "issues": [
+        "频率：每周仅规划1天训练，未达到用户设定的每周3天要求。",
+        "时间：单次训练时长远低于减脂目标所需的有效运动时长（建议30-45分钟）。",
+        "类型：主训练阶段仅包含1个动作，未达到至少2种不同运动模式的要求。",
+        "总量：主训练动作数量仅1个，未达到3-12个的最低安全与有效性标准。",
+        "进阶：coaching_notes 缺乏具体的渐进超负荷（Progressive Overload）量化建议，如增加组数、缩短休息或增加负重。"
+      ],
+      "suggestions": "整体评价：计划未达到FITT-VP规范。建议增加每周训练天数至3天；每日主训练应包含至少3个动作，涵盖推、拉、蹲、铰链或核心等不同模式；增加组数至2-3组以满足减脂所需的代谢消耗；并在备注中明确每周增加5-10%训练量或缩短休息时间的进阶策略。"
+    }
+  }
+}

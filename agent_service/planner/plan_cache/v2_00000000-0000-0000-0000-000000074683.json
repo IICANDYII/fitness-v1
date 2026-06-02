@@ -1,0 +1,230 @@
+{
+  "version": "v2",
+  "generated_at": "2026-06-02T16:53:05",
+  "plan": {
+    "plan_name": "身心掌控·核心塑形3日极简计划",
+    "user_id": "00000000-0000-0000-0000-000000074683",
+    "fitness_goal": "减脂",
+    "fitt_vp_summary": {
+      "frequency": "每周训练3天，建议隔天进行（如周一、三、五），留出充足的恢复时间。",
+      "intensity": "中低强度，注重动作控制、呼吸配合与核心深层肌群的募集，不追求爆发力与力竭。",
+      "time": "每次30分钟（包含5分钟动态热身、20分钟主训练、5分钟拉伸放松）。",
+      "type": "身心控制流训练，融合普拉提控制元素、自重与轻器械（哑铃、壶铃）的多关节复合动作。",
+      "volume": "每个动作安排2组，每组进行15-20次（或静态支撑30-40秒），组间休息45-60秒以维持心率并优化控制力。",
+      "progression": "遵循渐进超负荷原则。当能轻松完成目标次数时，优先通过减缓动作速度（如4秒离心收缩）或微调器械重量（增加1-2kg）来提升难度，而非突然增加训练量。"
+    },
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "theme": "核心控制与下肢稳定",
+        "estimated_duration_min": 30,
+        "fitt_vp_focus": "重点在于骨盆中立位、呼吸与动作的协同，强化臀腹链的控制力。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "warmup_001",
+            "name": "猫牛式呼吸与骨盆倾斜",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "吸气抬头塌腰，呼气拱背低头，感受脊柱的逐节活动与深层腹肌的收缩。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "bodyweight_squat_001",
+            "name": "自重深蹲",
+            "sets": 2,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "下蹲时吸气，臀部向后下方坐，膝盖与脚尖方向一致；起立时呼气，夹紧臀部。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "laying_leg_raises_001",
+            "name": "仰卧抬腿",
+            "sets": 2,
+            "reps_or_duration": "15次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "双手置于臀部两侧，下背部紧贴地面。慢速下放双腿，吸气下放，呼气用腹部力量抬起。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "hamstring_bridge_with_elevated_legs_box_bilateral_001",
+            "name": "箱上仰卧双腿垫高臀桥",
+            "sets": 2,
+            "reps_or_duration": "15次",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "双脚置于箱上（或长凳），呼气时脚跟蹬地抬起臀部至身体呈一直线，顶峰收缩2秒。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_elbow_side_plank_001",
+            "name": "哑铃肘撑侧板式",
+            "sets": 2,
+            "reps_or_duration": "每侧30秒",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "手肘在肩关节正下方，保持身体呈一条直线。初学者可先不持哑铃，专注于侧腹与臀中肌的支撑。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "cooldown_001",
+            "name": "婴儿式与臀部拉伸",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "跪姿，臀部坐于脚跟，双手前伸，额头贴地，配合深呼吸放松下背部与臀部。"
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "theme": "上肢塑形与腹背流线",
+        "estimated_duration_min": 30,
+        "fitt_vp_focus": "侧重于肩胛骨的稳定、胸背对抗肌群的协调，以及腹部深层的抗旋转控制。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "warmup_002",
+            "name": "手臂圈转与肩胛滑动",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "站姿，双臂向两侧延伸画圈，随后做耸肩与沉肩动作，激活肩袖与上背部肌群。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "bodyweight_standing_inverted_row_001",
+            "name": "站姿自重反向划船",
+            "sets": 2,
+            "reps_or_duration": "15次",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "保持身体笔直如钢板，呼气时拉近身体至把手，感受背部肌肉的夹紧，吸气慢速还原。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "bicycle_crunch_001",
+            "name": "仰卧单车卷腹",
+            "sets": 2,
+            "reps_or_duration": "20次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "动作要慢，用对侧肩膀去寻找膝盖，而非肘关节。转体时呼气，腹部始终保持紧绷。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "bodyweight_diamond_knee_push_ups_001",
+            "name": "跪姿钻石俯卧撑",
+            "sets": 2,
+            "reps_or_duration": "12-15次",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "双手大拇指与食指呈心形，膝盖着地。下压时吸气，撑起时呼气，重点雕琢手臂后侧与胸部线条。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "hollow_hold_001",
+            "name": "空心身体支撑",
+            "sets": 2,
+            "reps_or_duration": "30秒",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "下背部必须死死压住地面，双腿与上背部微抬，双手向后延伸，保持均匀的腹式呼吸。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "cooldown_002",
+            "name": "胸前十字拉伸与蛇式拉伸",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "俯卧，双手撑地慢慢抬起上身（蛇式）拉伸腹直肌；随后坐姿拉伸肩部与手臂后侧。"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "theme": "全身平衡与深层稳定",
+        "estimated_duration_min": 30,
+        "fitt_vp_focus": "通过多关节复合动作与静态支撑交替，提高身体协调性、平衡力与燃脂效率。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "warmup_003",
+            "name": "动态世界第一拉伸",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "弓步向前，同侧手肘贴地后向天空转体，激活髋关节、胸椎与全身肌肉。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_goblet_pulse_squat_001",
+            "name": "哑铃高杯脉冲深蹲",
+            "sets": 2,
+            "reps_or_duration": "15次",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "双手捧哑铃于胸前，下蹲至大腿平行地面，在底部做一次微幅脉冲弹动，再站起，增加肌肉在张力下的时间。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "situp_001",
+            "name": "仰卧起坐",
+            "sets": 2,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "双手交叉贴于胸前，利用腹肌力量逐节卷起脊柱，避免颈部过度发力，下放时要慢。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "kettlebell_romanian_deadlift_001",
+            "name": "壶铃罗马尼亚硬拉",
+            "sets": 2,
+            "reps_or_duration": "15次",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "微屈膝，髋部向后推，脊柱保持中立。感受大腿后侧与臀部的拉伸感，起立时夹紧臀部。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "hand_side_plank_001",
+            "name": "手撑侧板支撑",
+            "sets": 2,
+            "reps_or_duration": "每侧30秒",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "单手撑地，手臂垂直于地面，身体侧向呈直线。上方手可指向天空，保持骨盆不往下坠。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "cooldown_003",
+            "name": "大腿后侧与侧腹拉伸",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "坐姿单腿折叠，双手抱住另一侧脚尖拉伸腘绳肌；随后跪姿侧摆拉伸体侧。"
+          }
+        ]
+      }
+    ],
+    "coaching_notes": {
+      "warm_up": "热身阶段应以动态拉伸和关节激活为主，重点激活核心（如腹式呼吸、鸟狗式）与髋关节，使身体微发热，为后续的控制训练做好准备。",
+      "cool_down": "训练后进行5分钟的静态拉伸，重点针对臀部、大腿后侧、腹部及肩颈。配合深长的呼气，帮助降低心率，促进副交感神经兴奋，加速身体恢复。",
+      "nutrition": "减脂期间建议保持适度热量赤字（约300-500大卡）。饮食应以高蛋白（鸡胸肉、鱼、豆腐）、复合碳水（燕麦、糙米）和充足膳食纤维为主，训练后30分钟内补充适量蛋白质与碳水。",
+      "recovery_boost": "安全提示：若您有任何未诊断的关节疼痛或慢性疾病，请在开始前咨询医生。由于您不接受高强度训练，请始终将注意力集中在动作的‘控制’与‘呼吸’上，宁可做慢、做好，也不盲目追求次数。保证每晚7-8小时高质量睡眠，对核心肌肉修复与脂肪代谢至关重要。"
+    },
+    "_pipeline_version": "v2"
+  }
+}

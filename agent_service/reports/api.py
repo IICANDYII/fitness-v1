@@ -674,31 +674,128 @@ def update_plan_viewer_profile(body: ProfileUpdateRequest, user_id: str | None =
     )
     conn.commit()
     conn.close()
+    # 异步重新生成计划
+    job_id = str(_uuid.uuid4())
+    _regen_jobs[job_id] = {"status": "running"}
+    threading.Thread(target=_run_regen, args=(job_id, uid, _prompt_version), daemon=True).start()
+    return {"ok": True, "regen_job_id": job_id}
+
+
+# ── Equipment scene CRUD ─────────────────────────────────────────────────────
+ALL_EQUIPMENT = ["弹力带", "缆绳机", "哑铃", "训练凳", "单杠", "器械", "杠铃", "壶铃", "自重", "双杠", "史密斯架"]
+MAX_SCENES = 5
+
+
+@app.get("/api/plan-viewer/equipment-scenes")
+def get_equipment_scenes(user_id: str | None = None):
+    uid = _resolve_viewer_user(user_id)
+    conn = get_conn()
+    cur  = conn.cursor()
+    cur.execute(
+        "SELECT id, scene_name, equipment, is_active FROM equipment_scene WHERE user_id = %s ORDER BY id",
+        (uid,)
+    )
+    rows = cur.fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+class EquipmentSceneRequest(BaseModel):
+    scene_name: str
+    equipment: list[str]
+    is_active: bool = False
+
+
+@app.post("/api/plan-viewer/equipment-scenes")
+def create_equipment_scene(body: EquipmentSceneRequest, user_id: str | None = None):
+    uid = _resolve_viewer_user(user_id)
+    conn = get_conn()
+    cur  = conn.cursor()
+    cur.execute("SELECT COUNT(*) AS cnt FROM equipment_scene WHERE user_id = %s", (uid,))
+    if cur.fetchone()["cnt"] >= MAX_SCENES:
+        conn.close()
+        raise HTTPException(status_code=400, detail=f"最多只能创建 {MAX_SCENES} 个器械场景")
+    if body.is_active:
+        cur.execute("UPDATE equipment_scene SET is_active = FALSE WHERE user_id = %s", (uid,))
+    cur.execute(
+        "INSERT INTO equipment_scene (user_id, scene_name, equipment, is_active) VALUES (%s, %s, %s, %s) RETURNING id",
+        (uid, body.scene_name, body.equipment, body.is_active)
+    )
+    new_id = cur.fetchone()["id"]
+    conn.commit()
+    conn.close()
+    return {"id": new_id}
+
+
+@app.put("/api/plan-viewer/equipment-scenes/{scene_id}")
+def update_equipment_scene(scene_id: int, body: EquipmentSceneRequest, user_id: str | None = None):
+    uid = _resolve_viewer_user(user_id)
+    conn = get_conn()
+    cur  = conn.cursor()
+    if body.is_active:
+        cur.execute("UPDATE equipment_scene SET is_active = FALSE WHERE user_id = %s", (uid,))
+    cur.execute(
+        "UPDATE equipment_scene SET scene_name = %s, equipment = %s, is_active = %s WHERE id = %s AND user_id = %s",
+        (body.scene_name, body.equipment, body.is_active, scene_id, uid)
+    )
+    conn.commit()
+    conn.close()
     return {"ok": True}
+
+
+@app.delete("/api/plan-viewer/equipment-scenes/{scene_id}")
+def delete_equipment_scene(scene_id: int, user_id: str | None = None):
+    uid = _resolve_viewer_user(user_id)
+    conn = get_conn()
+    cur  = conn.cursor()
+    cur.execute("SELECT is_active FROM equipment_scene WHERE id = %s AND user_id = %s", (scene_id, uid))
+    row = cur.fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="场景不存在")
+    cur.execute("DELETE FROM equipment_scene WHERE id = %s AND user_id = %s", (scene_id, uid))
+    if row["is_active"]:
+        cur.execute(
+            "UPDATE equipment_scene SET is_active = TRUE WHERE id = (SELECT id FROM equipment_scene WHERE user_id = %s ORDER BY id LIMIT 1)",
+            (uid,)
+        )
+    conn.commit()
+    conn.close()
+    return {"ok": True}
+
+
+@app.post("/api/plan-viewer/equipment-scenes/{scene_id}/activate")
+def activate_equipment_scene(scene_id: int, user_id: str | None = None):
+    """Activate a scene, sync equipment to user profile, and trigger plan regeneration."""
+    uid = _resolve_viewer_user(user_id)
+    conn = get_conn()
+    cur  = conn.cursor()
+    cur.execute("UPDATE equipment_scene SET is_active = FALSE WHERE user_id = %s", (uid,))
+    cur.execute(
+        "UPDATE equipment_scene SET is_active = TRUE WHERE id = %s AND user_id = %s RETURNING equipment",
+        (scene_id, uid)
+    )
+    row = cur.fetchone()
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=404, detail="场景不存在")
+    cur.execute(
+        "UPDATE user_profile_long_term SET available_equipment = %s, updated_at = NOW() WHERE user_id = %s",
+        (row["equipment"], uid)
+    )
+    conn.commit()
+    conn.close()
+    # 异步重新生成计划
+    job_id = str(_uuid.uuid4())
+    _regen_jobs[job_id] = {"status": "running"}
+    threading.Thread(target=_run_regen, args=(job_id, uid, _prompt_version), daemon=True).start()
+    return {"ok": True, "equipment": row["equipment"], "regen_job_id": job_id}
 
 
 @app.get("/api/plan-viewer/latest-plan")
 def plan_viewer_latest_plan(version: str | None = None, user_id: str | None = None):
-    """
-    返回指定版本（v2/v3）的最新计划。
-    优先从文件缓存加载（毫秒级）；缓存不存在时回退到数据库最新记录。
-    version 参数未传时使用当前服务器选定版本（_prompt_version）。
-    """
-    from agent_service.planner.plan_generator import load_plan_cache, plan_cache_meta
-
+    """从 workout_plan 表读取最新计划记录。"""
     uid = _resolve_viewer_user(user_id)
-    ver = version or _prompt_version
-
-    # 1. 尝试文件缓存
-    cached = load_plan_cache(uid, ver)
-    if cached:
-        plan = dict(cached)
-        plan.setdefault("_source", "cache")
-        meta = plan_cache_meta(uid, ver) or {}
-        plan["_cached_at"] = meta.get("generated_at")
-        return plan
-
-    # 2. 回退：数据库最新记录（不区分版本）
     conn = get_conn()
     cur  = conn.cursor()
     cur.execute(
@@ -706,7 +803,7 @@ def plan_viewer_latest_plan(version: str | None = None, user_id: str | None = No
         SELECT plan_id, date, goal, plan_json
         FROM workout_plan
         WHERE user_id = %s
-        ORDER BY date DESC
+        ORDER BY date DESC, plan_id DESC
         LIMIT 1
         """,
         (uid,)
@@ -778,11 +875,12 @@ def plan_viewer_muscles_map(user_id: str | None = None):
 
 
 # ── Prompt version management ─────────────────────────────────────────────────
-_prompt_version: str = "v2"   # "v2" | "v3"
+_prompt_version: str = "v4"   # "v2" | "v3" | "v4"
 
 _PROMPT_FILES = {
     "v2": "workout_plan_generator_v2",
     "v3": "workout_plan_generator_v3",
+    "v4": "workout_plan_generator_v4",
 }
 
 
@@ -833,15 +931,32 @@ def get_prompt_content(version: str):
 _regen_jobs: dict[str, dict] = {}
 
 
+_DEFAULT_DAYS_PER_EXP = {"beginner": 3, "intermediate": 4, "advanced": 5}
+
+
+def _patch_schedule(profile: dict) -> dict:
+    """Ensure available_schedule has days_per_week (3-5) and daily_duration_min."""
+    schedule = dict(profile.get("available_schedule") or {})
+    if not schedule.get("days_per_week"):
+        exp = profile.get("experience_level", "intermediate")
+        schedule["days_per_week"] = _DEFAULT_DAYS_PER_EXP.get(exp, 4)
+    schedule["days_per_week"] = max(3, min(5, int(schedule["days_per_week"])))
+    if not schedule.get("daily_duration_min"):
+        schedule["daily_duration_min"] = 60
+    profile = dict(profile)
+    profile["available_schedule"] = schedule
+    return profile
+
+
 def _run_regen(job_id: str, user_id: str, version: str = "v2"):
     try:
         from agent_service.planner.plan_generator import (
             fetch_user_profile, fetch_dynamic_state, fetch_history_plans,
             filter_exercises_by_rules, rank_by_vector,
-            generate_plan_with_llm, generate_plan_v3,
-            save_workout_plan, save_plan_cache,
+            generate_plan_with_llm, generate_plan_v3, generate_plan_v4,
+            save_workout_plan, save_plan_cache, _ensure_user_in_profile,
         )
-        profile  = fetch_user_profile(user_id)
+        profile  = _patch_schedule(fetch_user_profile(user_id))
         dynamic  = fetch_dynamic_state(user_id)
         history  = fetch_history_plans(user_id)
         filtered = filter_exercises_by_rules(profile)
@@ -849,13 +964,16 @@ def _run_regen(job_id: str, user_id: str, version: str = "v2"):
             _regen_jobs[job_id] = {"status": "error", "error": "未筛出任何动作"}
             return
         ranked = rank_by_vector(filtered, profile, dynamic, history, top_k=40)
-        if version == "v3":
+        if version == "v4":
+            plan = generate_plan_v4(ranked, profile, dynamic)
+        elif version == "v3":
             plan = generate_plan_v3(ranked, profile, dynamic)
         else:
             plan = generate_plan_with_llm(ranked, profile, dynamic)
             plan["_pipeline_version"] = "v2"
+        _ensure_user_in_profile(user_id, profile)
         save_workout_plan(user_id, profile["fitness_goal"], plan)
-        save_plan_cache(user_id, version, plan)          # 持久化到文件缓存
+        save_plan_cache(user_id, version, plan)
         _regen_jobs[job_id] = {"status": "done"}
     except Exception as exc:
         _regen_jobs[job_id] = {"status": "error", "error": str(exc)}
@@ -920,6 +1038,61 @@ def cache_status(user_id: str | None = None):
         "v3": plan_cache_meta(uid, "v3"),
         "pregen_jobs": _pregen_jobs,
     }
+
+
+# ── Exercise swap (v4 replacement_pool) ───────────────────────────────────────
+
+class SwapExerciseRequest(BaseModel):
+    day_index: int
+    exercise_index: int
+    replacement_exercise_id: str
+    replacement_name: str
+    volume_adjustment: dict[str, float] | None = None
+
+
+@app.post("/api/plan-viewer/swap-exercise")
+def swap_exercise(body: SwapExerciseRequest, user_id: str | None = None):
+    """Swap an exercise in the cached v4 plan with one from its replacement_pool."""
+    from agent_service.planner.plan_generator import load_plan_cache, save_plan_cache
+
+    uid = _resolve_viewer_user(user_id)
+    plan = load_plan_cache(uid, "v4")
+    if not plan:
+        raise HTTPException(status_code=404, detail="v4 计划缓存不存在")
+
+    schedule = plan.get("weekly_schedule", [])
+    if body.day_index < 0 or body.day_index >= len(schedule):
+        raise HTTPException(status_code=400, detail="day_index 越界")
+    exercises = schedule[body.day_index].get("exercises", [])
+    if body.exercise_index < 0 or body.exercise_index >= len(exercises):
+        raise HTTPException(status_code=400, detail="exercise_index 越界")
+
+    ex = exercises[body.exercise_index]
+    old_id = ex.get("exercise_id")
+    old_name = ex.get("name")
+
+    adj = body.volume_adjustment or {}
+    sets_mult = adj.get("sets_multiplier", 1.0)
+    reps_mult = adj.get("reps_multiplier", 1.0)
+
+    if sets_mult != 1.0 and ex.get("sets"):
+        ex["sets"] = max(1, round(ex["sets"] * sets_mult))
+    if reps_mult != 1.0 and ex.get("reps_or_duration"):
+        rod = ex["reps_or_duration"]
+        if isinstance(rod, str):
+            import re
+            m = re.match(r'^(\d+)', rod)
+            if m:
+                new_val = max(1, round(int(m.group(1)) * reps_mult))
+                rod = re.sub(r'^\d+', str(new_val), rod)
+                ex["reps_or_duration"] = rod
+
+    ex["exercise_id"] = body.replacement_exercise_id
+    ex["name"] = body.replacement_name
+    ex.pop("replacement_pool", None)
+
+    save_plan_cache(uid, "v4", plan)
+    return {"ok": True, "swapped": {"old": old_name, "new": body.replacement_name}}
 
 
 # ── Serve plan_viewer.html at /plan-viewer ────────────────────────────────────

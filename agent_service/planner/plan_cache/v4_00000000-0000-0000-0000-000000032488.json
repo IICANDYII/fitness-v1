@@ -1,0 +1,346 @@
+{
+  "version": "v4",
+  "generated_at": "2026-06-02T19:22:14",
+  "plan": {
+    "plan_name": "女性健康维持与身心控制训练计划",
+    "user_id": "00000000-0000-0000-0000-000000032488",
+    "fitness_goal": "保持健康",
+    "fitt_vp_summary": {
+      "frequency": "每周3天，隔天训练",
+      "intensity": "中等强度，心率控制在60%-75% HRmax",
+      "time": "每次30分钟",
+      "type": "力量、核心、灵活性与有氧结合",
+      "volume": "每动作2-3组，每组12-15次",
+      "progression": "每两周增加5%训练量"
+    },
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "theme": "推与核心稳定性",
+        "estimated_duration_min": 30,
+        "fitt_vp_focus": "全身控制与推力模式",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "hand_plank_001",
+            "name": "手撑平板支撑",
+            "sets": 2,
+            "reps_or_duration": "45秒",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "激活核心，保持身体呈直线",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": [
+                {
+                  "exercise_id": "forearm_plank_001",
+                  "name": "前臂平板支撑",
+                  "replacement_score": 90,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "push_up_001",
+            "name": "俯卧撑",
+            "sets": 3,
+            "reps_or_duration": "12次",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "保持躯干稳定，避免塌腰",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [
+                {
+                  "exercise_id": "bodyweight_knee_push_ups_001",
+                  "name": "自重跪姿俯卧撑",
+                  "replacement_score": 95,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.2
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "decline_push_up_001",
+                  "name": "下斜俯卧撑",
+                  "replacement_score": 92,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "elbow_side_plank_001",
+            "name": "肘撑侧板支撑",
+            "sets": 3,
+            "reps_or_duration": "45秒",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "侧重腹斜肌控制",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": [
+                {
+                  "exercise_id": "hand_side_plank_001",
+                  "name": "手撑侧板支撑",
+                  "replacement_score": 95,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "hollow_hold_001",
+            "name": "空心身体支撑",
+            "sets": 2,
+            "reps_or_duration": "30秒",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "静态控制，拉伸腹部肌群",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "theme": "拉与背部控制",
+        "estimated_duration_min": 30,
+        "fitt_vp_focus": "背部肌群激活与核心耐力",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "hanging_knee_raises_001",
+            "name": "悬垂提膝",
+            "sets": 2,
+            "reps_or_duration": "10次",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "动态激活核心",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "bodyweight_standing_inverted_row_001",
+            "name": "站姿自重反向划船",
+            "sets": 3,
+            "reps_or_duration": "12次",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "感受背阔肌收缩",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "weighted_forearm_plank_001",
+            "name": "负重前臂平板支撑",
+            "sets": 3,
+            "reps_or_duration": "45秒",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "强化核心抗旋转能力",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [
+                {
+                  "exercise_id": "forearm_plank_001",
+                  "name": "前臂平板支撑",
+                  "replacement_score": 95,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "laying_leg_raises_001",
+            "name": "仰卧抬腿",
+            "sets": 2,
+            "reps_or_duration": "12次",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "缓慢控制，拉伸下背部",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "theme": "下肢与有氧耐力",
+        "estimated_duration_min": 30,
+        "fitt_vp_focus": "下肢力量与心肺功能",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "bodyweight_squat_001",
+            "name": "自重深蹲",
+            "sets": 2,
+            "reps_or_duration": "15次",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "激活下肢关节",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": [
+                {
+                  "exercise_id": "split_squat_001",
+                  "name": "分腿蹲",
+                  "replacement_score": 90,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.8
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "cardio_skater_001",
+            "name": "侧向滑步跳",
+            "sets": 3,
+            "reps_or_duration": "20次",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "提升心率，强化侧向稳定性",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [
+                {
+                  "exercise_id": "cardio_in_and_out_forward_001",
+                  "name": "前后进退跳",
+                  "replacement_score": 85,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "forward_lunges_001",
+            "name": "前跨步箭步蹲",
+            "sets": 3,
+            "reps_or_duration": "12次",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "平衡与下肢力量",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [
+                {
+                  "exercise_id": "bodyweight_reverse_lunge_001",
+                  "name": "自重后跨步蹲",
+                  "replacement_score": 95,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 1.0
+                  }
+                }
+              ],
+              "harder_version": [
+                {
+                  "exercise_id": "lateral_lunge_001",
+                  "name": "侧跨步蹲",
+                  "replacement_score": 90,
+                  "volume_adjustment": {
+                    "sets_multiplier": 1.0,
+                    "reps_multiplier": 0.9
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "mountain_climber_001",
+            "name": "登山者",
+            "sets": 2,
+            "reps_or_duration": "30秒",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "动态拉伸髋部",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      }
+    ],
+    "coaching_notes": {
+      "warm_up": "每个动作前进行5分钟关节活动，确保心率平稳上升。",
+      "cool_down": "训练后进行5分钟静态拉伸，重点针对当天训练肌群。",
+      "nutrition": "运动后补充适量蛋白质与碳水化合物，促进肌肉修复。",
+      "recovery_boost": "保证充足睡眠，若感到过度疲劳，可将训练强度降低20%。"
+    },
+    "_pipeline_version": "v4",
+    "_validation": {
+      "is_valid": false,
+      "score": 4,
+      "issues": [
+        "Day 1 拉伸阶段错误：空心身体支撑属于核心强化动作，非拉伸/放松动作。",
+        "Day 2 拉伸阶段错误：仰卧抬腿属于核心强化动作，非拉伸/放松动作。",
+        "Day 3 拉伸阶段错误：登山者属于有氧/核心强化动作，非拉伸/放松动作。",
+        "类型（Type）违规：Day 1 主训练仅包含 2 个动作，未达到至少 3 个动作的最低要求。",
+        "类型（Type）违规：Day 2 主训练仅包含 2 个动作，未达到至少 3 个动作的最低要求。",
+        "类型（Type）违规：Day 3 主训练仅包含 2 个动作，未达到至少 3 个动作的最低要求。",
+        "类型（Type）违规：所有日期均缺乏明确的静态拉伸或放松环节，仅以训练动作替代。"
+      ],
+      "suggestions": "整体评价：计划未通过审核。主要问题在于拉伸阶段被错误地填充为强化训练动作，且每日主训练动作数量不足（未达到3-12个的要求）。请将拉伸阶段替换为针对性的静态拉伸动作（如：胸部拉伸、婴儿式、大腿前侧拉伸等），并增加主训练动作以覆盖更多运动模式。"
+    }
+  }
+}

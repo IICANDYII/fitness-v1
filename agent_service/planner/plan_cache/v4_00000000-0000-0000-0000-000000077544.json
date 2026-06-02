@@ -1,0 +1,303 @@
+{
+  "version": "v4",
+  "generated_at": "2026-06-02T19:21:38",
+  "plan": {
+    "plan_name": "健康维护耐力与力量平衡计划",
+    "user_id": "00000000-0000-0000-0000-000000077544",
+    "fitness_goal": "保持健康",
+    "fitt_vp_summary": {
+      "frequency": "每周3天，隔天训练",
+      "intensity": "中等强度，60%-75% HRmax",
+      "time": "20分钟/次",
+      "type": "力量训练+核心训练+灵活性训练",
+      "volume": "每天3个主训练动作，每组8-12次，共3组",
+      "progression": "每两周增加5%训练量"
+    },
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "theme": "推力与核心",
+        "estimated_duration_min": 20,
+        "fitt_vp_focus": "肌肥大与核心稳定性",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "weighted_forearm_plank_001",
+            "name": "负重前臂平板支撑",
+            "sets": 1,
+            "reps_or_duration": "60秒",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "激活核心，保持身体平直",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "burpee_001",
+            "name": "波比跳",
+            "sets": 3,
+            "reps_or_duration": "10次",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "全身复合动作，提升心率",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "elevated_pike_press_001",
+            "name": "脚垫高折刀俯卧撑",
+            "sets": 3,
+            "reps_or_duration": "10次",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "强化肩部与核心",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_pushup_001",
+            "name": "弹力带俯卧撑",
+            "sets": 3,
+            "reps_or_duration": "12次",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "胸部肌肥大训练",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "band_crunch_001",
+            "name": "弹力带卷腹",
+            "sets": 1,
+            "reps_or_duration": "15次",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "轻量化腹部收缩",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "theme": "核心与耐力",
+        "estimated_duration_min": 20,
+        "fitt_vp_focus": "核心耐力与稳定性",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "band_crunch_001",
+            "name": "弹力带卷腹",
+            "sets": 1,
+            "reps_or_duration": "45秒",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "腹部预热",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "hollow_hold_001",
+            "name": "空心身体支撑",
+            "sets": 3,
+            "reps_or_duration": "40秒",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "核心深层肌肉激活",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "weighted_forearm_plank_001",
+            "name": "负重前臂平板支撑",
+            "sets": 3,
+            "reps_or_duration": "45秒",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "核心抗旋转能力",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "side_plank_reach_through_001",
+            "name": "侧板支撑穿针式",
+            "sets": 3,
+            "reps_or_duration": "10次/侧",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "腹斜肌训练",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "hollow_hold_001",
+            "name": "空心身体支撑",
+            "sets": 1,
+            "reps_or_duration": "30秒",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "核心放松与控制",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "theme": "下肢与臀部",
+        "estimated_duration_min": 20,
+        "fitt_vp_focus": "下肢力量与稳定性",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "lateral_lunge_001",
+            "name": "侧跨步蹲",
+            "sets": 1,
+            "reps_or_duration": "12次",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "下肢动态拉伸",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "nordic_hamstring_curl_001",
+            "name": "北欧腘绳肌弯举",
+            "sets": 3,
+            "reps_or_duration": "8次",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "腘绳肌离心控制",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "glute_ham_raise_001",
+            "name": "腘绳肌臀部起",
+            "sets": 3,
+            "reps_or_duration": "10次",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "臀部与后链强化",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "lateral_lunge_001",
+            "name": "侧跨步蹲",
+            "sets": 3,
+            "reps_or_duration": "12次",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "多平面下肢训练",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "side_plank_reach_through_001",
+            "name": "侧板支撑穿针式",
+            "sets": 1,
+            "reps_or_duration": "30秒",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "躯干侧向拉伸",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      }
+    ],
+    "coaching_notes": {
+      "warm_up": "确保每个动作前进行5分钟关节活动度练习。",
+      "cool_down": "训练后进行5分钟静态拉伸，重点针对训练肌群。",
+      "nutrition": "保持充足水分，训练后补充适量蛋白质。",
+      "recovery_boost": "保证每日7-8小时睡眠，训练日之间安排主动恢复活动。"
+    },
+    "_pipeline_version": "v4",
+    "_validation": {
+      "is_valid": false,
+      "score": 4,
+      "issues": [
+        "Day 1：拉伸阶段错误地安排了核心力量动作（弹力带卷腹），不符合拉伸/冷身定义。",
+        "Day 2：拉伸阶段错误地安排了核心力量动作（空心身体支撑），不符合拉伸/冷身定义。",
+        "Day 3：拉伸阶段错误地安排了核心力量动作（侧板支撑穿针式），不符合拉伸/冷身定义。",
+        "整体：所有训练日的拉伸阶段均由力量训练动作替代，缺乏真正的静态拉伸或低强度恢复动作，违反T（类型）与T（时间）规范。",
+        "整体：主训练动作数量不足，Day 1、Day 2、Day 3 均仅包含3个主训练动作，处于总量要求的下限，且部分动作重复（如Day 2热身与拉伸动作逻辑混乱）。",
+        "Day 2：热身阶段安排了高强度核心动作（弹力带卷腹），不符合热身阶段应以动态拉伸或低强度激活为主的原则。"
+      ],
+      "suggestions": "整体评价：计划在动作选择上具备一定强度，但严重违反了训练阶段的定义。请将各天的‘拉伸’阶段替换为针对目标肌群的静态拉伸动作（如：俯卧撑后应进行胸部拉伸，深蹲后应进行股四头肌/腘绳肌拉伸）。热身阶段应改为动态关节活动度练习，而非直接进行高强度核心训练。请确保主训练动作的动作模式多样化，并严格区分训练阶段与恢复阶段。"
+    }
+  }
+}

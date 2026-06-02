@@ -1,0 +1,272 @@
+{
+  "version": "v4",
+  "generated_at": "2026-06-02T19:21:14",
+  "plan": {
+    "plan_name": "Intermediate Hypertrophy 5-Day Split",
+    "user_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+    "fitness_goal": "增肌",
+    "fitt_vp_summary": {
+      "frequency": "每周5天",
+      "intensity": "70%-85% 1RM",
+      "time": "90分钟/天",
+      "type": "力量训练、核心训练、灵活性训练",
+      "volume": "3-4组/动作，8-12次/组",
+      "progression": "每两周增加2%-5%负荷"
+    },
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "theme": "胸部与下肢复合",
+        "estimated_duration_min": 90,
+        "fitt_vp_focus": "肌肥大",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "dumbbell_guillotine_incline_bench_press_001",
+            "name": "哑铃断头台斜板卧推",
+            "sets": 2,
+            "reps_or_duration": "15",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "使用极轻重量进行动态激活",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_single_leg_heels_elevated_hip_thrust_001",
+            "name": "哑铃单腿足跟抬高臀推",
+            "sets": 4,
+            "reps_or_duration": "10",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "复合动作，优先大肌群",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_internally_rotated_incline_chest_fly_001",
+            "name": "哑铃内旋斜板飞鸟",
+            "sets": 4,
+            "reps_or_duration": "12",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "胸部孤立动作",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "dumbbell_russian_twist_001",
+            "name": "哑铃俄罗斯转体",
+            "sets": 3,
+            "reps_or_duration": "20",
+            "rest_sec": 60,
+            "superset_group": null,
+            "notes": "核心训练作为拉伸阶段的补充",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "theme": "背部与拉力",
+        "estimated_duration_min": 90,
+        "fitt_vp_focus": "肌肥大",
+        "exercises": [
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_pullover_001",
+            "name": "哑铃仰卧拉起",
+            "sets": 4,
+            "reps_or_duration": "10",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "背阔肌孤立刺激",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_decline_guillotine_bench_press_001",
+            "name": "下斜哑铃断头台卧推",
+            "sets": 4,
+            "reps_or_duration": "8",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "复合动作，注意肩部稳定",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "theme": "下肢力量",
+        "estimated_duration_min": 90,
+        "fitt_vp_focus": "力量与肌肥大",
+        "exercises": [
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_bulgarian_split_squat_001",
+            "name": "哑铃保加利亚单腿蹲",
+            "sets": 4,
+            "reps_or_duration": "8",
+            "rest_sec": 150,
+            "superset_group": null,
+            "notes": "高强度复合动作",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_staggered_deadlift_001",
+            "name": "哑铃前后分腿硬拉",
+            "sets": 4,
+            "reps_or_duration": "10",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "腘绳肌复合动作",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "theme": "肩部与核心",
+        "estimated_duration_min": 90,
+        "fitt_vp_focus": "肌肥大",
+        "exercises": [
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_arnold_press_001",
+            "name": "哑铃阿诺德推举",
+            "sets": 4,
+            "reps_or_duration": "10",
+            "rest_sec": 120,
+            "superset_group": null,
+            "notes": "肩部复合动作",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_wood_chopper_001",
+            "name": "哑铃伐木",
+            "sets": 3,
+            "reps_or_duration": "12",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "核心与肩部协同",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      },
+      {
+        "day": 5,
+        "theme": "手臂与核心",
+        "estimated_duration_min": 90,
+        "fitt_vp_focus": "肌肥大",
+        "exercises": [
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_incline_skullover_001",
+            "name": "哑铃斜板仰卧拉伸臂屈伸",
+            "sets": 4,
+            "reps_or_duration": "12",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "肱三头肌孤立",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_rolling_tricep_extension_001",
+            "name": "哑铃滚动臂屈伸",
+            "sets": 4,
+            "reps_or_duration": "12",
+            "rest_sec": 90,
+            "superset_group": null,
+            "notes": "肱三头肌强化",
+            "replacement_pool": {
+              "same_equipment": [],
+              "different_equipment": [],
+              "easier_version": [],
+              "harder_version": []
+            }
+          }
+        ]
+      }
+    ],
+    "coaching_notes": {
+      "warm_up": "每节课前进行5-10分钟低强度有氧及动态拉伸。",
+      "cool_down": "每节课后进行静态拉伸，重点针对当日训练肌群。",
+      "nutrition": "保证每日蛋白质摄入量在1.6-2.0g/kg体重，训练后补充碳水。",
+      "recovery_boost": "保证每日7-9小时睡眠，疲劳度高时可适当减少组数。"
+    },
+    "_pipeline_version": "v4",
+    "_validation": {
+      "is_valid": false,
+      "score": 4,
+      "issues": [
+        "热身规范违规：Day 1 热身阶段包含哑铃断头台斜板卧推，属于高负荷复合动作，不符合热身原则。",
+        "拉伸规范违规：Day 1 拉伸阶段包含哑铃俄罗斯转体，属于核心力量训练，非静态拉伸。",
+        "类型违规：Day 2、Day 3、Day 4、Day 5 均缺失热身阶段。",
+        "类型违规：Day 2、Day 3、Day 4、Day 5 均缺失拉伸阶段。",
+        "类型违规：Day 2、Day 3、Day 4、Day 5 每日主训练动作数量少于 3 个，未达到总量要求。",
+        "类型违规：Day 2、Day 4、Day 5 每日主训练动作未覆盖至少 2 种不同 movement_pattern。",
+        "安全性违规：Day 2 包含下斜哑铃断头台卧推，该动作对肩袖肌群压力极大，属于高风险动作，建议替换为标准哑铃卧推。"
+      ],
+      "suggestions": "整体评价：计划未满足FITT-VP规范。主要问题在于每日训练结构不完整（缺失热身与拉伸），且主训练动作数量不足，导致运动模式覆盖面过窄。建议为每一天补充完整的动态热身与静态拉伸环节，并增加主训练动作数量以确保覆盖推、拉、下肢及核心等多种运动模式。同时，请移除所有断头台卧推变式，改用标准卧推以保护肩关节。"
+    }
+  }
+}

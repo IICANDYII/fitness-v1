@@ -510,6 +510,176 @@
     font-size: .78rem; line-height: 1.7; color: #d4c87a;
   }
   .validation-list.open { display: block; }
+
+  /* ── Equipment scene ────────────────────────────────────── */
+  .scene-section { margin-top: 16px; }
+  .scene-section-label {
+    font-size: .78rem; color: var(--muted); margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .scene-list { display: flex; flex-direction: column; gap: 8px; }
+  .scene-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .scene-card:hover { border-color: var(--accent); }
+  .scene-card.active {
+    border-color: var(--green);
+    background: rgba(67,233,123,.06);
+  }
+  .scene-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .scene-card-name {
+    font-size: .85rem; font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .scene-card-name .active-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--green); display: inline-block;
+  }
+  .scene-card-actions {
+    display: flex; gap: 4px;
+  }
+  .scene-card-actions button {
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font-size: .75rem; padding: 2px 6px;
+    border-radius: 4px; transition: all .15s;
+  }
+  .scene-card-actions button:hover { color: var(--text); background: rgba(255,255,255,.08); }
+  .scene-card-actions button.del:hover { color: var(--accent2); }
+  .scene-equip-pills {
+    display: flex; flex-wrap: wrap; gap: 5px;
+  }
+  .scene-equip-pills .pill { font-size: .72rem; padding: 2px 9px; }
+  .scene-collapsed .scene-equip-pills { display: none; }
+  .btn-add-scene {
+    background: rgba(108,99,255,.12);
+    border: 1px dashed rgba(108,99,255,.35);
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    color: #a09cf9;
+    font-size: .78rem;
+    transition: all .2s;
+  }
+  .btn-add-scene:hover { background: rgba(108,99,255,.2); border-style: solid; }
+
+  /* ── Scene edit modal ───────────────────────────────────── */
+  .scene-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.6);
+    display: grid; place-items: center;
+    z-index: 1000;
+  }
+  .scene-modal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    width: 380px; max-width: 90vw;
+    box-shadow: 0 8px 40px rgba(0,0,0,.5);
+  }
+  .scene-modal h3 {
+    font-size: .95rem; margin-bottom: 16px;
+  }
+  .scene-modal label {
+    font-size: .78rem; color: var(--muted); display: block; margin-bottom: 6px;
+  }
+  .scene-modal input[type="text"] {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: .88rem;
+    padding: 6px 10px;
+    width: 100%;
+    outline: none;
+    margin-bottom: 14px;
+  }
+  .scene-modal input[type="text"]:focus { border-color: var(--accent); }
+  .equip-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+    margin-bottom: 18px;
+  }
+  .equip-option {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 0;
+    text-align: center;
+    cursor: pointer;
+    font-size: .78rem;
+    transition: all .15s;
+    user-select: none;
+  }
+  .equip-option:hover { border-color: var(--accent); }
+  .equip-option.selected {
+    background: rgba(67,233,123,.12);
+    border-color: rgba(67,233,123,.4);
+    color: var(--green);
+    font-weight: 600;
+  }
+  .scene-modal-btns {
+    display: flex; justify-content: flex-end; gap: 8px;
+  }
+
+  /* ── Exercise swap button & panel ──────────────────────────── */
+  .btn-swap {
+    background: rgba(108,99,255,.12);
+    border: 1px solid rgba(108,99,255,.3);
+    color: #a09cf9;
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: .7rem; font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    margin-top: 6px;
+  }
+  .btn-swap:hover { background: rgba(108,99,255,.25); color: #fff; }
+  .swap-panel {
+    margin-top: 10px;
+    background: rgba(108,99,255,.06);
+    border: 1px solid rgba(108,99,255,.2);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .swap-category { font-size: .72rem; font-weight: 700; color: var(--muted); margin: 8px 0 4px; text-transform: uppercase; letter-spacing: .05em; }
+  .swap-category:first-child { margin-top: 0; }
+  .swap-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 5px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .15s;
+    font-size: .82rem;
+  }
+  .swap-item:hover { background: rgba(108,99,255,.12); }
+  .swap-item-name { flex: 1; }
+  .swap-item-score {
+    font-size: .7rem; color: var(--muted); margin-left: 8px;
+    background: rgba(255,255,255,.06);
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  .swap-item-btn {
+    background: rgba(67,233,123,.15);
+    border: 1px solid rgba(67,233,123,.3);
+    color: var(--green);
+    border-radius: 5px;
+    padding: 2px 8px;
+    font-size: .7rem; font-weight: 600;
+    cursor: pointer;
+    margin-left: 8px;
+    transition: all .15s;
+  }
+  .swap-item-btn:hover { background: rgba(67,233,123,.3); color: #fff; }
 </style>
 </head>
 <body>
@@ -834,10 +1004,16 @@ function renderProfile(profile) {
     <p style="font-size:.78rem;color:var(--muted);margin-bottom:8px">训练风格</p>
     <div class="pill-row">${styles.map(s=>`<span class="pill">${s}</span>`).join('')}</div>
     <p style="font-size:.78rem;color:var(--muted);margin:14px 0 8px">可用器械</p>
-    <div class="pill-row">${equip.map(e=>`<span class="pill green">${e}</span>`).join('')}</div>
-    <p style="font-size:.78rem;color:var(--muted);margin:14px 0 8px">训练时段</p>
+    <div class="pill-row" id="equip-pills">${equip.map(e=>`<span class="pill green">${e}</span>`).join('')}</div>
+    <div class="scene-section">
+      <div class="scene-section-label">
+        <span>器械场景</span>
+      </div>
+      <div class="scene-list" id="scene-list"></div>
+    </div>
     <div class="pill-row">${(profile.available_schedule?.free_time_slots||[]).map(t=>`<span class="pill yellow">${t}</span>`).join('')}</div>
   `;
+  loadEquipmentScenes();
 }
 
 function renderSummary(schedule) {
@@ -864,23 +1040,110 @@ function renderDayTabs(schedule, onSelect) {
     btn.addEventListener('click', () => {
       container.querySelectorAll('.day-tab').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      onSelect(+btn.dataset.i);
+      onSelect(+btn.dataset.i, +btn.dataset.i);
     });
   });
 }
 
 let _currentMuscleMap = {};
+let _currentSchedule = [];
+let _currentDayIndex = 0;
 
-function renderDayDetail(day) {
+function buildSwapPanel(ex, dayIdx, exIdx) {
+  const pool = ex.replacement_pool;
+  if (!pool) return '';
+
+  // Collect all exercise_ids already in this day's plan (to exclude from replacements)
+  const dayExercises = _currentSchedule[dayIdx]?.exercises || [];
+  const usedIds = new Set(dayExercises.map(e => e.exercise_id).filter(Boolean));
+
+  const categories = [
+    { key: 'same_equipment',     label: '同器械替换' },
+    { key: 'different_equipment', label: '换器械替换' },
+    { key: 'easier_version',     label: '更简单版本' },
+    { key: 'harder_version',     label: '更难版本' },
+  ];
+
+  let hasAny = false;
+  let items = '';
+  const seenIds = new Set();  // cross-category dedup
+
+  for (const cat of categories) {
+    const list = pool[cat.key];
+    if (!list || list.length === 0) continue;
+
+    // Filter: skip duplicates across categories & skip exercises already in this day's plan
+    const filtered = list.filter(r => {
+      if (!r.exercise_id || seenIds.has(r.exercise_id) || usedIds.has(r.exercise_id)) return false;
+      seenIds.add(r.exercise_id);
+      return true;
+    });
+    if (filtered.length === 0) continue;
+
+    hasAny = true;
+    items += `<div class="swap-category">${cat.label}</div>`;
+    for (const r of filtered) {
+      const adj = r.volume_adjustment || {};
+      const adjJson = JSON.stringify(adj).replace(/"/g, '&quot;');
+      items += `
+        <div class="swap-item">
+          <span class="swap-item-name">${r.name}</span>
+          <span class="swap-item-score">匹配 ${r.replacement_score}</span>
+          <button class="swap-item-btn"
+            onclick="event.stopPropagation(); doSwap(${dayIdx}, ${exIdx}, '${r.exercise_id}', '${r.name.replace(/'/g,"\\'")}', '${adjJson}')">
+            替换
+          </button>
+        </div>`;
+    }
+  }
+  if (!hasAny) return '';
+  return `<div class="swap-panel" id="swap-panel-${dayIdx}-${exIdx}" style="display:none">${items}</div>`;
+}
+
+function toggleSwapPanel(dayIdx, exIdx) {
+  const panel = document.getElementById(`swap-panel-${dayIdx}-${exIdx}`);
+  if (panel) panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+async function doSwap(dayIdx, exIdx, newId, newName, adjJson) {
+  const adj = JSON.parse(adjJson.replace(/&quot;/g, '"'));
+  try {
+    const res = await fetch(`/api/plan-viewer/swap-exercise${_uq()}`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        day_index: dayIdx,
+        exercise_index: exIdx,
+        replacement_exercise_id: newId,
+        replacement_name: newName,
+        volume_adjustment: adj,
+      }),
+    });
+    if (!res.ok) throw new Error((await res.json()).detail || '替换失败');
+    showToast(`已替换为: ${newName}`);
+    await reloadSchedule('v4');
+  } catch (e) {
+    showToast('替换失败: ' + e.message, true);
+  }
+}
+
+function renderDayDetail(day, dayIdx) {
+  if (dayIdx !== undefined) _currentDayIndex = dayIdx;
+  const di = _currentDayIndex;
   const container = document.getElementById('day-detail');
-  container.innerHTML = day.exercises.map(ex => {
+  const isV4 = _currentVersion === 'v4';
+
+  container.innerHTML = day.exercises.map((ex, exIdx) => {
     const pk = phaseKey(ex.phase);
     const isSS = ex.superset_group && ex.superset_group !== 'null';
     const dotClass = isSS ? 'superset' : pk;
     const cardClass = isSS ? 'superset' : pk;
-    const phaseLabel = isSS ? `超级组 ${ex.superset_group}` : (ex.phase || '主训练');
+    const phaseCnMap = { warmup: '热身', stretch: '拉伸', main: '主训练' };
+    const phaseLabel = isSS ? `超级组 ${ex.superset_group}` : (phaseCnMap[pk] || '主训练');
     const phaseCls   = isSS ? 'superset' : pk;
     const miniSvg    = buildMuscleMini(ex.exercise_id, _currentMuscleMap);
+    const hasPool    = isV4 && ex.replacement_pool &&
+      Object.values(ex.replacement_pool).some(arr => arr && arr.length > 0);
 
     return `
     <div class="tl-item">
@@ -897,6 +1160,8 @@ function renderDayDetail(day) {
             ${ex.rest_sec ? `<span>⏸ 休息 ${ex.rest_sec}s</span>` : ''}
           </div>
           ${ex.notes ? `<div class="ex-notes">${ex.notes}</div>` : ''}
+          ${hasPool ? `<button class="btn-swap" onclick="toggleSwapPanel(${di}, ${exIdx})">🔄 切换动作</button>` : ''}
+          ${hasPool ? buildSwapPanel(ex, di, exIdx) : ''}
         </div>
         ${miniSvg}
       </div>
@@ -1158,8 +1423,7 @@ function buildTagEditor(styles, equip, slots) {
     </div>`;
   }
   return section('训练风格', 'tags-style', '',       styles, '输入风格') +
-         section('可用器械', 'tags-equip', 'green',  equip,  '输入器械') +
-         section('训练时段', 'tags-slots', 'yellow', slots,  '输入时段');
+         section('可用器械', 'tags-equip', 'green',  equip,  '输入器械');
 }
 
 function renderEditPills(items, cls) {
@@ -1266,9 +1530,10 @@ async function reloadSchedule(version) {
   const plan = await planRes.json();
   _currentMuscleMap = musclesRes.ok ? await musclesRes.json() : {};
   const schedule = plan.weekly_schedule || [];
+  _currentSchedule = schedule;
   renderSummary(schedule);
-  renderDayTabs(schedule, i => renderDayDetail(schedule[i]));
-  if (schedule.length > 0) renderDayDetail(schedule[0]);
+  renderDayTabs(schedule, i => renderDayDetail(schedule[i], i));
+  if (schedule.length > 0) renderDayDetail(schedule[0], 0);
   renderCoachingNotes(plan.coaching_notes);
   renderValidationIssues(plan);
 }
@@ -1337,7 +1602,7 @@ function showToast(msg, isError = false) {
 // ════════════════════════════════════════════════════════════
 // Plan version (fixed v3)
 // ════════════════════════════════════════════════════════════
-const _currentVersion = 'v3';
+const _currentVersion = 'v4';
 
 function renderValidationIssues(plan) {
   const area = document.getElementById('validation-area');
@@ -1426,10 +1691,11 @@ async function renderAllForCurrentUser() {
       profile.gender === 'female' ? '🧘‍♀️' : '🏋️';
 
     _profile = profile;
+    _currentSchedule = schedule;
     renderProfile(profile);
     renderSummary(schedule);
-    renderDayTabs(schedule, i => renderDayDetail(schedule[i]));
-    if (schedule.length > 0) renderDayDetail(schedule[0]);
+    renderDayTabs(schedule, i => renderDayDetail(schedule[i], i));
+    if (schedule.length > 0) renderDayDetail(schedule[0], 0);
 
     renderCoachingNotes(plan.coaching_notes);
     renderValidationIssues(plan);
@@ -1445,6 +1711,130 @@ async function renderAllForCurrentUser() {
     document.getElementById('day-detail').innerHTML =
       `<div class="error-box">⚠️ ${err.message}<br><small>请确认后端 API 已启动</small></div>`;
   }
+}
+
+// ════════════════════════════════════════════════════════════
+// Equipment scenes
+// ════════════════════════════════════════════════════════════
+const ALL_EQUIPMENT = ["弹力带","缆绳机","哑铃","训练凳","单杠","器械","杠铃","壶铃","自重","双杠","史密斯架"];
+let _scenes = [];
+let _expandedSceneId = null;
+
+async function loadEquipmentScenes() {
+  const res = await fetch(`${API}/api/plan-viewer/equipment-scenes${_uq()}`);
+  _scenes = await res.json();
+  renderSceneList();
+}
+
+function renderSceneList() {
+  const container = document.getElementById('scene-list');
+  if (!container) return;
+  const canAdd = _scenes.length < 5;
+  container.innerHTML = _scenes.map(s => {
+    const isExpanded = _expandedSceneId === s.id;
+    return `
+    <div class="scene-card ${s.is_active ? 'active' : ''} ${isExpanded ? '' : 'scene-collapsed'}"
+         onclick="toggleSceneExpand(${s.id}, event)">
+      <div class="scene-card-header">
+        <div class="scene-card-name">
+          ${s.is_active ? '<span class="active-dot"></span>' : ''}
+          ${s.scene_name}
+        </div>
+        <div class="scene-card-actions" onclick="event.stopPropagation()">
+          ${!s.is_active ? `<button onclick="activateScene(${s.id})" title="启用">✓</button>` : ''}
+          <button onclick="openSceneModal(${s.id})" title="编辑">✎</button>
+          ${_scenes.length > 1 ? `<button class="del" onclick="deleteScene(${s.id})" title="删除">✕</button>` : ''}
+        </div>
+      </div>
+      <div class="scene-equip-pills">
+        ${s.equipment.map(e => `<span class="pill green">${e}</span>`).join('')}
+      </div>
+    </div>`;
+  }).join('') + (canAdd ? `<div class="btn-add-scene" onclick="openSceneModal(null)">+ 添加器械场景</div>` : '');
+}
+
+function toggleSceneExpand(id, e) {
+  if (e.target.closest('.scene-card-actions')) return;
+  _expandedSceneId = _expandedSceneId === id ? null : id;
+  renderSceneList();
+}
+
+async function activateScene(id) {
+  const res = await fetch(`${API}/api/plan-viewer/equipment-scenes/${id}/activate${_uq()}`, { method: 'POST' });
+  if (!res.ok) { showToast('启用失败', true); return; }
+  const data = await res.json();
+  _profile.available_equipment = data.equipment;
+  const pills = document.getElementById('equip-pills');
+  if (pills) pills.innerHTML = data.equipment.map(e => `<span class="pill green">${e}</span>`).join('');
+  await loadEquipmentScenes();
+  showToast('器械场景已切换，正在重新生成训练计划…');
+  triggerPlanRegeneration();
+}
+
+async function deleteScene(id) {
+  const res = await fetch(`${API}/api/plan-viewer/equipment-scenes/${id}${_uq()}`, { method: 'DELETE' });
+  if (!res.ok) { showToast('删除失败', true); return; }
+  if (_expandedSceneId === id) _expandedSceneId = null;
+  await loadEquipmentScenes();
+  showToast('场景已删除');
+}
+
+function openSceneModal(sceneId) {
+  const existing = sceneId ? _scenes.find(s => s.id === sceneId) : null;
+  const name = existing ? existing.scene_name : '';
+  const selected = existing ? [...existing.equipment] : ['自重'];
+
+  const overlay = document.createElement('div');
+  overlay.className = 'scene-modal-overlay';
+  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
+  overlay.innerHTML = `
+  <div class="scene-modal">
+    <h3>${existing ? '编辑器械场景' : '新建器械场景'}</h3>
+    <label>场景名称</label>
+    <input type="text" id="scene-name-input" value="${name}" maxlength="20" placeholder="例如: 家庭训练">
+    <label>选择器械（可多选）</label>
+    <div class="equip-grid" id="equip-grid">
+      ${ALL_EQUIPMENT.map(e => `<div class="equip-option ${selected.includes(e) ? 'selected' : ''}" data-equip="${e}" onclick="this.classList.toggle('selected')">${e}</div>`).join('')}
+    </div>
+    <div class="scene-modal-btns">
+      <button class="btn-cancel" onclick="this.closest('.scene-modal-overlay').remove()">取消</button>
+      <button class="btn-save" onclick="saveSceneFromModal(${sceneId})">保存</button>
+    </div>
+  </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector('#scene-name-input').focus();
+}
+
+async function saveSceneFromModal(sceneId) {
+  const overlay = document.querySelector('.scene-modal-overlay');
+  const nameInput = document.getElementById('scene-name-input');
+  const sceneName = nameInput.value.trim() || '未命名场景';
+  const equipment = [...document.querySelectorAll('#equip-grid .equip-option.selected')].map(el => el.dataset.equip);
+  if (equipment.length === 0) { showToast('请至少选择一种器械', true); return; }
+
+  const isActive = sceneId ? (_scenes.find(s => s.id === sceneId)?.is_active || false) : (_scenes.length === 0);
+  const body = { scene_name: sceneName, equipment, is_active: isActive };
+
+  let res;
+  if (sceneId) {
+    res = await fetch(`${API}/api/plan-viewer/equipment-scenes/${sceneId}${_uq()}`, {
+      method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
+    });
+  } else {
+    res = await fetch(`${API}/api/plan-viewer/equipment-scenes${_uq()}`, {
+      method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
+    });
+  }
+
+  if (!res.ok) { showToast((await res.json()).detail || '保存失败', true); return; }
+  overlay.remove();
+  if (isActive) {
+    _profile.available_equipment = equipment;
+    const pills = document.getElementById('equip-pills');
+    if (pills) pills.innerHTML = equipment.map(e => `<span class="pill green">${e}</span>`).join('');
+  }
+  await loadEquipmentScenes();
+  showToast('场景已保存');
 }
 
 // ════════════════════════════════════════════════════════════
