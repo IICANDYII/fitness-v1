@@ -3,8 +3,13 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
+from typing import Any
 import psycopg2
 import psycopg2.extras
+import json
+import threading
+import uuid as _uuid
 from datetime import datetime, timedelta, date
 from collections import defaultdict
 from pathlib import Path
@@ -580,9 +585,84 @@ def plan_viewer_profile():
     return data
 
 
+class ProfileUpdateRequest(BaseModel):
+    gender: str | None = None
+    age: int | None = None
+    height: int | None = None
+    weight: int | None = None
+    sleep_hours: float | None = None
+    fitness_goal: str | None = None
+    experience_level: str | None = None
+    preferred_training_style: list[str] | None = None
+    available_equipment: list[str] | None = None
+    available_schedule: dict[str, Any] | None = None
+
+
+@app.put("/api/plan-viewer/profile")
+def update_plan_viewer_profile(body: ProfileUpdateRequest):
+    """Update editable fields of the plan-viewer user's long-term profile."""
+    fields: list[str] = []
+    values: list[Any] = []
+
+    if body.gender is not None:
+        fields.append("gender = %s"); values.append(body.gender)
+    if body.age is not None:
+        fields.append("age = %s"); values.append(body.age)
+    if body.height is not None:
+        fields.append("height = %s"); values.append(body.height)
+    if body.weight is not None:
+        fields.append("weight = %s"); values.append(body.weight)
+    if body.sleep_hours is not None:
+        fields.append("sleep_hours = %s"); values.append(body.sleep_hours)
+    if body.fitness_goal is not None:
+        fields.append("fitness_goal = %s"); values.append(body.fitness_goal)
+    if body.experience_level is not None:
+        fields.append("experience_level = %s"); values.append(body.experience_level)
+    if body.preferred_training_style is not None:
+        fields.append("preferred_training_style = %s"); values.append(body.preferred_training_style)
+    if body.available_equipment is not None:
+        fields.append("available_equipment = %s"); values.append(body.available_equipment)
+    if body.available_schedule is not None:
+        fields.append("available_schedule = %s"); values.append(json.dumps(body.available_schedule))
+
+    if not fields:
+        raise HTTPException(status_code=400, detail="没有需要更新的字段")
+
+    fields.append("updated_at = NOW()")
+    values.append(PLAN_VIEWER_USER)
+
+    conn = get_conn()
+    cur  = conn.cursor()
+    cur.execute(
+        f"UPDATE user_profile_long_term SET {', '.join(fields)} WHERE user_id = %s",
+        values,
+    )
+    conn.commit()
+    conn.close()
+    return {"ok": True}
+
+
 @app.get("/api/plan-viewer/latest-plan")
-def plan_viewer_latest_plan():
-    """Most recent workout_plan for the plan viewer user."""
+def plan_viewer_latest_plan(version: str | None = None):
+    """
+    返回指定版本（v2/v3）的最新计划。
+    优先从文件缓存加载（毫秒级）；缓存不存在时回退到数据库最新记录。
+    version 参数未传时使用当前服务器选定版本（_prompt_version）。
+    """
+    from agent_service.planner.plan_generator import load_plan_cache, plan_cache_meta
+
+    ver = version or _prompt_version
+
+    # 1. 尝试文件缓存
+    cached = load_plan_cache(PLAN_VIEWER_USER, ver)
+    if cached:
+        plan = dict(cached)
+        plan.setdefault("_source", "cache")
+        meta = plan_cache_meta(PLAN_VIEWER_USER, ver) or {}
+        plan["_cached_at"] = meta.get("generated_at")
+        return plan
+
+    # 2. 回退：数据库最新记录（不区分版本）
     conn = get_conn()
     cur  = conn.cursor()
     cur.execute(
@@ -603,6 +683,7 @@ def plan_viewer_latest_plan():
     plan = dict(row["plan_json"])
     plan["plan_id"] = str(row["plan_id"])
     plan["date"]    = row["date"].isoformat() if row.get("date") else None
+    plan["_source"] = "db"
     return plan
 
 
@@ -657,6 +738,148 @@ def plan_viewer_muscles_map():
         }
     conn.close()
     return result
+
+
+# ── Prompt version management ─────────────────────────────────────────────────
+_prompt_version: str = "v2"   # "v2" | "v3"
+
+_PROMPT_FILES = {
+    "v2": "workout_plan_generator_v2",
+    "v3": "workout_plan_generator_v3",
+}
+
+
+@app.get("/api/plan-viewer/prompt-version")
+def get_prompt_version():
+    return {"version": _prompt_version}
+
+
+class PromptVersionRequest(BaseModel):
+    version: str
+
+
+@app.post("/api/plan-viewer/prompt-version")
+def set_prompt_version(body: PromptVersionRequest):
+    global _prompt_version
+    if body.version not in _PROMPT_FILES:
+        raise HTTPException(status_code=400, detail=f"不支持的版本: {body.version}")
+    _prompt_version = body.version
+    return {"version": _prompt_version}
+
+
+@app.get("/api/plan-viewer/prompt-content/{version}")
+def get_prompt_content(version: str):
+    """返回指定版本的 prompt YAML 原始内容及元数据。"""
+    import yaml as _yaml
+    from pathlib import Path as _Path
+    if version not in _PROMPT_FILES:
+        raise HTTPException(status_code=400, detail=f"不支持的版本: {version}")
+    prompt_name = _PROMPT_FILES[version]
+    # 找到 prompts/ 目录
+    project_root = _Path(__file__).parents[2]
+    candidates = list((project_root / "prompts").glob(f"{prompt_name}*.yaml"))
+    if not candidates:
+        raise HTTPException(status_code=404, detail="prompt 文件未找到")
+    yaml_path = candidates[0]
+    raw = yaml_path.read_text(encoding="utf-8")
+    data = _yaml.safe_load(raw)
+    return {
+        "version":     data.get("version", "?"),
+        "description": data.get("description", ""),
+        "system":      data.get("system", ""),
+        "user":        data.get("user", ""),
+        "raw":         raw,
+    }
+
+
+# ── Plan regeneration ─────────────────────────────────────────────────────────
+_regen_jobs: dict[str, dict] = {}
+
+
+def _run_regen(job_id: str, user_id: str, version: str = "v2"):
+    try:
+        from agent_service.planner.plan_generator import (
+            fetch_user_profile, fetch_dynamic_state, fetch_history_plans,
+            filter_exercises_by_rules, rank_by_vector,
+            generate_plan_with_llm, generate_plan_v3,
+            save_workout_plan, save_plan_cache,
+        )
+        profile  = fetch_user_profile(user_id)
+        dynamic  = fetch_dynamic_state(user_id)
+        history  = fetch_history_plans(user_id)
+        filtered = filter_exercises_by_rules(profile)
+        if not filtered:
+            _regen_jobs[job_id] = {"status": "error", "error": "未筛出任何动作"}
+            return
+        ranked = rank_by_vector(filtered, profile, dynamic, history, top_k=40)
+        if version == "v3":
+            plan = generate_plan_v3(ranked, profile, dynamic)
+        else:
+            plan = generate_plan_with_llm(ranked, profile, dynamic)
+            plan["_pipeline_version"] = "v2"
+        save_workout_plan(user_id, profile["fitness_goal"], plan)
+        save_plan_cache(user_id, version, plan)          # 持久化到文件缓存
+        _regen_jobs[job_id] = {"status": "done"}
+    except Exception as exc:
+        _regen_jobs[job_id] = {"status": "error", "error": str(exc)}
+
+
+@app.post("/api/plan-viewer/regenerate-plan")
+def regenerate_plan():
+    """Start async plan regeneration using the current prompt version; returns a job_id to poll."""
+    job_id = str(_uuid.uuid4())
+    _regen_jobs[job_id] = {"status": "running"}
+    threading.Thread(
+        target=_run_regen,
+        args=(job_id, PLAN_VIEWER_USER, _prompt_version),
+        daemon=True,
+    ).start()
+    return {"job_id": job_id}
+
+
+@app.get("/api/plan-viewer/regen-status/{job_id}")
+def regen_status(job_id: str):
+    job = _regen_jobs.get(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="job not found")
+    return job
+
+
+# ── Pregenerate both versions ─────────────────────────────────────────────────
+_pregen_jobs: dict[str, dict] = {}   # "v2" / "v3" → job_id
+
+
+@app.post("/api/plan-viewer/pregenerate-all")
+def pregenerate_all():
+    """
+    同时启动 v2 + v3 两个后台生成任务。
+    各自写入文件缓存；返回 {v2: job_id, v3: job_id}。
+    """
+    jid_v2 = str(_uuid.uuid4())
+    jid_v3 = str(_uuid.uuid4())
+    _regen_jobs[jid_v2] = {"status": "running", "version": "v2"}
+    _regen_jobs[jid_v3] = {"status": "running", "version": "v3"}
+    _pregen_jobs["v2"] = {"job_id": jid_v2, "status": "running"}
+    _pregen_jobs["v3"] = {"job_id": jid_v3, "status": "running"}
+
+    def _watch(jid: str, ver: str):
+        _run_regen(jid, PLAN_VIEWER_USER, ver)
+        _pregen_jobs[ver]["status"] = _regen_jobs[jid]["status"]
+
+    threading.Thread(target=_watch, args=(jid_v2, "v2"), daemon=True).start()
+    threading.Thread(target=_watch, args=(jid_v3, "v3"), daemon=True).start()
+    return {"v2": jid_v2, "v3": jid_v3}
+
+
+@app.get("/api/plan-viewer/cache-status")
+def cache_status():
+    """返回 v2/v3 文件缓存的生成时间（供 UI 展示预生成状态）。"""
+    from agent_service.planner.plan_generator import plan_cache_meta
+    return {
+        "v2": plan_cache_meta(PLAN_VIEWER_USER, "v2"),
+        "v3": plan_cache_meta(PLAN_VIEWER_USER, "v3"),
+        "pregen_jobs": _pregen_jobs,
+    }
 
 
 # ── Serve plan_viewer.html at /plan-viewer ────────────────────────────────────

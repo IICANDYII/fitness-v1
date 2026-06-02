@@ -1,0 +1,454 @@
+{
+  "version": "v3",
+  "generated_at": "2026-06-01T19:24:05",
+  "plan": {
+    "plan_name": "女性中级耐力提升与塑形计划（瑜伽与力量结合）",
+    "user_id": "b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12",
+    "fitness_goal": "提高耐力",
+    "fitt_vp_summary": {
+      "frequency": "每周训练4天，每次60分钟，合理安排肌群轮换，确保充足恢复时间。",
+      "intensity": "中等强度，注重高重复次数（15-20次/组）与短间歇（30-45秒），以提高肌肉耐力与心肺功能。",
+      "time": "每次训练60分钟，包含5-10分钟热身、45-50分钟主训练、5分钟拉伸放松。",
+      "type": "结合自重有氧、哑铃与弹力带力量训练，并融入瑜伽流派动作，兼顾力量耐力与身体柔韧性。",
+      "volume": "每个动作进行3组，每组15-20次（或持续支撑40-45秒），确保充足的累积运动量。",
+      "progression": "遵循渐进超负荷原则，当能轻松完成目标次数时，可适当增加弹力带阻力、哑铃重量或延长动作支撑时间（+5-10%）。"
+    },
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "theme": "胸肩与核心耐力",
+        "estimated_duration_min": 60,
+        "fitt_vp_focus": "通过抗阻推类动作与核心静力支撑，提升上肢推群与核心肌群的耐力表现。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "warmup_cat_cow",
+            "name": "瑜伽猫牛式呼吸",
+            "sets": 1,
+            "reps_or_duration": "2分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "活动脊柱，配合呼吸，吸气抬头塌腰，呼气拱背低头。"
+          },
+          {
+            "phase": "热身",
+            "exercise_id": "warmup_dynamic_chest",
+            "name": "动态胸肩拉伸",
+            "sets": 1,
+            "reps_or_duration": "2分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "双臂水平外展，感受胸部和肩前侧的动态拉伸，激活关节。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_pushup_001",
+            "name": "弹力带俯卧撑",
+            "sets": 3,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "弹力带绕过背部，双手按住两端，保持核心收紧，推起时胸肌发力。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_wood_chopper_001",
+            "name": "哑铃伐木",
+            "sets": 3,
+            "reps_or_duration": "15-20次/侧",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "双手握哑铃，斜向斜下方做伐木动作，控制核心，旋转躯干。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "elevated_pike_press_001",
+            "name": "脚垫高折刀俯卧撑",
+            "sets": 3,
+            "reps_or_duration": "12-15次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "脚部垫高，身体呈折刀状，主要锻炼三角肌前束与上胸部。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "hollow_hold_001",
+            "name": "空心身体支撑",
+            "sets": 3,
+            "reps_or_duration": "45秒",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "下背部紧贴地面，双腿与上背部微微抬起，保持腹肌持续紧张。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "lateral_lunge_001",
+            "name": "侧跨步蹲",
+            "sets": 3,
+            "reps_or_duration": "15-20次/侧",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "向侧方跨步下蹲，保持躯干挺直，臀部向后坐，激活臀大肌与股四头肌。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "plate_full_lateral_raise_001",
+            "name": "杠铃片全程侧平举",
+            "sets": 3,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "双手持轻分量哑铃或杠铃片，控制节奏侧平举至头顶，锻炼肩部耐力。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "stretch_cobra",
+            "name": "瑜伽眼镜蛇式拉伸",
+            "sets": 1,
+            "reps_or_duration": "2分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "俯卧，双手撑地抬起上身，拉伸腹直肌与胸前侧，保持深呼吸。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "stretch_child_pose",
+            "name": "瑜伽婴儿式放松",
+            "sets": 1,
+            "reps_or_duration": "2分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "臀部坐于脚后跟，手臂向前延伸，额头贴地，放松背部与肩膀。"
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "theme": "背部塑形与手臂耐力",
+        "estimated_duration_min": 60,
+        "fitt_vp_focus": "以拉类动作为主，针对背阔肌、斜方肌及手臂肌群，塑造紧致背部线条并提升耐力。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "warmup_shoulder_rolls",
+            "name": "双肩环绕与手臂画圈",
+            "sets": 1,
+            "reps_or_duration": "2分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "前后环绕双肩，活动肩关节与上背部肌群，预防运动损伤。"
+          },
+          {
+            "phase": "热身",
+            "exercise_id": "warmup_cat_cow_d2",
+            "name": "瑜伽猫牛式",
+            "sets": 1,
+            "reps_or_duration": "2分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "温和唤醒脊柱与背部肌肉，建立良好的呼吸节奏。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_bent_over_row",
+            "name": "弹力带俯身划船",
+            "sets": 3,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "双脚踩住弹力带，俯身保持背部平直，收紧核心，用背部力量将弹力带拉向小腹。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_hammer_curl",
+            "name": "哑铃锤式弯举",
+            "sets": 3,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "大臂贴紧身体两侧，掌心相对，控制下放速度，锻炼肱二头肌与前臂。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "yoga_plank_hold",
+            "name": "瑜伽斜板式支撑",
+            "sets": 3,
+            "reps_or_duration": "45秒",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "身体呈一条直线，收紧腹部与臀部，避免塌腰，提升核心静力耐力。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_pullover_001",
+            "name": "哑铃仰卧拉起",
+            "sets": 3,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "仰卧于垫上，双手握哑铃，保持手臂微屈，用背阔肌发力拉回至胸前上方。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_bird_dog",
+            "name": "弹力带对侧超人式",
+            "sets": 3,
+            "reps_or_duration": "15-20次/侧",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "四足跪姿，对侧手脚同时伸展，保持身体稳定不晃动，激活后侧链肌群。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_overhead_triceps_extension",
+            "name": "哑铃颈后臂屈伸",
+            "sets": 3,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "双手握住哑铃，大臂固定在耳侧，屈肘下放再用三头肌发力推起。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "stretch_puppy_pose",
+            "name": "瑜伽哈巴狗式拉伸",
+            "sets": 1,
+            "reps_or_duration": "2分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "臀部保持在高位，胸腔向下贴地，深度拉伸背阔肌与肩膀。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "stretch_thread_needle",
+            "name": "瑜伽穿针式拉伸",
+            "sets": 1,
+            "reps_or_duration": "2分钟/侧",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "旋转脊柱，拉伸肩后侧与上背部，缓解背部紧张。"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "theme": "臀腿塑形与下肢耐力",
+        "estimated_duration_min": 60,
+        "fitt_vp_focus": "以多关节复合动作为核心，结合弹力带与哑铃，全面激活并塑造下肢线条。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "warmup_downward_dog_flow",
+            "name": "下犬式至眼镜蛇式流动",
+            "sets": 1,
+            "reps_or_duration": "3分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "动态拉伸大腿后侧，活动全身关节，提升身体温度。"
+          },
+          {
+            "phase": "热身",
+            "exercise_id": "warmup_dynamic_lunges",
+            "name": "徒手动态弓步蹲",
+            "sets": 1,
+            "reps_or_duration": "2分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "激活臀肌与股四头肌，控制下蹲深度，保持身体平衡。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_bulgarian_split_squat_001",
+            "name": "哑铃保加利亚单腿蹲",
+            "sets": 3,
+            "reps_or_duration": "12-15次/侧",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "单脚后搁在矮凳上，双手持哑铃，前腿下蹲至大腿与地面平行。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_lateral_walk",
+            "name": "弹力带侧向行走",
+            "sets": 3,
+            "reps_or_duration": "20步/来回",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "弹力带套在膝盖上方，微蹲保持张力，侧向移动激活臀中肌。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_staggered_deadlift_001",
+            "name": "哑铃前后分腿硬拉",
+            "sets": 3,
+            "reps_or_duration": "15-20次/侧",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "双脚前后交错站立，重心主要在前脚，屈髋俯身，拉伸并激活腘绳肌与臀大肌。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_calf_raise",
+            "name": "哑铃提踵",
+            "sets": 3,
+            "reps_or_duration": "20次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "双手持哑铃，前脚掌垫高，慢起慢落，锻炼小腿三头肌耐力。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_single_leg_heels_elevated_hip_thrust_001",
+            "name": "哑铃单腿足跟抬高臀推",
+            "sets": 3,
+            "reps_or_duration": "12-15次/侧",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "足跟垫高，单腿支撑，将哑铃置于髋部，顶峰收缩臀大肌。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "yoga_chair_pose_hold",
+            "name": "瑜伽幻椅式静止支撑",
+            "sets": 3,
+            "reps_or_duration": "45秒",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "双脚并拢，臀部向后下方坐，双手向上延伸，保持大腿前侧与核心紧绷。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "stretch_pigeon_pose",
+            "name": "瑜伽鸽子式拉伸",
+            "sets": 1,
+            "reps_or_duration": "2分钟/侧",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "深度拉伸臀部外侧与髂腰肌，缓解下肢紧张。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "stretch_seated_forward_fold",
+            "name": "瑜伽坐姿前屈式",
+            "sets": 1,
+            "reps_or_duration": "2分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "双腿伸直，身体前屈，拉伸大腿后侧腘绳肌与整个背部。"
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "theme": "全身协调与核心耐力",
+        "estimated_duration_min": 60,
+        "fitt_vp_focus": "结合自重有氧与多角度核心抗阻动作，全面提升全身耐力与核心稳定性。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "warmup_sun_salutation",
+            "name": "瑜伽向阳起航（拜日A）",
+            "sets": 3,
+            "reps_or_duration": "3分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "流畅连贯的全身性热身，提升体温与关节活动度。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "burpee_001",
+            "name": "波比跳",
+            "sets": 3,
+            "reps_or_duration": "12-15次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "保持动作连贯，下蹲、后撤呈平板、俯卧撑、收腹起跳，控制节奏。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_russian_twist_001",
+            "name": "哑铃俄罗斯转体",
+            "sets": 3,
+            "reps_or_duration": "20次/侧",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "坐姿，双腿微屈悬空，双手持哑铃左右转体，收紧腹斜肌。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_mountain_climbers",
+            "name": "弹力带登山者",
+            "sets": 3,
+            "reps_or_duration": "40秒",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "双手撑地呈平板支撑，弹力带套在脚掌，快速交替提膝，保持核心稳定。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "yoga_boat_pose_hold",
+            "name": "瑜伽船式支撑",
+            "sets": 3,
+            "reps_or_duration": "40秒",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "坐姿，身体微后仰，双腿抬起呈V字，双手平行地面，锻炼腹部深层肌群。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_dead_bug",
+            "name": "哑铃死虫式",
+            "sets": 3,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "仰卧，双手持哑铃举起，双腿屈膝90度，对侧手脚交替缓慢下放至接近地面。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_wood_chopper_001",
+            "name": "弹力带伐木式",
+            "sets": 3,
+            "reps_or_duration": "15-20次/侧",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "侧向站立，双手拉住弹力带，斜向下拉至对侧髋部，锻炼腹斜肌与肩部耐力。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "stretch_child_pose_d4",
+            "name": "瑜伽婴儿式放松",
+            "sets": 1,
+            "reps_or_duration": "2分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "完全放松全身，平复心率，拉伸背部。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "stretch_cat_cow_stretch",
+            "name": "静态猫牛式拉伸",
+            "sets": 1,
+            "reps_or_duration": "2分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "静态保持拱背与塌腰姿势各30秒，舒缓脊柱压力。"
+          }
+        ]
+      }
+    ],
+    "coaching_notes": {
+      "warm_up": "每次训练前务必进行5-10分钟的动态热身（如瑜伽猫牛式、动态拉伸），以激活目标肌群并提高关节活动度，预防运动损伤。",
+      "cool_down": "训练结束后进行5分钟的静态拉伸（如婴儿式、鸽子式等瑜伽体式），每个动作保持30秒以上，配合深呼吸，帮助肌肉恢复弹性并降低延迟性肌肉酸痛。",
+      "nutrition": "耐力训练期间，建议适量增加优质碳水化合物（如燕麦、红薯）的摄入以补充肌糖原，并保证每餐摄入足量优质蛋白质（如鸡胸肉、鱼肉、豆腐）以促进肌肉修复。",
+      "recovery_boost": "保证每天7-8小时的高质量睡眠。若连续两次训练能轻松超额完成目标次数，可尝试缩短5秒休息时间，或将哑铃重量/弹力带阻力增加5-10%，以实现渐进超负荷。"
+    },
+    "_pipeline_version": "v3",
+    "_validation": {
+      "is_valid": true,
+      "score": 10,
+      "issues": [],
+      "suggestions": "整体评价：计划完全符合FITT-VP标准。每天均包含完整的热身与拉伸阶段，动作选择与‘提高耐力’的目标高度契合，且完美修正了此前版本中存在的安全隐患与阶段缺失问题。动作模式多样，强度与总量设计非常适合中级水平（Intermediate）用户。"
+    }
+  }
+}

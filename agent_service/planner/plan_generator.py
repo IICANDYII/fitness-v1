@@ -387,6 +387,172 @@ def rank_by_vector(
 
 
 # ═══════════════════════════════════════════════════════════════
+# Step 2b (V3): 粗筛 + 近似动作分天排布
+# ═══════════════════════════════════════════════════════════════
+
+_DAY_MUSCLE_THEMES: dict[int, list[dict]] = {
+    2: [
+        {"theme": "推/上肢",  "keywords": ["胸大肌", "三角肌", "肱三头肌"]},
+        {"theme": "拉/下肢",  "keywords": ["背阔肌", "股四头肌", "腘绳肌", "臀大肌"]},
+    ],
+    3: [
+        {"theme": "推",       "keywords": ["胸大肌", "三角肌前束", "肱三头肌"]},
+        {"theme": "拉",       "keywords": ["背阔肌", "斜方肌", "肱二头肌"]},
+        {"theme": "腿/臀",    "keywords": ["股四头肌", "腘绳肌", "臀大肌", "腓肠肌"]},
+    ],
+    4: [
+        {"theme": "胸肩",     "keywords": ["胸大肌", "三角肌", "肱三头肌"]},
+        {"theme": "背臂",     "keywords": ["背阔肌", "斜方肌", "肱二头肌", "菱形肌"]},
+        {"theme": "腿臀",     "keywords": ["股四头肌", "腘绳肌", "臀大肌", "腓肠肌"]},
+        {"theme": "全身核心", "keywords": ["腹直肌", "竖脊肌", "腹斜肌"]},
+    ],
+    5: [
+        {"theme": "胸",       "keywords": ["胸大肌"]},
+        {"theme": "背",       "keywords": ["背阔肌", "斜方肌", "菱形肌"]},
+        {"theme": "腿",       "keywords": ["股四头肌", "腘绳肌", "腓肠肌"]},
+        {"theme": "肩",       "keywords": ["三角肌", "三角肌前束", "三角肌后束"]},
+        {"theme": "臂/核心",  "keywords": ["肱二头肌", "肱三头肌", "腹直肌"]},
+    ],
+}
+
+
+def rough_assign_to_days(exercises: list[dict], days_per_week: int) -> list[dict]:
+    """
+    V3 Step 2b: 按肌群主题将候选动作粗分到各训练日。
+    返回可直接注入 prompt 的结构化列表（每个元素是一天的候选集合）。
+    """
+    available = sorted(_DAY_MUSCLE_THEMES.keys())
+    clamp = min(available, key=lambda k: abs(k - days_per_week))
+    themes = _DAY_MUSCLE_THEMES[clamp]
+
+    day_buckets: list[list[dict]] = [[] for _ in themes]
+    unassigned: list[dict] = []
+
+    for ex in exercises:
+        primary_str = " ".join(_jsonb_to_list(ex.get("primary_muscles")))
+        placed = False
+        for i, t in enumerate(themes):
+            if any(kw in primary_str for kw in t["keywords"]):
+                day_buckets[i].append(ex)
+                placed = True
+                break
+        if not placed:
+            unassigned.append(ex)
+
+    # 未分配动作轮流补入各日
+    for i, ex in enumerate(unassigned):
+        day_buckets[i % len(themes)].append(ex)
+
+    result = []
+    for idx, bucket in enumerate(day_buckets):
+        rep_range = {}
+        entries = []
+        for ex in bucket:
+            rep_range = ex.get("recommended_rep_range") or {}
+            if isinstance(rep_range, str):
+                rep_range = json.loads(rep_range)
+            entries.append({
+                "id":        ex["exercise_id"],
+                "name":      ex.get("name_cn") or ex["name"],
+                "muscles":   _jsonb_to_list(ex.get("primary_muscles")),
+                "sec":       _jsonb_to_list(ex.get("secondary_muscles")),
+                "pattern":   ex.get("movement_pattern"),
+                "type":      ex.get("exercise_type"),
+                "difficulty": ex.get("difficulty"),
+                "goals":     _jsonb_to_list(ex.get("training_goals")),
+                "rep_range": rep_range,
+                "risk":      ex.get("risk_level"),
+                "mets":      ex.get("estimated_mets"),
+            })
+        result.append({
+            "suggested_day": idx + 1,
+            "theme_hint":    themes[idx]["theme"],
+            "candidates":    entries,
+        })
+    return result
+
+
+# ═══════════════════════════════════════════════════════════════
+# Step 4 (V3): LLM 规则校验器  (check_plan_islegal_v1.yaml)
+# ═══════════════════════════════════════════════════════════════
+
+def _phase_key(phase: str) -> str:
+    p = (phase or "").lower()
+    if "热身" in p or "warm" in p:
+        return "warmup"
+    if "拉伸" in p or "stretch" in p or "恢复" in p:
+        return "stretch"
+    return "main"
+
+
+def validate_plan_llm(plan: dict, profile: dict, prior_issues: list[str] | None = None) -> dict:
+    """
+    调用 check_plan_islegal_v1 prompt，对生成的周计划做 LLM 规则校验。
+
+    Returns dict:
+      {
+        "is_valid": bool,
+        "score":    int,
+        "issues":   list[str],
+        "suggestions": str,
+      }
+    """
+    schedule = profile.get("available_schedule") or {}
+    prior_text = (
+        "\n".join(f"- {i}" for i in prior_issues)
+        if prior_issues else "（无）"
+    )
+
+    # 只传计划骨架给校验器，去掉 notes 等长文本以节省 token
+    plan_slim = {
+        "weekly_schedule": [
+            {
+                "day":   d.get("day"),
+                "theme": d.get("theme"),
+                "exercises": [
+                    {k: e.get(k) for k in
+                     ("phase", "name", "sets", "reps_or_duration", "rest_sec", "superset_group")}
+                    for e in d.get("exercises", [])
+                ],
+            }
+            for d in plan.get("weekly_schedule", [])
+        ],
+        "coaching_notes": plan.get("coaching_notes"),
+    }
+
+    system_msg, user_msg = load_prompt(
+        "check_plan_islegal_v1",
+        experience_level = profile.get("experience_level", ""),
+        days_per_week    = schedule.get("days_per_week", 4),
+        duration_min     = schedule.get("daily_duration_min", 60),
+        fitness_goal     = profile.get("fitness_goal", ""),
+        prior_issues     = prior_text,
+        plan_json        = json.dumps(plan_slim, ensure_ascii=False, indent=2),
+    )
+
+    resp = llm_client.chat.completions.create(
+        model    = _GEMINI_MODEL,
+        messages = [
+            {"role": "system", "content": system_msg},
+            {"role": "user",   "content": user_msg},
+        ],
+        temperature       = 0.1,
+        response_format   = {"type": "json_object"},
+    )
+    try:
+        result = json.loads(resp.choices[0].message.content)
+        return {
+            "is_valid":    bool(result.get("is_valid", True)),
+            "score":       int(result.get("score", 7)),
+            "issues":      result.get("issues") or [],
+            "suggestions": result.get("suggestions", ""),
+        }
+    except Exception as e:
+        print(f"   [V3] 校验结果解析失败: {e}")
+        return {"is_valid": True, "score": 7, "issues": [], "suggestions": ""}
+
+
+# ═══════════════════════════════════════════════════════════════
 # Step 3: LLM 生成周计划
 # ═══════════════════════════════════════════════════════════════
 
@@ -470,6 +636,118 @@ def generate_plan_with_llm(
 
 
 # ═══════════════════════════════════════════════════════════════
+# V3 Pipeline: 分天排布 → 规则库 → LLM → LLM校验器(+重试)
+# ═══════════════════════════════════════════════════════════════
+
+def _call_v3_llm(
+    day_assignments: list[dict],
+    profile: dict,
+    dynamic: dict | None,
+    extra_context: str = "",
+) -> dict:
+    """调用 workout_plan_generator_v3，返回原始计划 JSON。"""
+    schedule     = profile.get("available_schedule") or {}
+    days_per_wk  = schedule.get("days_per_week", 4)
+    duration_min = schedule.get("daily_duration_min", 60)
+    total_cands  = sum(len(d["candidates"]) for d in day_assignments)
+
+    fatigue_note = ""
+    if dynamic:
+        fatigue_note = (
+            f"\n当前状态 — 疲劳: {dynamic.get('fatigue_level', '未知')}, "
+            f"准备度: {dynamic.get('today_readiness', '未知')}/10, "
+            f"近期训练负荷: {dynamic.get('last_training_load', '未知')}"
+        )
+    if extra_context:
+        fatigue_note += f"\n\n⚠️ 上一次生成的计划存在以下问题，请务必修正：\n{extra_context}"
+
+    meta = prompt_meta("workout_plan_generator_v3")
+    print(f"   加载 prompt: workout_plan_generator_v3 v{meta.get('version', '?')}")
+    system_msg, user_msg = load_prompt(
+        "workout_plan_generator_v3",
+        gender                = profile.get("gender", ""),
+        age                   = profile.get("age", ""),
+        weight                = profile.get("weight", ""),
+        height                = profile.get("height", ""),
+        fitness_goal          = profile.get("fitness_goal", ""),
+        experience_level      = profile.get("experience_level", ""),
+        preferred_styles      = ", ".join(profile.get("preferred_training_style") or []),
+        days_per_week         = days_per_wk,
+        duration_min          = duration_min,
+        available_equipment   = ", ".join(profile.get("available_equipment") or []),
+        accept_high_intensity = profile.get("accept_high_intensity", ""),
+        need_variety          = profile.get("need_variety", ""),
+        fatigue_note          = fatigue_note,
+        exercise_count        = total_cands,
+        exercise_list_json    = json.dumps(day_assignments, ensure_ascii=False, indent=2),
+        user_id               = str(profile.get("user_id") or DEFAULT_USER_ID),
+    )
+    resp = llm_client.chat.completions.create(
+        model             = _GEMINI_MODEL,
+        messages          = [
+            {"role": "system", "content": system_msg},
+            {"role": "user",   "content": user_msg},
+        ],
+        temperature       = 0.3,
+        response_format   = {"type": "json_object"},
+    )
+    return json.loads(resp.choices[0].message.content)
+
+
+def generate_plan_v3(
+    exercises: list[dict],
+    profile: dict,
+    dynamic: dict | None,
+) -> dict:
+    """
+    V3 Pipeline:
+      Step 1  粗筛 + 近似动作分天排布
+      Step 2  规则库作为前置知识（内嵌于 v3 prompt）
+      Step 3  大模型解释与个性化表达
+      Step 4  LLM 规则校验器审核（check_plan_islegal_v1）
+              → 不合规时将问题反馈给模型，重新生成一次
+    """
+    schedule    = profile.get("available_schedule") or {}
+    days_per_wk = schedule.get("days_per_week", 4)
+
+    # ── Step 1 ──────────────────────────────────────────────────
+    print(f"   [V3] 粗筛 + 近似动作分天排布 (days={days_per_wk})...")
+    day_assignments  = rough_assign_to_days(exercises, days_per_wk)
+    total_candidates = sum(len(d["candidates"]) for d in day_assignments)
+    print(f"   [V3] 分天完成: {len(day_assignments)} 天 / {total_candidates} 个候选动作")
+
+    # ── Step 2 & 3: 规则库 + LLM 首次生成 ────────────────────
+    print(f"   [V3] 调用 {_GEMINI_MODEL} 生成计划 (第1次)...")
+    plan = _call_v3_llm(day_assignments, profile, dynamic)
+
+    # ── Step 4: LLM 校验器 ───────────────────────────────────
+    print("   [V3] LLM 规则校验器审核 (check_plan_islegal_v1)...")
+    validation = validate_plan_llm(plan, profile)
+    print(f"   [V3] 校验分数: {validation['score']}/10  合规: {validation['is_valid']}")
+
+    if not validation["is_valid"] and validation["issues"]:
+        issues_text = "\n".join(f"- {i}" for i in validation["issues"])
+        print(f"   [V3] 发现 {len(validation['issues'])} 条违规，重新生成...")
+        for issue in validation["issues"]:
+            print(f"      - {issue}")
+
+        # ── Step 3b: 携带问题列表重新生成（仅一次）───────────
+        print(f"   [V3] 调用 {_GEMINI_MODEL} 重新生成计划 (第2次)...")
+        plan = _call_v3_llm(day_assignments, profile, dynamic, extra_context=issues_text)
+
+        # 重新校验（记录结果但不再重试）
+        print("   [V3] 重新校验...")
+        validation = validate_plan_llm(plan, profile, prior_issues=validation["issues"])
+        print(f"   [V3] 最终校验分数: {validation['score']}/10  合规: {validation['is_valid']}")
+    else:
+        print("   [V3] 规则校验通过 ✓")
+
+    plan["_pipeline_version"] = "v3"
+    plan["_validation"]       = validation
+    return plan
+
+
+# ═══════════════════════════════════════════════════════════════
 # 持久化
 # ═══════════════════════════════════════════════════════════════
 
@@ -513,6 +791,56 @@ def save_workout_plan(user_id: str, goal: str, plan_json: dict) -> str:
             plan_id = cur.fetchone()[0]
         conn.commit()
     return str(plan_id)
+
+
+# ═══════════════════════════════════════════════════════════════
+# 文件缓存 — 每个用户每个版本存一份最新计划 JSON
+# ═══════════════════════════════════════════════════════════════
+
+_CACHE_DIR = Path(__file__).parent / "plan_cache"
+
+
+def _cache_path(user_id: str, version: str) -> Path:
+    _CACHE_DIR.mkdir(exist_ok=True)
+    return _CACHE_DIR / f"{version}_{user_id}.json"
+
+
+def save_plan_cache(user_id: str, version: str, plan: dict) -> None:
+    """将计划持久化到文件缓存（version=v2|v3）。"""
+    from datetime import datetime as _dt
+    payload = {
+        "version":      version,
+        "generated_at": _dt.now().isoformat(timespec="seconds"),
+        "plan":         plan,
+    }
+    _cache_path(user_id, version).write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    print(f"   缓存已写入: plan_cache/{version}_{user_id}.json")
+
+
+def load_plan_cache(user_id: str, version: str) -> dict | None:
+    """读取文件缓存，若不存在返回 None。"""
+    p = _cache_path(user_id, version)
+    if not p.exists():
+        return None
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+        return data.get("plan")
+    except Exception:
+        return None
+
+
+def plan_cache_meta(user_id: str, version: str) -> dict | None:
+    """返回缓存元信息 {version, generated_at}，不含计划主体。"""
+    p = _cache_path(user_id, version)
+    if not p.exists():
+        return None
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+        return {"version": data.get("version"), "generated_at": data.get("generated_at")}
+    except Exception:
+        return None
 
 
 # ═══════════════════════════════════════════════════════════════

@@ -1,0 +1,378 @@
+{
+  "version": "v2",
+  "generated_at": "2026-06-01T19:22:38",
+  "plan": {
+    "plan_name": "女性中级塑形与耐力提升4周计划",
+    "user_id": "b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12",
+    "fitness_goal": "提高耐力",
+    "fitt_vp_summary": {
+      "frequency": "每周训练4天，结合力量耐力与瑜伽流，确保充足恢复与多样性。",
+      "intensity": "中等强度，控制在最大心率的60%-75%，力量训练采用高次数（15-20次）低间歇模式，不进行高强度爆发力训练。",
+      "time": "每次训练60分钟（热身8分钟 + 主训练47分钟 + 拉伸5分钟）。",
+      "type": "抗阻力耐力训练、核心稳定性训练与瑜伽流灵活性训练相结合，使用哑铃、弹力带及瑜伽垫。",
+      "volume": "每个动作进行3组，每组15-20次（或静力支撑40-60秒），组间休息30-45秒以优化肌肉耐力。",
+      "progression": "遵循渐进超负荷原则，当能轻松完成目标次数时，增加2-5%的哑铃重量或弹力带阻力，或延长静力支撑时间。"
+    },
+    "weekly_schedule": [
+      {
+        "day": 1,
+        "theme": "下肢与核心耐力",
+        "estimated_duration_min": 60,
+        "fitt_vp_focus": "侧重下肢大肌群与核心深层肌肉的耐力建设，采用高重复次数与短间歇。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "dynamic_warmup_01",
+            "name": "动态关节活动与猫牛式",
+            "sets": 1,
+            "reps_or_duration": "8分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "活动脊柱与髋关节，激活核心肌群，为后续训练做准备。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_staggered_deadlift_001",
+            "name": "哑铃前后分腿硬拉",
+            "sets": 3,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "保持背部平直，感受腘绳肌与臀大肌的拉伸与收缩。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "hollow_hold_001",
+            "name": "空心身体支撑",
+            "sets": 3,
+            "reps_or_duration": "40-60秒",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "下背部紧贴瑜伽垫，核心收紧，保持均匀呼吸。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_bulgarian_split_squat_001",
+            "name": "哑铃保加利亚单腿蹲",
+            "sets": 3,
+            "reps_or_duration": "15次/侧",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "前脚掌实踩，后脚置于矮凳或垫高物上，保持躯干稳定。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_russian_twist_001",
+            "name": "哑铃俄罗斯转体",
+            "sets": 3,
+            "reps_or_duration": "20次",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "腹部持续紧绷，转动上身，哑铃在身体两侧轻轻点地。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "lateral_lunge_001",
+            "name": "侧跨步蹲",
+            "sets": 3,
+            "reps_or_duration": "15次/侧",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "跨步时臀部向后坐，膝盖与脚尖方向一致，训练内收肌群与臀部。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_crunch_001",
+            "name": "弹力带卷腹",
+            "sets": 3,
+            "reps_or_duration": "20次",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "利用弹力带提供额外阻力，卷起时呼气，顶峰收缩1秒。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "yoga_cooldown_01",
+            "name": "瑜伽下肢拉伸与婴儿式",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "重点拉伸臀部、大腿前侧及后侧，配合深呼吸放松神经系统。"
+          }
+        ]
+      },
+      {
+        "day": 2,
+        "theme": "上肢与塑形耐力",
+        "estimated_duration_min": 60,
+        "fitt_vp_focus": "强化上肢线条与肩袖稳定性，通过多角度抗阻训练提升肌肉耐力。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "dynamic_warmup_02",
+            "name": "手臂圈转与肩关节激活",
+            "sets": 1,
+            "reps_or_duration": "8分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "激活肩袖肌群，预防上肢训练中的关节弹响与不适。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_arnold_press_001",
+            "name": "哑铃阿诺德推举",
+            "sets": 3,
+            "reps_or_duration": "15次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "推举过程中旋转手腕，全面激活三角肌前束与中束。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_wood_chopper_001",
+            "name": "哑铃伐木",
+            "sets": 3,
+            "reps_or_duration": "15次/侧",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "对角线轨迹移动哑铃，核心控速，避免腰椎过度扭转。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_pushup_001",
+            "name": "弹力带俯卧撑",
+            "sets": 3,
+            "reps_or_duration": "12-15次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "弹力带绕过背部增加阻力，保持身体呈一条直线，不塌腰。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_pullover_001",
+            "name": "哑铃仰卧拉起",
+            "sets": 3,
+            "reps_or_duration": "15次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "仰卧于瑜伽垫上，微屈肘关节，感受背阔肌与胸大肌的拉伸。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "weighted_forearm_plank_001",
+            "name": "负重前臂平板支撑",
+            "sets": 3,
+            "reps_or_duration": "45-60秒",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "可在背部放置轻量哑铃或沙袋，保持骨盆中立，核心极度收紧。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "plate_full_lateral_raise_001",
+            "name": "杠铃片全程侧平举",
+            "sets": 3,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "使用轻量哑铃代替杠铃片，控制下放速度，雕刻肩部线条。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "yoga_cooldown_02",
+            "name": "瑜伽胸腔打开与肩颈拉伸",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "拉伸胸大肌、三角肌及颈部肌肉，缓解上背部紧张。"
+          }
+        ]
+      },
+      {
+        "day": 3,
+        "theme": "瑜伽流与核心稳定",
+        "estimated_duration_min": 60,
+        "fitt_vp_focus": "结合瑜伽流的灵活性与核心静力支撑，提升身体协调性与深层耐力。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "dynamic_warmup_03",
+            "name": "太阳礼拜式 A 序列",
+            "sets": 1,
+            "reps_or_duration": "8分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "通过瑜伽经典序列温和提升体温，活动全身关节。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "elevated_pike_press_001",
+            "name": "脚垫高折刀俯卧撑",
+            "sets": 3,
+            "reps_or_duration": "12次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "类似瑜伽下犬式的变体，锻炼肩部与核心稳定性。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "side_plank_reach_through_001",
+            "name": "侧板支撑穿针式",
+            "sets": 3,
+            "reps_or_duration": "12次/侧",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "单臂支撑，另一手穿过身体下方再打开，挑战侧腹耐力与平衡。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_spanish_squat_001",
+            "name": "弹力带西班牙深蹲",
+            "sets": 3,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "弹力带套在膝后，小腿保持垂直，重点激活股四头肌。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "hollow_hold_001",
+            "name": "空心身体支撑",
+            "sets": 3,
+            "reps_or_duration": "45秒",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "保持腹肌持续紧张，若感到腰酸可稍微抬高双腿。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_staggered_deadlift_001",
+            "name": "哑铃前后分腿硬拉",
+            "sets": 3,
+            "reps_or_duration": "15次/侧",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "慢下慢起，感受单侧臀肌的深度拉伸。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "plate_full_lateral_raise_001",
+            "name": "杠铃片全程侧平举",
+            "sets": 3,
+            "reps_or_duration": "15次",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "动作顶点稍作停留，慢速下放，增加肌肉在张力下的时间。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "yoga_cooldown_03",
+            "name": "鸽子式与脊柱扭转式",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "深度拉伸臀部外侧与大腿内侧，扭转脊柱放松中枢神经。"
+          }
+        ]
+      },
+      {
+        "day": 4,
+        "theme": "全身循环与耐力挑战",
+        "estimated_duration_min": 60,
+        "fitt_vp_focus": "多关节复合动作与单关节孤立动作交替，全面压榨肌肉耐力，提高心肺效率。",
+        "exercises": [
+          {
+            "phase": "热身",
+            "exercise_id": "dynamic_warmup_04",
+            "name": "全身多关节动态激活",
+            "sets": 1,
+            "reps_or_duration": "8分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "包括开合跳（低冲击版）、动态弓步蹲，全面唤醒身体。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_bulgarian_split_squat_001",
+            "name": "哑铃保加利亚单腿蹲",
+            "sets": 3,
+            "reps_or_duration": "15次/侧",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "保持躯干微前倾，将负荷集中于前侧腿的臀大肌。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "dumbbell_wood_chopper_001",
+            "name": "哑铃伐木",
+            "sets": 3,
+            "reps_or_duration": "15次/侧",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "利用核心力量带动哑铃旋转，注意骨盆不要过度晃动。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_pushup_001",
+            "name": "弹力带俯卧撑",
+            "sets": 3,
+            "reps_or_duration": "15次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "若后期力竭，可降阶为双膝着地的跪姿弹力带俯卧撑。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "nordic_hamstring_curl_001",
+            "name": "北欧腘绳肌弯举",
+            "sets": 3,
+            "reps_or_duration": "12次",
+            "rest_sec": 45,
+            "superset_group": null,
+            "notes": "用弹力带辅助减重，控制身体下落速度，重点训练离心控制力。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "weighted_forearm_plank_001",
+            "name": "负重前臂平板支撑",
+            "sets": 3,
+            "reps_or_duration": "60秒",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "手肘在肩关节正下方，前臂平行压实地面，脚跟向后蹬。"
+          },
+          {
+            "phase": "主训练",
+            "exercise_id": "band_skullcrusher_001",
+            "name": "弹力带仰卧臂屈伸",
+            "sets": 3,
+            "reps_or_duration": "15-20次",
+            "rest_sec": 30,
+            "superset_group": null,
+            "notes": "大臂垂直于地面并保持固定，仅屈伸肘关节以雕刻手臂后侧。"
+          },
+          {
+            "phase": "拉伸",
+            "exercise_id": "yoga_cooldown_04",
+            "name": "大拜式与全身大字形放松",
+            "sets": 1,
+            "reps_or_duration": "5分钟",
+            "rest_sec": 0,
+            "superset_group": null,
+            "notes": "彻底放松全身肌肉，平复心率，进入冥想式休息。"
+          }
+        ]
+      }
+    ],
+    "coaching_notes": {
+      "warm_up": "热身阶段（8分钟）应以动态拉伸和关节润滑为主。建议先进行5分钟的瑜伽猫牛式和太阳礼拜式，随后进行3分钟的轻度动态弓步和手臂圈转，以提高核心温度并激活目标肌群。",
+      "cool_down": "拉伸阶段（5分钟）采用静态拉伸与瑜伽静态体式。重点放松臀部（鸽子式）、大腿后侧（单腿屈膝前屈式）以及胸肩部。每个动作保持30秒以上，配合深长的腹式呼吸。",
+      "nutrition": "由于目标是提高耐力，建议在训练前1-2小时补充复合碳水化合物（如燕麦、全麦面包）以维持运动中的血糖稳定。训练后30分钟内补充20g左右的优质蛋白质和适量碳水，促进肌肉修复。",
+      "recovery_boost": "耐力训练的关键在于高重复次数下的肌肉抗疲劳能力。每组动作应保持动作的高质量，避免借力。若连续两次训练能轻松超过目标次数，可尝试缩短5秒休息时间或微调弹力带阻力。每周保证至少3天彻底休息或进行轻度散步等低强度活动。"
+    },
+    "_pipeline_version": "v2"
+  }
+}

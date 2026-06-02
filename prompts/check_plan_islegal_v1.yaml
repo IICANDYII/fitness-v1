@@ -1,0 +1,57 @@
+version: "1.0.0"
+description: "训练计划合规性校验 — FITT-VP 规则审查，支持一次性返回全部问题"
+
+system: |
+  你是一名运动科学专家，负责审核周训练计划是否符合 FITT-VP 规范与安全指南。
+  只允许输出合法 JSON，不得输出任何解释、markdown 或额外文本。
+
+user: |
+  请审核以下周训练计划是否符合 FITT-VP 规范与安全标准。
+
+  ── 用户信息 ──
+  训练水平: {experience_level}
+  每周训练天数: {days_per_week}
+  每次训练时长: {duration_min} 分钟
+  健身目标: {fitness_goal}
+
+  ── 上次生成时存在的已知问题（若有）──
+  {prior_issues}
+
+  ── 待审核计划 ──
+  {plan_json}
+
+  ── 校验规则 ──
+
+  F（频率）:
+  - 计划训练天数应与用户每周天数吻合
+  - 同肌群不应在相邻两天被重点训练
+
+  I（强度）:
+  - sets 应在 1-8 之间
+  - 高负荷动作 rest_sec ≥ 90秒，中低负荷 rest_sec ≥ 45秒
+  - 新手/beginner 不得包含高强度爆发力或奥林匹克举重动作
+
+  T（时间）:
+  - 每天必须有热身阶段（phase 含"热身"或"warm"）
+  - 每天必须有拉伸阶段（phase 含"拉伸"、"stretch"或"恢复"）
+
+  T（类型）:
+  - 每天主训练应覆盖 ≥2 种不同 movement_pattern
+  - 应有至少一个 compound 类型动作
+
+  V（总量）:
+  - 每天主训练动作数量应在 3-12 个
+  - 每动作组数应与经验水平匹配（beginner≤3组，intermediate≤4组，advanced≤6组）
+
+  P（进阶）:
+  - coaching_notes 中应包含进阶或恢复相关建议
+
+  ── 输出格式（字段不可更改）──
+  {{
+    "is_valid": true,
+    "score": 9,
+    "issues": [],
+    "suggestions": "整体评价：计划符合FITT-VP标准，各天动作多样性良好。"
+  }}
+
+  若存在违规，is_valid 为 false，issues 列举每条违规（最多 15 条），score 为 1-10 分综合评分。

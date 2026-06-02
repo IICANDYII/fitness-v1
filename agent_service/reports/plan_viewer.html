@@ -289,6 +289,144 @@
   .chip .cv { font-size: 1.3rem; font-weight: 800; color: var(--accent); }
   .chip .cl { font-size: .72rem; color: var(--muted); margin-top: 2px; }
 
+  /* ── Edit button ────────────────────────────────────────── */
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .card-header .card-title { margin-bottom: 0; }
+  .btn-edit {
+    background: rgba(108,99,255,.15);
+    border: 1px solid rgba(108,99,255,.4);
+    color: #a09cf9;
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: .72rem; font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-edit:hover { background: rgba(108,99,255,.3); color: #fff; }
+  .btn-save {
+    background: rgba(67,233,123,.15);
+    border: 1px solid rgba(67,233,123,.4);
+    color: #43e97b;
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: .72rem; font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    margin-right: 6px;
+  }
+  .btn-save:hover { background: rgba(67,233,123,.3); color: #fff; }
+  .btn-cancel {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.12);
+    color: var(--muted);
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: .72rem; font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-cancel:hover { background: rgba(255,255,255,.1); color: var(--text); }
+
+  /* ── Editable field inputs ───────────────────────────────── */
+  .edit-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .9rem;
+    gap: 12px;
+  }
+  .edit-row:last-child { border-bottom: none; }
+  .edit-row .label { color: var(--muted); flex-shrink: 0; }
+  .edit-input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: .88rem;
+    padding: 4px 9px;
+    width: 130px;
+    text-align: right;
+    outline: none;
+  }
+  .edit-input:focus { border-color: var(--accent); }
+  .edit-select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: .88rem;
+    padding: 4px 9px;
+    width: 130px;
+    outline: none;
+  }
+  .edit-select:focus { border-color: var(--accent); }
+
+  /* ── Tag editor ──────────────────────────────────────────── */
+  .tag-section { margin-top: 14px; }
+  .tag-section-label { font-size: .78rem; color: var(--muted); margin-bottom: 8px; }
+  .tag-edit-area {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    min-height: 32px;
+    align-items: center;
+  }
+  .pill-editable {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(108,99,255,.15);
+    border: 1px solid rgba(108,99,255,.35);
+    color: #a09cf9;
+    border-radius: 20px;
+    padding: 4px 8px 4px 13px;
+    font-size: .78rem; font-weight: 500;
+  }
+  .pill-editable.green { background: rgba(67,233,123,.12); border-color: rgba(67,233,123,.3); color: #43e97b; }
+  .pill-editable.yellow { background: rgba(249,212,35,.12); border-color: rgba(249,212,35,.3); color: #f9d423; }
+  .pill-del {
+    background: none; border: none; cursor: pointer;
+    color: inherit; opacity: .6;
+    font-size: .9rem; line-height: 1;
+    padding: 0; display: flex;
+  }
+  .pill-del:hover { opacity: 1; }
+  .tag-add-row {
+    display: flex; align-items: center; gap: 6px; margin-top: 8px;
+  }
+  .tag-add-input {
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: 20px;
+    color: var(--text);
+    font-size: .78rem;
+    padding: 4px 12px;
+    width: 110px;
+    outline: none;
+  }
+  .tag-add-input:focus { border-color: var(--accent); }
+  .btn-tag-add {
+    background: rgba(108,99,255,.2);
+    border: 1px solid rgba(108,99,255,.4);
+    color: #a09cf9;
+    border-radius: 50%;
+    width: 22px; height: 22px;
+    font-size: .9rem; line-height: 1;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background .15s;
+  }
+  .btn-tag-add:hover { background: rgba(108,99,255,.4); color: #fff; }
+
+  /* ── Schedule regen overlay ──────────────────────────────── */
+  .regen-overlay {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 14px;
+    padding: 48px 20px;
+    color: var(--muted); font-size: .9rem;
+  }
+  .regen-overlay .spinner { margin: 0; }
+
   /* ── Loading ─────────────────────────────────────────────── */
   #loading {
     position: fixed; inset: 0;
@@ -316,6 +454,150 @@
     padding: 16px 20px;
     margin: 20px 0;
   }
+
+  /* ── Prompt version toggle bar ──────────────────────────── */
+  .prompt-bar {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    background: rgba(108,99,255,.07);
+    border: 1px solid rgba(108,99,255,.2);
+    border-radius: 10px;
+    flex-wrap: wrap;
+  }
+  .prompt-bar-label {
+    font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .version-toggle {
+    display: flex; gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+  }
+  .version-btn {
+    background: none; border: none; cursor: pointer;
+    padding: 4px 14px; border-radius: 6px;
+    font-size: .78rem; font-weight: 600; color: var(--muted);
+    transition: all .18s;
+    white-space: nowrap;
+  }
+  .version-btn.active {
+    background: var(--accent);
+    color: #fff;
+  }
+  .version-btn:not(.active):hover { color: var(--text); }
+  .prompt-desc {
+    font-size: .75rem; color: var(--muted);
+    flex: 1; min-width: 0;
+  }
+  .btn-view-prompt {
+    background: rgba(108,99,255,.12);
+    border: 1px solid rgba(108,99,255,.3);
+    color: #a09cf9;
+    border-radius: 7px;
+    padding: 4px 11px;
+    font-size: .72rem; font-weight: 600;
+    cursor: pointer;
+    transition: all .18s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .btn-view-prompt:hover { background: rgba(108,99,255,.25); color: #fff; }
+
+  /* ── Prompt content drawer ──────────────────────────────── */
+  .prompt-drawer {
+    display: none;
+    margin-bottom: 16px;
+    background: #13151f;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .prompt-drawer.open { display: block; }
+  .prompt-drawer-tabs {
+    display: flex; gap: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .prompt-drawer-tab {
+    background: none; border: none; cursor: pointer;
+    padding: 8px 16px;
+    font-size: .72rem; font-weight: 600; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--muted);
+    border-bottom: 2px solid transparent;
+    transition: all .15s;
+  }
+  .prompt-drawer-tab.active {
+    color: var(--accent); border-bottom-color: var(--accent);
+  }
+  .prompt-panel { display: none; padding: 14px 16px; }
+  .prompt-panel.active { display: block; }
+  .prompt-pre {
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: .75rem; line-height: 1.6;
+    color: #c5c8e0;
+    white-space: pre-wrap; word-break: break-word;
+    max-height: 320px; overflow-y: auto;
+  }
+  .prompt-pre::-webkit-scrollbar { width: 5px; }
+  .prompt-pre::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── Pregenerate button & cache status ──────────────────── */
+  .btn-pregen {
+    background: rgba(67,233,123,.12);
+    border: 1px solid rgba(67,233,123,.35);
+    color: #43e97b;
+    border-radius: 7px;
+    padding: 4px 11px;
+    font-size: .72rem; font-weight: 600;
+    cursor: pointer;
+    transition: all .18s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .btn-pregen:hover { background: rgba(67,233,123,.25); color: #fff; }
+  .btn-pregen:disabled { opacity: .45; cursor: not-allowed; }
+  .cache-dots {
+    display: flex; gap: 5px; align-items: center;
+    flex-shrink: 0;
+  }
+  .cache-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--border);
+    title: attr(title);
+  }
+  .cache-dot.ready   { background: var(--green); }
+  .cache-dot.running { background: var(--yellow); animation: pulse .8s ease-in-out infinite alternate; }
+  @keyframes pulse { from { opacity: .4; } to { opacity: 1; } }
+
+  /* ── Validation issues badge ─────────────────────────────── */
+  .validation-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(249,212,35,.1);
+    border: 1px solid rgba(249,212,35,.3);
+    color: var(--yellow);
+    border-radius: 7px;
+    padding: 3px 9px;
+    font-size: .72rem; font-weight: 600;
+    cursor: pointer;
+  }
+  .validation-badge.ok {
+    background: rgba(67,233,123,.1);
+    border-color: rgba(67,233,123,.3);
+    color: var(--green);
+  }
+  .validation-list {
+    display: none;
+    margin-top: 10px;
+    background: rgba(249,212,35,.06);
+    border: 1px solid rgba(249,212,35,.2);
+    border-radius: 8px;
+    padding: 10px 13px;
+    font-size: .78rem; line-height: 1.7; color: #d4c87a;
+  }
+  .validation-list.open { display: block; }
 </style>
 </head>
 <body>
@@ -344,12 +626,22 @@
     <!-- ── 左栏: 用户画像 ── -->
     <div>
       <div class="card" style="margin-bottom:20px">
-        <div class="card-title">用户长期画像</div>
+        <div class="card-header">
+          <div class="card-title">用户长期画像</div>
+          <div id="profile-stats-actions">
+            <button class="btn-edit" onclick="enterEditStats()">编辑</button>
+          </div>
+        </div>
         <div id="profile-stats"></div>
       </div>
 
       <div class="card" style="margin-bottom:20px">
-        <div class="card-title">训练偏好</div>
+        <div class="card-header">
+          <div class="card-title">训练偏好</div>
+          <div id="profile-tags-actions">
+            <button class="btn-edit" onclick="enterEditTags()">编辑</button>
+          </div>
+        </div>
         <div id="profile-tags"></div>
       </div>
 
@@ -361,10 +653,38 @@
 
     <!-- ── 右栏: 训练计划 ── -->
     <div>
+      <!-- Prompt version toggle bar -->
+      <div class="prompt-bar" id="prompt-bar">
+        <span class="prompt-bar-label">Prompt 版本</span>
+        <div class="version-toggle">
+          <button class="version-btn" data-v="v2" onclick="switchVersion('v2')">V1 标准</button>
+          <button class="version-btn" data-v="v3" onclick="switchVersion('v3')">V2 FITT-VP</button>
+        </div>
+        <span class="prompt-desc" id="prompt-desc"></span>
+        <div class="cache-dots" id="cache-dots" title="缓存状态：v1 / v2">
+          <span style="font-size:.68rem;color:var(--muted)">缓存</span>
+          <span class="cache-dot" id="dot-v2" title="V1 缓存"></span>
+          <span class="cache-dot" id="dot-v3" title="V2 缓存"></span>
+        </div>
+        <button class="btn-pregen" id="btn-pregen" onclick="pregenBoth()">预生成双版本</button>
+        <button class="btn-view-prompt" onclick="togglePromptDrawer()">查看提示词</button>
+      </div>
+
+      <!-- Prompt content drawer -->
+      <div class="prompt-drawer" id="prompt-drawer">
+        <div class="prompt-drawer-tabs">
+          <button class="prompt-drawer-tab active" data-tab="system" onclick="switchPromptTab('system')">System</button>
+          <button class="prompt-drawer-tab" data-tab="user"   onclick="switchPromptTab('user')">User</button>
+        </div>
+        <div class="prompt-panel active" id="pp-system"><pre class="prompt-pre" id="pp-system-text">加载中…</pre></div>
+        <div class="prompt-panel"        id="pp-user">  <pre class="prompt-pre" id="pp-user-text">加载中…</pre></div>
+      </div>
+
       <div class="card">
         <div class="card-title">本周训练安排</div>
         <div class="summary-chips" id="summary-chips"></div>
         <div class="day-tabs" id="day-tabs"></div>
+        <div id="validation-area"></div>
         <div class="timeline" id="day-detail"></div>
         <div id="coaching-notes"></div>
       </div>
@@ -382,7 +702,7 @@ async function fetchData() {
   // Stage 1: fetch profile + plan + muscle map in parallel
   const [profileRes, planRes, musclesRes] = await Promise.all([
     fetch(`${API}/api/plan-viewer/profile`),
-    fetch(`${API}/api/plan-viewer/latest-plan`),
+    fetch(`${API}/api/plan-viewer/latest-plan?version=${_currentVersion}`),
     fetch(`${API}/api/plan-viewer/muscles-map`),
   ]);
   if (!profileRes.ok || !planRes.ok) throw new Error('API 请求失败');
@@ -811,6 +1131,484 @@ function renderCoachingNotes(notes) {
 }
 
 // ════════════════════════════════════════════════════════════
+// Edit — profile stats
+// ════════════════════════════════════════════════════════════
+let _profile = null;  // live copy updated on save
+
+function enterEditStats() {
+  const p = _profile;
+  const sched = p.available_schedule || {};
+
+  const GOAL_OPTIONS = ['减脂', '增肌', '塑形', '提高耐力', '维持体重', '增强力量'];
+  const LEVEL_OPTIONS = [['beginner','初级'], ['intermediate','中级'], ['advanced','高级']];
+
+  const fields = [
+    { label: '性别', name: 'gender', type: 'select', options: [['male','男'],['female','女']], value: p.gender },
+    { label: '年龄', name: 'age', type: 'number', value: p.age, min: 10, max: 100, unit: '岁' },
+    { label: '身高', name: 'height', type: 'number', value: p.height, min: 100, max: 250, unit: 'cm' },
+    { label: '体重', name: 'weight', type: 'number', value: p.weight, min: 30, max: 300, unit: 'kg' },
+    { label: '睡眠', name: 'sleep_hours', type: 'number', value: p.sleep_hours, min: 1, max: 12, step: 0.5, unit: '小时/天' },
+    { label: '训练目标', name: 'fitness_goal', type: 'select', options: GOAL_OPTIONS.map(g=>[g,g]), value: p.fitness_goal },
+    { label: '训练水平', name: 'experience_level', type: 'select', options: LEVEL_OPTIONS, value: p.experience_level },
+    { label: '每周天数', name: 'days_per_week', type: 'number', value: sched.days_per_week, min: 1, max: 7, unit: '天', sched: true },
+    { label: '每次时长', name: 'daily_duration_min', type: 'number', value: sched.daily_duration_min, min: 10, max: 300, unit: '分钟', sched: true },
+  ];
+
+  const html = fields.map(f => {
+    let input;
+    if (f.type === 'select') {
+      const opts = f.options.map(([v,l]) =>
+        `<option value="${v}"${f.value===v?' selected':''}>${l}</option>`).join('');
+      input = `<select class="edit-select" name="${f.name}">${opts}</select>`;
+    } else {
+      input = `<input class="edit-input" type="number" name="${f.name}" value="${f.value??''}" min="${f.min}" max="${f.max}" step="${f.step||1}">`;
+    }
+    return `<div class="edit-row"><span class="label">${f.label}</span>${input}</div>`;
+  }).join('');
+
+  document.getElementById('profile-stats').innerHTML = html;
+  document.getElementById('profile-stats-actions').innerHTML = `
+    <button class="btn-save" onclick="saveStats()">保存</button>
+    <button class="btn-cancel" onclick="cancelEditStats()">取消</button>`;
+}
+
+async function saveStats() {
+  const container = document.getElementById('profile-stats');
+  const data = {};
+  const schedFields = ['days_per_week', 'daily_duration_min'];
+  const schedData = {};
+
+  container.querySelectorAll('[name]').forEach(el => {
+    const v = el.value.trim();
+    if (!v) return;
+    if (schedFields.includes(el.name)) {
+      schedData[el.name] = Number(v);
+    } else if (['age','height','weight'].includes(el.name)) {
+      data[el.name] = Number(v);
+    } else if (el.name === 'sleep_hours') {
+      data[el.name] = parseFloat(v);
+    } else {
+      data[el.name] = v;
+    }
+  });
+
+  // Merge schedData with existing schedule
+  if (Object.keys(schedData).length) {
+    data.available_schedule = Object.assign({}, _profile.available_schedule || {}, schedData);
+  }
+
+  try {
+    const res = await fetch('/api/plan-viewer/profile', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    Object.assign(_profile, data);
+    if (data.available_schedule) _profile.available_schedule = data.available_schedule;
+    renderProfile(_profile);
+    drawRadar(_profile);
+    exitEditStats();
+    showToast('画像已保存，正在重新生成训练计划…');
+    triggerPlanRegeneration();
+  } catch (e) {
+    showToast('保存失败: ' + e.message, true);
+  }
+}
+
+function cancelEditStats() {
+  renderProfile(_profile);
+  exitEditStats();
+}
+
+function exitEditStats() {
+  document.getElementById('profile-stats-actions').innerHTML =
+    `<button class="btn-edit" onclick="enterEditStats()">编辑</button>`;
+}
+
+// ════════════════════════════════════════════════════════════
+// Edit — training preferences (tags)
+// ════════════════════════════════════════════════════════════
+
+function enterEditTags() {
+  const p = _profile;
+  const sched = p.available_schedule || {};
+  const styles = [...(p.preferred_training_style || [])];
+  const equip  = [...(p.available_equipment || [])];
+  const slots  = [...(sched.free_time_slots || [])];
+
+  document.getElementById('profile-tags').innerHTML = buildTagEditor(styles, equip, slots);
+  document.getElementById('profile-tags-actions').innerHTML = `
+    <button class="btn-save" onclick="saveTags()">保存</button>
+    <button class="btn-cancel" onclick="cancelEditTags()">取消</button>`;
+}
+
+function buildTagEditor(styles, equip, slots) {
+  function section(label, id, cls, items, placeholder) {
+    return `
+    <div class="tag-section">
+      <div class="tag-section-label">${label}</div>
+      <div class="tag-edit-area" id="${id}">${renderEditPills(items, cls)}</div>
+      <div class="tag-add-row">
+        <input class="tag-add-input" id="${id}-input" placeholder="${placeholder}"
+               onkeydown="addTag(event,'${id}','${cls}')"
+               oncompositionstart="window._ime_${id}=true"
+               oncompositionend="window._ime_${id}=false">
+        <button class="btn-tag-add" onclick="addTagByBtn('${id}','${cls}')" title="添加">+</button>
+      </div>
+    </div>`;
+  }
+  return section('训练风格', 'tags-style', '',       styles, '输入风格') +
+         section('可用器械', 'tags-equip', 'green',  equip,  '输入器械') +
+         section('训练时段', 'tags-slots', 'yellow', slots,  '输入时段');
+}
+
+function renderEditPills(items, cls) {
+  return items.map(t =>
+    `<span class="pill-editable ${cls}" data-value="${t}">${t}<button class="pill-del" onclick="removeTag(this)" title="删除">×</button></span>`
+  ).join('');
+}
+
+function removeTag(btn) {
+  btn.closest('.pill-editable').remove();
+}
+
+function _appendTag(containerId, cls, val) {
+  if (!val) return;
+  const container = document.getElementById(containerId);
+  const span = document.createElement('span');
+  span.className = ('pill-editable ' + cls).trim();
+  span.dataset.value = val;
+  const txt = document.createTextNode(val);
+  const btn = document.createElement('button');
+  btn.className = 'pill-del';
+  btn.title = '删除';
+  btn.textContent = '×';
+  btn.onclick = () => btn.closest('.pill-editable').remove();
+  span.appendChild(txt);
+  span.appendChild(btn);
+  container.appendChild(span);
+}
+
+function addTag(e, containerId, cls) {
+  if (e.key !== 'Enter' && e.key !== ',') return;
+  // Block while Chinese IME is composing
+  if (e.isComposing || window['_ime_' + containerId]) return;
+  e.preventDefault();
+  const val = e.target.value.trim();
+  if (!val) return;
+  _appendTag(containerId, cls, val);
+  e.target.value = '';
+}
+
+function addTagByBtn(containerId, cls) {
+  const input = document.getElementById(containerId + '-input');
+  const val = input.value.trim();
+  if (!val) return;
+  _appendTag(containerId, cls, val);
+  input.value = '';
+  input.focus();
+}
+
+function getTagValues(containerId) {
+  return [...document.querySelectorAll(`#${containerId} .pill-editable`)].map(el => el.dataset.value);
+}
+
+async function saveTags() {
+  const styles = getTagValues('tags-style');
+  const equip  = getTagValues('tags-equip');
+  const slots  = getTagValues('tags-slots');
+  const schedUpdate = Object.assign({}, _profile.available_schedule || {}, { free_time_slots: slots });
+
+  try {
+    const res = await fetch('/api/plan-viewer/profile', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        preferred_training_style: styles,
+        available_equipment: equip,
+        available_schedule: schedUpdate,
+      }),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    _profile.preferred_training_style = styles;
+    _profile.available_equipment = equip;
+    if (!_profile.available_schedule) _profile.available_schedule = {};
+    _profile.available_schedule.free_time_slots = slots;
+    renderProfile(_profile);
+    exitEditTags();
+    showToast('偏好已保存，正在重新生成训练计划…');
+    triggerPlanRegeneration();
+  } catch (e) {
+    showToast('保存失败: ' + e.message, true);
+  }
+}
+
+function cancelEditTags() {
+  renderProfile(_profile);
+  exitEditTags();
+}
+
+function exitEditTags() {
+  document.getElementById('profile-tags-actions').innerHTML =
+    `<button class="btn-edit" onclick="enterEditTags()">编辑</button>`;
+}
+
+// ════════════════════════════════════════════════════════════
+// Schedule reload & plan regeneration
+// ════════════════════════════════════════════════════════════
+async function reloadSchedule(version) {
+  const ver = version || _currentVersion;
+  const [planRes, musclesRes] = await Promise.all([
+    fetch(`/api/plan-viewer/latest-plan?version=${ver}`),
+    fetch('/api/plan-viewer/muscles-map'),
+  ]);
+  if (!planRes.ok) throw new Error('计划加载失败');
+  const plan = await planRes.json();
+  _currentMuscleMap = musclesRes.ok ? await musclesRes.json() : {};
+  const schedule = plan.weekly_schedule || [];
+  renderSummary(schedule);
+  renderDayTabs(schedule, i => renderDayDetail(schedule[i]));
+  if (schedule.length > 0) renderDayDetail(schedule[0]);
+  renderCoachingNotes(plan.coaching_notes);
+  renderValidationIssues(plan);
+}
+
+function showScheduleLoading() {
+  ['summary-chips','day-tabs','day-detail','coaching-notes'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '';
+  });
+  document.getElementById('day-detail').innerHTML =
+    `<div class="regen-overlay"><div class="spinner"></div><div>正在根据新画像重新生成训练计划…</div></div>`;
+}
+
+async function triggerPlanRegeneration() {
+  showScheduleLoading();
+  try {
+    const res = await fetch('/api/plan-viewer/regenerate-plan', { method: 'POST' });
+    const { job_id } = await res.json();
+    await pollRegenJob(job_id);
+  } catch (e) {
+    showToast('计划生成失败: ' + e.message, true);
+    await reloadSchedule();
+  }
+}
+
+async function pollRegenJob(job_id) {
+  while (true) {
+    await new Promise(r => setTimeout(r, 3000));
+    try {
+      const res = await fetch(`/api/plan-viewer/regen-status/${job_id}`);
+      const job = await res.json();
+      if (job.status === 'done') {
+        await reloadSchedule();
+        showToast('训练计划已更新 ✓');
+        return;
+      }
+      if (job.status === 'error') {
+        showToast('计划生成失败: ' + (job.error || '未知错误'), true);
+        await reloadSchedule();
+        return;
+      }
+    } catch (_) { /* keep polling */ }
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// Toast notification
+// ════════════════════════════════════════════════════════════
+function showToast(msg, isError = false) {
+  let t = document.getElementById('_toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = '_toast';
+    t.style.cssText = `position:fixed;bottom:28px;right:24px;padding:10px 18px;border-radius:10px;
+      font-size:.85rem;font-weight:600;z-index:9999;transition:opacity .4s;pointer-events:none;`;
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.background = isError ? 'rgba(255,101,132,.9)' : 'rgba(67,233,123,.9)';
+  t.style.color = '#0f1117';
+  t.style.opacity = '1';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.style.opacity = '0'; }, 2200);
+}
+
+// ════════════════════════════════════════════════════════════
+// Prompt version toggle
+// ════════════════════════════════════════════════════════════
+const VERSION_DESC = {
+  v2: '三步流水线：规则初筛 → 向量语义排序(MMR) → LLM 生成',
+  v3: 'FITT-VP 流水线：分天排布 → 规则库前置知识 → LLM → LLM校验器(+重试)',
+};
+
+let _currentVersion = 'v2';
+let _promptCache = {};  // version → {system, user}
+
+function applyVersionUI(version) {
+  _currentVersion = version;
+  document.querySelectorAll('.version-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.v === version);
+  });
+  document.getElementById('prompt-desc').textContent = VERSION_DESC[version] || '';
+}
+
+function updateCacheDots(status) {
+  // status: { v2: {generated_at} | null, v3: ... , pregen_jobs: {v2:{status}, v3:{status}} }
+  const jobs = status.pregen_jobs || {};
+  ['v2', 'v3'].forEach(ver => {
+    const dot = document.getElementById(`dot-${ver}`);
+    if (!dot) return;
+    const running = jobs[ver] && jobs[ver].status === 'running';
+    const cached  = !!status[ver];
+    dot.className = 'cache-dot' + (running ? ' running' : cached ? ' ready' : '');
+    const ts = status[ver] && status[ver].generated_at ? ` (${status[ver].generated_at.replace('T',' ')})` : '';
+    dot.title = `${ver.toUpperCase()} 缓存${cached ? '就绪'+ts : running ? '生成中…' : '：未缓存'}`;
+  });
+}
+
+async function refreshCacheStatus() {
+  try {
+    const res = await fetch('/api/plan-viewer/cache-status');
+    const data = await res.json();
+    updateCacheDots(data);
+    return data;
+  } catch (_) { return {}; }
+}
+
+async function switchVersion(version) {
+  if (version === _currentVersion) return;
+  try {
+    const res = await fetch('/api/plan-viewer/prompt-version', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ version }),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    applyVersionUI(version);
+    _promptCache = {};
+    if (document.getElementById('prompt-drawer').classList.contains('open')) {
+      await loadPromptContent(version);
+    }
+
+    // 尝试从缓存直接加载，避免重新生成
+    const cacheStatus = await refreshCacheStatus();
+    if (cacheStatus[version]) {
+      showToast(`已切换到 ${version.toUpperCase()}，从缓存加载计划…`);
+      await reloadSchedule(version);
+    } else {
+      showToast(`已切换到 ${version.toUpperCase()}，缓存不存在，正在生成…`);
+      triggerPlanRegeneration();
+    }
+  } catch (e) {
+    showToast('切换失败: ' + e.message, true);
+  }
+}
+
+async function pregenBoth() {
+  const btn = document.getElementById('btn-pregen');
+  btn.disabled = true;
+  btn.textContent = '生成中…';
+  try {
+    const res = await fetch('/api/plan-viewer/pregenerate-all', { method: 'POST' });
+    const { v2: jid_v2, v3: jid_v3 } = await res.json();
+    showToast('开始预生成 V2 + V3 双版本计划，请稍候…');
+
+    // Poll both jobs until both done
+    const poll = async (jid) => {
+      while (true) {
+        await new Promise(r => setTimeout(r, 4000));
+        const s = await fetch(`/api/plan-viewer/regen-status/${jid}`).then(r=>r.json());
+        if (s.status !== 'running') return s;
+        await refreshCacheStatus();
+      }
+    };
+    const [r2, r3] = await Promise.all([poll(jid_v2), poll(jid_v3)]);
+    await refreshCacheStatus();
+
+    const ok2 = r2.status === 'done', ok3 = r3.status === 'done';
+    if (ok2 && ok3) {
+      showToast('V2 + V3 双版本计划已预生成 ✓');
+      await reloadSchedule(_currentVersion);
+    } else {
+      const msg = (!ok2 ? `V2失败: ${r2.error} ` : '') + (!ok3 ? `V3失败: ${r3.error}` : '');
+      showToast(msg.trim(), true);
+    }
+  } catch (e) {
+    showToast('预生成失败: ' + e.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '预生成双版本';
+  }
+}
+
+async function loadPromptContent(version) {
+  if (_promptCache[version]) {
+    renderPromptContent(_promptCache[version]);
+    return;
+  }
+  document.getElementById('pp-system-text').textContent = '加载中…';
+  document.getElementById('pp-user-text').textContent   = '加载中…';
+  try {
+    const res  = await fetch(`/api/plan-viewer/prompt-content/${version}`);
+    const data = await res.json();
+    _promptCache[version] = data;
+    renderPromptContent(data);
+  } catch (e) {
+    document.getElementById('pp-system-text').textContent = '加载失败: ' + e.message;
+  }
+}
+
+function renderPromptContent(data) {
+  document.getElementById('pp-system-text').textContent = data.system || '(空)';
+  document.getElementById('pp-user-text').textContent   = data.user   || '(空)';
+}
+
+function togglePromptDrawer() {
+  const drawer = document.getElementById('prompt-drawer');
+  const isOpen = drawer.classList.toggle('open');
+  if (isOpen) loadPromptContent(_currentVersion);
+}
+
+function switchPromptTab(tab) {
+  document.querySelectorAll('.prompt-drawer-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === tab);
+  });
+  document.querySelectorAll('.prompt-panel').forEach(p => {
+    p.classList.toggle('active', p.id === `pp-${tab}`);
+  });
+}
+
+function renderValidationIssues(plan) {
+  const area = document.getElementById('validation-area');
+  if (!area) return;
+  if (plan._pipeline_version !== 'v3') { area.innerHTML = ''; return; }
+
+  // Support both new {_validation: {score,issues,suggestions}} and legacy {_validation_issues:[]}
+  const v       = plan._validation || {};
+  const issues  = v.issues || plan._validation_issues || [];
+  const score   = v.score;
+  const suggest = v.suggestions || '';
+  const isValid = v.is_valid !== undefined ? v.is_valid : issues.length === 0;
+
+  const scoreChip = score != null
+    ? `<span style="margin-left:6px;font-size:.7rem;color:var(--muted)">评分 ${score}/10</span>`
+    : '';
+
+  if (isValid && issues.length === 0) {
+    area.innerHTML = `<div style="margin-bottom:12px">
+      <span class="validation-badge ok" onclick="this.nextElementSibling.classList.toggle('open')">
+        ✓ LLM 规则校验通过
+      </span>${scoreChip}
+      <div class="validation-list">${suggest || '所有 FITT-VP 规则均已满足。'}</div>
+    </div>`;
+  } else {
+    
+  }
+}
+
+// ════════════════════════════════════════════════════════════
 // Boot
 // ════════════════════════════════════════════════════════════
 (async () => {
@@ -834,14 +1632,26 @@ function renderCoachingNotes(notes) {
     document.getElementById('avatar-icon').textContent =
       profile.gender === 'female' ? '🧘‍♀️' : '🏋️';
 
+    _profile = profile;
     renderProfile(profile);
     renderSummary(schedule);
     renderDayTabs(schedule, i => renderDayDetail(schedule[i]));
     if (schedule.length > 0) renderDayDetail(schedule[0]);
 
     renderCoachingNotes(plan.coaching_notes);
+    renderValidationIssues(plan);
 
     drawRadar(profile);
+
+    // Load prompt version state + cache status
+    try {
+      const [vRes] = await Promise.all([
+        fetch('/api/plan-viewer/prompt-version'),
+      ]);
+      const vData = await vRes.json();
+      applyVersionUI(vData.version || 'v2');
+    } catch (_) { applyVersionUI('v2'); }
+    refreshCacheStatus();  // non-blocking, updates dots
 
     document.getElementById('loading').style.display = 'none';
     document.getElementById('app').style.display = 'block';
