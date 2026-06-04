@@ -1,0 +1,463 @@
+# ============================================================
+# fitness_rules.yaml  —  健身视频分析规则库
+# ============================================================
+# 版本：1.0
+# 用途：供 AI Agent 读取，作为识别依据。
+#       不内嵌在 prompt 中，而是在调用前由代码注入或由 Agent 工具读取。
+# ============================================================
+
+version: "1.0"
+
+# ────────────────────────────────────────────────────────────
+# 一、核心原则（优先级由高到低）
+# ────────────────────────────────────────────────────────────
+core_principles:
+
+  - id: P1
+    name: 看到器械不等于正在用器械
+    description: >
+      第一人称视角下，用户走过任何器械都会被拍到。
+      判定 exercise 必须同时满足两个条件：
+      (1) 画面在该器械前持续停留（≥3 帧，不是快速扫过）；
+      (2) 有明确的操作证据（配重在动、绳索拉紧、画面节奏性晃动等）。
+
+  - id: P2
+    name: 进场帧优先确认器械
+    description: >
+      训练时相机贴近器械，只能看到局部（配重块、把手、一小段框架）。
+      必须回看该训练段之前 2-3 帧（进场帧），寻找器械完整轮廓。
+      判断优先级：进场帧整体结构 > 训练帧局部特征。
+      若进场帧与训练帧指向不同器械，以进场帧为准。
+
+  - id: P3
+    name: 相机朝向反映身体姿态
+    description: >
+      胸前固定相机的朝向直接反映身体朝向，用于区分同器械的不同动作。
+      具体映射见 camera_posture_map。
+
+  - id: P4
+    name: 训练计划是参考不是答案
+    description: >
+      训练计划告知当天大概会用哪些器械，帮助缩小识别范围。
+      但不能因为计划里有某个动作就把不相关的帧强行归入。
+      必须以画面证据为准；计划外的动作正常标注并在 note 中注明"计划外"。
+
+
+# ────────────────────────────────────────────────────────────
+# 二、状态定义
+# ────────────────────────────────────────────────────────────
+status_definitions:
+
+  exercise:
+    description: 用户正在操作器械做重复动作
+    required_evidence:
+      - 画面持续停留在同一器械前（≥3 帧）
+      - 有可见的操作动作（配重移动、绳索拉紧、杠铃位移、画面节奏晃动等）
+    common_false_positives:
+      - 走过器械时短暂对准（1-2 帧）→ 应标为 transition
+      - 坐在器械上看手机/喝水 → 应标为 rest
+      - 在器械前调整配重/座椅 → 应标为 rest
+
+  rest:
+    description: 用户静止或接近静止，处于恢复、等待或准备状态
+    signals:
+      - 画面静止或轻微晃动
+      - 可见手机屏幕、水杯、毛巾
+      - 坐着或站着不做重复动作
+      - 在调整器械（加减配重片、调节座椅高度、调安全扣）
+
+  transition:
+    description: 用户在移动，场景在变化
+    signals:
+      - 画面持续运动，背景在快速变化
+      - 经过走廊、过道、多台不同器械
+      - 视角快速扫过（前后帧场景差异大）
+
+
+# ────────────────────────────────────────────────────────────
+# 三、相机朝向 → 身体姿态 → 典型动作
+# ────────────────────────────────────────────────────────────
+camera_posture_map:
+
+  - camera_direction: 朝天花板或正上方
+    body_posture: 躺着（仰卧）
+    typical_movements:
+      - 平板卧推
+      - 上斜卧推
+      - 仰卧飞鸟
+      - 仰卧举腿
+    note: 看到天花板灯带 + 器械框架从两侧出现 → 卧推类
+
+  - camera_direction: 朝地面或自己脚部
+    body_posture: 弯腰或俯身
+    typical_movements:
+      - 硬拉
+      - 俯身划船
+      - 罗马尼亚硬拉
+    note: 看到地板 + 杠铃杆在脚边 → 硬拉类
+
+  - camera_direction: 平视器械（画面稳定）
+    body_posture: 坐着或站着
+    typical_movements: 根据器械类型判断
+    note: 需结合器械特征进一步区分
+
+  - camera_direction: 从下往上看横杆或天花板悬挂结构
+    body_posture: 悬挂（脚离地）
+    typical_movements:
+      - 引体向上
+      - 悬垂举腿
+      - 悬垂抬腿
+    note: 看到头顶横杆 + 画面有规律上下位移 → 悬挂类
+
+  - camera_direction: 低角度朝地面（无器械）
+    body_posture: 俯卧或跪撑
+    typical_movements:
+      - 俯卧撑
+      - 平板支撑
+      - 卷腹
+    note: 看到地面/垫子 + 无器械框架 → 自重类
+
+
+# ────────────────────────────────────────────────────────────
+# 四、绳索动作方向规则（适用于龙门架）
+# ────────────────────────────────────────────────────────────
+cable_direction_rules:
+
+  - cable_from: 上方（滑轮在头顶）
+    hand_motion: 向下压
+    movement: 绳索三头下压
+
+  - cable_from: 上方
+    hand_motion: 双手向胸前中间合拢
+    movement: 高位绳索夹胸
+
+  - cable_from: 上方
+    hand_motion: 单手向斜下方拉
+    movement: 绳索下拉
+
+  - cable_from: 下方（滑轮在脚边）
+    hand_motion: 向上拉
+    movement: 绳索弯举
+
+  - cable_from: 下方
+    hand_motion: 双手向脸部拉
+    movement: 面拉
+
+  - cable_from: 水平（与腰齐高）
+    hand_motion: 向身体后方拉
+    movement: 绳索划船
+
+
+# ────────────────────────────────────────────────────────────
+# 五、器械库
+# ────────────────────────────────────────────────────────────
+equipment:
+
+  跑步机:
+    category: cardio
+    evidence_required:
+      - 履带在转动（可见黑色传送带运动）
+      - 控制面板亮着并显示数据
+      - 画面有节奏性上下晃动（跑步步频对应）
+    movements: [跑步, 快走]
+    confuse_with: []
+
+  椭圆机:
+    category: cardio
+    evidence_required:
+      - 踏板在做椭圆形轨迹运动
+      - 长动臂在前后摆动
+    movements: [椭圆机]
+    confuse_with: []
+
+  动感单车:
+    category: cardio
+    evidence_required:
+      - 可见腿部蹬踏动作
+      - 飞轮在转动
+    movements: [动感单车]
+    confuse_with: []
+
+  划船机:
+    category: cardio
+    evidence_required:
+      - 滑座在前后滑动
+      - 拉绳或拉柄被拉动
+    movements: [划船机]
+    confuse_with: []
+
+  杠铃:
+    category: free_weight
+    evidence_required:
+      - 杠铃杆在移动（上下推/拉）或扛在肩上/胸前
+    movements:
+      平板卧推:
+        camera_cue: 朝天花板，杠铃杆横跨画面上方
+      上斜卧推:
+        camera_cue: 朝斜上方天花板
+      深蹲:
+        camera_cue: 平视前方，杠铃杆在肩颈后方
+      硬拉:
+        camera_cue: 朝地面，杠铃在脚边
+      划船:
+        camera_cue: 朝地面，杠铃从腹部拉起
+      推举:
+        camera_cue: 平视或略仰，杠铃从肩部推高
+      弯举:
+        camera_cue: 平视，杠铃从腰部弯举至胸前
+    confuse_with:
+      - equipment: 史密斯架
+        disambiguation: 杠铃可自由移动；史密斯架杠铃有固定导轨，左右各有卡扣
+
+  史密斯架:
+    category: free_weight
+    structure: 双立柱，杠铃在固定垂直导轨内运动，两端有金属卡扣
+    evidence_required:
+      - 可见双立柱固定轨道
+      - 杠铃在导轨内上下移动
+      - 两端可见旋转卡扣
+    movements:
+      史密斯卧推:
+        camera_cue: 朝天花板
+      史密斯深蹲:
+        camera_cue: 平视或略低，从下往上看杠铃和立柱
+      史密斯划船:
+        camera_cue: 朝地面
+      史密斯推举:
+        camera_cue: 平视或仰视
+    confuse_with:
+      - equipment: 杠铃
+        disambiguation: 史密斯架有固定导轨和卡扣；自由杠铃无导轨可任意移动
+
+  哑铃:
+    category: free_weight
+    evidence_required:
+      - 用户手持哑铃在做重复动作（非仅放在哑铃架上）
+    movements:
+      哑铃弯举:
+        camera_cue: 平视，手臂屈肘上举
+      哑铃侧平举:
+        camera_cue: 平视，双臂水平展开
+      哑铃推举:
+        camera_cue: 平视或仰视，向头顶推
+      哑铃飞鸟:
+        camera_cue: 朝天花板，双臂展开合拢
+      哑铃卧推:
+        camera_cue: 朝天花板
+      哑铃划船:
+        camera_cue: 朝地面，单臂拉起
+    confuse_with: []
+
+  龙门架:
+    category: cable
+    structure: 双立柱独立结构，两侧各有一根立柱，无固定座椅
+    evidence_required:
+      - 绳索被明显拉紧
+      - 配重在升降
+      - 可见双立柱结构
+    movements: 参见 cable_direction_rules
+    confuse_with:
+      - equipment: 高位下拉
+        disambiguation: >
+          龙门架是双立柱、无固定座椅、可调节滑轮高度；
+          高位下拉是单立柱、有固定座椅、大腿挡板固定腿部。
+
+  高位下拉:
+    category: machine
+    structure: 单立柱，顶部有固定滑轮，座椅前有大腿挡板
+    evidence_required:
+      - 用户坐在固定座椅上
+      - 大腿被挡板固定
+      - 从头顶拉下直杆或弯杆
+    movements: [高位下拉, 窄握高位下拉, 反握高位下拉]
+    confuse_with:
+      - equipment: 龙门架
+        disambiguation: 高位下拉是坐着操作；龙门架通常站着或跪着
+
+  坐姿划船:
+    category: machine
+    evidence_required:
+      - 坐在带座垫的机器上
+      - 双手握住横向把手向身体方向拉
+    movements: [坐姿划船]
+    confuse_with: []
+
+  蝴蝶机:
+    category: machine
+    evidence_required:
+      - 坐着
+      - 两侧扇形挡板（蝴蝶翼）在合拢或张开
+    movements: [夹胸, 反向夹胸]
+    confuse_with: []
+
+  腿举机:
+    category: machine
+    evidence_required:
+      - 45°斜板结构
+      - 脚蹬踏板在被推动
+    movements: [腿举]
+    confuse_with: []
+
+  推肩机:
+    category: machine
+    evidence_required:
+      - 坐着
+      - 双手握住两侧把手向上推
+    movements: [推肩]
+    confuse_with: []
+
+  悍马机:
+    category: machine
+    structure: 固定轨道，两个独立把手，可模拟自由重量动作
+    evidence_required:
+      - 可见弧形固定轨道
+      - 把手在弧形轨迹上移动
+    movements: [上斜推胸, 平板推胸, 下斜推胸, 悍马高位下拉, 悍马划船]
+    confuse_with:
+      - equipment: 史密斯架
+        disambiguation: 悍马机有两个独立把手；史密斯架是单一横杆
+
+  引体向上:
+    category: bodyweight
+    evidence_required:
+      - 用户身体悬挂（脚离地）
+      - 从下方仰拍横杆
+      - 身体有向上拉升的运动
+    movements: [引体向上, 悬垂举腿, 悬垂抬腿]
+    confuse_with:
+      - equipment: 高位下拉
+        disambiguation: 引体向上脚离地悬挂；高位下拉坐在椅子上脚踩地
+
+  自重训练:
+    category: bodyweight
+    evidence_required:
+      - 无器械被操作
+      - 低角度画面（地面、垫子、墙面）
+    movements: [俯卧撑, 平板支撑, 卷腹, 深蹲跳, 箭步蹲]
+    confuse_with: []
+
+  拉伸:
+    category: other
+    evidence_required:
+      - 慢速、大幅度的单次拉伸动作
+      - 通常在训练前后
+    movements: [拉伸]
+    confuse_with: []
+
+
+# ────────────────────────────────────────────────────────────
+# 六、易混淆场景汇总
+# ────────────────────────────────────────────────────────────
+common_confusions:
+
+  - scene: 走向跑步机被误判为跑步
+    symptom: exercise 起始时间早于实际开始跑步
+    rule: >
+      必须有履带转动 + 画面节奏晃动才算跑步开始。
+      仅走向跑步机或站在跑步机旁 → transition / rest。
+
+  - scene: 路过器械被误判为使用
+    symptom: 短暂的 exercise 段（1-2 帧）夹在 transition 中
+    rule: >
+      持续帧数 < 3 帧的 exercise 段视为噪声，丢弃或归入前后段。
+
+  - scene: 组间休息切断训练段
+    symptom: 一段连续训练被拆成两段，中间有短暂 rest
+    rule: >
+      同一器械上的短暂停顿（≤30 秒且未离开位置）→ 视为组间休息，
+      两段合并为一个训练段。
+
+  - scene: 引体向上架 vs 高位下拉
+    symptom: 悬挂类动作被标为高位下拉
+    rule: >
+      脚离地悬挂 → 引体向上/悬垂举腿；
+      坐在椅子上大腿被固定 → 高位下拉。
+
+  - scene: 龙门架 vs 高位下拉
+    symptom: 绳索类动作器械标错
+    rule: >
+      双立柱 + 可调节滑轮 → 龙门架；
+      单立柱 + 固定座椅 + 大腿挡板 → 高位下拉。
+
+  - scene: 史密斯架深蹲起始边界偏移
+    symptom: 过渡帧（走向史密斯架）被标为深蹲，或深蹲帧被标为过渡
+    rule: >
+      深蹲起始证据：从下方仰望杠铃和立柱，杠铃杆在导轨内明显下降。
+      仅站在史密斯架旁调整配重 → rest。
+
+
+# ────────────────────────────────────────────────────────────
+# 七、分段合并规则
+# ────────────────────────────────────────────────────────────
+merge_rules:
+
+  # 组间休息合并
+  intra_exercise_gap_s: 30
+  description_gap: >
+    同一器械两个相邻 exercise 段之间，若间隔 ≤ 30 秒且用户未明显换位置，
+    视为组间休息，合并为一个训练段。
+
+  # 过短段丢弃
+  min_exercise_duration_s: 3
+  description_min: >
+    持续时长 < 3 秒的 exercise 段视为噪声，丢弃。
+
+  # 单帧噪声去除
+  noise_threshold_frames: 1
+  description_noise: >
+    某段只有 1 帧且前后段类型相同 → 归入前一段（视为噪声）。
+
+  # 过渡段最大长度（异常检测）
+  max_transition_s: 120
+  description_transition: >
+    过渡段超过 120 秒 → 可能遗漏了中间的训练段，需要重新检查。
+
+
+# ────────────────────────────────────────────────────────────
+# 八、组数和次数估算规则
+# ────────────────────────────────────────────────────────────
+sets_reps_estimation:
+
+  sets_count:
+    method: >
+      数该 exercise 段内出现几次「运动 → 短暂停止 → 运动」的周期，
+      每个周期对应一组。
+    fallback_long: >
+      看不清节奏但段时长 > 60 秒 → sets_count = round(时长 / 40)
+    fallback_short: >
+      段时长 ≤ 60 秒 → sets_count = 1
+
+  reps_estimate:
+    method: >
+      从画面动作节奏估算单组次数，典型范围 6-15 次。
+    typical_values:
+      卧推类: 8
+      深蹲类: 8
+      弯举类: 12
+      有氧类: 0
+    fallback: >
+      看不清时按动作类型填典型值；完全无法判断 → 填 0
+
+
+# ────────────────────────────────────────────────────────────
+# 九、输出字段说明
+# ────────────────────────────────────────────────────────────
+output_fields:
+
+  required_for_exercise:
+    - startFrameIndex
+    - endFrameIndex
+    - status: exercise
+    - equipmentName: 从器械库中选一个
+    - movementName: 从该器械候选动作中选一个，看不清则填 equipmentName
+    - confidence: 0.0-1.0
+    - sets_count: 正整数
+    - reps_estimate: 非负整数
+    - plannedOrder: 对应训练计划第 N 个动作填 N，计划外填 null
+    - note: 一句话，必须包含「进场帧看到了什么」+「训练帧看到了什么」+「组数估算依据」
+
+  required_for_other:
+    - startFrameIndex
+    - endFrameIndex
+    - status: rest 或 transition
+    - note: 一句话描述画面状态

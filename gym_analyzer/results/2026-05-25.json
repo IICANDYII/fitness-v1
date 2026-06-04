@@ -1,0 +1,120 @@
+{
+  "calendar": {
+    "days": {
+      "2026-05-25": "full"
+    },
+    "month": 5,
+    "year": 2026
+  },
+  "daily": {
+    "avg_hr": null,
+    "calories": 30,
+    "completion_rate": 95,
+    "duration_min": 4.8,
+    "muscle_distribution": {
+      "腹": 13,
+      "腿": 100
+    }
+  },
+  "date": "2026-05-25",
+  "muscles": {
+    "abdominals": "low",
+    "calves": "high",
+    "glutes": "medium",
+    "hamstrings": "high",
+    "obliques": "low",
+    "quads": "high"
+  },
+  "raw_segments": [
+    {
+      "end_sec": 35,
+      "start_sec": 0,
+      "type": "transition"
+    },
+    {
+      "confidence": 0.95,
+      "end_sec": 177.2,
+      "exercise_name": "跑步",
+      "note": "控制面板亮起并显示运动数据，画面伴随跑步节奏有明显上下晃动，持续约141秒的有氧运动。",
+      "primary_muscles": [
+        "quads",
+        "hamstrings",
+        "calves"
+      ],
+      "reps_estimate": 0,
+      "secondary_muscles": [
+        "glutes"
+      ],
+      "sets_count": 1,
+      "start_sec": 35,
+      "type": "exercise"
+    },
+    {
+      "end_sec": 192.2,
+      "start_sec": 177.2,
+      "type": "transition"
+    },
+    {
+      "confidence": 0.85,
+      "end_sec": 218.2,
+      "exercise_name": "史密斯深蹲",
+      "note": "双手扶在史密斯机杠铃杆上并调整站位，随后进行了一组深蹲动作，时长约26秒。",
+      "primary_muscles": [],
+      "reps_estimate": 8,
+      "secondary_muscles": [],
+      "sets_count": 1,
+      "start_sec": 192.2,
+      "type": "exercise"
+    },
+    {
+      "end_sec": 263.3,
+      "start_sec": 218.2,
+      "type": "transition"
+    },
+    {
+      "confidence": 0.9,
+      "end_sec": 282.3,
+      "exercise_name": "悬垂举腿",
+      "note": "双手抓握单杠上方，身体呈悬挂姿态，视角伴随腿部举起有节奏变化，完成一组动作。",
+      "primary_muscles": [
+        "abdominals"
+      ],
+      "reps_estimate": 10,
+      "secondary_muscles": [
+        "obliques"
+      ],
+      "sets_count": 1,
+      "start_sec": 263.3,
+      "type": "exercise"
+    },
+    {
+      "end_sec": 291.3,
+      "start_sec": 282.3,
+      "type": "transition"
+    }
+  ],
+  "weekly": {
+    "calories_trend_pct": 0,
+    "daily_sets": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "day_labels": [
+      "5/27",
+      "5/28",
+      "5/29",
+      "5/30",
+      "5/31",
+      "6/1",
+      "6/2"
+    ],
+    "sets_trend_pct": 0,
+    "total_calories": 30,
+    "total_sets": 3
+  }
+}

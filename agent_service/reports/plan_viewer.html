@@ -427,34 +427,6 @@
   }
   .regen-overlay .spinner { margin: 0; }
 
-  /* ── User selector ───────────────────────────────────────── */
-  .user-selector-bar {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 24px;
-    padding: 12px 16px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-  }
-  .user-selector-bar label {
-    font-size: .78rem; font-weight: 700; letter-spacing: .08em;
-    text-transform: uppercase; color: var(--muted);
-    flex-shrink: 0;
-  }
-  .user-select {
-    flex: 1; max-width: 420px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-size: .88rem;
-    padding: 7px 12px;
-    outline: none;
-    cursor: pointer;
-  }
-  .user-select:focus { border-color: var(--accent); }
-  .user-select option { background: var(--card); color: var(--text); }
-
   /* ── Loading ─────────────────────────────────────────────── */
   #loading {
     position: fixed; inset: 0;
@@ -483,6 +455,122 @@
     margin: 20px 0;
   }
 
+  /* ── Prompt version toggle bar ──────────────────────────── */
+  .prompt-bar {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    background: rgba(108,99,255,.07);
+    border: 1px solid rgba(108,99,255,.2);
+    border-radius: 10px;
+    flex-wrap: wrap;
+  }
+  .prompt-bar-label {
+    font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .version-toggle {
+    display: flex; gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+  }
+  .version-btn {
+    background: none; border: none; cursor: pointer;
+    padding: 4px 14px; border-radius: 6px;
+    font-size: .78rem; font-weight: 600; color: var(--muted);
+    transition: all .18s;
+    white-space: nowrap;
+  }
+  .version-btn.active {
+    background: var(--accent);
+    color: #fff;
+  }
+  .version-btn:not(.active):hover { color: var(--text); }
+  .prompt-desc {
+    font-size: .75rem; color: var(--muted);
+    flex: 1; min-width: 0;
+  }
+  .btn-view-prompt {
+    background: rgba(108,99,255,.12);
+    border: 1px solid rgba(108,99,255,.3);
+    color: #a09cf9;
+    border-radius: 7px;
+    padding: 4px 11px;
+    font-size: .72rem; font-weight: 600;
+    cursor: pointer;
+    transition: all .18s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .btn-view-prompt:hover { background: rgba(108,99,255,.25); color: #fff; }
+
+  /* ── Prompt content drawer ──────────────────────────────── */
+  .prompt-drawer {
+    display: none;
+    margin-bottom: 16px;
+    background: #13151f;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .prompt-drawer.open { display: block; }
+  .prompt-drawer-tabs {
+    display: flex; gap: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .prompt-drawer-tab {
+    background: none; border: none; cursor: pointer;
+    padding: 8px 16px;
+    font-size: .72rem; font-weight: 600; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--muted);
+    border-bottom: 2px solid transparent;
+    transition: all .15s;
+  }
+  .prompt-drawer-tab.active {
+    color: var(--accent); border-bottom-color: var(--accent);
+  }
+  .prompt-panel { display: none; padding: 14px 16px; }
+  .prompt-panel.active { display: block; }
+  .prompt-pre {
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: .75rem; line-height: 1.6;
+    color: #c5c8e0;
+    white-space: pre-wrap; word-break: break-word;
+    max-height: 320px; overflow-y: auto;
+  }
+  .prompt-pre::-webkit-scrollbar { width: 5px; }
+  .prompt-pre::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── Pregenerate button & cache status ──────────────────── */
+  .btn-pregen {
+    background: rgba(67,233,123,.12);
+    border: 1px solid rgba(67,233,123,.35);
+    color: #43e97b;
+    border-radius: 7px;
+    padding: 4px 11px;
+    font-size: .72rem; font-weight: 600;
+    cursor: pointer;
+    transition: all .18s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .btn-pregen:hover { background: rgba(67,233,123,.25); color: #fff; }
+  .btn-pregen:disabled { opacity: .45; cursor: not-allowed; }
+  .cache-dots {
+    display: flex; gap: 5px; align-items: center;
+    flex-shrink: 0;
+  }
+  .cache-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--border);
+    title: attr(title);
+  }
+  .cache-dot.ready   { background: var(--green); }
+  .cache-dot.running { background: var(--yellow); animation: pulse .8s ease-in-out infinite alternate; }
+  @keyframes pulse { from { opacity: .4; } to { opacity: 1; } }
 
   /* ── Validation issues badge ─────────────────────────────── */
   .validation-badge {
@@ -510,176 +598,6 @@
     font-size: .78rem; line-height: 1.7; color: #d4c87a;
   }
   .validation-list.open { display: block; }
-
-  /* ── Equipment scene ────────────────────────────────────── */
-  .scene-section { margin-top: 16px; }
-  .scene-section-label {
-    font-size: .78rem; color: var(--muted); margin-bottom: 10px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .scene-list { display: flex; flex-direction: column; gap: 8px; }
-  .scene-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 14px;
-    cursor: pointer;
-    transition: all .2s;
-  }
-  .scene-card:hover { border-color: var(--accent); }
-  .scene-card.active {
-    border-color: var(--green);
-    background: rgba(67,233,123,.06);
-  }
-  .scene-card-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 6px;
-  }
-  .scene-card-name {
-    font-size: .85rem; font-weight: 600;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .scene-card-name .active-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--green); display: inline-block;
-  }
-  .scene-card-actions {
-    display: flex; gap: 4px;
-  }
-  .scene-card-actions button {
-    background: none; border: none; cursor: pointer;
-    color: var(--muted); font-size: .75rem; padding: 2px 6px;
-    border-radius: 4px; transition: all .15s;
-  }
-  .scene-card-actions button:hover { color: var(--text); background: rgba(255,255,255,.08); }
-  .scene-card-actions button.del:hover { color: var(--accent2); }
-  .scene-equip-pills {
-    display: flex; flex-wrap: wrap; gap: 5px;
-  }
-  .scene-equip-pills .pill { font-size: .72rem; padding: 2px 9px; }
-  .scene-collapsed .scene-equip-pills { display: none; }
-  .btn-add-scene {
-    background: rgba(108,99,255,.12);
-    border: 1px dashed rgba(108,99,255,.35);
-    border-radius: 10px;
-    padding: 8px;
-    text-align: center;
-    cursor: pointer;
-    color: #a09cf9;
-    font-size: .78rem;
-    transition: all .2s;
-  }
-  .btn-add-scene:hover { background: rgba(108,99,255,.2); border-style: solid; }
-
-  /* ── Scene edit modal ───────────────────────────────────── */
-  .scene-modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,.6);
-    display: grid; place-items: center;
-    z-index: 1000;
-  }
-  .scene-modal {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
-    width: 380px; max-width: 90vw;
-    box-shadow: 0 8px 40px rgba(0,0,0,.5);
-  }
-  .scene-modal h3 {
-    font-size: .95rem; margin-bottom: 16px;
-  }
-  .scene-modal label {
-    font-size: .78rem; color: var(--muted); display: block; margin-bottom: 6px;
-  }
-  .scene-modal input[type="text"] {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text);
-    font-size: .88rem;
-    padding: 6px 10px;
-    width: 100%;
-    outline: none;
-    margin-bottom: 14px;
-  }
-  .scene-modal input[type="text"]:focus { border-color: var(--accent); }
-  .equip-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
-    margin-bottom: 18px;
-  }
-  .equip-option {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px 0;
-    text-align: center;
-    cursor: pointer;
-    font-size: .78rem;
-    transition: all .15s;
-    user-select: none;
-  }
-  .equip-option:hover { border-color: var(--accent); }
-  .equip-option.selected {
-    background: rgba(67,233,123,.12);
-    border-color: rgba(67,233,123,.4);
-    color: var(--green);
-    font-weight: 600;
-  }
-  .scene-modal-btns {
-    display: flex; justify-content: flex-end; gap: 8px;
-  }
-
-  /* ── Exercise swap button & panel ──────────────────────────── */
-  .btn-swap {
-    background: rgba(108,99,255,.12);
-    border: 1px solid rgba(108,99,255,.3);
-    color: #a09cf9;
-    border-radius: 6px;
-    padding: 3px 10px;
-    font-size: .7rem; font-weight: 600;
-    cursor: pointer;
-    transition: all .2s;
-    margin-top: 6px;
-  }
-  .btn-swap:hover { background: rgba(108,99,255,.25); color: #fff; }
-  .swap-panel {
-    margin-top: 10px;
-    background: rgba(108,99,255,.06);
-    border: 1px solid rgba(108,99,255,.2);
-    border-radius: 8px;
-    padding: 10px 12px;
-  }
-  .swap-category { font-size: .72rem; font-weight: 700; color: var(--muted); margin: 8px 0 4px; text-transform: uppercase; letter-spacing: .05em; }
-  .swap-category:first-child { margin-top: 0; }
-  .swap-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 5px 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background .15s;
-    font-size: .82rem;
-  }
-  .swap-item:hover { background: rgba(108,99,255,.12); }
-  .swap-item-name { flex: 1; }
-  .swap-item-score {
-    font-size: .7rem; color: var(--muted); margin-left: 8px;
-    background: rgba(255,255,255,.06);
-    padding: 2px 7px;
-    border-radius: 4px;
-  }
-  .swap-item-btn {
-    background: rgba(67,233,123,.15);
-    border: 1px solid rgba(67,233,123,.3);
-    color: var(--green);
-    border-radius: 5px;
-    padding: 2px 8px;
-    font-size: .7rem; font-weight: 600;
-    cursor: pointer;
-    margin-left: 8px;
-    transition: all .15s;
-  }
-  .swap-item-btn:hover { background: rgba(67,233,123,.3); color: #fff; }
 </style>
 </head>
 <body>
@@ -696,12 +614,6 @@
 </div>
 
 <div class="page" id="app" style="display:none">
-  <!-- User selector -->
-  <div class="user-selector-bar">
-    <label>选择用户</label>
-    <select class="user-select" id="user-select" onchange="switchUser(this.value)"></select>
-  </div>
-
   <header>
     <div class="avatar" id="avatar-icon">🏃</div>
     <div>
@@ -741,6 +653,33 @@
 
     <!-- ── 右栏: 训练计划 ── -->
     <div>
+      <!-- Prompt version toggle bar -->
+      <div class="prompt-bar" id="prompt-bar">
+        <span class="prompt-bar-label">Prompt 版本</span>
+        <div class="version-toggle">
+          <button class="version-btn" data-v="v2" onclick="switchVersion('v2')">V1 标准</button>
+          <button class="version-btn" data-v="v3" onclick="switchVersion('v3')">V2 FITT-VP</button>
+        </div>
+        <span class="prompt-desc" id="prompt-desc"></span>
+        <div class="cache-dots" id="cache-dots" title="缓存状态：v1 / v2">
+          <span style="font-size:.68rem;color:var(--muted)">缓存</span>
+          <span class="cache-dot" id="dot-v2" title="V1 缓存"></span>
+          <span class="cache-dot" id="dot-v3" title="V2 缓存"></span>
+        </div>
+        <button class="btn-pregen" id="btn-pregen" onclick="pregenBoth()">预生成双版本</button>
+        <button class="btn-view-prompt" onclick="togglePromptDrawer()">查看提示词</button>
+      </div>
+
+      <!-- Prompt content drawer -->
+      <div class="prompt-drawer" id="prompt-drawer">
+        <div class="prompt-drawer-tabs">
+          <button class="prompt-drawer-tab active" data-tab="system" onclick="switchPromptTab('system')">System</button>
+          <button class="prompt-drawer-tab" data-tab="user"   onclick="switchPromptTab('user')">User</button>
+        </div>
+        <div class="prompt-panel active" id="pp-system"><pre class="prompt-pre" id="pp-system-text">加载中…</pre></div>
+        <div class="prompt-panel"        id="pp-user">  <pre class="prompt-pre" id="pp-user-text">加载中…</pre></div>
+      </div>
+
       <div class="card">
         <div class="card-title">本周训练安排</div>
         <div class="summary-chips" id="summary-chips"></div>
@@ -758,21 +697,13 @@
 // Data fetch
 // ════════════════════════════════════════════════════════════
 const API = '';  // same-origin; change if backend on different port
-let _currentUserId = '';  // set after user list loads
-
-function _uq(extra = '') {
-  const parts = [];
-  if (_currentUserId) parts.push(`user_id=${encodeURIComponent(_currentUserId)}`);
-  if (extra) parts.push(extra);
-  return parts.length ? '?' + parts.join('&') : '';
-}
 
 async function fetchData() {
   // Stage 1: fetch profile + plan + muscle map in parallel
   const [profileRes, planRes, musclesRes] = await Promise.all([
-    fetch(`${API}/api/plan-viewer/profile${_uq()}`),
-    fetch(`${API}/api/plan-viewer/latest-plan${_uq(`version=${_currentVersion}`)}`),
-    fetch(`${API}/api/plan-viewer/muscles-map${_uq()}`),
+    fetch(`${API}/api/plan-viewer/profile`),
+    fetch(`${API}/api/plan-viewer/latest-plan?version=${_currentVersion}`),
+    fetch(`${API}/api/plan-viewer/muscles-map`),
   ]);
   if (!profileRes.ok || !planRes.ok) throw new Error('API 请求失败');
 
@@ -1004,16 +935,10 @@ function renderProfile(profile) {
     <p style="font-size:.78rem;color:var(--muted);margin-bottom:8px">训练风格</p>
     <div class="pill-row">${styles.map(s=>`<span class="pill">${s}</span>`).join('')}</div>
     <p style="font-size:.78rem;color:var(--muted);margin:14px 0 8px">可用器械</p>
-    <div class="pill-row" id="equip-pills">${equip.map(e=>`<span class="pill green">${e}</span>`).join('')}</div>
-    <div class="scene-section">
-      <div class="scene-section-label">
-        <span>器械场景</span>
-      </div>
-      <div class="scene-list" id="scene-list"></div>
-    </div>
+    <div class="pill-row">${equip.map(e=>`<span class="pill green">${e}</span>`).join('')}</div>
+    <p style="font-size:.78rem;color:var(--muted);margin:14px 0 8px">训练时段</p>
     <div class="pill-row">${(profile.available_schedule?.free_time_slots||[]).map(t=>`<span class="pill yellow">${t}</span>`).join('')}</div>
   `;
-  loadEquipmentScenes();
 }
 
 function renderSummary(schedule) {
@@ -1040,110 +965,23 @@ function renderDayTabs(schedule, onSelect) {
     btn.addEventListener('click', () => {
       container.querySelectorAll('.day-tab').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      onSelect(+btn.dataset.i, +btn.dataset.i);
+      onSelect(+btn.dataset.i);
     });
   });
 }
 
 let _currentMuscleMap = {};
-let _currentSchedule = [];
-let _currentDayIndex = 0;
 
-function buildSwapPanel(ex, dayIdx, exIdx) {
-  const pool = ex.replacement_pool;
-  if (!pool) return '';
-
-  // Collect all exercise_ids already in this day's plan (to exclude from replacements)
-  const dayExercises = _currentSchedule[dayIdx]?.exercises || [];
-  const usedIds = new Set(dayExercises.map(e => e.exercise_id).filter(Boolean));
-
-  const categories = [
-    { key: 'same_equipment',     label: '同器械替换' },
-    { key: 'different_equipment', label: '换器械替换' },
-    { key: 'easier_version',     label: '更简单版本' },
-    { key: 'harder_version',     label: '更难版本' },
-  ];
-
-  let hasAny = false;
-  let items = '';
-  const seenIds = new Set();  // cross-category dedup
-
-  for (const cat of categories) {
-    const list = pool[cat.key];
-    if (!list || list.length === 0) continue;
-
-    // Filter: skip duplicates across categories & skip exercises already in this day's plan
-    const filtered = list.filter(r => {
-      if (!r.exercise_id || seenIds.has(r.exercise_id) || usedIds.has(r.exercise_id)) return false;
-      seenIds.add(r.exercise_id);
-      return true;
-    });
-    if (filtered.length === 0) continue;
-
-    hasAny = true;
-    items += `<div class="swap-category">${cat.label}</div>`;
-    for (const r of filtered) {
-      const adj = r.volume_adjustment || {};
-      const adjJson = JSON.stringify(adj).replace(/"/g, '&quot;');
-      items += `
-        <div class="swap-item">
-          <span class="swap-item-name">${r.name}</span>
-          <span class="swap-item-score">匹配 ${r.replacement_score}</span>
-          <button class="swap-item-btn"
-            onclick="event.stopPropagation(); doSwap(${dayIdx}, ${exIdx}, '${r.exercise_id}', '${r.name.replace(/'/g,"\\'")}', '${adjJson}')">
-            替换
-          </button>
-        </div>`;
-    }
-  }
-  if (!hasAny) return '';
-  return `<div class="swap-panel" id="swap-panel-${dayIdx}-${exIdx}" style="display:none">${items}</div>`;
-}
-
-function toggleSwapPanel(dayIdx, exIdx) {
-  const panel = document.getElementById(`swap-panel-${dayIdx}-${exIdx}`);
-  if (panel) panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-}
-
-async function doSwap(dayIdx, exIdx, newId, newName, adjJson) {
-  const adj = JSON.parse(adjJson.replace(/&quot;/g, '"'));
-  try {
-    const res = await fetch(`/api/plan-viewer/swap-exercise${_uq()}`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        day_index: dayIdx,
-        exercise_index: exIdx,
-        replacement_exercise_id: newId,
-        replacement_name: newName,
-        volume_adjustment: adj,
-      }),
-    });
-    if (!res.ok) throw new Error((await res.json()).detail || '替换失败');
-    showToast(`已替换为: ${newName}`);
-    await reloadSchedule('v4');
-  } catch (e) {
-    showToast('替换失败: ' + e.message, true);
-  }
-}
-
-function renderDayDetail(day, dayIdx) {
-  if (dayIdx !== undefined) _currentDayIndex = dayIdx;
-  const di = _currentDayIndex;
+function renderDayDetail(day) {
   const container = document.getElementById('day-detail');
-  const isV4 = _currentVersion === 'v4';
-
-  container.innerHTML = day.exercises.map((ex, exIdx) => {
+  container.innerHTML = day.exercises.map(ex => {
     const pk = phaseKey(ex.phase);
     const isSS = ex.superset_group && ex.superset_group !== 'null';
     const dotClass = isSS ? 'superset' : pk;
     const cardClass = isSS ? 'superset' : pk;
-    const phaseCnMap = { warmup: '热身', stretch: '拉伸', main: '主训练' };
-    const phaseLabel = isSS ? `超级组 ${ex.superset_group}` : (phaseCnMap[pk] || '主训练');
+    const phaseLabel = isSS ? `超级组 ${ex.superset_group}` : (ex.phase || '主训练');
     const phaseCls   = isSS ? 'superset' : pk;
     const miniSvg    = buildMuscleMini(ex.exercise_id, _currentMuscleMap);
-    const hasPool    = isV4 && ex.replacement_pool &&
-      Object.values(ex.replacement_pool).some(arr => arr && arr.length > 0);
 
     return `
     <div class="tl-item">
@@ -1160,8 +998,6 @@ function renderDayDetail(day, dayIdx) {
             ${ex.rest_sec ? `<span>⏸ 休息 ${ex.rest_sec}s</span>` : ''}
           </div>
           ${ex.notes ? `<div class="ex-notes">${ex.notes}</div>` : ''}
-          ${hasPool ? `<button class="btn-swap" onclick="toggleSwapPanel(${di}, ${exIdx})">🔄 切换动作</button>` : ''}
-          ${hasPool ? buildSwapPanel(ex, di, exIdx) : ''}
         </div>
         ${miniSvg}
       </div>
@@ -1362,7 +1198,7 @@ async function saveStats() {
   }
 
   try {
-    const res = await fetch(`/api/plan-viewer/profile${_uq()}`, {
+    const res = await fetch('/api/plan-viewer/profile', {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data),
@@ -1423,7 +1259,8 @@ function buildTagEditor(styles, equip, slots) {
     </div>`;
   }
   return section('训练风格', 'tags-style', '',       styles, '输入风格') +
-         section('可用器械', 'tags-equip', 'green',  equip,  '输入器械');
+         section('可用器械', 'tags-equip', 'green',  equip,  '输入器械') +
+         section('训练时段', 'tags-slots', 'yellow', slots,  '输入时段');
 }
 
 function renderEditPills(items, cls) {
@@ -1484,7 +1321,7 @@ async function saveTags() {
   const schedUpdate = Object.assign({}, _profile.available_schedule || {}, { free_time_slots: slots });
 
   try {
-    const res = await fetch(`/api/plan-viewer/profile${_uq()}`, {
+    const res = await fetch('/api/plan-viewer/profile', {
       method: 'PUT',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -1523,17 +1360,16 @@ function exitEditTags() {
 async function reloadSchedule(version) {
   const ver = version || _currentVersion;
   const [planRes, musclesRes] = await Promise.all([
-    fetch(`/api/plan-viewer/latest-plan${_uq(`version=${ver}`)}`),
-    fetch(`/api/plan-viewer/muscles-map${_uq()}`),
+    fetch(`/api/plan-viewer/latest-plan?version=${ver}`),
+    fetch('/api/plan-viewer/muscles-map'),
   ]);
   if (!planRes.ok) throw new Error('计划加载失败');
   const plan = await planRes.json();
   _currentMuscleMap = musclesRes.ok ? await musclesRes.json() : {};
   const schedule = plan.weekly_schedule || [];
-  _currentSchedule = schedule;
   renderSummary(schedule);
-  renderDayTabs(schedule, i => renderDayDetail(schedule[i], i));
-  if (schedule.length > 0) renderDayDetail(schedule[0], 0);
+  renderDayTabs(schedule, i => renderDayDetail(schedule[i]));
+  if (schedule.length > 0) renderDayDetail(schedule[0]);
   renderCoachingNotes(plan.coaching_notes);
   renderValidationIssues(plan);
 }
@@ -1550,7 +1386,7 @@ function showScheduleLoading() {
 async function triggerPlanRegeneration() {
   showScheduleLoading();
   try {
-    const res = await fetch(`/api/plan-viewer/regenerate-plan${_uq()}`, { method: 'POST' });
+    const res = await fetch('/api/plan-viewer/regenerate-plan', { method: 'POST' });
     const { job_id } = await res.json();
     await pollRegenJob(job_id);
   } catch (e) {
@@ -1600,9 +1436,149 @@ function showToast(msg, isError = false) {
 }
 
 // ════════════════════════════════════════════════════════════
-// Plan version (fixed v3)
+// Prompt version toggle
 // ════════════════════════════════════════════════════════════
-const _currentVersion = 'v4';
+const VERSION_DESC = {
+  v2: '三步流水线：规则初筛 → 向量语义排序(MMR) → LLM 生成',
+  v3: 'FITT-VP 流水线：分天排布 → 规则库前置知识 → LLM → LLM校验器(+重试)',
+};
+
+let _currentVersion = 'v2';
+let _promptCache = {};  // version → {system, user}
+
+function applyVersionUI(version) {
+  _currentVersion = version;
+  document.querySelectorAll('.version-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.v === version);
+  });
+  document.getElementById('prompt-desc').textContent = VERSION_DESC[version] || '';
+}
+
+function updateCacheDots(status) {
+  // status: { v2: {generated_at} | null, v3: ... , pregen_jobs: {v2:{status}, v3:{status}} }
+  const jobs = status.pregen_jobs || {};
+  ['v2', 'v3'].forEach(ver => {
+    const dot = document.getElementById(`dot-${ver}`);
+    if (!dot) return;
+    const running = jobs[ver] && jobs[ver].status === 'running';
+    const cached  = !!status[ver];
+    dot.className = 'cache-dot' + (running ? ' running' : cached ? ' ready' : '');
+    const ts = status[ver] && status[ver].generated_at ? ` (${status[ver].generated_at.replace('T',' ')})` : '';
+    dot.title = `${ver.toUpperCase()} 缓存${cached ? '就绪'+ts : running ? '生成中…' : '：未缓存'}`;
+  });
+}
+
+async function refreshCacheStatus() {
+  try {
+    const res = await fetch('/api/plan-viewer/cache-status');
+    const data = await res.json();
+    updateCacheDots(data);
+    return data;
+  } catch (_) { return {}; }
+}
+
+async function switchVersion(version) {
+  if (version === _currentVersion) return;
+  try {
+    const res = await fetch('/api/plan-viewer/prompt-version', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ version }),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    applyVersionUI(version);
+    _promptCache = {};
+    if (document.getElementById('prompt-drawer').classList.contains('open')) {
+      await loadPromptContent(version);
+    }
+
+    // 尝试从缓存直接加载，避免重新生成
+    const cacheStatus = await refreshCacheStatus();
+    if (cacheStatus[version]) {
+      showToast(`已切换到 ${version.toUpperCase()}，从缓存加载计划…`);
+      await reloadSchedule(version);
+    } else {
+      showToast(`已切换到 ${version.toUpperCase()}，缓存不存在，正在生成…`);
+      triggerPlanRegeneration();
+    }
+  } catch (e) {
+    showToast('切换失败: ' + e.message, true);
+  }
+}
+
+async function pregenBoth() {
+  const btn = document.getElementById('btn-pregen');
+  btn.disabled = true;
+  btn.textContent = '生成中…';
+  try {
+    const res = await fetch('/api/plan-viewer/pregenerate-all', { method: 'POST' });
+    const { v2: jid_v2, v3: jid_v3 } = await res.json();
+    showToast('开始预生成 V2 + V3 双版本计划，请稍候…');
+
+    // Poll both jobs until both done
+    const poll = async (jid) => {
+      while (true) {
+        await new Promise(r => setTimeout(r, 4000));
+        const s = await fetch(`/api/plan-viewer/regen-status/${jid}`).then(r=>r.json());
+        if (s.status !== 'running') return s;
+        await refreshCacheStatus();
+      }
+    };
+    const [r2, r3] = await Promise.all([poll(jid_v2), poll(jid_v3)]);
+    await refreshCacheStatus();
+
+    const ok2 = r2.status === 'done', ok3 = r3.status === 'done';
+    if (ok2 && ok3) {
+      showToast('V2 + V3 双版本计划已预生成 ✓');
+      await reloadSchedule(_currentVersion);
+    } else {
+      const msg = (!ok2 ? `V2失败: ${r2.error} ` : '') + (!ok3 ? `V3失败: ${r3.error}` : '');
+      showToast(msg.trim(), true);
+    }
+  } catch (e) {
+    showToast('预生成失败: ' + e.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '预生成双版本';
+  }
+}
+
+async function loadPromptContent(version) {
+  if (_promptCache[version]) {
+    renderPromptContent(_promptCache[version]);
+    return;
+  }
+  document.getElementById('pp-system-text').textContent = '加载中…';
+  document.getElementById('pp-user-text').textContent   = '加载中…';
+  try {
+    const res  = await fetch(`/api/plan-viewer/prompt-content/${version}`);
+    const data = await res.json();
+    _promptCache[version] = data;
+    renderPromptContent(data);
+  } catch (e) {
+    document.getElementById('pp-system-text').textContent = '加载失败: ' + e.message;
+  }
+}
+
+function renderPromptContent(data) {
+  document.getElementById('pp-system-text').textContent = data.system || '(空)';
+  document.getElementById('pp-user-text').textContent   = data.user   || '(空)';
+}
+
+function togglePromptDrawer() {
+  const drawer = document.getElementById('prompt-drawer');
+  const isOpen = drawer.classList.toggle('open');
+  if (isOpen) loadPromptContent(_currentVersion);
+}
+
+function switchPromptTab(tab) {
+  document.querySelectorAll('.prompt-drawer-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === tab);
+  });
+  document.querySelectorAll('.prompt-panel').forEach(p => {
+    p.classList.toggle('active', p.id === `pp-${tab}`);
+  });
+}
 
 function renderValidationIssues(plan) {
   const area = document.getElementById('validation-area');
@@ -1633,43 +1609,9 @@ function renderValidationIssues(plan) {
 }
 
 // ════════════════════════════════════════════════════════════
-// User selector
+// Boot
 // ════════════════════════════════════════════════════════════
-let _userList = [];
-
-async function loadUserList() {
-  const res = await fetch(`${API}/api/plan-viewer/users`);
-  _userList = await res.json();
-  const sel = document.getElementById('user-select');
-  sel.innerHTML = _userList.map(u => {
-    const desc = `${u.label} · ${u.gender === 'female' ? '女' : '男'} · ${u.age}岁 · ${u.fitness_goal}`;
-    return `<option value="${u.user_id}">${desc}</option>`;
-  }).join('');
-  // Default: first user or from URL param
-  const params = new URLSearchParams(location.search);
-  const fromUrl = params.get('user_id');
-  if (fromUrl && _userList.some(u => u.user_id === fromUrl)) {
-    _currentUserId = fromUrl;
-  } else if (_userList.length) {
-    _currentUserId = _userList[0].user_id;
-  }
-  sel.value = _currentUserId;
-}
-
-async function switchUser(uid) {
-  if (uid === _currentUserId) return;
-  _currentUserId = uid;
-  // Update URL without reload
-  const url = new URL(location);
-  url.searchParams.set('user_id', uid);
-  history.replaceState(null, '', url);
-  // Re-render everything
-  await renderAllForCurrentUser();
-}
-
-async function renderAllForCurrentUser() {
-  document.getElementById('loading').style.display = 'grid';
-  document.getElementById('app').style.display = 'none';
+(async () => {
   try {
     const { profile, plan, muscleMap, frontSvg, backSvg } = await fetchData();
     if (plan._empty) {
@@ -1691,159 +1633,28 @@ async function renderAllForCurrentUser() {
       profile.gender === 'female' ? '🧘‍♀️' : '🏋️';
 
     _profile = profile;
-    _currentSchedule = schedule;
     renderProfile(profile);
     renderSummary(schedule);
-    renderDayTabs(schedule, i => renderDayDetail(schedule[i], i));
-    if (schedule.length > 0) renderDayDetail(schedule[0], 0);
+    renderDayTabs(schedule, i => renderDayDetail(schedule[i]));
+    if (schedule.length > 0) renderDayDetail(schedule[0]);
 
     renderCoachingNotes(plan.coaching_notes);
     renderValidationIssues(plan);
+
     drawRadar(profile);
 
+    // Load prompt version state + cache status
+    try {
+      const [vRes] = await Promise.all([
+        fetch('/api/plan-viewer/prompt-version'),
+      ]);
+      const vData = await vRes.json();
+      applyVersionUI(vData.version || 'v2');
+    } catch (_) { applyVersionUI('v2'); }
+    refreshCacheStatus();  // non-blocking, updates dots
 
-    document.getElementById('user-select').value = _currentUserId;
     document.getElementById('loading').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-  } catch (err) {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    document.getElementById('day-detail').innerHTML =
-      `<div class="error-box">⚠️ ${err.message}<br><small>请确认后端 API 已启动</small></div>`;
-  }
-}
-
-// ════════════════════════════════════════════════════════════
-// Equipment scenes
-// ════════════════════════════════════════════════════════════
-const ALL_EQUIPMENT = ["弹力带","缆绳机","哑铃","训练凳","单杠","器械","杠铃","壶铃","自重","双杠","史密斯架"];
-let _scenes = [];
-let _expandedSceneId = null;
-
-async function loadEquipmentScenes() {
-  const res = await fetch(`${API}/api/plan-viewer/equipment-scenes${_uq()}`);
-  _scenes = await res.json();
-  renderSceneList();
-}
-
-function renderSceneList() {
-  const container = document.getElementById('scene-list');
-  if (!container) return;
-  const canAdd = _scenes.length < 5;
-  container.innerHTML = _scenes.map(s => {
-    const isExpanded = _expandedSceneId === s.id;
-    return `
-    <div class="scene-card ${s.is_active ? 'active' : ''} ${isExpanded ? '' : 'scene-collapsed'}"
-         onclick="toggleSceneExpand(${s.id}, event)">
-      <div class="scene-card-header">
-        <div class="scene-card-name">
-          ${s.is_active ? '<span class="active-dot"></span>' : ''}
-          ${s.scene_name}
-        </div>
-        <div class="scene-card-actions" onclick="event.stopPropagation()">
-          ${!s.is_active ? `<button onclick="activateScene(${s.id})" title="启用">✓</button>` : ''}
-          <button onclick="openSceneModal(${s.id})" title="编辑">✎</button>
-          ${_scenes.length > 1 ? `<button class="del" onclick="deleteScene(${s.id})" title="删除">✕</button>` : ''}
-        </div>
-      </div>
-      <div class="scene-equip-pills">
-        ${s.equipment.map(e => `<span class="pill green">${e}</span>`).join('')}
-      </div>
-    </div>`;
-  }).join('') + (canAdd ? `<div class="btn-add-scene" onclick="openSceneModal(null)">+ 添加器械场景</div>` : '');
-}
-
-function toggleSceneExpand(id, e) {
-  if (e.target.closest('.scene-card-actions')) return;
-  _expandedSceneId = _expandedSceneId === id ? null : id;
-  renderSceneList();
-}
-
-async function activateScene(id) {
-  const res = await fetch(`${API}/api/plan-viewer/equipment-scenes/${id}/activate${_uq()}`, { method: 'POST' });
-  if (!res.ok) { showToast('启用失败', true); return; }
-  const data = await res.json();
-  _profile.available_equipment = data.equipment;
-  const pills = document.getElementById('equip-pills');
-  if (pills) pills.innerHTML = data.equipment.map(e => `<span class="pill green">${e}</span>`).join('');
-  await loadEquipmentScenes();
-  showToast('器械场景已切换，正在重新生成训练计划…');
-  triggerPlanRegeneration();
-}
-
-async function deleteScene(id) {
-  const res = await fetch(`${API}/api/plan-viewer/equipment-scenes/${id}${_uq()}`, { method: 'DELETE' });
-  if (!res.ok) { showToast('删除失败', true); return; }
-  if (_expandedSceneId === id) _expandedSceneId = null;
-  await loadEquipmentScenes();
-  showToast('场景已删除');
-}
-
-function openSceneModal(sceneId) {
-  const existing = sceneId ? _scenes.find(s => s.id === sceneId) : null;
-  const name = existing ? existing.scene_name : '';
-  const selected = existing ? [...existing.equipment] : ['自重'];
-
-  const overlay = document.createElement('div');
-  overlay.className = 'scene-modal-overlay';
-  overlay.onclick = e => { if (e.target === overlay) overlay.remove(); };
-  overlay.innerHTML = `
-  <div class="scene-modal">
-    <h3>${existing ? '编辑器械场景' : '新建器械场景'}</h3>
-    <label>场景名称</label>
-    <input type="text" id="scene-name-input" value="${name}" maxlength="20" placeholder="例如: 家庭训练">
-    <label>选择器械（可多选）</label>
-    <div class="equip-grid" id="equip-grid">
-      ${ALL_EQUIPMENT.map(e => `<div class="equip-option ${selected.includes(e) ? 'selected' : ''}" data-equip="${e}" onclick="this.classList.toggle('selected')">${e}</div>`).join('')}
-    </div>
-    <div class="scene-modal-btns">
-      <button class="btn-cancel" onclick="this.closest('.scene-modal-overlay').remove()">取消</button>
-      <button class="btn-save" onclick="saveSceneFromModal(${sceneId})">保存</button>
-    </div>
-  </div>`;
-  document.body.appendChild(overlay);
-  overlay.querySelector('#scene-name-input').focus();
-}
-
-async function saveSceneFromModal(sceneId) {
-  const overlay = document.querySelector('.scene-modal-overlay');
-  const nameInput = document.getElementById('scene-name-input');
-  const sceneName = nameInput.value.trim() || '未命名场景';
-  const equipment = [...document.querySelectorAll('#equip-grid .equip-option.selected')].map(el => el.dataset.equip);
-  if (equipment.length === 0) { showToast('请至少选择一种器械', true); return; }
-
-  const isActive = sceneId ? (_scenes.find(s => s.id === sceneId)?.is_active || false) : (_scenes.length === 0);
-  const body = { scene_name: sceneName, equipment, is_active: isActive };
-
-  let res;
-  if (sceneId) {
-    res = await fetch(`${API}/api/plan-viewer/equipment-scenes/${sceneId}${_uq()}`, {
-      method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
-    });
-  } else {
-    res = await fetch(`${API}/api/plan-viewer/equipment-scenes${_uq()}`, {
-      method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body),
-    });
-  }
-
-  if (!res.ok) { showToast((await res.json()).detail || '保存失败', true); return; }
-  overlay.remove();
-  if (isActive) {
-    _profile.available_equipment = equipment;
-    const pills = document.getElementById('equip-pills');
-    if (pills) pills.innerHTML = equipment.map(e => `<span class="pill green">${e}</span>`).join('');
-  }
-  await loadEquipmentScenes();
-  showToast('场景已保存');
-}
-
-// ════════════════════════════════════════════════════════════
-// Boot
-// ════════════════════════════════════════════════════════════
-(async () => {
-  try {
-    await loadUserList();
-    await renderAllForCurrentUser();
   } catch (err) {
     document.getElementById('loading').innerHTML =
       `<div class="error-box">⚠️ ${err.message}<br><small>请确认后端 API 已启动</small></div>`;

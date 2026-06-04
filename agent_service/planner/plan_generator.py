@@ -43,25 +43,8 @@ embed_client = OpenAI(api_key=_ZCHAT_KEY, base_url="https://api.zchat.tech/v1")
 
 # ── LLM 客户端 (nextrouter.cc → Gemini, 与 import_exercises 一致) ─
 _GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "sk-gxBoLiZEqsQnwPweg2mlV6AWz0gpQJzlbtFz2rzRBYova4Fc")
-_GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite-preview")
-llm_client = OpenAI(api_key=_GEMINI_KEY, base_url="https://nextrouter.cc/v1", timeout=180.0)
-
-_LLM_MAX_RETRIES = 3
-_LLM_RETRY_DELAY = 30
-
-
-def _llm_chat_with_retry(**kwargs) -> object:
-    """带重试的 LLM 调用，应对 524 超时等瞬时错误。"""
-    import openai
-    for attempt in range(1, _LLM_MAX_RETRIES + 1):
-        try:
-            return llm_client.chat.completions.create(**kwargs)
-        except (openai.APITimeoutError, openai.InternalServerError, openai.APIConnectionError) as e:
-            if attempt == _LLM_MAX_RETRIES:
-                raise
-            wait = _LLM_RETRY_DELAY * attempt
-            print(f"   ⚠ LLM 请求失败 (第{attempt}次): {type(e).__name__}, {wait}s 后重试...")
-            time.sleep(wait)
+_GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
+llm_client = OpenAI(api_key=_GEMINI_KEY, base_url="https://nextrouter.cc/v1")
 
 # 器械名称映射: 用户画像中的器械 → exercises 表中的 equipment 值
 EQUIPMENT_MAP = {
@@ -80,44 +63,6 @@ DIFFICULTY_PREFERENCE = {
     "intermediate": ["intermediate", "advanced"],
     "advanced":     ["advanced", "intermediate"],
 }
-
-
-# ═══════════════════════════════════════════════════════════════
-# JSON 提取辅助（兼容 reasoning 模型：raw 文本可能含思考内容）
-# ═══════════════════════════════════════════════════════════════
-
-def _extract_json(raw: str, resp=None) -> dict:
-    """从 LLM raw 输出中提取第一个完整 JSON 对象。"""
-    if not raw:
-        detail = ""
-        if resp:
-            choice = resp.choices[0] if resp.choices else None
-            finish = choice.finish_reason if choice else "no_choice"
-            model  = getattr(resp, "model", "unknown")
-            usage  = getattr(resp, "usage", None)
-            detail = (
-                f" [model={model}, finish_reason={finish}"
-                f", prompt_tokens={getattr(usage, 'prompt_tokens', '?')}"
-                f", completion_tokens={getattr(usage, 'completion_tokens', '?')}]"
-            )
-        raise ValueError(f"LLM returned empty content{detail}")
-    raw = raw.strip()
-    # 直接解析
-    try:
-        return json.loads(raw)
-    except json.JSONDecodeError:
-        pass
-    # 找 ```json ... ``` 代码块
-    import re
-    m = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", raw, re.DOTALL)
-    if m:
-        return json.loads(m.group(1))
-    # 找第一个 { ... 最后一个 }
-    start = raw.find("{")
-    end   = raw.rfind("}")
-    if start != -1 and end > start:
-        return json.loads(raw[start: end + 1])
-    raise ValueError(f"No JSON object found in LLM response (len={len(raw)})")
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -510,11 +455,14 @@ def rough_assign_to_days(exercises: list[dict], days_per_week: int) -> list[dict
                 "id":        ex["exercise_id"],
                 "name":      ex.get("name_cn") or ex["name"],
                 "muscles":   _jsonb_to_list(ex.get("primary_muscles")),
+                "sec":       _jsonb_to_list(ex.get("secondary_muscles")),
                 "pattern":   ex.get("movement_pattern"),
                 "type":      ex.get("exercise_type"),
                 "difficulty": ex.get("difficulty"),
                 "goals":     _jsonb_to_list(ex.get("training_goals")),
                 "rep_range": rep_range,
+                "risk":      ex.get("risk_level"),
+                "mets":      ex.get("estimated_mets"),
             })
         result.append({
             "suggested_day": idx + 1,
@@ -582,17 +530,17 @@ def validate_plan_llm(plan: dict, profile: dict, prior_issues: list[str] | None 
         plan_json        = json.dumps(plan_slim, ensure_ascii=False, indent=2),
     )
 
-    resp = _llm_chat_with_retry(
+    resp = llm_client.chat.completions.create(
         model    = _GEMINI_MODEL,
         messages = [
             {"role": "system", "content": system_msg},
             {"role": "user",   "content": user_msg},
         ],
-        temperature = 0.1,
-        max_tokens  = 4096,
+        temperature       = 0.1,
+        response_format   = {"type": "json_object"},
     )
     try:
-        result = _extract_json(resp.choices[0].message.content or "", resp)
+        result = json.loads(resp.choices[0].message.content)
         return {
             "is_valid":    bool(result.get("is_valid", True)),
             "score":       int(result.get("score", 7)),
@@ -600,7 +548,7 @@ def validate_plan_llm(plan: dict, profile: dict, prior_issues: list[str] | None 
             "suggestions": result.get("suggestions", ""),
         }
     except Exception as e:
-        print(f"   校验结果解析失败: {e}")
+        print(f"   [V3] 校验结果解析失败: {e}")
         return {"is_valid": True, "score": 7, "issues": [], "suggestions": ""}
 
 
@@ -669,22 +617,22 @@ def generate_plan_with_llm(
         need_variety        = profile.get("need_variety", ""),
         fatigue_note        = fatigue_note,
         exercise_count      = len(ex_summaries),
-        exercise_list_json  = json.dumps(ex_summaries, ensure_ascii=False),
+        exercise_list_json  = json.dumps(ex_summaries, ensure_ascii=False, indent=2),
         user_id             = str(profile.get("user_id") or DEFAULT_USER_ID),
     )
 
     print(f"   调用 {_GEMINI_MODEL} 生成计划...")
-    resp = _llm_chat_with_retry(
+    resp = llm_client.chat.completions.create(
         model=_GEMINI_MODEL,
         messages=[
             {"role": "system", "content": system_msg},
             {"role": "user",   "content": user_msg},
         ],
         temperature=0.3,
-        max_tokens=32768,
+        response_format={"type": "json_object"},
     )
 
-    return _extract_json(resp.choices[0].message.content or "", resp)
+    return json.loads(resp.choices[0].message.content)
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -731,19 +679,19 @@ def _call_v3_llm(
         need_variety          = profile.get("need_variety", ""),
         fatigue_note          = fatigue_note,
         exercise_count        = total_cands,
-        exercise_list_json    = json.dumps(day_assignments, ensure_ascii=False),
+        exercise_list_json    = json.dumps(day_assignments, ensure_ascii=False, indent=2),
         user_id               = str(profile.get("user_id") or DEFAULT_USER_ID),
     )
-    resp = _llm_chat_with_retry(
+    resp = llm_client.chat.completions.create(
         model             = _GEMINI_MODEL,
         messages          = [
             {"role": "system", "content": system_msg},
             {"role": "user",   "content": user_msg},
         ],
         temperature       = 0.3,
-        max_tokens        = 32768,
+        response_format   = {"type": "json_object"},
     )
-    return _extract_json(resp.choices[0].message.content or "", resp)
+    return json.loads(resp.choices[0].message.content)
 
 
 def generate_plan_v3(
@@ -795,112 +743,6 @@ def generate_plan_v3(
         print("   [V3] 规则校验通过 ✓")
 
     plan["_pipeline_version"] = "v3"
-    plan["_validation"]       = validation
-    return plan
-
-
-# ═══════════════════════════════════════════════════════════════
-# V4 Pipeline: 分天排布 → LLM(含替代动作池) → LLM校验器(+重试)
-# ═══════════════════════════════════════════════════════════════
-
-def _call_v4_llm(
-    day_assignments: list[dict],
-    profile: dict,
-    dynamic: dict | None,
-    extra_context: str = "",
-) -> dict:
-    """调用 workout_plan_generator_v4，返回含 replacement_pool 的计划 JSON。"""
-    schedule     = profile.get("available_schedule") or {}
-    days_per_wk  = schedule.get("days_per_week", 4)
-    duration_min = schedule.get("daily_duration_min", 60)
-    total_cands  = sum(len(d["candidates"]) for d in day_assignments)
-
-    fatigue_note = ""
-    if dynamic:
-        fatigue_note = (
-            f"\n当前状态 — 疲劳: {dynamic.get('fatigue_level', '未知')}, "
-            f"准备度: {dynamic.get('today_readiness', '未知')}/10, "
-            f"近期训练负荷: {dynamic.get('last_training_load', '未知')}"
-        )
-    if extra_context:
-        fatigue_note += f"\n\n⚠️ 上一次生成的计划存在以下问题，请务必修正：\n{extra_context}"
-
-    meta = prompt_meta("workout_plan_generator_v4")
-    print(f"   加载 prompt: workout_plan_generator_v4 v{meta.get('version', '?')}")
-    system_msg, user_msg = load_prompt(
-        "workout_plan_generator_v4",
-        gender                = profile.get("gender", ""),
-        age                   = profile.get("age", ""),
-        weight                = profile.get("weight", ""),
-        height                = profile.get("height", ""),
-        fitness_goal          = profile.get("fitness_goal", ""),
-        experience_level      = profile.get("experience_level", ""),
-        preferred_styles      = ", ".join(profile.get("preferred_training_style") or []),
-        days_per_week         = days_per_wk,
-        duration_min          = duration_min,
-        available_equipment   = ", ".join(profile.get("available_equipment") or []),
-        accept_high_intensity = profile.get("accept_high_intensity", ""),
-        need_variety          = profile.get("need_variety", ""),
-        fatigue_note          = fatigue_note,
-        exercise_count        = total_cands,
-        exercise_list_json    = json.dumps(day_assignments, ensure_ascii=False),
-        user_id               = str(profile.get("user_id") or DEFAULT_USER_ID),
-    )
-    resp = _llm_chat_with_retry(
-        model             = _GEMINI_MODEL,
-        messages          = [
-            {"role": "system", "content": system_msg},
-            {"role": "user",   "content": user_msg},
-        ],
-        temperature       = 0.3,
-        max_tokens        = 32768,
-    )
-    return _extract_json(resp.choices[0].message.content or "", resp)
-
-
-def generate_plan_v4(
-    exercises: list[dict],
-    profile: dict,
-    dynamic: dict | None,
-) -> dict:
-    """
-    V4 Pipeline (基于 V3，增加动作冗余池):
-      Step 1  粗筛 + 近似动作分天排布
-      Step 2  规则库作为前置知识（内嵌于 v4 prompt）
-      Step 3  大模型生成含 replacement_pool 的周计划
-      Step 4  LLM 规则校验器审核
-    """
-    schedule    = profile.get("available_schedule") or {}
-    days_per_wk = schedule.get("days_per_week", 4)
-
-    print(f"   [V4] 粗筛 + 近似动作分天排布 (days={days_per_wk})...")
-    day_assignments  = rough_assign_to_days(exercises, days_per_wk)
-    total_candidates = sum(len(d["candidates"]) for d in day_assignments)
-    print(f"   [V4] 分天完成: {len(day_assignments)} 天 / {total_candidates} 个候选动作")
-
-    print(f"   [V4] 调用 {_GEMINI_MODEL} 生成计划 (第1次)...")
-    plan = _call_v4_llm(day_assignments, profile, dynamic)
-
-    print("   [V4] LLM 规则校验器审核 (check_plan_islegal_v1)...")
-    validation = validate_plan_llm(plan, profile)
-    print(f"   [V4] 校验分数: {validation['score']}/10  合规: {validation['is_valid']}")
-
-    if not validation["is_valid"] and validation["issues"]:
-        issues_text = "\n".join(f"- {i}" for i in validation["issues"])
-        print(f"   [V4] 发现 {len(validation['issues'])} 条违规，重新生成...")
-        for issue in validation["issues"]:
-            print(f"      - {issue}")
-
-        print(f"   [V4] 调用 {_GEMINI_MODEL} 重新生成计划 (第2次)...")
-        plan = _call_v4_llm(day_assignments, profile, dynamic, extra_context=issues_text)
-
-        print("   [V4] 重新校验...")
-        validation = validate_plan_llm(plan, profile, prior_issues=validation["issues"])
-        print(f"   [V4] 最终校验分数: {validation['score']}/10  合规: {validation['is_valid']}")
-    else:
-        print("   [V4] 规则校验通过 ✓")
-
-    plan["_pipeline_version"] = "v4"
     plan["_validation"]       = validation
     return plan
 
@@ -1036,9 +878,9 @@ def main():
     ranked = rank_by_vector(filtered, profile, dynamic, history, top_k=40)
     print(f"   OK 取 Top-{len(ranked)} 语义最相关动作\n")
 
-    # ── Step 3 (V4 Pipeline) ────────────────────────────────
-    print("④ [V4] 分天排布 → LLM 生成(含替代池) → LLM 校验...")
-    plan = generate_plan_v4(ranked, profile, dynamic)
+    # ── Step 3 ────────────────────────────────────────────────
+    print("④ [Step 3] LLM 生成周训练计划...")
+    plan = generate_plan_with_llm(ranked, profile, dynamic)
     print(f"   OK 计划生成: {plan.get('plan_name', '(无名称)')}\n")
 
     # ── 保存 ──────────────────────────────────────────────────

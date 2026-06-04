@@ -1,4 +1,5 @@
 from __future__ import annotations
+import re
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
@@ -20,27 +21,88 @@ app.add_middleware(
     allow_methods=["*"], allow_headers=["*"]
 )
 
-DB      = dict(host="localhost", port=5432, dbname="fitness", user="postgres", password="666666")
-USER_ID = "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+DB          = dict(host="localhost", port=5432, dbname="fitness", user="postgres", password="666666")
+USER_ID     = "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+RESULTS_DIR = Path(__file__).parent.parent.parent / "gym_analyzer" / "results"
 
-# exercise_execution.exercise_name (short) → exercises.name_cn (canonical)
+# exercise_execution.exercise_name (short/AI-variant) → exercises.name_cn (canonical)
 EXERCISE_ALIAS: dict[str, str] = {
-    "平板卧推":      "杠铃平卧推",
-    "上斜哑铃推":    "哑铃上斜卧推",
-    "侧平举":        "哑铃侧平举",
-    "深蹲":          "杠铃深蹲",
-    "硬拉":          "杠铃硬拉",
-    "站姿推举":      "杠铃过顶推举",
-    "提踵":          "站姿提踵",
-    "杠铃划船":      "杠铃俯身划船",
-    "罗马尼亚硬拉":  "杠铃罗马尼亚硬拉",
-    "腿举":          "器械腿举",
-    "腿弯举":        "器械腘绳肌弯举",
-    "面拉":          "绳索面拉",
-    "绳索下压":      "绳索下压",
-    "引体向上":      "引体向上",
-    "杠铃弯举":      "杠铃弯举",
+    "平板卧推":       "杠铃平卧推",
+    "上斜哑铃推":     "哑铃上斜卧推",
+    "侧平举":         "哑铃侧平举",
+    "深蹲":           "杠铃深蹲",
+    "硬拉":           "杠铃硬拉",
+    "站姿推举":       "杠铃过顶推举",
+    "提踵":           "站姿提踵",
+    "杠铃划船":       "杠铃俯身划船",
+    "罗马尼亚硬拉":   "杠铃罗马尼亚硬拉",
+    "腿举":           "器械腿举",
+    "腿弯举":         "器械腘绳肌弯举",
+    "面拉":           "绳索面拉",
+    "绳索下压":       "绳索下压",
+    "引体向上":       "引体向上",
+    "杠铃弯举":       "杠铃弯举",
+    # AI 识别的变体名 → exercises.name_cn 精确值
+    "史密斯深蹲":     "史密斯机深蹲",
+    "跑步":           "跑步机慢跑",
+    "器械下拉":       "器械下拉",
+    "绳索反握下压":   "绳索下压",
+    "悬垂举腿":       "悬垂举腿",
+    "臀桥":           "臀桥",
 }
+
+# exercise_name → exercise category for the time-bar widget
+EXERCISE_CATEGORY: dict[str, str] = {
+    # 有氧
+    "跑步": "有氧", "慢跑": "有氧", "快走": "有氧", "健步走": "有氧",
+    "游泳": "有氧", "骑车": "有氧", "单车": "有氧", "动感单车": "有氧",
+    "椭圆机": "有氧", "跳绳": "有氧", "爬楼梯": "有氧", "划船机": "有氧",
+    "有氧操": "有氧", "跑步机": "有氧", "室外跑": "有氧", "功率车": "有氧",
+    "HIIT": "有氧", "踏步机": "有氧",
+    # 核心
+    "卷腹": "核心", "仰卧起坐": "核心", "平板支撑": "核心",
+    "悬垂举腿": "核心", "俄罗斯转体": "核心", "腹轮": "核心",
+    "侧卷腹": "核心", "反向卷腹": "核心", "死虫": "核心",
+    "臀桥": "核心", "超人式": "核心", "腹肌撕裂者": "核心",
+    "直腿抬高": "核心", "剪刀腿": "核心",
+    # 热身/拉伸
+    "热身": "热身/拉伸", "拉伸": "热身/拉伸", "动态拉伸": "热身/拉伸",
+    "泡沫轴": "热身/拉伸", "瑜伽": "热身/拉伸", "静态拉伸": "热身/拉伸",
+    "颈部拉伸": "热身/拉伸", "腿部拉伸": "热身/拉伸", "放松": "热身/拉伸",
+}
+# Anything not in the dict defaults to 力量 (strength/anaerobic)
+
+
+def _read_raw_segments(date_str: str) -> tuple[list[dict], float]:
+    """Read per-exercise segments from the gym_analyzer results JSON for a given date."""
+    p = RESULTS_DIR / f"{date_str}.json"
+    if not p.exists():
+        return [], 0.0
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+        all_segs = data.get("raw_segments", [])
+        exercise_segs = []
+        for s in all_segs:
+            if s.get("type") != "exercise":
+                continue
+            name      = s.get("exercise_name", "")
+            canonical = EXERCISE_ALIAS.get(name, name)
+            cat       = EXERCISE_CATEGORY.get(canonical) or EXERCISE_CATEGORY.get(name) or "力量"
+            exercise_segs.append({
+                "exercise_name":   name,
+                "category":        cat,
+                "start_sec":       round(float(s.get("start_sec", 0)), 1),
+                "end_sec":         round(float(s.get("end_sec",   0)), 1),
+                "sets_count":      int(s.get("sets_count", 1) or 1),
+                "reps_estimate":   int(s.get("reps_estimate", 0) or 0),
+                "primary_muscles": s.get("primary_muscles") or [],
+                "secondary_muscles": s.get("secondary_muscles") or [],
+            })
+        total_sec = max((s["end_sec"] for s in all_segs if "end_sec" in s), default=0.0)
+        return exercise_segs, float(total_sec)
+    except Exception:
+        return [], 0.0
+
 
 # Major groups for Card 1 bar chart.
 # Values are SVG muscle IDs (without b- prefix); both front and back maps are checked.
@@ -69,6 +131,44 @@ def group_peak(muscles: list[str], svg_scores: dict[str, float]) -> float:
     return peak
 
 
+def group_total(muscles: list[str], raw_scores: dict[str, float]) -> float:
+    """Total score of all muscles in a major group, using unprefixed muscle IDs."""
+    return sum(raw_scores.get(m, 0) for m in muscles)
+
+
+def compute_share_distribution(raw_scores: dict[str, float]) -> dict[str, int]:
+    """Return major-group share_percent values for Card 1 bars."""
+    group_scores = {
+        label: group_total(muscles, raw_scores)
+        for label, muscles in MAJOR_GROUPS.items()
+    }
+    total = sum(v for v in group_scores.values() if v > 0)
+    if total <= 0:
+        return {}
+    return {
+        label: round(score / total * 100)
+        for label, score in group_scores.items()
+        if score > 0
+    }
+
+
+def compute_relative_heatmap(svg_scores: dict[str, float]) -> dict[str, int]:
+    """Return per-SVG-muscle relative_percent values for Card 2 heatmap."""
+    if not svg_scores:
+        return {}
+    max_overall = max(svg_scores.values()) or 1
+    heatmap = {
+        muscle: round(score / max_overall * 100)
+        for muscle, score in svg_scores.items()
+        if score > 0
+    }
+    for group_muscles in MAJOR_GROUPS.values():
+        for m in group_muscles:
+            heatmap.setdefault(m, 0)
+            heatmap.setdefault("b-" + m, 0)
+    return heatmap
+
+
 def compute_distribution(cur, session_id) -> dict[str, int]:
     """Return muscle_distribution (label→0-100) for a given session_id."""
     cur.execute(
@@ -76,16 +176,8 @@ def compute_distribution(cur, session_id) -> dict[str, int]:
         (session_id,),
     )
     rows = cur.fetchall()
-    svg_scores, _ = compute_muscles(cur, rows)
-    if not svg_scores:
-        return {}
-    max_overall = max(svg_scores.values())
-    result = {}
-    for label, muscles in MAJOR_GROUPS.items():
-        peak = group_peak(muscles, svg_scores)
-        if peak > 0:
-            result[label] = round(peak / max_overall * 100)
-    return result
+    _, raw_scores = compute_muscles(cur, rows)
+    return compute_share_distribution(raw_scores)
 
 
 def get_conn():
@@ -119,14 +211,29 @@ def compute_muscles(cur, rows: list) -> tuple[dict[str, float], dict[str, float]
     Data source: exercises.source_data->'muscles'->'frontBodyMap'/'backBodyMap'
     """
     canonical_names = list({EXERCISE_ALIAS.get(r["exercise_name"], r["exercise_name"]) for r in rows})
+    ex_map: dict[str, dict] = {}
     if canonical_names:
         cur.execute(
             "SELECT name_cn, source_data->'muscles' AS m FROM exercises WHERE name_cn = ANY(%s)",
             (canonical_names,),
         )
-        ex_map: dict[str, dict] = {r["name_cn"]: (r["m"] or {}) for r in cur.fetchall()}
-    else:
-        ex_map = {}
+        ex_map = {r["name_cn"]: (r["m"] or {}) for r in cur.fetchall()}
+        # Fuzzy fallback for names not found by exact match
+        _PREFIX = re.compile(r'^(史密斯机?|杠铃|哑铃|自重|器械|绳索|弹力带|壶铃|TRX)')
+        for cn in canonical_names:
+            if cn in ex_map:
+                continue
+            core = _PREFIX.sub('', cn).strip()
+            if len(core) < 2:
+                continue
+            cur.execute(
+                "SELECT name_cn, source_data->'muscles' AS m "
+                "FROM exercises WHERE name_cn LIKE %s ORDER BY LENGTH(name_cn) LIMIT 1",
+                (f'%{core}%',),
+            )
+            row = cur.fetchone()
+            if row and row["m"]:
+                ex_map[cn] = row["m"]
 
     svg_scores: defaultdict[str, float] = defaultdict(float)
     raw_scores: defaultdict[str, float] = defaultdict(float)
@@ -139,30 +246,154 @@ def compute_muscles(cur, rows: list) -> tuple[dict[str, float], dict[str, float]
         fm        = m.get("frontBodyMap", {})
         bm        = m.get("backBodyMap",  {})
 
-        for muscle in fm.get("text-mw-red",  []):
-            svg_scores[muscle]          += sets * 2
-            raw_scores[muscle]          += sets * 2
-        for muscle in fm.get("text-mw-gray", []):
-            svg_scores[muscle]          += sets * 1
-            raw_scores[muscle]          += sets * 1
-        for muscle in bm.get("text-mw-red",  []):
-            svg_scores["b-" + muscle]   += sets * 2
-            raw_scores[muscle]          += sets * 2
-        for muscle in bm.get("text-mw-gray", []):
-            svg_scores["b-" + muscle]   += sets * 1
-            raw_scores[muscle]          += sets * 1
+        for muscle in fm.get("text-mw-red", []):
+            svg_scores[muscle]        += sets
+            raw_scores[muscle]        += sets
+        for muscle in bm.get("text-mw-red", []):
+            svg_scores["b-" + muscle] += sets
+            raw_scores[muscle]        += sets
 
     return dict(svg_scores), dict(raw_scores)
 
 
+# SVG muscle IDs that live on the back body map
+_BACK_MUSCLES = {"lats", "lowerback", "hamstrings", "glutes",
+                 "rear-shoulders", "triceps", "traps-middle", "traps", "scapula"}
+
+
+def compute_muscles_from_segs(cur, segs: list[dict]) -> tuple[dict[str, float], dict[str, float]]:
+    """Compute muscle scores from raw_segments (JSON source).
+
+    Uses primary_muscles/secondary_muscles fields from the JSON directly.
+    Falls back to the exercises DB table for segments with empty muscle lists.
+    """
+    # Collect exercises that have no JSON muscle data — need DB lookup
+    no_muscle = list({
+        EXERCISE_ALIAS.get(s["exercise_name"], s["exercise_name"])
+        for s in segs
+        if not s.get("primary_muscles") and not s.get("secondary_muscles")
+    })
+    db_map: dict[str, dict] = {}
+    if no_muscle:
+        # 1. Exact match
+        cur.execute(
+            "SELECT name_cn, source_data->'muscles' AS m FROM exercises WHERE name_cn = ANY(%s)",
+            (no_muscle,),
+        )
+        db_map = {r["name_cn"]: (r["m"] or {}) for r in cur.fetchall()}
+
+        # 2. Fuzzy fallback: strip equipment prefix and search by core movement name
+        _PREFIX = re.compile(r'^(史密斯机?|杠铃|哑铃|自重|器械|绳索|弹力带|壶铃|TRX)')
+        for name in no_muscle:
+            if name in db_map:
+                continue
+            core = _PREFIX.sub('', name).strip()
+            if len(core) < 2:
+                continue
+            cur.execute(
+                "SELECT name_cn, source_data->'muscles' AS m "
+                "FROM exercises WHERE name_cn LIKE %s ORDER BY LENGTH(name_cn) LIMIT 1",
+                (f'%{core}%',),
+            )
+            row = cur.fetchone()
+            if row and row["m"]:
+                db_map[name] = row["m"]
+
+    svg_scores: defaultdict[str, float] = defaultdict(float)
+    raw_scores: defaultdict[str, float] = defaultdict(float)
+
+    for seg in segs:
+        name      = seg["exercise_name"]
+        sets      = float(seg.get("sets_count") or 1)
+        primary   = seg.get("primary_muscles") or []
+        secondary = seg.get("secondary_muscles") or []
+
+        # Fall back to DB primary-only when JSON has no muscle data
+        if not primary:
+            canonical = EXERCISE_ALIAS.get(name, name)
+            m  = db_map.get(canonical, {})
+            fm = m.get("frontBodyMap", {})
+            bm = m.get("backBodyMap",  {})
+            primary = fm.get("text-mw-red", []) + [("b-" + x) for x in bm.get("text-mw-red", [])]
+
+        for muscle in primary:
+            back = muscle.startswith("b-") or muscle in _BACK_MUSCLES
+            key  = muscle if muscle.startswith("b-") else ("b-" + muscle if back else muscle)
+            svg_scores[key]                                                          += sets
+            raw_scores[muscle[2:] if muscle.startswith("b-") else muscle]           += sets
+
+    return dict(svg_scores), dict(raw_scores)
+
+
+# ── MET-based calorie helpers ─────────────────────────────────────────────────
+
+def _get_user_profile(cur, uid: str) -> dict:
+    """返回 user_profile_long_term 中的体重/性别/年龄。"""
+    cur.execute("""
+        SELECT weight, gender, age
+        FROM user_profile_long_term WHERE user_id = %s
+    """, (uid,))
+    row = cur.fetchone()
+    return dict(row) if row else {}
+
+
+def _calc_met_calories(cur, session_id: str,
+                       weight_kg: float, gender: str, age: int) -> float:
+    """MET × 体重 × 时长 × 性别系数 × 年龄系数。
+
+    来源：Ainsworth et al. 2011 Compendium of Physical Activities
+    性别系数：女性取 0.90，男性取 1.00
+    年龄系数：20 岁后每年下降 0.5%，下限 0.75
+    """
+    cur.execute("""
+        SELECT exercise_name,
+               COALESCE(duration_sec,
+                        EXTRACT(EPOCH FROM (end_time - timestamp))) AS duration_sec
+        FROM exercise_execution
+        WHERE session_id = %s
+          AND (duration_sec > 0
+               OR (end_time IS NOT NULL AND end_time > timestamp))
+    """, (session_id,))
+    rows = cur.fetchall()
+    if not rows:
+        return 0.0
+
+    names = list({EXERCISE_ALIAS.get(r["exercise_name"], r["exercise_name"]) for r in rows})
+    cur.execute("""
+        SELECT DISTINCT ON (name_cn) name_cn, estimated_mets
+        FROM exercises
+        WHERE name_cn = ANY(%s) AND estimated_mets IS NOT NULL
+        ORDER BY name_cn,
+                 CASE WHEN exercise_id LIKE 'ex_%%' THEN 0 ELSE 1 END,
+                 exercise_id
+    """, (names,))
+    met_map = {r["name_cn"]: float(r["estimated_mets"]) for r in cur.fetchall()}
+
+    is_female     = gender.lower() in ("female", "f", "女")
+    gender_factor = 0.90 if is_female else 1.00
+
+    age_factor = max(0.75, 1.0 - max(0, age - 20) * 0.005)
+
+    total = 0.0
+    for row in rows:
+        name      = row["exercise_name"]
+        canonical = EXERCISE_ALIAS.get(name, name)
+        met       = met_map.get(canonical) or met_map.get(name) or 4.0
+        dur_h     = float(row["duration_sec"] or 0) / 3600
+        total    += met * weight_kg * dur_h * gender_factor * age_factor
+
+    return round(total, 1)
+
+
 @app.get("/api/user")
-def user():
+def user(user_id: str | None = None):
     """返回当前用户基本信息（性别等），供前端切换人体图性别。"""
+    uid  = user_id or USER_ID
     conn = get_conn()
     cur  = conn.cursor()
     cur.execute(
         "SELECT gender FROM user_profile_long_term WHERE user_id = %s",
-        (USER_ID,)
+        (uid,)
     )
     row = cur.fetchone()
     conn.close()
@@ -173,8 +404,9 @@ def user():
 
 
 @app.get("/api/daily")
-def daily(date: str | None = None):
-    """指定日期（默认最近一次）的当日分析：时长/热量/心率/完成率/肌群分布"""
+def daily(date: str | None = None, user_id: str | None = None):
+    """指定日期（默认最近一次）的当日分析：时长/热量/完成率/肌群分布"""
+    uid  = user_id or USER_ID
     conn = get_conn()
     cur  = conn.cursor()
 
@@ -190,7 +422,7 @@ def daily(date: str | None = None):
             FROM workout_session
             WHERE user_id = %s AND DATE(start_time) = %s
             ORDER BY start_time LIMIT 1
-        """, (USER_ID, target_date))
+        """, (uid, target_date))
     else:
         cur.execute("""
             SELECT session_id, start_time, end_time, calories, completion_rate, total_volume,
@@ -198,7 +430,7 @@ def daily(date: str | None = None):
             FROM workout_session
             WHERE user_id = %s
             ORDER BY start_time DESC LIMIT 1
-        """, (USER_ID,))
+        """, (uid,))
 
     session = cur.fetchone()
     if not session:
@@ -207,39 +439,63 @@ def daily(date: str | None = None):
 
     sid = session["session_id"]
 
-    # 平均心率
-    cur.execute("""
-        SELECT ROUND(AVG(heart_rate)) AS avg_hr
-        FROM biometric_stream
-        WHERE user_id = %s AND timestamp BETWEEN %s AND %s
-    """, (USER_ID, session["start_time"], session["end_time"]))
-    hr_row = cur.fetchone()
-    avg_hr = int(hr_row["avg_hr"]) if hr_row and hr_row["avg_hr"] else 0
+    # 用户画像（体重/性别/年龄）→ MET 卡路里
+    profile    = _get_user_profile(cur, uid)
+    weight_kg  = float(profile.get("weight") or 65.0)
+    gender_str = str(profile.get("gender") or "female")
+    age        = int(profile.get("age") or 25)
+    calories   = _calc_met_calories(cur, sid, weight_kg, gender_str, age)
 
-    # 动作执行记录
-    cur.execute(
-        "SELECT exercise_name, sets, reps FROM exercise_execution WHERE session_id = %s ORDER BY timestamp",
-        (sid,),
-    )
-    executions = cur.fetchall()
+    # 把计算结果写回 workout_session，保持 weekly 一致
+    if calories > 0:
+        cur.execute("UPDATE workout_session SET calories = %s WHERE session_id = %s",
+                    (calories, sid))
+        conn.commit()
 
-    svg_scores, _ = compute_muscles(cur, executions)
+    # Read JSON segments first — used as the primary source for exercises + muscles
+    date_str = session["start_time"].date().isoformat()
+    raw_segs, total_sec = _read_raw_segments(date_str)
+    if total_sec == 0:
+        total_sec = float(session["duration_min"]) * 60
 
-    # Card 1 bars: peak individual-muscle score per group,
-    # normalised by the SAME global max as Card 2 — so bar % == heatmap intensity.
-    max_overall = max(svg_scores.values()) if svg_scores else 1
-    muscle_distribution = {}
-    for label, muscles in MAJOR_GROUPS.items():
-        peak = group_peak(muscles, svg_scores)
-        if peak > 0:
-            muscle_distribution[label] = round(peak / max_overall * 100)
+    # 动作执行记录：优先从 JSON（和视频分析一致），无 JSON 则查数据库
+    if raw_segs:
+        # Aggregate by exercise name: same format compute_muscles expects
+        from collections import OrderedDict as _OD
+        _agg: _OD = _OD()
+        for seg in raw_segs:
+            n = seg["exercise_name"]
+            if n not in _agg:
+                _agg[n] = {"exercise_name": n, "sets": seg["sets_count"],
+                           "reps": seg["reps_estimate"]}
+            else:
+                _agg[n]["sets"] += seg["sets_count"]
+                _agg[n]["reps"]  = max(_agg[n]["reps"], seg["reps_estimate"])
+        executions = list(_agg.values())
+    else:
+        cur.execute(
+            "SELECT exercise_name, sets, reps FROM exercise_execution WHERE session_id = %s ORDER BY timestamp",
+            (sid,),
+        )
+        executions = cur.fetchall()
+
+    svg_scores, raw_scores = (compute_muscles_from_segs(cur, raw_segs)
+                              if raw_segs else compute_muscles(cur, executions))
+
+    # Card 1 bars use share_percent across major groups.
+    muscle_distribution = compute_share_distribution(raw_scores)
+    muscle_heatmap = compute_relative_heatmap(svg_scores)
+
+    # category_duration: computed later from raw_segments (accurate per-segment durations)
+    # — avoids the DB aggregation which spans first→last occurrence including rest gaps
+    category_duration: dict[str, int] = {"有氧": 0, "力量": 0, "核心": 0, "热身/拉伸": 0}
 
     # Previous training session muscle distribution (for trend arrows)
     cur.execute("""
         SELECT session_id FROM workout_session
         WHERE user_id = %s AND DATE(start_time) < %s
         ORDER BY start_time DESC LIMIT 1
-    """, (USER_ID, session["start_time"].date()))
+    """, (uid, session["start_time"].date()))
     prev_row = cur.fetchone()
     prev_distribution: dict[str, int] = {}
     if prev_row:
@@ -265,33 +521,32 @@ def daily(date: str | None = None):
         for r in executions
     ]
 
-    # Card 2 heatmap: each SVG muscle ID → its group's 0-100 pct from Card 1 bars.
-    # All muscles in every group are included (0 for untrained groups) so the
-    # frontend can reset inactive muscles to grey without a separate pass.
-    muscle_heatmap: dict[str, int] = {}
-    for label, group_muscles in MAJOR_GROUPS.items():
-        pct = muscle_distribution.get(label, 0)
-        for m in group_muscles:
-            muscle_heatmap[m] = pct          # front SVG key
-            muscle_heatmap["b-" + m] = pct   # back SVG key
+    # Fill category_duration from raw_segments — each entry has exact start/end secs
+    for seg in raw_segs:
+        cat = seg.get("category", "力量")
+        if cat in category_duration:
+            category_duration[cat] += int(round(seg["end_sec"] - seg["start_sec"]))
 
     return {
-        "date":              session["start_time"].date().isoformat(),
+        "date":              date_str,
         "duration_min":      int(session["duration_min"]),
-        "calories":          int(session["calories"]),
-        "avg_hr":            avg_hr,
+        "calories":          int(calories),
         "completion_rate":   round(float(session["completion_rate"]) * 100),
         "total_volume":      int(session["total_volume"] or 0),
         "muscle_distribution": muscle_distribution,
         "muscle_trend":        muscle_trend,
         "muscle_heatmap":      muscle_heatmap,
         "exercises":           exercises_list,
+        "category_duration":   {k: v for k, v in category_duration.items() if v > 0},
+        "raw_segments":        raw_segs,
+        "total_sec":           total_sec,
     }
 
 
 @app.get("/api/weekly")
-def weekly():
+def weekly(user_id: str | None = None):
     """近 7 日训练量、热量汇总及每日组数明细（用于折线图）"""
+    uid  = user_id or USER_ID
     conn = get_conn()
     cur  = conn.cursor()
 
@@ -299,7 +554,7 @@ def weekly():
         SELECT DATE(start_time) AS day
         FROM workout_session WHERE user_id = %s
         ORDER BY start_time DESC LIMIT 1
-    """, (USER_ID,))
+    """, (uid,))
     latest = cur.fetchone()
     if not latest:
         conn.close()
@@ -316,7 +571,7 @@ def weekly():
         WHERE ws.user_id = %s AND DATE(ws.start_time) BETWEEN %s AND %s
         GROUP BY DATE(ws.start_time)
         ORDER BY day
-    """, (USER_ID, start_date, end_date))
+    """, (uid, start_date, end_date))
     daily_rows = {row["day"]: int(row["total_sets"]) for row in cur.fetchall()}
 
     # 每日热量
@@ -325,7 +580,7 @@ def weekly():
         FROM workout_session
         WHERE user_id = %s AND DATE(start_time) BETWEEN %s AND %s
         GROUP BY DATE(start_time)
-    """, (USER_ID, start_date, end_date))
+    """, (uid, start_date, end_date))
     daily_kcal = {row["day"]: float(row["kcal"]) for row in cur.fetchall()}
 
     # 上一个 7 天（趋势对比）
@@ -336,7 +591,7 @@ def weekly():
         FROM workout_session ws
         LEFT JOIN exercise_execution ee ON ee.session_id = ws.session_id
         WHERE ws.user_id = %s AND DATE(ws.start_time) BETWEEN %s AND %s
-    """, (USER_ID, prev_start, prev_end))
+    """, (uid, prev_start, prev_end))
     prev = cur.fetchone()
     conn.close()
 
@@ -366,12 +621,13 @@ def weekly():
 
 
 @app.get("/api/muscles")
-def muscles(date: str | None = None):
+def muscles(date: str | None = None, user_id: str | None = None):
     """
     肌群热力图（high/medium/low/none）
     - ?date=YYYY-MM-DD → 仅该日数据
     - 无参数           → 最近 7 天
     """
+    uid  = user_id or USER_ID
     conn = get_conn()
     cur  = conn.cursor()
 
@@ -386,7 +642,7 @@ def muscles(date: str | None = None):
         cur.execute("""
             SELECT DATE(start_time) AS day FROM workout_session
             WHERE user_id = %s ORDER BY start_time DESC LIMIT 1
-        """, (USER_ID,))
+        """, (uid,))
         latest = cur.fetchone()
         if not latest:
             conn.close()
@@ -400,7 +656,7 @@ def muscles(date: str | None = None):
         JOIN workout_session ws ON ws.session_id = ee.session_id
         WHERE ws.user_id = %s AND DATE(ws.start_time) BETWEEN %s AND %s
         GROUP BY ee.exercise_name
-    """, (USER_ID, start_date, end_date))
+    """, (uid, start_date, end_date))
     rows = cur.fetchall()
 
     svg_scores, _ = compute_muscles(cur, rows)
@@ -416,13 +672,14 @@ def muscles(date: str | None = None):
 
 
 @app.get("/api/hr_detail")
-def hr_detail(date: str | None = None):
+def hr_detail(date: str | None = None, user_id: str | None = None):
     """
     返回指定日期（默认最近一次训练日）的：
       - 生物特征流（每10分钟心率/HRV/疲劳）
       - 动作执行记录
       - session 信息
     """
+    uid  = user_id or USER_ID
     conn = get_conn()
     cur  = conn.cursor()
 
@@ -436,7 +693,7 @@ def hr_detail(date: str | None = None):
         cur.execute(
             "SELECT DATE(start_time) AS day FROM workout_session "
             "WHERE user_id = %s ORDER BY start_time DESC LIMIT 1",
-            (USER_ID,),
+            (uid,),
         )
         row = cur.fetchone()
         if not row:
@@ -450,7 +707,7 @@ def hr_detail(date: str | None = None):
         FROM biometric_stream
         WHERE user_id = %s AND DATE(timestamp) = %s
         ORDER BY timestamp
-    """, (USER_ID, target_date))
+    """, (uid, target_date))
     biometrics = [
         {
             "timestamp":     r["timestamp"].isoformat(),
@@ -469,7 +726,7 @@ def hr_detail(date: str | None = None):
         JOIN workout_session ws ON ws.session_id = ee.session_id
         WHERE ws.user_id = %s AND DATE(ee.timestamp) = %s
         ORDER BY ee.timestamp
-    """, (USER_ID, target_date))
+    """, (uid, target_date))
     exercises = [
         {
             "exercise_name": r["exercise_name"],
@@ -489,7 +746,7 @@ def hr_detail(date: str | None = None):
         FROM workout_session
         WHERE user_id = %s AND DATE(start_time) = %s
         ORDER BY start_time
-    """, (USER_ID, target_date))
+    """, (uid, target_date))
     sessions = [
         {
             "session_id":      str(r["session_id"]),
@@ -513,8 +770,9 @@ def hr_detail(date: str | None = None):
 
 
 @app.get("/api/calendar")
-def calendar(year: int | None = None, month: int | None = None):
+def calendar(year: int | None = None, month: int | None = None, user_id: str | None = None):
     """每日训练状态：full(完整)/partial(部分)。默认为最近一次训练所在月份。"""
+    uid  = user_id or USER_ID
     conn = get_conn()
     cur  = conn.cursor()
 
@@ -523,7 +781,7 @@ def calendar(year: int | None = None, month: int | None = None):
         cur.execute(
             "SELECT DATE(start_time) AS day FROM workout_session "
             "WHERE user_id = %s ORDER BY start_time DESC LIMIT 1",
-            (USER_ID,),
+            (uid,),
         )
         latest = cur.fetchone()
         ref = latest["day"] if latest else date.today()
@@ -544,7 +802,7 @@ def calendar(year: int | None = None, month: int | None = None):
           AND DATE(start_time) >= %s
           AND DATE(start_time) <= %s
         ORDER BY start_time
-    """, (USER_ID, month_start, month_end))
+    """, (uid, month_start, month_end))
     rows = cur.fetchall()
     conn.close()
 
@@ -564,48 +822,14 @@ def calendar(year: int | None = None, month: int | None = None):
 # ── Plan Viewer endpoints ─────────────────────────────────────────────────────
 PLAN_VIEWER_USER = "b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12"
 
-
-def _resolve_viewer_user(user_id: str | None) -> str:
-    return user_id if user_id else PLAN_VIEWER_USER
-
-
-@app.get("/api/plan-viewer/users")
-def plan_viewer_users():
-    """Return all users in user_profile_long_term for the selector dropdown."""
-    conn = get_conn()
-    cur  = conn.cursor()
-    cur.execute(
-        "SELECT user_id, gender, age, fitness_goal FROM user_profile_long_term ORDER BY id"
-    )
-    rows = cur.fetchall()
-    conn.close()
-    result = []
-    for r in rows:
-        uid = str(r["user_id"])
-        label = uid
-        visitor_match = uid.replace("-", "")
-        if visitor_match.startswith("0" * 20):
-            num = visitor_match[20:].lstrip("0") or "0"
-            label = f"访客 {num}"
-        result.append({
-            "user_id": uid,
-            "label":   label,
-            "gender":  r["gender"],
-            "age":     r["age"],
-            "fitness_goal": r["fitness_goal"],
-        })
-    return result
-
-
 @app.get("/api/plan-viewer/profile")
-def plan_viewer_profile(user_id: str | None = None):
+def plan_viewer_profile():
     """Long-term user profile for the plan viewer page."""
-    uid  = _resolve_viewer_user(user_id)
     conn = get_conn()
     cur  = conn.cursor()
     cur.execute(
         "SELECT * FROM user_profile_long_term WHERE user_id = %s",
-        (uid,)
+        (PLAN_VIEWER_USER,)
     )
     row = cur.fetchone()
     conn.close()
@@ -633,9 +857,8 @@ class ProfileUpdateRequest(BaseModel):
 
 
 @app.put("/api/plan-viewer/profile")
-def update_plan_viewer_profile(body: ProfileUpdateRequest, user_id: str | None = None):
+def update_plan_viewer_profile(body: ProfileUpdateRequest):
     """Update editable fields of the plan-viewer user's long-term profile."""
-    uid = _resolve_viewer_user(user_id)
     fields: list[str] = []
     values: list[Any] = []
 
@@ -664,7 +887,7 @@ def update_plan_viewer_profile(body: ProfileUpdateRequest, user_id: str | None =
         raise HTTPException(status_code=400, detail="没有需要更新的字段")
 
     fields.append("updated_at = NOW()")
-    values.append(uid)
+    values.append(PLAN_VIEWER_USER)
 
     conn = get_conn()
     cur  = conn.cursor()
@@ -674,128 +897,30 @@ def update_plan_viewer_profile(body: ProfileUpdateRequest, user_id: str | None =
     )
     conn.commit()
     conn.close()
-    # 异步重新生成计划
-    job_id = str(_uuid.uuid4())
-    _regen_jobs[job_id] = {"status": "running"}
-    threading.Thread(target=_run_regen, args=(job_id, uid, _prompt_version), daemon=True).start()
-    return {"ok": True, "regen_job_id": job_id}
-
-
-# ── Equipment scene CRUD ─────────────────────────────────────────────────────
-ALL_EQUIPMENT = ["弹力带", "缆绳机", "哑铃", "训练凳", "单杠", "器械", "杠铃", "壶铃", "自重", "双杠", "史密斯架"]
-MAX_SCENES = 5
-
-
-@app.get("/api/plan-viewer/equipment-scenes")
-def get_equipment_scenes(user_id: str | None = None):
-    uid = _resolve_viewer_user(user_id)
-    conn = get_conn()
-    cur  = conn.cursor()
-    cur.execute(
-        "SELECT id, scene_name, equipment, is_active FROM equipment_scene WHERE user_id = %s ORDER BY id",
-        (uid,)
-    )
-    rows = cur.fetchall()
-    conn.close()
-    return [dict(r) for r in rows]
-
-
-class EquipmentSceneRequest(BaseModel):
-    scene_name: str
-    equipment: list[str]
-    is_active: bool = False
-
-
-@app.post("/api/plan-viewer/equipment-scenes")
-def create_equipment_scene(body: EquipmentSceneRequest, user_id: str | None = None):
-    uid = _resolve_viewer_user(user_id)
-    conn = get_conn()
-    cur  = conn.cursor()
-    cur.execute("SELECT COUNT(*) AS cnt FROM equipment_scene WHERE user_id = %s", (uid,))
-    if cur.fetchone()["cnt"] >= MAX_SCENES:
-        conn.close()
-        raise HTTPException(status_code=400, detail=f"最多只能创建 {MAX_SCENES} 个器械场景")
-    if body.is_active:
-        cur.execute("UPDATE equipment_scene SET is_active = FALSE WHERE user_id = %s", (uid,))
-    cur.execute(
-        "INSERT INTO equipment_scene (user_id, scene_name, equipment, is_active) VALUES (%s, %s, %s, %s) RETURNING id",
-        (uid, body.scene_name, body.equipment, body.is_active)
-    )
-    new_id = cur.fetchone()["id"]
-    conn.commit()
-    conn.close()
-    return {"id": new_id}
-
-
-@app.put("/api/plan-viewer/equipment-scenes/{scene_id}")
-def update_equipment_scene(scene_id: int, body: EquipmentSceneRequest, user_id: str | None = None):
-    uid = _resolve_viewer_user(user_id)
-    conn = get_conn()
-    cur  = conn.cursor()
-    if body.is_active:
-        cur.execute("UPDATE equipment_scene SET is_active = FALSE WHERE user_id = %s", (uid,))
-    cur.execute(
-        "UPDATE equipment_scene SET scene_name = %s, equipment = %s, is_active = %s WHERE id = %s AND user_id = %s",
-        (body.scene_name, body.equipment, body.is_active, scene_id, uid)
-    )
-    conn.commit()
-    conn.close()
     return {"ok": True}
-
-
-@app.delete("/api/plan-viewer/equipment-scenes/{scene_id}")
-def delete_equipment_scene(scene_id: int, user_id: str | None = None):
-    uid = _resolve_viewer_user(user_id)
-    conn = get_conn()
-    cur  = conn.cursor()
-    cur.execute("SELECT is_active FROM equipment_scene WHERE id = %s AND user_id = %s", (scene_id, uid))
-    row = cur.fetchone()
-    if not row:
-        conn.close()
-        raise HTTPException(status_code=404, detail="场景不存在")
-    cur.execute("DELETE FROM equipment_scene WHERE id = %s AND user_id = %s", (scene_id, uid))
-    if row["is_active"]:
-        cur.execute(
-            "UPDATE equipment_scene SET is_active = TRUE WHERE id = (SELECT id FROM equipment_scene WHERE user_id = %s ORDER BY id LIMIT 1)",
-            (uid,)
-        )
-    conn.commit()
-    conn.close()
-    return {"ok": True}
-
-
-@app.post("/api/plan-viewer/equipment-scenes/{scene_id}/activate")
-def activate_equipment_scene(scene_id: int, user_id: str | None = None):
-    """Activate a scene, sync equipment to user profile, and trigger plan regeneration."""
-    uid = _resolve_viewer_user(user_id)
-    conn = get_conn()
-    cur  = conn.cursor()
-    cur.execute("UPDATE equipment_scene SET is_active = FALSE WHERE user_id = %s", (uid,))
-    cur.execute(
-        "UPDATE equipment_scene SET is_active = TRUE WHERE id = %s AND user_id = %s RETURNING equipment",
-        (scene_id, uid)
-    )
-    row = cur.fetchone()
-    if not row:
-        conn.close()
-        raise HTTPException(status_code=404, detail="场景不存在")
-    cur.execute(
-        "UPDATE user_profile_long_term SET available_equipment = %s, updated_at = NOW() WHERE user_id = %s",
-        (row["equipment"], uid)
-    )
-    conn.commit()
-    conn.close()
-    # 异步重新生成计划
-    job_id = str(_uuid.uuid4())
-    _regen_jobs[job_id] = {"status": "running"}
-    threading.Thread(target=_run_regen, args=(job_id, uid, _prompt_version), daemon=True).start()
-    return {"ok": True, "equipment": row["equipment"], "regen_job_id": job_id}
 
 
 @app.get("/api/plan-viewer/latest-plan")
-def plan_viewer_latest_plan(version: str | None = None, user_id: str | None = None):
-    """从 workout_plan 表读取最新计划记录。"""
-    uid = _resolve_viewer_user(user_id)
+def plan_viewer_latest_plan(version: str | None = None):
+    """
+    返回指定版本（v2/v3）的最新计划。
+    优先从文件缓存加载（毫秒级）；缓存不存在时回退到数据库最新记录。
+    version 参数未传时使用当前服务器选定版本（_prompt_version）。
+    """
+    from agent_service.planner.plan_generator import load_plan_cache, plan_cache_meta
+
+    ver = version or _prompt_version
+
+    # 1. 尝试文件缓存
+    cached = load_plan_cache(PLAN_VIEWER_USER, ver)
+    if cached:
+        plan = dict(cached)
+        plan.setdefault("_source", "cache")
+        meta = plan_cache_meta(PLAN_VIEWER_USER, ver) or {}
+        plan["_cached_at"] = meta.get("generated_at")
+        return plan
+
+    # 2. 回退：数据库最新记录（不区分版本）
     conn = get_conn()
     cur  = conn.cursor()
     cur.execute(
@@ -803,10 +928,10 @@ def plan_viewer_latest_plan(version: str | None = None, user_id: str | None = No
         SELECT plan_id, date, goal, plan_json
         FROM workout_plan
         WHERE user_id = %s
-        ORDER BY date DESC, plan_id DESC
+        ORDER BY date DESC
         LIMIT 1
         """,
-        (uid,)
+        (PLAN_VIEWER_USER,)
     )
     row = cur.fetchone()
     conn.close()
@@ -822,9 +947,8 @@ def plan_viewer_latest_plan(version: str | None = None, user_id: str | None = No
 
 # ── Exercise muscle map for plan viewer ───────────────────────────────────────
 @app.get("/api/plan-viewer/muscles-map")
-def plan_viewer_muscles_map(user_id: str | None = None):
+def plan_viewer_muscles_map():
     """Return {exercise_id: {primary, secondary}} for all exercises in the latest plan."""
-    uid  = _resolve_viewer_user(user_id)
     conn = get_conn()
     cur  = conn.cursor()
 
@@ -835,7 +959,7 @@ def plan_viewer_muscles_map(user_id: str | None = None):
         WHERE user_id = %s
         ORDER BY date DESC LIMIT 1
         """,
-        (uid,)
+        (PLAN_VIEWER_USER,)
     )
     row = cur.fetchone()
     if not row:
@@ -875,12 +999,11 @@ def plan_viewer_muscles_map(user_id: str | None = None):
 
 
 # ── Prompt version management ─────────────────────────────────────────────────
-_prompt_version: str = "v4"   # "v2" | "v3" | "v4"
+_prompt_version: str = "v2"   # "v2" | "v3"
 
 _PROMPT_FILES = {
     "v2": "workout_plan_generator_v2",
     "v3": "workout_plan_generator_v3",
-    "v4": "workout_plan_generator_v4",
 }
 
 
@@ -931,32 +1054,15 @@ def get_prompt_content(version: str):
 _regen_jobs: dict[str, dict] = {}
 
 
-_DEFAULT_DAYS_PER_EXP = {"beginner": 3, "intermediate": 4, "advanced": 5}
-
-
-def _patch_schedule(profile: dict) -> dict:
-    """Ensure available_schedule has days_per_week (3-5) and daily_duration_min."""
-    schedule = dict(profile.get("available_schedule") or {})
-    if not schedule.get("days_per_week"):
-        exp = profile.get("experience_level", "intermediate")
-        schedule["days_per_week"] = _DEFAULT_DAYS_PER_EXP.get(exp, 4)
-    schedule["days_per_week"] = max(3, min(5, int(schedule["days_per_week"])))
-    if not schedule.get("daily_duration_min"):
-        schedule["daily_duration_min"] = 60
-    profile = dict(profile)
-    profile["available_schedule"] = schedule
-    return profile
-
-
 def _run_regen(job_id: str, user_id: str, version: str = "v2"):
     try:
         from agent_service.planner.plan_generator import (
             fetch_user_profile, fetch_dynamic_state, fetch_history_plans,
             filter_exercises_by_rules, rank_by_vector,
-            generate_plan_with_llm, generate_plan_v3, generate_plan_v4,
-            save_workout_plan, save_plan_cache, _ensure_user_in_profile,
+            generate_plan_with_llm, generate_plan_v3,
+            save_workout_plan, save_plan_cache,
         )
-        profile  = _patch_schedule(fetch_user_profile(user_id))
+        profile  = fetch_user_profile(user_id)
         dynamic  = fetch_dynamic_state(user_id)
         history  = fetch_history_plans(user_id)
         filtered = filter_exercises_by_rules(profile)
@@ -964,30 +1070,26 @@ def _run_regen(job_id: str, user_id: str, version: str = "v2"):
             _regen_jobs[job_id] = {"status": "error", "error": "未筛出任何动作"}
             return
         ranked = rank_by_vector(filtered, profile, dynamic, history, top_k=40)
-        if version == "v4":
-            plan = generate_plan_v4(ranked, profile, dynamic)
-        elif version == "v3":
+        if version == "v3":
             plan = generate_plan_v3(ranked, profile, dynamic)
         else:
             plan = generate_plan_with_llm(ranked, profile, dynamic)
             plan["_pipeline_version"] = "v2"
-        _ensure_user_in_profile(user_id, profile)
         save_workout_plan(user_id, profile["fitness_goal"], plan)
-        save_plan_cache(user_id, version, plan)
+        save_plan_cache(user_id, version, plan)          # 持久化到文件缓存
         _regen_jobs[job_id] = {"status": "done"}
     except Exception as exc:
         _regen_jobs[job_id] = {"status": "error", "error": str(exc)}
 
 
 @app.post("/api/plan-viewer/regenerate-plan")
-def regenerate_plan(user_id: str | None = None):
+def regenerate_plan():
     """Start async plan regeneration using the current prompt version; returns a job_id to poll."""
-    uid = _resolve_viewer_user(user_id)
     job_id = str(_uuid.uuid4())
     _regen_jobs[job_id] = {"status": "running"}
     threading.Thread(
         target=_run_regen,
-        args=(job_id, uid, _prompt_version),
+        args=(job_id, PLAN_VIEWER_USER, _prompt_version),
         daemon=True,
     ).start()
     return {"job_id": job_id}
@@ -1006,12 +1108,11 @@ _pregen_jobs: dict[str, dict] = {}   # "v2" / "v3" → job_id
 
 
 @app.post("/api/plan-viewer/pregenerate-all")
-def pregenerate_all(user_id: str | None = None):
+def pregenerate_all():
     """
     同时启动 v2 + v3 两个后台生成任务。
     各自写入文件缓存；返回 {v2: job_id, v3: job_id}。
     """
-    uid = _resolve_viewer_user(user_id)
     jid_v2 = str(_uuid.uuid4())
     jid_v3 = str(_uuid.uuid4())
     _regen_jobs[jid_v2] = {"status": "running", "version": "v2"}
@@ -1020,7 +1121,7 @@ def pregenerate_all(user_id: str | None = None):
     _pregen_jobs["v3"] = {"job_id": jid_v3, "status": "running"}
 
     def _watch(jid: str, ver: str):
-        _run_regen(jid, uid, ver)
+        _run_regen(jid, PLAN_VIEWER_USER, ver)
         _pregen_jobs[ver]["status"] = _regen_jobs[jid]["status"]
 
     threading.Thread(target=_watch, args=(jid_v2, "v2"), daemon=True).start()
@@ -1029,74 +1130,22 @@ def pregenerate_all(user_id: str | None = None):
 
 
 @app.get("/api/plan-viewer/cache-status")
-def cache_status(user_id: str | None = None):
+def cache_status():
     """返回 v2/v3 文件缓存的生成时间（供 UI 展示预生成状态）。"""
     from agent_service.planner.plan_generator import plan_cache_meta
-    uid = _resolve_viewer_user(user_id)
     return {
-        "v2": plan_cache_meta(uid, "v2"),
-        "v3": plan_cache_meta(uid, "v3"),
+        "v2": plan_cache_meta(PLAN_VIEWER_USER, "v2"),
+        "v3": plan_cache_meta(PLAN_VIEWER_USER, "v3"),
         "pregen_jobs": _pregen_jobs,
     }
 
 
-# ── Exercise swap (v4 replacement_pool) ───────────────────────────────────────
-
-class SwapExerciseRequest(BaseModel):
-    day_index: int
-    exercise_index: int
-    replacement_exercise_id: str
-    replacement_name: str
-    volume_adjustment: dict[str, float] | None = None
-
-
-@app.post("/api/plan-viewer/swap-exercise")
-def swap_exercise(body: SwapExerciseRequest, user_id: str | None = None):
-    """Swap an exercise in the cached v4 plan with one from its replacement_pool."""
-    from agent_service.planner.plan_generator import load_plan_cache, save_plan_cache
-
-    uid = _resolve_viewer_user(user_id)
-    plan = load_plan_cache(uid, "v4")
-    if not plan:
-        raise HTTPException(status_code=404, detail="v4 计划缓存不存在")
-
-    schedule = plan.get("weekly_schedule", [])
-    if body.day_index < 0 or body.day_index >= len(schedule):
-        raise HTTPException(status_code=400, detail="day_index 越界")
-    exercises = schedule[body.day_index].get("exercises", [])
-    if body.exercise_index < 0 or body.exercise_index >= len(exercises):
-        raise HTTPException(status_code=400, detail="exercise_index 越界")
-
-    ex = exercises[body.exercise_index]
-    old_id = ex.get("exercise_id")
-    old_name = ex.get("name")
-
-    adj = body.volume_adjustment or {}
-    sets_mult = adj.get("sets_multiplier", 1.0)
-    reps_mult = adj.get("reps_multiplier", 1.0)
-
-    if sets_mult != 1.0 and ex.get("sets"):
-        ex["sets"] = max(1, round(ex["sets"] * sets_mult))
-    if reps_mult != 1.0 and ex.get("reps_or_duration"):
-        rod = ex["reps_or_duration"]
-        if isinstance(rod, str):
-            import re
-            m = re.match(r'^(\d+)', rod)
-            if m:
-                new_val = max(1, round(int(m.group(1)) * reps_mult))
-                rod = re.sub(r'^\d+', str(new_val), rod)
-                ex["reps_or_duration"] = rod
-
-    ex["exercise_id"] = body.replacement_exercise_id
-    ex["name"] = body.replacement_name
-    ex.pop("replacement_pool", None)
-
-    save_plan_cache(uid, "v4", plan)
-    return {"ok": True, "swapped": {"old": old_name, "new": body.replacement_name}}
-
-
 # ── Serve plan_viewer.html at /plan-viewer ────────────────────────────────────
 _REPORTS_DIR = Path(__file__).parent
+
+@app.get("/", include_in_schema=False)
+def dashboard_page():
+    return FileResponse(_REPORTS_DIR / "training_dashboard.html")
 
 @app.get("/plan-viewer", include_in_schema=False)
 def serve_plan_viewer():

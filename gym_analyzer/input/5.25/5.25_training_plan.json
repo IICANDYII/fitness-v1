@@ -1,0 +1,41 @@
+{
+  "planId": "plan_demo_001",
+  "userId": "user_test_001",
+  "date": "2026-05-27",
+  "name": "全身基础训练",
+  "phases": [
+    {
+      "phaseName": "warmup",
+      "order": 1,
+      "exercises": [
+        {
+          "order": 1,
+          "equipmentId": "equip_treadmill_01",
+          "exerciseName": "跑步机慢跑"
+        }
+      ]
+    },
+    {
+      "phaseName": "strength",
+      "order": 2,
+      "exercises": [
+        {
+          "order": 2,
+          "equipmentId": "equip_smith_machine_01",
+          "exerciseName": "史密斯机深蹲"
+        }
+      ]
+    },
+    {
+      "phaseName": "core",
+      "order": 3,
+      "exercises": [
+        {
+          "order": 3,
+          "equipmentId": "equip_pull_up_bar_01",
+          "exerciseName": "悬垂举腿"
+        }
+      ]
+    }
+  ]
+}

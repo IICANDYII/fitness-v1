@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gym Analyzer — 视频分析</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #0f1117; color: #e2e8f0; min-height: 100vh; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; color: #f8fafc; margin-bottom: 6px; }
+  .subtitle { font-size: 13px; color: #64748b; margin-bottom: 32px; }
+  .card { background: #1e2330; border: 1px solid #2d3748; border-radius: 12px;
+          padding: 24px; margin-bottom: 20px; }
+  .card-title { font-size: 13px; font-weight: 600; color: #94a3b8;
+                text-transform: uppercase; letter-spacing: .06em; margin-bottom: 16px; }
+  label { display: block; font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
+  select, input[type=date], input[type=number] {
+    width: 100%; background: #0f1117; border: 1px solid #2d3748; border-radius: 8px;
+    color: #e2e8f0; padding: 10px 12px; font-size: 14px; margin-bottom: 16px;
+    appearance: none; -webkit-appearance: none; }
+  select:focus, input:focus { outline: none; border-color: #3b82f6; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .btn { width: 100%; padding: 12px; background: #3b82f6; color: #fff;
+         border: none; border-radius: 8px; font-size: 15px; font-weight: 600;
+         cursor: pointer; transition: background .15s; }
+  .btn:hover { background: #2563eb; }
+  .btn:disabled { background: #1e3a5f; color: #475569; cursor: not-allowed; }
+  .btn-secondary { background: #1e40af; margin-top: 8px; font-size: 13px; padding: 9px; }
+  .btn-secondary:hover { background: #1d4ed8; }
+
+  /* Progress */
+  #progress { display: none; }
+  .step { display: flex; align-items: center; gap: 12px; padding: 10px 0;
+          border-bottom: 1px solid #2d3748; font-size: 14px; }
+  .step:last-child { border-bottom: none; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: #334155; flex-shrink: 0; }
+  .dot.done  { background: #10b981; }
+  .dot.active { background: #3b82f6; animation: pulse 1s infinite; }
+  .dot.error { background: #ef4444; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .step-label { color: #94a3b8; }
+  .step-label.active { color: #e2e8f0; font-weight: 600; }
+  .step-label.done { color: #10b981; }
+
+  /* File list */
+  .file-item { display: flex; align-items: center; justify-content: space-between;
+               padding: 10px 12px; background: #0f1117; border-radius: 8px;
+               margin-bottom: 8px; font-size: 13px; }
+  .file-name { color: #e2e8f0; font-weight: 500; overflow: hidden;
+               text-overflow: ellipsis; white-space: nowrap; max-width: 70%; }
+  .file-size { color: #475569; font-size: 12px; }
+  .empty { color: #475569; font-size: 13px; text-align: center; padding: 16px 0; }
+
+  .input-dir { font-size: 12px; color: #475569; margin-bottom: 12px;
+               word-break: break-all; background: #0f1117; padding: 8px 10px;
+               border-radius: 6px; border: 1px solid #1e2a3a; }
+  .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 4px;
+         margin-left: 6px; }
+  .tag-video { background: #1e3a5f; color: #60a5fa; }
+
+
+  .result-box { background: #0f1117; border-radius: 8px; padding: 16px;
+                font-size: 13px; color: #94a3b8; margin-top: 16px; }
+  .result-row { display: flex; justify-content: space-between; padding: 5px 0;
+                border-bottom: 1px solid #1e2330; }
+  .result-row:last-child { border-bottom: none; }
+  .result-val { color: #e2e8f0; font-weight: 600; }
+  .success-banner { background: #052e16; border: 1px solid #14532d; border-radius: 8px;
+                    padding: 14px 16px; color: #4ade80; font-size: 14px; margin-top: 16px; }
+  .error-banner { background: #2d0000; border: 1px solid #7f1d1d; border-radius: 8px;
+                  padding: 14px 16px; color: #fca5a5; font-size: 14px; margin-top: 16px; }
+</style>
+</head>
+<body>
+
+<h1>Gym Analyzer</h1>
+
+
+<!-- User card -->
+<div class="card">
+  <div class="card-title">用户</div>
+
+  <label>选择用户</label>
+  <select id="userSelect" onchange="onUserSelect()">
+    <option value="">加载中...</option>
+  </select>
+
+  <!-- New user form (hidden by default) -->
+  <div id="newUserForm" style="display:none; background:#0f1117; border-radius:8px; padding:16px; margin-bottom:16px;">
+    <div style="font-size:13px; color:#94a3b8; margin-bottom:12px; font-weight:600;">新建用户</div>
+    <div class="row">
+      <div>
+        <label>性别</label>
+        <select id="newGender">
+          <option value="male">男</option>
+          <option value="female">女</option>
+        </select>
+      </div>
+      <div>
+        <label>年龄</label>
+        <input type="number" id="newAge" value="25" min="10" max="100">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>身高 (cm)</label>
+        <input type="number" id="newHeight" value="170" min="100" max="220">
+      </div>
+      <div>
+        <label>体重 (kg)</label>
+        <input type="number" id="newWeight" value="65" min="30" max="200">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>目标</label>
+        <select id="newGoal">
+          <option value="增肌">增肌</option>
+          <option value="减脂">减脂</option>
+          <option value="保持">保持</option>
+          <option value="提高体能">提高体能</option>
+        </select>
+      </div>
+      <div>
+        <label>训练水平</label>
+        <select id="newLevel">
+          <option value="beginner">初级</option>
+          <option value="intermediate" selected>中级</option>
+          <option value="advanced">高级</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn" style="background:#059669;" onclick="createUser()">创建并选择</button>
+  </div>
+
+  <button class="btn btn-secondary" onclick="toggleNewUser()" id="toggleNewUserBtn">+ 新建用户</button>
+</div>
+
+<!-- Analysis config card -->
+<div class="card">
+  <div class="card-title">分析配置</div>
+
+  <label>选择视频文件 <span class="tag tag-video">VIDEO</span></label>
+  <div style="position:relative;margin-bottom:16px;">
+    <input type="file" id="videoFile" accept=".mp4,.mov,.avi,.mkv,.m4v,.wmv"
+           onchange="onVideoFileChange(this)"
+           style="position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;z-index:2;">
+    <div id="videoFileLabel"
+         style="background:#0f1117;border:1px dashed #2d3748;border-radius:8px;
+                padding:12px 16px;font-size:13px;color:#475569;display:flex;
+                align-items:center;gap:10px;cursor:pointer;">
+      <span style="background:#1e3a5f;color:#60a5fa;border-radius:4px;padding:2px 8px;font-size:11px;flex-shrink:0;">VIDEO</span>
+      <span id="videoFileName">点击选择本地视频文件…</span>
+    </div>
+    <div id="uploadStatus" style="font-size:12px;color:#64748b;margin-top:4px;display:none;"></div>
+  </div>
+
+  <label>训练计划 <span style="color:#475569;font-weight:400;font-size:12px">（可选）</span></label>
+  <div style="position:relative;margin-bottom:16px;">
+    <input type="file" id="planFile" accept=".json"
+           onchange="onPlanFileChange(this)"
+           style="position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;z-index:2;">
+    <div id="planFileLabel"
+         style="background:#0f1117;border:1px dashed #2d3748;border-radius:8px;
+                padding:12px 16px;font-size:13px;color:#475569;display:flex;
+                align-items:center;gap:10px;cursor:pointer;">
+      <span style="background:#1e3754;color:#818cf8;border-radius:4px;
+                   padding:2px 8px;font-size:11px;flex-shrink:0;">JSON</span>
+      <span id="planFileName">未选择（跳过计划对比）</span>
+    </div>
+    <div id="planUploadStatus" style="font-size:12px;margin-top:4px;display:none;"></div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label>训练日期</label>
+      <input type="date" id="dateInput">
+    </div>
+    <div>
+      <label>性别</label>
+      <select id="genderInput">
+        <option value="female">女</option>
+        <option value="male">男</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label>年龄</label>
+      <input type="number" id="ageInput" value="25" min="10" max="100">
+    </div>
+    <div>
+      <label>体重 (kg)</label>
+      <input type="number" id="weightInput" value="65" min="30" max="200" step="0.5">
+    </div>
+  </div>
+
+  <button class="btn" id="analyzeBtn" onclick="startAnalysis()">开始分析</button>
+</div>
+
+<!-- Progress card -->
+<div class="card" id="progress">
+  <div class="card-title">分析进度</div>
+  <div id="steps"></div>
+  <div id="elapsed" style="font-size:12px;color:#475569;margin-top:10px;"></div>
+  <div id="resultArea"></div>
+</div>
+
+<script>
+const API = 'http://localhost:8002';
+let pollTimer = null;
+let currentVideo = null;
+let uploadedVideoPath = null;   // server path after upload
+let users = [];
+let selectedUser = null;
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+document.getElementById('dateInput').value = new Date().toISOString().split('T')[0];
+
+loadUsers();
+
+// ── User management ───────────────────────────────────────────────────────────
+async function loadUsers() {
+  try {
+    const r = await fetch(API + '/api/users');
+    users = await r.json();
+    const sel = document.getElementById('userSelect');
+    sel.innerHTML = '<option value="">— 选择用户 —</option>' +
+      users.map(u => `<option value="${u.user_id}">${u.label}</option>`).join('') +
+      '<option value="__new__">+ 新建用户...</option>';
+  } catch(e) {
+    document.getElementById('userSelect').innerHTML = '<option value="">无法加载用户列表</option>';
+  }
+}
+
+function onUserSelect() {
+  const val = document.getElementById('userSelect').value;
+  if (val === '__new__') {
+    document.getElementById('newUserForm').style.display = 'block';
+    document.getElementById('toggleNewUserBtn').style.display = 'none';
+    selectedUser = null;
+    return;
+  }
+  document.getElementById('newUserForm').style.display = 'none';
+  document.getElementById('toggleNewUserBtn').style.display = 'block';
+  selectedUser = users.find(u => u.user_id === val) || null;
+  if (selectedUser) {
+    // Auto-fill analysis params from user profile
+    document.getElementById('genderInput').value  = selectedUser.gender || 'male';
+    document.getElementById('ageInput').value     = selectedUser.age    || 25;
+    document.getElementById('weightInput').value  = selectedUser.weight || 65;
+  }
+}
+
+function toggleNewUser() {
+  const form = document.getElementById('newUserForm');
+  const btn  = document.getElementById('toggleNewUserBtn');
+  const show = form.style.display === 'none';
+  form.style.display = show ? 'block' : 'none';
+  btn.textContent    = show ? '取消' : '+ 新建用户';
+}
+
+async function createUser() {
+  const body = {
+    gender:           document.getElementById('newGender').value,
+    age:              parseInt(document.getElementById('newAge').value),
+    height:           parseInt(document.getElementById('newHeight').value),
+    weight:           parseInt(document.getElementById('newWeight').value),
+    fitness_goal:     document.getElementById('newGoal').value,
+    experience_level: document.getElementById('newLevel').value,
+  };
+  try {
+    const r = await fetch(API + '/api/users', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body),
+    });
+    const u = await r.json();
+    users.push(u);
+    selectedUser = u;
+    // Add to select and pick it
+    const sel = document.getElementById('userSelect');
+    const opt = document.createElement('option');
+    opt.value = u.user_id;
+    opt.text  = u.label;
+    sel.insertBefore(opt, sel.lastElementChild);
+    sel.value = u.user_id;
+    document.getElementById('newUserForm').style.display = 'none';
+    document.getElementById('toggleNewUserBtn').style.display = 'block';
+    document.getElementById('toggleNewUserBtn').textContent = '+ 新建用户';
+    // Auto-fill
+    document.getElementById('genderInput').value = u.gender;
+    document.getElementById('ageInput').value    = u.age;
+    document.getElementById('weightInput').value = u.weight;
+    alert(`用户创建成功！ID: ${u.user_id.slice(0,8)}...`);
+  } catch(e) {
+    alert('创建失败：' + e.message);
+  }
+}
+
+// ── 本地视频文件选择 & 上传 ───────────────────────────────────────────────────
+async function onVideoFileChange(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  document.getElementById('videoFileName').textContent = `${file.name}  (${(file.size/1024/1024).toFixed(1)} MB)`;
+  document.getElementById('videoFileName').style.color = '#e2e8f0';
+  autoFillDate(file.name);
+
+  // 上传到服务器
+  const status = document.getElementById('uploadStatus');
+  status.style.display = 'block';
+  status.style.color = '#64748b';
+  status.textContent = '上传中…';
+
+  try {
+    const form = new FormData();
+    form.append('file', file);
+    const r = await fetch(API + '/api/upload', { method: 'POST', body: form });
+    if (!r.ok) { const e = await r.json(); throw new Error(e.detail || '上传失败'); }
+    const data = await r.json();
+    uploadedVideoPath = data.path;
+    status.style.color = '#10b981';
+    status.textContent = `✓ 已上传：${data.path}`;
+  } catch(e) {
+    uploadedVideoPath = null;
+    status.style.color = '#ef4444';
+    status.textContent = '✗ 上传失败：' + e.message;
+  }
+}
+
+// ── 训练计划 JSON 文件选择 & 上传 ───────────────────────────────────────────────
+async function onPlanFileChange(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  document.getElementById('planFileName').textContent = file.name;
+  document.getElementById('planFileName').style.color = '#e2e8f0';
+
+  const status = document.getElementById('planUploadStatus');
+  status.style.display = 'block';
+  status.style.color = '#64748b';
+  status.textContent = '上传中…';
+
+  try {
+    const form = new FormData();
+    form.append('file', file);
+    const r = await fetch(API + '/api/upload/plan', { method: 'POST', body: form });
+    if (!r.ok) { const e = await r.json(); throw new Error(e.detail || '上传失败'); }
+    const data = await r.json();
+    status.style.color = '#10b981';
+    status.textContent = `✓ 已上传：${data.filename}`;
+  } catch(e) {
+    document.getElementById('planFileName').style.color = '#ef4444';
+    status.style.color = '#ef4444';
+    status.textContent = '✗ ' + e.message;
+  }
+}
+
+// ── Date auto-fill from filename ─────────────────────────────────────────────
+// Supports: "5.25.mp4" → 2026-05-25,  "2026-05-25_workout.mp4" → 2026-05-25
+function autoFillDate(filename) {
+  const stem = filename.replace(/\.[^.]+$/, '');
+  // ISO date: 2026-05-25
+  let m = stem.match(/(\d{4})[.\-_](\d{1,2})[.\-_](\d{1,2})/);
+  if (m) {
+    document.getElementById('dateInput').value =
+      `${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;
+    return;
+  }
+  // Short: 5.25 or 525 → current year
+  m = stem.match(/^(\d{1,2})[._](\d{2})$/);
+  if (m) {
+    const y = new Date().getFullYear();
+    document.getElementById('dateInput').value =
+      `${y}-${m[1].padStart(2,'0')}-${m[2].padStart(2,'0')}`;
+  }
+}
+
+// ── Analysis ──────────────────────────────────────────────────────────────────
+async function startAnalysis() {
+  const videoPath  = uploadedVideoPath;
+  const dateVal    = document.getElementById('dateInput').value;
+  const genderVal  = document.getElementById('genderInput').value;
+  const ageVal     = parseInt(document.getElementById('ageInput').value);
+  const weightVal  = parseFloat(document.getElementById('weightInput').value);
+
+  if (!videoPath) { alert('请先选择并上传视频文件'); return; }
+  if (!selectedUser) { alert('请先选择或创建一个用户'); return; }
+
+  currentVideo = videoPath;
+  document.getElementById('analyzeBtn').disabled = true;
+  document.getElementById('progress').style.display = 'block';
+  document.getElementById('resultArea').innerHTML = '';
+  document.getElementById('steps').innerHTML = '';
+  document.getElementById('elapsed').textContent = '';
+
+  try {
+    const resp = await fetch(API + '/api/analyze', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        video_path:  videoPath,
+        user_id:     selectedUser.user_id,
+        date:        dateVal,
+        gender:      genderVal,
+        age:         ageVal,
+        weight_kg:   weightVal,
+      }),
+    });
+    if (!resp.ok) {
+      const err = await resp.json();
+      showError('提交失败：' + (err.detail || JSON.stringify(err)));
+      return;
+    }
+    pollProgress();
+  } catch(e) {
+    showError('网络错误：' + e.message);
+  }
+}
+
+// Real-time progress from backend — no fake phase advancement
+const STEP_LABELS = {
+  0: '排队中',
+  1: '提取视频帧',
+  2: '加载训练计划',
+  3: 'Gemini 视觉分析',
+  4: '计算仪表盘数据',
+  5: '写入数据库',
+  6: '保存备份',
+  7: '完成',
+};
+const TOTAL_STEPS = 7;
+let startTime = null;
+
+function pollProgress() {
+  startTime = Date.now();
+  pollTimer = setInterval(async () => {
+    try {
+      const r = await fetch(API + '/api/analyze/progress');
+      const all = await r.json();
+      const p = all[currentVideo];
+      if (!p) return;
+
+      renderSteps(p);
+
+      const elapsed = Math.round((Date.now() - startTime) / 1000);
+      document.getElementById('elapsed').textContent = `已用时 ${elapsed}s`;
+
+      if (p.status === 'done') {
+        clearInterval(pollTimer);
+        showSuccess();
+      } else if (p.status === 'error') {
+        clearInterval(pollTimer);
+        showError(p.error || '未知错误');
+      }
+    } catch(e) { /* keep polling */ }
+  }, 2000);
+}
+
+function renderSteps(p) {
+  const current = p.step || 0;
+  let html = '';
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    let dotClass = 'dot';
+    let labelClass = 'step-label';
+    if (i < current)      { dotClass += ' done';   labelClass += ' done'; }
+    else if (i === current){ dotClass += ' active'; labelClass += ' active'; }
+
+    const label = STEP_LABELS[i] || '';
+    const detail = (i === current && p.detail) ? ` — ${p.detail}` : '';
+    html += `<div class="step">
+      <div class="${dotClass}"></div>
+      <div class="${labelClass}">${label}${detail}</div>
+    </div>`;
+  }
+  document.getElementById('steps').innerHTML = html;
+}
+
+function showSuccess() {
+  document.getElementById('analyzeBtn').disabled = false;
+  const uid = selectedUser ? selectedUser.user_id : '';
+  const dashUrl = uid ? `http://localhost:8000/?user_id=${uid}` : 'http://localhost:8000';
+  document.getElementById('resultArea').innerHTML = `
+    <div class="success-banner">
+      ✅ 分析完成！数据已写入数据库。<br><br>
+      <a href="${dashUrl}"
+         style="color:#4ade80;font-weight:600;" target="_blank">
+        → 打开训练仪表盘查看结果
+      </a>
+    </div>`;
+}
+
+function showError(msg) {
+  document.getElementById('analyzeBtn').disabled = false;
+  document.getElementById('resultArea').innerHTML =
+    `<div class="error-banner">❌ ${msg}</div>`;
+}
+</script>
+</body>
+</html>

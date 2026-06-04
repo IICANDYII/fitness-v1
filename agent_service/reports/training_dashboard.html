@@ -41,7 +41,7 @@ body {
    ════════════════════════════ */
 .stats-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 6px;
   margin-bottom: 14px;
 }
@@ -143,6 +143,117 @@ body {
 }
 .exercise-name { font-size: 13px; font-weight: 600; color: #1e2340; }
 .exercise-detail { font-size: 12px; color: #8b92b0; font-weight: 500; white-space: nowrap; }
+
+/* Type-duration time bars */
+.type-bar-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  width: 52px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.type-bar-dur {
+  font-size: 12px;
+  font-weight: 700;
+  color: #374151;
+  width: 46px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════
+   CARD 5 — 运动类型时长
+   ════════════════════════════ */
+.type-card {
+  grid-column: 1 / 5;
+}
+.type-card .bar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.type-card .card-title {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.type-toggle-icon {
+  font-size: 13px;
+  color: #8b92b0;
+  transition: transform 0.25s ease;
+  line-height: 1;
+}
+.type-toggle-icon.open { transform: rotate(180deg); }
+
+/* Per-category inline bar ↔ timeline swap */
+.type-bar-area {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  height: 26px;
+}
+/* Summary: the familiar fill bar */
+.type-summary {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.22s ease;
+}
+.type-summary .bar-track {
+  flex: 1;
+  margin: 0;
+}
+/* Detail: the timeline track */
+.type-detail {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+#type-bars.expanded .type-summary {
+  opacity: 0;
+  pointer-events: none;
+}
+#type-bars.expanded .type-detail {
+  opacity: 1;
+  pointer-events: auto;
+}
+.tl-baseline {
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 6px;
+  margin-top: -3px;
+  background: #e9ecf5;
+  border-radius: 3px;
+}
+.tl-seg {
+  position: absolute;
+  top: 0; height: 100%;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.92);
+  min-width: 4px;
+  box-sizing: border-box;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s ease;
+}
+#type-bars.expanded .tl-seg {
+  transform: scaleX(1);
+}
 
 /* ════════════════════════════
    CARD 3 — 每周分析
@@ -254,11 +365,7 @@ body {
         <div class="stat-val" id="s-calories">--<span class="stat-unit">kcal</span></div>
       </div>
       <div class="stat-box">
-        <div class="stat-lbl">平均心率</div>
-        <div class="stat-val" id="s-hr">--<span class="stat-unit">bpm</span></div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-lbl">完成率</div>
+        <div class="stat-lbl">计划完成率</div>
         <div class="stat-val" id="s-rate">--<span class="stat-unit">%</span></div>
       </div>
     </div>
@@ -320,10 +427,28 @@ body {
     <div class="cal-grid" id="calGrid"></div>
   </div>
 
+  <!-- ══ Card 5: 运动类型时长 ══ -->
+  <div class="card type-card">
+    <div class="card-title" id="type-card-title" onclick="toggleTypeBars()">
+      运动类型时长
+      <span class="type-toggle-icon" id="type-toggle-icon">&#9660;</span>
+    </div>
+    <div class="bar-list" id="type-bars">
+      <!-- filled by JS -->
+    </div>
+  </div>
+
 </div>
 
 <script>
 var API = 'http://localhost:8000/api';
+
+// 从 URL 中读取 user_id 参数（analyzer.html 跳转时携带）
+var _UID = new URLSearchParams(window.location.search).get('user_id') || '';
+// 所有 API 请求统一加 user_id（若有）
+function apiUrl(path) {
+  return _UID ? API + path + (path.includes('?') ? '&' : '?') + 'user_id=' + _UID : API + path;
+}
 
 // 8-step gradient: step 0 = lightest activation, step 7 = darkest
 var GRAD8 = ['#d4d6e8','#bfc2db','#aaadce','#9599c1','#8085b4','#6b70a7','#565c9a','#41478d'];
@@ -331,6 +456,8 @@ var HEAT_NONE = '#c8cad6';  // inactive muscle colour
 
 // Each muscle group gets a fixed palette color (index order)
 var BAR_PALETTE = ['#F786A9', '#52C41A', '#E6A23C', '#409EFF', '#722ED1', '#13C2C2'];
+var CAT_COLORS = { '有氧': '#3b82f6', '力量': '#8b5cf6', '核心': '#10b981', '热身/拉伸': '#f59e0b' };
+var CAT_ORDER  = ['有氧', '力量', '核心', '热身/拉伸'];
 
 /* ── Heatmap ─────────────────────────────────────────────────────────
    Uses querySelectorAll('[id="..."]') instead of getElementById so that
@@ -376,9 +503,86 @@ function renderExercises(exercises) {
     item.className = 'exercise-item';
     item.innerHTML =
       '<span class="exercise-name">' + ex.name + '</span>' +
-      '<span class="exercise-detail">' + ex.sets + '组 × ' + ex.reps + '次</span>';
+      '<span class="exercise-detail">' + ex.sets + '组' + (ex.reps > 0 ? ' × ' + ex.reps + '次' : '') + '</span>';
     list.appendChild(item);
   });
+}
+
+/* ── Exercise type time bars (Card 5) ──────────────────────────────── */
+var _typeExpanded = false;
+var _rawSegments  = [];
+var _totalSec     = 0;
+
+function fmtDur(sec) {
+  var m = Math.floor(sec / 60), s = sec % 60;
+  if (m > 0 && s > 0) return m + '分' + s + '秒';
+  if (m > 0)           return m + '分钟';
+  return s + '秒';
+}
+
+function fmtTimeSec(sec) {
+  var m = Math.floor(sec / 60), s = Math.round(sec % 60);
+  return m + ':' + (s < 10 ? '0' : '') + s;
+}
+
+function renderTypeBars(catDur, rawSegs, totalSec) {
+  _rawSegments = rawSegs  || [];
+  _totalSec    = totalSec || 0;
+
+  var list = document.getElementById('type-bars');
+  if (!list) return;
+  list.innerHTML = '';
+
+  var baseSec = _totalSec > 0 ? _totalSec : Math.max.apply(null, CAT_ORDER.map(function(k) { return catDur[k] || 0; }).concat([1]));
+
+  CAT_ORDER.forEach(function(cat) {
+    var sec = catDur[cat] || 0;
+    if (sec === 0) return;
+    var pct   = Math.min(100, Math.round(sec / baseSec * 100));
+    var color = CAT_COLORS[cat];
+    var segs  = _rawSegments.filter(function(s) { return s.category === cat; });
+
+    // Detail: timeline segments
+    var detailInner = '<div class="tl-baseline"></div>';
+    if (_totalSec > 0) {
+      segs.forEach(function(seg) {
+        var left  = (seg.start_sec / _totalSec * 100).toFixed(2);
+        var width = Math.max(((seg.end_sec - seg.start_sec) / _totalSec * 100), 0.8).toFixed(2);
+        var dur   = Math.round(seg.end_sec - seg.start_sec);
+        var label = seg.exercise_name + ' ' + fmtDur(dur);
+        detailInner +=
+          '<div class="tl-seg" style="left:' + left + '%;width:' + width + '%;background:' + color + '"'
+          + ' title="' + label + '  ' + fmtTimeSec(seg.start_sec) + ' – ' + fmtTimeSec(seg.end_sec) + '">'
+          + label + '</div>';
+      });
+    }
+
+    var item = document.createElement('div');
+    item.className = 'bar-item';
+    item.innerHTML =
+      '<span class="type-bar-name">' + cat + '</span>' +
+      '<div class="type-bar-area">' +
+        '<div class="type-summary">' +
+          '<div class="bar-track">' +
+            '<div class="bar-fill" style="width:' + pct + '%;background:' + color + '"></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="type-detail">' + detailInner + '</div>' +
+      '</div>' +
+      '<span class="type-bar-dur">' + fmtDur(sec) + '</span>';
+    list.appendChild(item);
+  });
+
+  // Restore expanded state after re-render
+  list.classList.toggle('expanded', _typeExpanded);
+}
+
+function toggleTypeBars() {
+  _typeExpanded = !_typeExpanded;
+  var icon = document.getElementById('type-toggle-icon');
+  if (icon) icon.className = 'type-toggle-icon' + (_typeExpanded ? ' open' : '');
+  var list = document.getElementById('type-bars');
+  if (list) list.classList.toggle('expanded', _typeExpanded);
 }
 
 /* ── Weekly line chart ─────────────────────────────────────────────── */
@@ -491,7 +695,7 @@ async function loadCalendar(year, month) {
   calState.month = month;
   calState.days  = {};
   try {
-    var r = await fetch(API + '/calendar?year=' + year + '&month=' + month);
+    var r = await fetch(apiUrl('/calendar?year=' + year + '&month=' + month));
     if (r.ok) {
       var data = await r.json();
       calState.days = data.days || {};
@@ -503,7 +707,7 @@ async function loadCalendar(year, month) {
 /* ── Load & render daily data (Card 1 + Card 2) for a date ──────── */
 async function loadDailyForDate(date) {
   try {
-    var r = await fetch(API + '/daily?date=' + date);
+    var r = await fetch(apiUrl('/daily?date=' + date));
     var daily = r.ok ? await r.json() : {};
     renderDailyData(daily);
   } catch (e) {
@@ -518,9 +722,9 @@ function safeVal(v, fallback) {
 function renderDailyData(daily) {
   document.getElementById('s-duration').innerHTML = safeVal(daily.duration_min) + '<span class="stat-unit"> min</span>';
   document.getElementById('s-calories').innerHTML = safeVal(daily.calories) + '<span class="stat-unit">kcal</span>';
-  document.getElementById('s-hr').innerHTML = safeVal(daily.avg_hr) + '<span class="stat-unit">bpm</span>';
   document.getElementById('s-rate').innerHTML = safeVal(daily.completion_rate) + '<span class="stat-unit">%</span>';
   renderMuscleBars(daily.muscle_distribution || {});
+  renderTypeBars(daily.category_duration || {}, daily.raw_segments || [], daily.total_sec || 0);
   renderExercises(daily.exercises || []);
   // Reset heatmap then apply new data
   document.querySelectorAll('.bodymap path, .bodymap circle, .bodymap ellipse, .bodymap polygon, .bodymap rect')
@@ -576,10 +780,10 @@ function applyGender(gender) {
 async function init() {
   try {
     var [daily, weekly, calendar, userInfo] = await Promise.all([
-      fetch(API + '/daily').then(function(r)   { return r.json(); }),
-      fetch(API + '/weekly').then(function(r)  { return r.json(); }),
-      fetch(API + '/calendar').then(function(r){ return r.json(); }),
-      fetch(API + '/user').then(function(r)    { return r.json(); }),
+      fetch(apiUrl('/daily')).then(function(r)   { return r.json(); }),
+      fetch(apiUrl('/weekly')).then(function(r)  { return r.json(); }),
+      fetch(apiUrl('/calendar')).then(function(r){ return r.json(); }),
+      fetch(apiUrl('/user')).then(function(r)    { return r.json(); }),
     ]);
 
     applyGender(userInfo.gender || 'male');
@@ -588,20 +792,24 @@ async function init() {
     renderDailyData(daily);
 
     // Card 3: weekly KPIs + chart
-    document.getElementById('w-sets').innerHTML = weekly.total_sets + ' ' + trendHtml(weekly.sets_trend_pct);
-    document.getElementById('w-kcal').innerHTML = weekly.total_calories + ' ' + trendHtml(weekly.calories_trend_pct);
-    drawChart(weekly.daily_sets, weekly.day_labels);
+    var wSets = weekly.total_sets != null ? weekly.total_sets : '--';
+    var wKcal = weekly.total_calories != null ? weekly.total_calories : '--';
+    document.getElementById('w-sets').innerHTML = wSets + ' ' + trendHtml(weekly.sets_trend_pct);
+    document.getElementById('w-kcal').innerHTML = wKcal + ' ' + trendHtml(weekly.calories_trend_pct);
+    drawChart(weekly.daily_sets || [0,0,0,0,0,0,0],
+              weekly.day_labels  || ['周一','周二','周三','周四','周五','周六','周日']);
 
     // Card 4: calendar — init state then render
-    calState.year  = calendar.year;
-    calState.month = calendar.month;
+    var today = new Date();
+    calState.year  = calendar.year  || today.getFullYear();
+    calState.month = calendar.month || (today.getMonth() + 1);
     calState.days  = calendar.days || {};
     renderCalendar(calState.year, calState.month, calState.days, calState.selectedDate);
 
   } catch (err) {
     console.error('API error:', err);
     drawChart([0, 0, 0, 0, 0, 0, 0], ['周一','周二','周三','周四','周五','周六','周日']);
-    document.getElementById('cal-month').textContent = '⚠ 后端未启动 (port 8002)';
+    document.getElementById('cal-month').textContent = '⚠ 后端连接失败，请刷新页面';
   }
 }
 

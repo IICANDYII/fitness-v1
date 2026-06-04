@@ -1,59 +1,47 @@
 @echo off
-chcp 65001 >nul
-cd /d D:\WorkPath\fitness
 
-echo ============================================
+set PROJDIR=E:\fitness_code
+set PYTHONPATH=E:\fitness_code
+set PYTHON=C:\Users\qinzi\.conda\envs\fitness\python.exe
+
+echo =============================================
 echo  Fitness Dashboard Launcher
-echo ============================================
+echo =============================================
 echo.
 
-:: Step 0: Kill any existing process on port 8000
-echo [0/4] Checking for existing process on port 8000...
-for /f "tokens=5" %%p in ('netstat -ano ^| findstr ":8000 " ^| findstr "LISTENING"') do (
-    echo   Killing PID %%p on port 8000...
+:: Step 0: Kill ports 8000 and 8002
+echo [0/3] Clearing ports...
+for /f "tokens=5" %%p in ('netstat -ano 2^>nul ^| findstr ":8000 " ^| findstr "LISTENING"') do (
+    taskkill /PID %%p /F >nul 2>&1
+)
+for /f "tokens=5" %%p in ('netstat -ano 2^>nul ^| findstr ":8002 " ^| findstr "LISTENING"') do (
     taskkill /PID %%p /F >nul 2>&1
 )
 timeout /t 1 /nobreak >nul
 
-:: Step 1: Start PostgreSQL service
-sc query postgresql-x64-18 | find "RUNNING" >nul 2>&1
+:: Step 1: PostgreSQL via Docker
+echo [1/3] Checking Docker container...
+docker inspect -f "{{.State.Running}}" postgres-pgvector 2>nul | find "true" >nul
 if %errorlevel% neq 0 (
-    echo [1/4] Starting PostgreSQL service...
-    net start postgresql-x64-18
-    if %errorlevel% neq 0 (
-        echo [ERROR] Failed to start PostgreSQL. Try running as Administrator.
-        pause
-        exit /b 1
-    )
+    echo   Starting postgres-pgvector...
+    docker start postgres-pgvector >nul 2>&1
     timeout /t 3 /nobreak >nul
 ) else (
-    echo [1/4] PostgreSQL already running. OK.
+    echo   PostgreSQL OK.
 )
 
-:: Step 2: Start FastAPI backend (reports + planner on port 8000)
-echo [2/4] Starting backend API on http://localhost:8000 ...
-start "Fitness API :8000" cmd /k "python -m uvicorn agent_service.reports.api:app --host 0.0.0.0 --port 8000 --reload"
+:: Step 2: Start APIs
+echo [2/3] Starting Dashboard API :8000 ...
+start "Dashboard API :8000" cmd /k "cd /d E:\fitness_code && set PYTHONPATH=E:\fitness_code && C:\Users\qinzi\.conda\envs\fitness\python.exe -m uvicorn agent_service.reports.api:app --host 0.0.0.0 --port 8000 --reload"
 
-:: Step 3: Wait for uvicorn to be ready
-echo [3/4] Waiting for API server to start...
-timeout /t 4 /nobreak >nul
-
-:: Step 4: Open frontend pages
-echo [4/4] Opening frontends...
-echo   Planner   -^> http://localhost:8000/plan-viewer
-start "" "http://localhost:8000/plan-viewer"
-
-echo   Reports   -^> training_dashboard.html
-start "" "D:\WorkPath\fitness\agent_service\reports\training_dashboard.html"
-
-echo   HR Detail -^> hr_detail.html
-start "" "D:\WorkPath\fitness\agent_service\reports\hr_detail.html"
+echo [3/3] Starting Gym Analyzer API :8002 ...
+start "Gym Analyzer :8002" cmd /k "cd /d E:\fitness_code && set PYTHONPATH=E:\fitness_code && C:\Users\qinzi\.conda\envs\fitness\python.exe -m uvicorn gym_analyzer.api:app --host 0.0.0.0 --port 8002 --reload"
 
 echo.
-echo ============================================
-echo   Backend  : http://localhost:8000
-echo   Planner  : http://localhost:8000/plan-viewer
-echo   API docs : http://localhost:8000/docs
-echo ============================================
+echo =============================================
+echo   Dashboard : http://localhost:8000
+echo   Analyzer  : http://localhost:8002/analyzer
+echo   API docs  : http://localhost:8000/docs
+echo =============================================
 echo.
 pause
