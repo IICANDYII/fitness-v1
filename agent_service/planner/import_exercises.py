@@ -235,7 +235,11 @@ LLM_USER_TMPL = """\
 
 
 def call_llm(client: OpenAI, batch: list) -> list:
-    """Call Gemini for a batch; return list of enrichment dicts."""
+    """Call Gemini for a batch; return list of enrichment dicts.
+
+    Validates response data quality and retries on dirty data (non-string
+    values in lists, illegal characters, concatenated muscle IDs, etc.).
+    """
     lines = []
     for i, ex in enumerate(batch, 1):
         pm = ", ".join(ex["primary_muscles"]) or "未知"
@@ -248,7 +252,8 @@ def call_llm(client: OpenAI, batch: list) -> list:
     block  = "\n".join(lines)
     prompt = LLM_USER_TMPL.format(n=len(batch), exercises_block=block)
 
-    for attempt in range(3):
+    MAX_ATTEMPTS = 5
+    for attempt in range(MAX_ATTEMPTS):
         try:
             resp = client.chat.completions.create(
                 model=GEMINI_MODEL,
@@ -260,18 +265,127 @@ def call_llm(client: OpenAI, batch: list) -> list:
                 timeout=60,
             )
             raw = resp.choices[0].message.content.strip()
-            # Strip markdown code fences if present
             raw = re.sub(r"^```(?:json)?\s*", "", raw)
             raw = re.sub(r"\s*```$", "", raw)
             data = json.loads(raw)
-            if isinstance(data, list) and len(data) == len(batch):
-                return data
-            print(f"  [LLM] Length mismatch: got {len(data)}, expected {len(batch)}")
+            if not isinstance(data, list) or len(data) != len(batch):
+                print(f"  [LLM] Length mismatch: got {len(data) if isinstance(data, list) else type(data).__name__}, expected {len(batch)}")
+                time.sleep(2)
+                continue
+
+            # --- Validate each item ---
+            all_errors: list[str] = []
+            for idx, item in enumerate(data):
+                if not isinstance(item, dict):
+                    all_errors.append(f"  item[{idx}] is not a dict")
+                    continue
+                errs = _validate_enrichment(item)
+                for e in errs:
+                    all_errors.append(f"  item[{idx}] ({batch[idx]['name']}): {e}")
+
+            if all_errors and attempt < MAX_ATTEMPTS - 1:
+                print(f"  [LLM] Attempt {attempt+1}: dirty data detected ({len(all_errors)} issues):")
+                for e in all_errors[:5]:
+                    print(f"    {e}")
+                if len(all_errors) > 5:
+                    print(f"    ... and {len(all_errors) - 5} more")
+                time.sleep(2)
+                continue
+
+            if all_errors:
+                print(f"  [LLM] Last attempt still has {len(all_errors)} issues, sanitizing in-place")
+
+            # --- Sanitize: fix recoverable dirty data ---
+            for item in data:
+                if not isinstance(item, dict):
+                    continue
+                if "secondary_muscles" in item:
+                    item["secondary_muscles"] = _sanitize_muscle_list(
+                        item["secondary_muscles"] if isinstance(item["secondary_muscles"], list) else []
+                    )
+                for field in ("common_mistakes", "safety_tips", "contraindications"):
+                    val = item.get(field)
+                    if isinstance(val, list):
+                        item[field] = [
+                            _sanitize_str(str(v)) for v in val
+                            if isinstance(v, str) and _sanitize_str(v)
+                        ]
+
+            return data
+        except json.JSONDecodeError as e:
+            print(f"  [LLM] Attempt {attempt+1} JSON parse failed: {e}")
+            time.sleep(2)
         except Exception as e:
             print(f"  [LLM] Attempt {attempt+1} failed: {e}")
             time.sleep(2)
     # Fallback: empty enrichment for each
     return [{}] * len(batch)
+
+
+VALID_MUSCLE_NAMES_ZH = set(MUSCLE_ZH.values())
+
+VALID_MUSCLE_IDS = set(MUSCLE_ZH.keys())
+
+_MUSCLE_CLEAN_RE = re.compile(r'[?\n\r\t\x00-\x1f]')
+
+
+def _sanitize_str(v: str) -> str:
+    """Strip illegal characters from a string value."""
+    return _MUSCLE_CLEAN_RE.sub('', v).strip()
+
+
+def _sanitize_muscle_list(raw: list) -> list[str]:
+    """Clean a muscle list: ensure all items are strings, fix common Gemini errors."""
+    cleaned = []
+    for item in raw:
+        if not isinstance(item, str):
+            continue
+        s = _sanitize_str(item)
+        if '_' in s and s not in VALID_MUSCLE_IDS:
+            parts = s.split('_')
+            for p in parts:
+                p = p.strip()
+                if p and (p in VALID_MUSCLE_NAMES_ZH or p in VALID_MUSCLE_IDS):
+                    cleaned.append(p)
+            continue
+        if s:
+            cleaned.append(s)
+    return list(dict.fromkeys(cleaned))
+
+
+def _validate_enrichment(item: dict) -> list[str]:
+    """Validate a single Gemini enrichment result. Returns a list of error messages."""
+    errors = []
+    sm = item.get("secondary_muscles", [])
+    if not isinstance(sm, list):
+        errors.append(f"secondary_muscles is not a list: {type(sm).__name__}")
+    else:
+        for i, v in enumerate(sm):
+            if not isinstance(v, str):
+                errors.append(f"secondary_muscles[{i}] is {type(v).__name__}({v!r}), expected str")
+            elif _MUSCLE_CLEAN_RE.search(v):
+                errors.append(f"secondary_muscles[{i}] contains illegal chars: {v!r}")
+            elif '_' in v and v not in VALID_MUSCLE_IDS:
+                errors.append(f"secondary_muscles[{i}] looks like concatenated IDs: {v!r}")
+
+    cm = item.get("common_mistakes", [])
+    if not isinstance(cm, list):
+        errors.append(f"common_mistakes is not a list: {type(cm).__name__}")
+
+    st = item.get("safety_tips", [])
+    if not isinstance(st, list):
+        errors.append(f"safety_tips is not a list: {type(st).__name__}")
+
+    mets = item.get("estimated_mets")
+    if mets is not None:
+        try:
+            fv = float(mets)
+            if not (1.0 <= fv <= 15.0):
+                errors.append(f"estimated_mets out of range: {fv}")
+        except (TypeError, ValueError):
+            errors.append(f"estimated_mets not numeric: {mets!r}")
+
+    return errors
 
 
 def safe_list(v) -> list:

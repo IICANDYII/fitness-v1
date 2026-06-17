@@ -6,9 +6,9 @@ stitcher.py - 关键帧拼图模块
 画布宽高均不超过 max_dim（默认 3028）。
 
 布局：
-  每 cell = 400×225
-  max_cols = floor(3028 / 400) = 7
-  60帧 → 7列×9行 → 2800×2025
+  每 cell = 280×158
+  max_cols = floor(3028 / 280) = 10 (实际固定 7 列)
+  60帧 → 7列×9行 → 1960×1422
 """
 
 from __future__ import annotations
@@ -28,11 +28,11 @@ from .extractor import FrameMeta
 # 常量
 # ──────────────────────────────────────────────
 
-CELL_W = 400
-CELL_H = 225
+CELL_W = 280
+CELL_H = 158
 FRAMES_PER_GRID = 60
 MAX_DIM = 3028
-JPEG_QUALITY = 75          # 与 recognize_video.py 保持一致
+JPEG_QUALITY = 60
 
 # 时间戳文字样式
 FONT = cv2.FONT_HERSHEY_SIMPLEX

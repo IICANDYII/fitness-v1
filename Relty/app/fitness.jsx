@@ -418,6 +418,68 @@ function TrainingSuggestions({ nav }) {
 }
 
 // ─────────────────────────────────────────────────────────────
+// User selector — tap the avatar to switch between users
+// ─────────────────────────────────────────────────────────────
+function UserSelector() {
+  const T = useTheme();
+  const store = useFit();
+  const [open, setOpen] = React.useState(false);
+  const users = store.users || [];
+  const current = users.find(u => u.user_id === store.currentUid);
+  const label = current ? current.label : 'Loading…';
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <button className="press" onClick={() => setOpen(!open)} style={{
+        display: 'flex', alignItems: 'center', gap: 7, cursor: 'pointer', fontFamily: 'inherit',
+        padding: '6px 11px', borderRadius: 999,
+        border: `1px solid ${open ? `color-mix(in srgb, ${T.blue} 40%, transparent)` : T.line}`,
+        background: open ? `color-mix(in srgb, ${T.blue} 13%, transparent)` : 'rgba(255,255,255,0.04)',
+        fontSize: 11.5, fontWeight: 700, color: open ? T.blue : T.sub,
+      }}>
+        <Ic name="user" size={13} color={open ? T.blue : T.sub} sw={2} />
+        <span style={{ maxWidth: 120, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</span>
+        <Ic name={open ? 'chevL' : 'chevR'} size={11} color={open ? T.blue : T.faint} sw={2.4} style={open ? { transform: 'rotate(-90deg)' } : { transform: 'rotate(90deg)' }} />
+      </button>
+      {open && (
+        <div style={{
+          position: 'absolute', top: '100%', right: 0, marginTop: 6, zIndex: 50,
+          width: 260, maxHeight: 320, overflowY: 'auto',
+          background: T.card, border: `1px solid ${T.line}`, borderRadius: 14,
+          boxShadow: '0 16px 48px rgba(0,0,0,0.55)',
+          padding: 6,
+        }} className="scroll-hidden">
+          {users.map(u => {
+            const on = u.user_id === store.currentUid;
+            return (
+              <button key={u.user_id} className="press" onClick={() => {
+                if (!on) switchUser(u.user_id);
+                setOpen(false);
+              }} style={{
+                display: 'flex', alignItems: 'center', gap: 10, width: '100%', textAlign: 'left',
+                padding: '10px 10px', borderRadius: 10, cursor: 'pointer', fontFamily: 'inherit',
+                border: on ? `1px solid color-mix(in srgb, ${T.blue} 40%, transparent)` : '1px solid transparent',
+                background: on ? `color-mix(in srgb, ${T.blue} 11%, transparent)` : 'transparent',
+              }}>
+                <span style={{
+                  width: 16, height: 16, borderRadius: 99, flexShrink: 0,
+                  border: on ? 'none' : `1.5px solid ${T.line}`, background: on ? T.blue : 'transparent',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>{on && <Ic name="check" size={10} color="#081019" sw={3} />}</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 12.5, fontWeight: 600, color: on ? T.text : T.sub, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{u.label}</div>
+                  <div style={{ fontSize: 10, color: T.faint, marginTop: 2 }}>{u.session_count} sessions{u.last_workout ? ` · last ${u.last_workout}` : ''}</div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
 // SCREEN 1 — Fitness Report (default home)
 // ─────────────────────────────────────────────────────────────
 // Today's Plan — compact tile (taps through to the editable plan)
@@ -454,9 +516,21 @@ function FitnessReport({ nav }) {
   const store = useFit();
   const w = getWorkout(store.selected);
   const isLatest = WORKOUTS.length > 0 && w.id === WORKOUTS[WORKOUTS.length - 1].id;
+
+  if (store.loading) {
+    return (
+      <div data-screen-label="Fitness · Report">
+        <ScreenHeader kicker="Training log & review" title="Fitness" accent={T.blue} right={<UserSelector />} />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '80px 0', color: T.faint, fontSize: 13, fontWeight: 600 }}>
+          Loading workout data…
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div data-screen-label="Fitness · Report">
-      <ScreenHeader kicker="Training log & review" title="Fitness" accent={T.blue} />
+      <ScreenHeader kicker="Training log & review" title="Fitness" accent={T.blue} right={<UserSelector />} />
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: '12px 16px 0' }}>
 
@@ -543,4 +617,5 @@ function FitnessReport({ nav }) {
 Object.assign(window, {
   FitnessReport, BodyFigure, MuscleCoverage,
   FitnessTabs, MuscleBars, Timeline, GhostBtn, WeekStrip, WeekCalendarCard, MonthCalendar, TrainingSuggestions,
+  UserSelector,
 });

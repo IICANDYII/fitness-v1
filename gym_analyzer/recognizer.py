@@ -24,6 +24,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
 
+import cv2
 import numpy as np
 import requests
 
@@ -205,6 +206,81 @@ def _gemini_generate(
 
 def _image_to_data_url(jpeg_bytes: bytes) -> str:
     return "data:image/jpeg;base64," + base64.b64encode(jpeg_bytes).decode()
+
+
+_DIRTY_CHAR_RE = re.compile(r'[?\x00-\x1f]')
+
+
+def _validate_exercise_result(data: dict) -> list[str]:
+    """Validate Phase 2 Gemini response structure. Returns list of error messages."""
+    errors = []
+    if not isinstance(data, dict):
+        return [f"result is {type(data).__name__}, expected dict"]
+
+    for field in ("equipment", "exercise"):
+        val = data.get(field)
+        if val is not None and not isinstance(val, str):
+            errors.append(f"{field} is {type(val).__name__}({val!r}), expected str")
+        elif isinstance(val, str) and _DIRTY_CHAR_RE.search(val):
+            errors.append(f"{field} contains illegal chars: {val!r}")
+
+    conf = data.get("confidence")
+    if conf is not None:
+        try:
+            cv = float(conf)
+            if not (0.0 <= cv <= 1.0):
+                errors.append(f"confidence out of range: {cv}")
+        except (TypeError, ValueError):
+            errors.append(f"confidence not numeric: {conf!r}")
+
+    sets_val = data.get("sets")
+    if sets_val is not None:
+        if not isinstance(sets_val, list):
+            errors.append(f"sets is {type(sets_val).__name__}, expected list")
+        else:
+            for i, s in enumerate(sets_val):
+                if not isinstance(s, dict):
+                    errors.append(f"sets[{i}] is {type(s).__name__}, expected dict")
+                else:
+                    reps = s.get("reps")
+                    if reps is not None and not isinstance(reps, (int, float)):
+                        errors.append(f"sets[{i}].reps is {type(reps).__name__}({reps!r})")
+
+    return errors
+
+
+def _sanitize_exercise_result(data: dict) -> dict:
+    """Fix recoverable dirty data in Phase 2 result."""
+    if not isinstance(data, dict):
+        return data
+    for field in ("equipment", "exercise", "exercise_id"):
+        val = data.get(field)
+        if isinstance(val, str):
+            data[field] = _DIRTY_CHAR_RE.sub('', val).strip()
+        elif val is not None and not isinstance(val, str):
+            data[field] = str(val)
+
+    if "confidence" in data:
+        try:
+            data["confidence"] = max(0.0, min(1.0, float(data["confidence"])))
+        except (TypeError, ValueError):
+            data["confidence"] = 0.0
+
+    sets_val = data.get("sets")
+    if isinstance(sets_val, list):
+        clean_sets = []
+        for s in sets_val:
+            if not isinstance(s, dict):
+                continue
+            if "reps" in s:
+                try:
+                    s["reps"] = int(float(s["reps"]))
+                except (TypeError, ValueError):
+                    s["reps"] = 0
+            clean_sets.append(s)
+        data["sets"] = clean_sets
+
+    return data
 
 
 def _extract_json(text: str):
@@ -411,8 +487,15 @@ def _recognize_one_exercise(
         if not img_path.exists():
             img_path = frames_dir.parent / em.path
         if img_path.exists():
-            raw_bytes = img_path.read_bytes()
-            entrance_frames.append(raw_bytes)
+            img = cv2.imdecode(np.fromfile(str(img_path), dtype=np.uint8), cv2.IMREAD_COLOR)
+            if img is not None:
+                h, w = img.shape[:2]
+                if max(h, w) > 800:
+                    scale = 800 / max(h, w)
+                    img = cv2.resize(img, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_AREA)
+                ok, buf = cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, 60])
+                if ok:
+                    entrance_frames.append(bytes(buf))
 
     # 光流摘要
     flow_summary = format_flow_for_exercise(flow_data, t_start, t_end)
@@ -699,19 +782,42 @@ def _recognize_one_exercise(
         "image_url": {"url": _image_to_data_url(jpeg_bytes)},
     })
 
-    raw = _gemini_generate(system_prompt, user_content)
-    tprint(f"    [{seg_id}] 响应长度: {len(raw)} 字符")
+    MAX_VALIDATE_RETRIES = 3
+    seg_result = None
 
-    # 保存原始响应
-    raw_path = output_dir / f"exercise_raw_{seg_id}.txt"
-    raw_path.parent.mkdir(parents=True, exist_ok=True)
-    raw_path.write_text(raw, encoding="utf-8")
+    for v_attempt in range(MAX_VALIDATE_RETRIES):
+        raw = _gemini_generate(system_prompt, user_content)
+        tprint(f"    [{seg_id}] 响应长度: {len(raw)} 字符")
 
-    try:
-        seg_result = _extract_json(raw)
-    except (json.JSONDecodeError, ValueError) as e:
-        tprint(f"    [{seg_id}] [警告] JSON 解析失败: {e}")
-        seg_result = {"raw_response": raw}
+        # 保存原始响应
+        raw_path = output_dir / f"exercise_raw_{seg_id}.txt"
+        raw_path.parent.mkdir(parents=True, exist_ok=True)
+        raw_path.write_text(raw, encoding="utf-8")
+
+        try:
+            seg_result = _extract_json(raw)
+        except (json.JSONDecodeError, ValueError) as e:
+            tprint(f"    [{seg_id}] [警告] JSON 解析失败: {e}")
+            if v_attempt < MAX_VALIDATE_RETRIES - 1:
+                tprint(f"    [{seg_id}] 重试 ({v_attempt + 1}/{MAX_VALIDATE_RETRIES})...")
+                continue
+            seg_result = {"raw_response": raw}
+            break
+
+        # 校验 Gemini 返回数据质量
+        validation_errors = _validate_exercise_result(seg_result)
+        if validation_errors and v_attempt < MAX_VALIDATE_RETRIES - 1:
+            tprint(f"    [{seg_id}] 数据校验失败 ({len(validation_errors)} 项问题):")
+            for err in validation_errors[:3]:
+                tprint(f"      - {err}")
+            tprint(f"    [{seg_id}] 重试 ({v_attempt + 1}/{MAX_VALIDATE_RETRIES})...")
+            continue
+
+        if validation_errors:
+            tprint(f"    [{seg_id}] 最终仍有 {len(validation_errors)} 项问题，执行清洗")
+
+        seg_result = _sanitize_exercise_result(seg_result)
+        break
 
     # 标准化动作名称
     if isinstance(seg_result, dict) and "exercise" in seg_result:

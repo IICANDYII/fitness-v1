@@ -1,15 +1,16 @@
 @echo off
+chcp 65001 >nul
 
-set PROJDIR=E:\fitness_code
-set PYTHONPATH=E:\fitness_code
-set PYTHON=C:\Users\qinzi\.conda\envs\fitness\python.exe
+set PROJDIR=D:\WorkPath\fitness_new
+set PYTHONPATH=D:\WorkPath\fitness_new
+set PYTHON=E:\Anaconda\envs\diet\python.exe
 
 :: 绕过系统代理，直连 API 网关
-set HTTP_PROXY=
-set HTTPS_PROXY=
-set http_proxy=
-set https_proxy=
-set NO_PROXY=*
+set "HTTP_PROXY="
+set "HTTPS_PROXY="
+set "http_proxy="
+set "https_proxy="
+set "NO_PROXY=*"
 
 echo =============================================
 echo  Fitness Dashboard Launcher
@@ -39,13 +40,14 @@ if %errorlevel% neq 0 (
 
 :: Step 2: Start APIs
 echo [2/3] Starting Dashboard API :8000 ...
-start "Dashboard API :8000" cmd /k "cd /d E:\fitness_code && set PYTHONPATH=E:\fitness_code && C:\Users\qinzi\.conda\envs\fitness\python.exe -m uvicorn agent_service.reports.api:app --host 0.0.0.0 --port 8000 --reload"
+start "Dashboard API :8000" cmd /k "cd /d D:\WorkPath\fitness_new && set PYTHONPATH=D:\WorkPath\fitness_new && set HTTP_PROXY= && set HTTPS_PROXY= && set NO_PROXY=* && E:\Anaconda\envs\diet\python.exe -m uvicorn agent_service.reports.api:app --host 0.0.0.0 --port 8000 --reload"
 
 echo [3/3] Starting Gym Analyzer API :8002 ...
-start "Gym Analyzer :8002" cmd /k "cd /d E:\fitness_code && set PYTHONPATH=E:\fitness_code && C:\Users\qinzi\.conda\envs\fitness\python.exe -m uvicorn gym_analyzer.api:app --host 0.0.0.0 --port 8002 --reload"
+start "Gym Analyzer :8002" cmd /k "cd /d D:\WorkPath\fitness_new && set PYTHONPATH=D:\WorkPath\fitness_new && set HTTP_PROXY= && set HTTPS_PROXY= && set NO_PROXY=* && E:\Anaconda\envs\diet\python.exe -m uvicorn gym_analyzer.api:app --host 0.0.0.0 --port 8002 --reload"
 
 echo.
 echo =============================================
+echo   Relty App : http://localhost:8000/relty/
 echo   Dashboard : http://localhost:8000
 echo   Analyzer  : http://localhost:8002/analyzer
 echo   API docs  : http://localhost:8000/docs

@@ -2,7 +2,7 @@
 // Loaded BEFORE fitness.jsx / fitness-detail.jsx.
 
 const API_BASE = 'http://localhost:8000/api';
-const DEFAULT_UID = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11';
+const DEFAULT_UID = '00000000-0000-0000-0000-000000025803';
 
 // ── Level → color mapping (shared by bars AND the body figure) ──
 function levelMeta(T) {
@@ -151,9 +151,10 @@ function dailyToWorkout(daily, dateStr) {
 
 // ── API fetch helpers ──
 
-async function apiFetch(path) {
+async function apiFetch(path, uid) {
+  const id = uid || fitStore.currentUid || DEFAULT_UID;
   const sep = path.includes('?') ? '&' : '?';
-  const url = `${API_BASE}${path}${sep}user_id=${encodeURIComponent(DEFAULT_UID)}`;
+  const url = `${API_BASE}${path}${sep}user_id=${encodeURIComponent(id)}`;
   const r = await fetch(url);
   if (!r.ok) throw new Error(`API ${r.status}`);
   return r.json();
@@ -261,6 +262,8 @@ const fitStore = {
   plan: 'lower',
   planEdits: {},
   loading: true,
+  currentUid: DEFAULT_UID,
+  users: [],
   _l: new Set(),
   set(patch) { Object.assign(fitStore, patch); fitStore._l.forEach((f) => f()); },
 };
@@ -333,6 +336,27 @@ async function loadDailyWorkout(dateStr) {
     console.warn('loadDailyWorkout failed:', e);
     return null;
   }
+}
+
+// ── Load user list ──
+async function loadUsers() {
+  try {
+    const r = await fetch(`${API_BASE}/users`);
+    if (!r.ok) return;
+    const users = await r.json();
+    fitStore.set({ users });
+  } catch (e) {
+    console.warn('loadUsers failed:', e);
+  }
+}
+
+// ── Switch to a different user and reload all data ──
+async function switchUser(uid) {
+  fitStore.set({ currentUid: uid, loading: true, selected: null });
+  WORKOUTS.length = 0;
+  WEEK.length = 0;
+  Object.keys(WORKOUT_DAYS).forEach(k => delete WORKOUT_DAYS[k]);
+  await initFitnessData();
 }
 
 // ── Initial data load from backend ──
@@ -453,6 +477,7 @@ async function initFitnessData() {
 }
 
 // Kick off data loading
+loadUsers();
 initFitnessData();
 
 Object.assign(window, {
@@ -460,4 +485,5 @@ Object.assign(window, {
   COVERAGE_30D, COVERAGE_30D_FRONT, COVERAGE_30D_BACK, MONTH_LOAD, WORKOUT_DAYS,
   WEEK, WORKOUTS, WEEKLY_STATS, WEEKLY_INSIGHTS, MONTHLY_INSIGHTS, getWorkout, getPlan, MOVEMENT_ALTS, PLANS, fitStore, useFit,
   loadDailyWorkout, apiFetch, MUSCLE_CN_TO_EN, toCoverage, toBodyFigures,
+  switchUser, loadUsers,
 });

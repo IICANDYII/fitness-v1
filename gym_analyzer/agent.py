@@ -7,6 +7,7 @@ The agent (Gemini Flash) decides which tools to call and in what order.
 from __future__ import annotations
 
 import json
+import time as time_module
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -39,8 +40,11 @@ class GymAnalyzerAgent:
             "Authorization": f"Bearer {config.GATEWAY_KEY}",
             "Content-Type": "application/json",
         }
+        self._session = requests.Session()
+        self._session.trust_env = False
 
-    def _chat(self, messages: list[dict], tools: list[dict] | None = None) -> dict:
+    def _chat(self, messages: list[dict], tools: list[dict] | None = None,
+              max_retries: int = 5) -> dict:
         payload: dict[str, Any] = {
             "model": self.model,
             "messages": messages,
@@ -49,9 +53,36 @@ class GymAnalyzerAgent:
         if tools:
             payload["tools"] = tools
             payload["tool_choice"] = "auto"
-        resp = requests.post(self.url, headers=self.headers, json=payload, timeout=120)
-        resp.raise_for_status()
-        return resp.json()
+
+        for attempt in range(1, max_retries + 1):
+            try:
+                resp = self._session.post(self.url, headers=self.headers, json=payload, timeout=600)
+            except (requests.exceptions.SSLError,
+                    requests.exceptions.ConnectionError,
+                    requests.exceptions.Timeout) as e:
+                wait = min(30 * attempt, 180)
+                print(f"  [Agent 网络错误] {type(e).__name__}: {e}")
+                if attempt < max_retries:
+                    print(f"  等待 {wait}s 后重试（{attempt}/{max_retries}）...")
+                    time_module.sleep(wait)
+                    continue
+                raise
+
+            if resp.status_code == 429:
+                wait = 60 * attempt
+                print(f"  [Agent 429] 等待 {wait}s 后重试（{attempt}/{max_retries}）...")
+                time_module.sleep(wait)
+                continue
+            if resp.status_code >= 500:
+                wait = min(30 * attempt, 180)
+                print(f"  [Agent HTTP {resp.status_code}] 服务端错误，等待 {wait}s 后重试（{attempt}/{max_retries}）...")
+                if attempt < max_retries:
+                    time_module.sleep(wait)
+                    continue
+            resp.raise_for_status()
+            return resp.json()
+
+        raise RuntimeError("Agent: 超过最大重试次数")
 
     def _dispatch(self, tool_name: str, args: dict, video_key: str) -> str:
         fn = TOOL_REGISTRY.get(tool_name)

@@ -209,6 +209,28 @@ _FRONT = {"chest", "abdominals", "obliques", "front-shoulders",
           "biceps", "forearms", "quads", "calves", "traps"}
 _BACK  = {"lats", "lowerback", "hamstrings", "glutes",
           "rear-shoulders", "triceps", "traps"}
+_ALL_VALID_MUSCLE_IDS = _FRONT | _BACK
+_MUSCLE_CLEAN_RE = __import__('re').compile(r'[?\n\r\t\x00-\x1f]')
+
+
+def _sanitize_muscle_ids(raw: list) -> list[str]:
+    """Filter and clean muscle ID list from DB — drop non-strings, illegal chars,
+    and split wrongly-concatenated IDs like 'abdominals_obliques'."""
+    result = []
+    for item in raw:
+        if not isinstance(item, str):
+            continue
+        s = _MUSCLE_CLEAN_RE.sub('', item).strip()
+        if not s:
+            continue
+        if s in _ALL_VALID_MUSCLE_IDS:
+            result.append(s)
+        elif '_' in s:
+            for part in s.split('_'):
+                part = part.strip()
+                if part in _ALL_VALID_MUSCLE_IDS:
+                    result.append(part)
+    return result
 
 
 def _build_source_data(primary: list[str], secondary: list[str]) -> dict:
@@ -257,8 +279,10 @@ def get_exercise_muscles(name_cn: str, cur=None) -> dict[str, list[str]]:
         m = row["m"] if isinstance(row["m"], dict) else json.loads(row["m"])
         fm = m.get("frontBodyMap", {})
         bm = m.get("backBodyMap", {})
-        primary = list(dict.fromkeys(fm.get("text-mw-red", []) + bm.get("text-mw-red", [])))
-        secondary = list(dict.fromkeys(fm.get("text-mw-gray", []) + bm.get("text-mw-gray", [])))
+        raw_primary = fm.get("text-mw-red", []) + bm.get("text-mw-red", [])
+        raw_secondary = fm.get("text-mw-gray", []) + bm.get("text-mw-gray", [])
+        primary = list(dict.fromkeys(_sanitize_muscle_ids(raw_primary)))
+        secondary = list(dict.fromkeys(_sanitize_muscle_ids(raw_secondary)))
         return {"primary": primary, "secondary": secondary}
     finally:
         if close:

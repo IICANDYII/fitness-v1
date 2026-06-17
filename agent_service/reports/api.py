@@ -30,7 +30,7 @@ DB = dict(
     password=os.getenv("DB_PASSWORD", os.getenv("POSTGRES_PASSWORD", "666666")),
     connect_timeout=int(os.getenv("DB_CONNECT_TIMEOUT", "3")),
 )
-USER_ID     = "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
+USER_ID     = "00000000-0000-0000-0000-000000025803"
 RESULTS_DIR = Path(__file__).parent.parent.parent / "gym_analyzer" / "results"
 
 # exercise_execution.exercise_name (short/AI-variant) → exercises.name_cn (canonical)
@@ -60,6 +60,24 @@ EXERCISE_ALIAS: dict[str, str] = {
 }
 
 # exercise_name → exercise category for the time-bar widget
+# date → video file mapping (per user)
+_DATE_VIDEO_MAP: dict[str, dict[str, str]] = {
+    "00000000-0000-0000-0000-000000025803": {
+        "2026-05-27": "1.mp4",
+        "2026-05-29": "2.mp4",
+        "2026-05-31": "3.mp4",
+        "2026-06-02": "4.mp4",
+        "2026-06-03": "8.mp4",
+        "2026-06-05": "9.mp4",
+        "2026-06-06": "张靖义-2026.06.11.mp4",
+        "2026-06-08": "手臂-胸-杨博宇.mp4",
+        "2026-06-10": "肩-秦紫渝.mp4",
+        "2026-06-11": "肩-背-秦紫渝.mp4",
+        "2026-06-13": "肩背-叶翔.mp4",
+        "2026-06-15": "腿-张开.mp4",
+    },
+}
+
 EXERCISE_CATEGORY: dict[str, str] = {
     # 有氧
     "跑步": "有氧", "慢跑": "有氧", "快走": "有氧", "健步走": "有氧",
@@ -110,6 +128,33 @@ def _read_raw_segments(date_str: str) -> tuple[list[dict], float]:
         return exercise_segs, float(total_sec)
     except Exception:
         return [], 0.0
+
+
+def _read_all_segments(date_str: str) -> list[dict]:
+    """Read ALL segments (exercise + transition + rest) for the timeline visualization."""
+    p = RESULTS_DIR / f"{date_str}.json"
+    if not p.exists():
+        return []
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+        all_segs = data.get("raw_segments", [])
+        result = []
+        for s in all_segs:
+            seg = {
+                "type":      s.get("type", "transition"),
+                "start_sec": round(float(s.get("start_sec", 0)), 1),
+                "end_sec":   round(float(s.get("end_sec",   0)), 1),
+            }
+            if s.get("type") == "exercise":
+                seg["exercise_name"]  = s.get("exercise_name", "")
+                seg["equipment"]      = s.get("equipment", "")
+                seg["sets_count"]     = int(s.get("sets_count", 1) or 1)
+                seg["reps_estimate"]  = int(s.get("reps_estimate", 0) or 0)
+                seg["confidence"]     = float(s.get("confidence", 0) or 0)
+            result.append(seg)
+        return result
+    except Exception:
+        return []
 
 
 # Major groups for Card 1 bar chart.
@@ -646,6 +691,7 @@ def daily(date: str | None = None, user_id: str | None = None):
     # Read JSON segments first — used as the primary source for exercises + muscles
     date_str = session["start_time"].date().isoformat()
     raw_segs, total_sec = _read_raw_segments(date_str)
+    all_segments = _read_all_segments(date_str)
     if total_sec == 0:
         total_sec = float(session["duration_min"]) * 60
 
@@ -747,7 +793,9 @@ def daily(date: str | None = None, user_id: str | None = None):
         "exercises":           exercises_list,
         "category_duration":   {k: v for k, v in category_duration.items() if v > 0},
         "raw_segments":        raw_segs,
+        "all_segments":        all_segments,
         "total_sec":           total_sec,
+        "video_file":          _DATE_VIDEO_MAP.get(uid, {}).get(date_str),
     }
 
 
@@ -1406,6 +1454,39 @@ def cache_status():
     }
 
 
+# ── Video files serving ──────────────────────────────────────────────────────
+_INPUT_DIR = Path(__file__).parent.parent.parent / "gym_analyzer" / "input"
+_VIDEO_EXTS = {".mp4", ".avi", ".mov", ".mkv", ".webm"}
+
+
+@app.get("/api/videos")
+def list_videos():
+    """List video files in gym_analyzer/input/."""
+    if not _INPUT_DIR.is_dir():
+        return []
+    return sorted(
+        f.name for f in _INPUT_DIR.iterdir()
+        if f.suffix.lower() in _VIDEO_EXTS
+    )
+
+
+@app.get("/video/{filename}", include_in_schema=False)
+def serve_video(filename: str):
+    """Serve a video file from gym_analyzer/input/ with Range support."""
+    import urllib.parse
+    filename = urllib.parse.unquote(filename)
+    filepath = (_INPUT_DIR / filename).resolve()
+    if not str(filepath).startswith(str(_INPUT_DIR.resolve())):
+        raise HTTPException(status_code=403)
+    if not filepath.is_file():
+        raise HTTPException(status_code=404, detail=f"Video not found: {filename}")
+
+    ext_map = {".mp4": "video/mp4", ".webm": "video/webm", ".mov": "video/quicktime",
+               ".avi": "video/x-msvideo", ".mkv": "video/x-matroska"}
+    media = ext_map.get(filepath.suffix.lower(), "video/mp4")
+    return FileResponse(filepath, media_type=media)
+
+
 # ── Serve plan_viewer.html at /plan-viewer ────────────────────────────────────
 _REPORTS_DIR = Path(__file__).parent
 
@@ -1485,3 +1566,9 @@ def muscle_svg(
         media_type="image/svg+xml",
         headers={"Cache-Control": "no-cache"},
     )
+
+
+# ── Relty Wearable App (served via HTTP so JSX files load without CORS issues) ─
+_RELTY_DIR = Path(__file__).parent.parent.parent / "Relty"
+if _RELTY_DIR.is_dir():
+    app.mount("/relty", StaticFiles(directory=str(_RELTY_DIR), html=True), name="relty")

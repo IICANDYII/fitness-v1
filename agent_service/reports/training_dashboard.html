@@ -280,6 +280,21 @@ body {
 .completion-content { position:relative; z-index:1; text-align:center; }
 .completion-value { font-size:25px; font-weight:850; color:#1d2340; line-height:1; }
 .completion-label { font-size:10px; color:#8b92b0; margin-top:5px; }
+/* Balance tooltip */
+.balance-ring { cursor:pointer; }
+.balance-tooltip { display:none; position:absolute; left:120px; top:50%; transform:translateY(-50%); width:340px; background:#fff; border:1px solid #e2e5f1; border-radius:12px; box-shadow:0 8px 28px rgba(30,40,80,.13); padding:16px 18px; z-index:100; font-size:12px; color:#3a3f5c; line-height:1.7; }
+.balance-tooltip::before { content:""; position:absolute; left:-7px; top:50%; transform:translateY(-50%) rotate(45deg); width:12px; height:12px; background:#fff; border-left:1px solid #e2e5f1; border-bottom:1px solid #e2e5f1; }
+.balance-ring:hover .balance-tooltip { display:block; }
+.balance-tooltip .tt-title { font-size:13px; font-weight:700; color:#1d2340; margin-bottom:8px; }
+.balance-tooltip .tt-formula { background:#f5f6fc; border-radius:8px; padding:10px 12px; margin-bottom:10px; font-family:'Courier New',monospace; font-size:11.5px; line-height:1.8; color:#4a4f6f; }
+.balance-tooltip .tt-formula .tt-op { color:#8b92b0; }
+.balance-tooltip .tt-formula .tt-val { font-weight:700; color:#10b981; }
+.balance-tooltip .tt-formula .tt-result { font-weight:800; color:#1d2340; font-size:13px; border-top:1px dashed #dde0ef; margin-top:4px; padding-top:4px; }
+.balance-tooltip .tt-components { margin-bottom:6px; }
+.balance-tooltip .tt-row { display:flex; justify-content:space-between; align-items:center; padding:2px 0; }
+.balance-tooltip .tt-row .tt-label { color:#6b7194; }
+.balance-tooltip .tt-row .tt-score { font-weight:700; color:#1d2340; }
+.balance-tooltip .tt-desc { font-size:11px; color:#9298b4; margin-top:6px; line-height:1.5; }
 @keyframes ringPulse { 0%,100%{filter:drop-shadow(0 0 2px rgba(255,55,95,.18))} 50%{filter:drop-shadow(0 0 10px rgba(255,55,95,.38))} }
 .route-box { background:linear-gradient(135deg,#f7f7ff,#f2f5ff); border:1px solid #e8eafb; border-radius:14px; padding:13px 12px; }
 .route-track { display:flex; align-items:center; justify-content:space-between; gap:4px; }
@@ -319,6 +334,102 @@ body {
 .card.insufficient .weekly-empty { display:flex; }
 .weekly-empty { display:none; position:absolute; inset:40px 12px 12px; flex-direction:column; align-items:center; justify-content:center; gap:6px; z-index:3; color:#6b7396; font-size:14px; font-weight:700; text-align:center; }
 .weekly-empty span { font-size:11px; font-weight:400; color:#9aa1bd; }
+
+/* ════════════════════════════
+   Video Timeline + Exercise Table
+   ════════════════════════════ */
+.timeline-section {
+  max-width: 1440px;
+  margin: 24px auto 0;
+  background: #fff;
+  border-radius: 18px;
+  padding: 20px 24px 24px;
+  box-shadow: 0 2px 14px rgba(80,100,160,0.07);
+}
+.timeline-section .card-title { font-size: 16px; font-weight: 700; color: #1e2340; text-align: center; margin-bottom: 16px; }
+.timeline-main { display: flex; gap: 20px; align-items: flex-start; }
+.timeline-video-wrap { flex: 0 0 480px; position: relative; }
+.timeline-video-wrap video { width: 100%; border-radius: 10px; background: #000; display: block; }
+.timeline-video-wrap .no-video-hint { color: #9ca3af; font-size: 14px; text-align: center; padding: 60px 0; background: #f4f6fc; border-radius: 10px; }
+.timeline-right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.tl-video-select { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.tl-video-select label { font-size: 13px; color: #6b7396; font-weight: 600; }
+.tl-video-select select { font-size: 13px; padding: 5px 10px; border: 1px solid #d0d3e0; border-radius: 8px; background: #f7f8fc; color: #333; min-width: 200px; }
+
+/* Timeline bar */
+.tl-bar-container { position: relative; }
+.tl-bar { position: relative; height: 36px; background: #eef0f8; border-radius: 6px; overflow: hidden; cursor: pointer; }
+.tl-segment { position: absolute; top: 0; bottom: 0; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: #fff; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding: 0 4px; transition: filter .15s; cursor: pointer; }
+.tl-segment:hover { filter: brightness(1.15); }
+.tl-segment.type-exercise { background: #6c7ae0; }
+.tl-segment.type-transition { background: #d0d3e0; color: #8b92b0; }
+.tl-segment.type-rest { background: #fde68a; color: #92400e; }
+.tl-playhead { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #ef4444; z-index: 5; pointer-events: none; transition: left 0.1s linear; }
+.tl-time-labels { display: flex; justify-content: space-between; margin-top: 3px; font-size: 10px; color: #9ca3af; }
+
+/* Controls row under video */
+.tl-controls { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.tl-controls .tl-btn { padding: 5px 14px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all .15s; }
+.tl-btn-play { background: #6c7ae0; color: #fff; min-width: 70px; }
+.tl-btn-play:hover { background: #5b69d0; }
+.tl-time-text { font-size: 13px; color: #6b7396; font-variant-numeric: tabular-nums; }
+.tl-speed { font-size: 12px; color: #8b92b0; margin-left: auto; display: flex; align-items: center; gap: 4px; }
+.tl-speed select { font-size: 12px; border: 1px solid #d0d3e0; border-radius: 4px; padding: 2px 6px; background: #f7f8fc; }
+
+/* Legend */
+.tl-legend { display: flex; gap: 16px; margin-top: 4px; }
+.tl-legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #6b7396; }
+.tl-legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+/* Exercise recognition table */
+.exercise-table-section {
+  max-width: 1440px;
+  margin: 20px auto 0;
+  background: #fff;
+  border-radius: 18px;
+  padding: 20px 24px 24px;
+  box-shadow: 0 2px 14px rgba(80,100,160,0.07);
+}
+.exercise-table-section .card-title { font-size: 16px; font-weight: 700; color: #1e2340; text-align: center; margin-bottom: 14px; }
+.ex-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.ex-table thead th {
+  background: #f4f6fc;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7396;
+  text-align: left;
+  border-bottom: 2px solid #e2e5f1;
+}
+.ex-table thead th:first-child { border-radius: 8px 0 0 0; }
+.ex-table thead th:last-child { border-radius: 0 8px 0 0; }
+.ex-table tbody td {
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #374151;
+  border-bottom: 1px solid #f0f1f7;
+}
+.ex-table tbody tr:hover { background: #f9fafd; }
+.ex-table tbody tr { cursor: pointer; transition: background .12s; }
+.ex-table .ex-name { font-weight: 600; color: #1e2340; }
+.ex-table .ex-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.ex-badge-exercise { background: #e8eafc; color: #6c7ae0; }
+.ex-badge-rest { background: #fef3c7; color: #92400e; }
+.ex-badge-transition { background: #f0f1f7; color: #8b92b0; }
+.ex-table .ex-conf { display: flex; align-items: center; gap: 6px; }
+.ex-conf-bar { width: 50px; height: 6px; background: #e9ecf5; border-radius: 3px; overflow: hidden; }
+.ex-conf-fill { height: 100%; border-radius: 3px; background: #10b981; }
+.ex-table-empty { text-align: center; color: #9ca3af; padding: 32px 0; font-size: 14px; }
+@media (max-width: 960px) {
+  .timeline-main { flex-direction: column; }
+  .timeline-video-wrap { flex: none; width: 100%; }
+}
 </style>
 </head>
 <body>
@@ -335,6 +446,12 @@ body {
     <div class="daily-top-row">
       <div class="balance-ring" id="balance-ring">
         <div class="completion-content"><div class="completion-value" id="s-balance">--</div><div class="completion-label">Balance</div></div>
+        <div class="balance-tooltip" id="balance-tooltip">
+          <div class="tt-title">Fitness Balance v4 计算公式</div>
+          <div class="tt-formula" id="tt-formula"></div>
+          <div class="tt-components" id="tt-components"></div>
+          <div class="tt-desc">基于滚动 7 天有效力量训练记录，综合训练结构 Balance。参考肌力强化指南，结合用户偏好、设备可观测证据、训练连续性与肌群恢复间距。</div>
+        </div>
       </div>
       <div class="stats-col">
         <div class="stat-box"><div class="stat-lbl">训练时长</div><div class="stat-val" id="s-duration">--<span class="stat-unit"> min</span></div></div>
@@ -399,6 +516,71 @@ body {
     <div class="cal-grid" id="calGrid"></div>
   </div>
 
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     Video Timeline + Exercise Recognition Table
+     ════════════════════════════════════════════════════════════════════ -->
+<div class="timeline-section" id="timeline-section" style="display:none;">
+  <div class="card-title">运动识别可视化</div>
+  <div class="tl-video-select">
+    <label>视频文件：</label>
+    <select id="tl-video-select"><option value="">-- 请选择视频 --</option></select>
+  </div>
+  <div class="timeline-main">
+    <div class="timeline-video-wrap">
+      <video id="tl-video" preload="auto"></video>
+      <div class="no-video-hint" id="tl-no-video">选择视频文件后播放</div>
+      <div class="tl-controls">
+        <button class="tl-btn tl-btn-play" id="tl-play-btn" onclick="tlTogglePlay()">播放</button>
+        <span class="tl-time-text" id="tl-time-text">00:00 / 00:00</span>
+        <span class="tl-speed">
+          <label>速度</label>
+          <select id="tl-speed" onchange="tlSetSpeed(this.value)">
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+          </select>
+        </span>
+      </div>
+    </div>
+    <div class="timeline-right">
+      <div class="tl-bar-container">
+        <div class="tl-bar" id="tl-bar"></div>
+        <div class="tl-playhead" id="tl-playhead" style="left:0%"></div>
+        <div class="tl-time-labels">
+          <span id="tl-time-start">00:00</span>
+          <span id="tl-time-end">00:00</span>
+        </div>
+      </div>
+      <div class="tl-legend">
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#6c7ae0"></div>运动</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#d0d3e0"></div>过渡</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#fde68a"></div>休息</div>
+      </div>
+      <div id="tl-segment-info" style="font-size:13px;color:#6b7396;min-height:22px;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="exercise-table-section" id="exercise-table-section" style="display:none;">
+  <div class="card-title">识别运动详情</div>
+  <table class="ex-table" id="ex-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>动作名称</th>
+        <th>器械</th>
+        <th>识别组数</th>
+        <th>持续时间</th>
+        <th>时间区间</th>
+        <th>置信度</th>
+      </tr>
+    </thead>
+    <tbody id="ex-table-body"></tbody>
+  </table>
+  <div class="ex-table-empty" id="ex-table-empty" style="display:none;">暂无识别数据</div>
 </div>
 
 <script>
@@ -646,13 +828,57 @@ async function loadDailyForDate(date) {
     var r = await fetch(apiUrl('/daily?date=' + date));
     var daily = r.ok ? await r.json() : {};
     renderDailyData(daily);
+    renderTimeline(daily.all_segments || daily.raw_segments || [], daily.total_sec || 0, daily.video_file || '');
+    renderExerciseTable(daily.all_segments || daily.raw_segments || []);
   } catch (e) {
     renderDailyData({});
+    renderTimeline([], 0);
+    renderExerciseTable([]);
   }
 }
 
 function safeVal(v, fallback) {
   return (v != null && v !== '') ? v : (fallback !== undefined ? fallback : '--');
+}
+
+function renderBalanceTooltip(fb) {
+  var G = Number(fb.G || 0), S = Number(fb.S || 0), E = Number(fb.E || 0), C = Number(fb.C || 0);
+  var score = Number(fb.score || 0);
+  var days = fb.strength_days || 0, covered = fb.covered_count || 0;
+  var missing = fb.missing_groups || [];
+  var status = fb.status || 'insufficient_data';
+
+  var formulaEl = document.getElementById('tt-formula');
+  var compEl = document.getElementById('tt-components');
+
+  if (status === 'insufficient_data' || (G === 0 && S === 0 && E === 0 && C === 0 && score === 0)) {
+    formulaEl.innerHTML = '<span style="color:#9298b4">暂无有效力量训练数据</span>';
+    compEl.innerHTML = '';
+    return;
+  }
+
+  var base = (0.15 * G + 0.40 * S + 0.20 * E + 0.25 * C).toFixed(1);
+  formulaEl.innerHTML =
+    'Balance<sub>base</sub> <span class="tt-op">=</span> ' +
+    '<span class="tt-op">0.15×</span><span class="tt-val">' + G + '</span> ' +
+    '<span class="tt-op">+ 0.40×</span><span class="tt-val">' + S + '</span> ' +
+    '<span class="tt-op">+ 0.20×</span><span class="tt-val">' + E + '</span> ' +
+    '<span class="tt-op">+ 0.25×</span><span class="tt-val">' + C + '</span><br>' +
+    '<div class="tt-result">Balance<sub>final</sub> = clamp(' + base + ' + R, 0, 100) = <span class="tt-val">' + score + '</span></div>';
+
+  var groupNames = {legs:'腿部',hips:'臀部',back:'背部',abdomen:'腹部',chest:'胸部',shoulders:'肩部',arms:'手臂'};
+  var missingStr = missing.length ? missing.map(function(g){return groupNames[g]||g}).join('、') : '无';
+
+  compEl.innerHTML =
+    '<div class="tt-row"><span class="tt-label">G · 指南参考分</span><span class="tt-score">' + G + '</span></div>' +
+    '<div class="tt-row"><span class="tt-label" style="padding-left:12px;font-size:11px">训练天数 ' + days + '/2 · 覆盖肌群 ' + covered + '/7</span></div>' +
+    '<div class="tt-row"><span class="tt-label">S · 结构偏好分</span><span class="tt-score">' + S + '</span></div>' +
+    '<div class="tt-row"><span class="tt-label" style="padding-left:12px;font-size:11px">实际 vs 目标肌群分布偏差</span></div>' +
+    '<div class="tt-row"><span class="tt-label">E · 有效训练证据分</span><span class="tt-score">' + E + '</span></div>' +
+    '<div class="tt-row"><span class="tt-label" style="padding-left:12px;font-size:11px">识别置信度 · 重复模式 · 训练量</span></div>' +
+    '<div class="tt-row"><span class="tt-label">C · 连续性与剂量分</span><span class="tt-score">' + C + '</span></div>' +
+    '<div class="tt-row"><span class="tt-label" style="padding-left:12px;font-size:11px">训练天数 ' + days + '/4 · 训练单位/8</span></div>' +
+    (missing.length ? '<div class="tt-row" style="margin-top:4px;color:#ef4444"><span class="tt-label">遗漏肌群</span><span class="tt-score" style="color:#ef4444">' + missingStr + '</span></div>' : '');
 }
 
 function renderDailyData(daily) {
@@ -664,6 +890,7 @@ function renderDailyData(daily) {
   var balScore = Number(fb.score || 0);
   document.getElementById('s-balance').textContent = balScore;
   document.getElementById('balance-ring').style.setProperty('--balance', balScore);
+  renderBalanceTooltip(fb);
   renderTrainingRoute(daily.exercises || []);
   // Reset heatmap then apply new data
   document.querySelectorAll('.bodymap path, .bodymap circle, .bodymap ellipse, .bodymap polygon, .bodymap rect')
@@ -725,6 +952,200 @@ function applyGender(gender) {
 }
 
 /* ── Main init (parallel API fetch) ─────────────────────────────── */
+/* ── Timeline + Exercise Table ──────────────────────────────────── */
+var tlVideo = document.getElementById('tl-video');
+var tlSegments = [];   // raw_segments from API
+var tlTotalSec = 0;
+
+function tlFormatTime(s) {
+  var m = Math.floor(s / 60);
+  var sec = Math.floor(s % 60);
+  return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+}
+
+function tlTogglePlay() {
+  if (!tlVideo.src || tlVideo.readyState < 1) return;
+  tlVideo.paused ? tlVideo.play() : tlVideo.pause();
+}
+tlVideo.addEventListener('play', function() { document.getElementById('tl-play-btn').textContent = '暂停'; });
+tlVideo.addEventListener('pause', function() { document.getElementById('tl-play-btn').textContent = '播放'; });
+
+function tlSetSpeed(v) { tlVideo.playbackRate = parseFloat(v); }
+
+tlVideo.addEventListener('timeupdate', function() {
+  if (!tlVideo.duration) return;
+  var pct = (tlVideo.currentTime / tlVideo.duration) * 100;
+  document.getElementById('tl-playhead').style.left = pct + '%';
+  document.getElementById('tl-time-text').textContent =
+    tlFormatTime(tlVideo.currentTime) + ' / ' + tlFormatTime(tlVideo.duration);
+
+  // highlight current segment info
+  var info = document.getElementById('tl-segment-info');
+  var cur = null;
+  for (var i = 0; i < tlSegments.length; i++) {
+    var s = tlSegments[i];
+    if (tlVideo.currentTime >= s.start_sec && tlVideo.currentTime <= (s.end_sec || s.start_sec)) {
+      cur = s; break;
+    }
+  }
+  if (cur && cur.type === 'exercise') {
+    info.innerHTML = '<b style="color:#6c7ae0">' + (cur.exercise_name || '运动') + '</b> &nbsp; ' +
+      tlFormatTime(cur.start_sec) + ' → ' + tlFormatTime(cur.end_sec) +
+      (cur.equipment ? ' &nbsp; 器械: ' + cur.equipment : '');
+  } else if (cur) {
+    info.textContent = (cur.type === 'rest' ? '休息' : '过渡') + ' ' + tlFormatTime(cur.start_sec) + ' → ' + tlFormatTime(cur.end_sec);
+  } else {
+    info.textContent = '';
+  }
+});
+
+document.getElementById('tl-bar').addEventListener('click', function(e) {
+  if (!tlVideo.duration) return;
+  var rect = this.getBoundingClientRect();
+  var pct = (e.clientX - rect.left) / rect.width;
+  tlVideo.currentTime = pct * tlVideo.duration;
+});
+
+function renderTimeline(segments, totalSec, videoFile) {
+  tlSegments = segments || [];
+  tlTotalSec = totalSec || 0;
+  var section = document.getElementById('timeline-section');
+  if (!tlSegments.length) { section.style.display = 'none'; return; }
+  section.style.display = '';
+
+  var bar = document.getElementById('tl-bar');
+  bar.innerHTML = '';
+  document.getElementById('tl-time-start').textContent = '00:00';
+  document.getElementById('tl-time-end').textContent = tlFormatTime(tlTotalSec);
+
+  var dur = tlTotalSec || 1;
+  tlSegments.forEach(function(seg) {
+    var left = (seg.start_sec / dur) * 100;
+    var width = ((seg.end_sec - seg.start_sec) / dur) * 100;
+    if (width < 0.3) return;
+    var el = document.createElement('div');
+    el.className = 'tl-segment type-' + (seg.type || 'transition');
+    el.style.left = left + '%';
+    el.style.width = width + '%';
+    if (seg.type === 'exercise') {
+      el.textContent = seg.exercise_name || '运动';
+    }
+    el.title = (seg.exercise_name || seg.type || '') + ' ' + tlFormatTime(seg.start_sec) + '→' + tlFormatTime(seg.end_sec);
+    el.addEventListener('click', function(ev) {
+      ev.stopPropagation();
+      if (tlVideo.readyState >= 1) {
+        tlVideo.currentTime = seg.start_sec;
+        tlVideo.play();
+      }
+    });
+    bar.appendChild(el);
+  });
+
+  // Load video list then auto-select if mapping available
+  loadVideoList().then(function() {
+    if (videoFile) {
+      var sel = document.getElementById('tl-video-select');
+      sel.value = videoFile;
+      sel.dispatchEvent(new Event('change'));
+    }
+  });
+}
+
+async function loadVideoList() {
+  try {
+    var r = await fetch('/api/videos');
+    var files = await r.json();
+    var sel = document.getElementById('tl-video-select');
+    var prev = sel.value;
+    sel.innerHTML = '<option value="">-- 请选择视频 --</option>';
+    files.forEach(function(f) {
+      var opt = document.createElement('option');
+      opt.value = f;
+      opt.textContent = f;
+      sel.appendChild(opt);
+    });
+    if (prev && files.includes(prev)) sel.value = prev;
+  } catch(e) { console.warn('loadVideoList error:', e); }
+}
+
+document.getElementById('tl-video-select').addEventListener('change', function() {
+  var name = this.value;
+  var video = document.getElementById('tl-video');
+  var hint = document.getElementById('tl-no-video');
+  if (!name) {
+    video.removeAttribute('src');
+    video.style.display = 'none';
+    hint.style.display = '';
+    return;
+  }
+  hint.style.display = 'none';
+  video.style.display = 'block';
+  video.src = '/video/' + encodeURIComponent(name);
+  video.load();
+});
+
+function renderExerciseTable(segments) {
+  var section = document.getElementById('exercise-table-section');
+  var tbody = document.getElementById('ex-table-body');
+  var empty = document.getElementById('ex-table-empty');
+  var exerciseSegs = (segments || []).filter(function(s) { return s.type === 'exercise'; });
+
+  if (!exerciseSegs.length) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = '';
+  empty.style.display = 'none';
+
+  // Aggregate: group consecutive same-exercise segments into logical exercises with set count
+  var grouped = [];
+  var lastGroup = null;
+  for (var i = 0; i < exerciseSegs.length; i++) {
+    var seg = exerciseSegs[i];
+    if (lastGroup && lastGroup.exercise_name === seg.exercise_name) {
+      lastGroup.sets_count += (seg.sets_count || 1);
+      lastGroup.end_sec = seg.end_sec;
+      lastGroup.reps_total += (seg.reps_estimate || 0);
+      lastGroup.confidences.push(seg.confidence || 0);
+    } else {
+      lastGroup = {
+        exercise_name: seg.exercise_name || '未知动作',
+        equipment: seg.equipment || '',
+        sets_count: seg.sets_count || 1,
+        start_sec: seg.start_sec,
+        end_sec: seg.end_sec,
+        reps_total: seg.reps_estimate || 0,
+        confidences: [seg.confidence || 0],
+      };
+      grouped.push(lastGroup);
+    }
+  }
+
+  tbody.innerHTML = '';
+  grouped.forEach(function(g, idx) {
+    var duration = g.end_sec - g.start_sec;
+    var avgConf = g.confidences.reduce(function(a, b) { return a + b; }, 0) / g.confidences.length;
+    var confPct = Math.round(avgConf * 100);
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td>' + (idx + 1) + '</td>' +
+      '<td class="ex-name">' + g.exercise_name + '</td>' +
+      '<td>' + (g.equipment || '-') + '</td>' +
+      '<td><b>' + g.sets_count + '</b> 组</td>' +
+      '<td>' + tlFormatTime(duration) + '</td>' +
+      '<td style="font-variant-numeric:tabular-nums;color:#6b7396;">' + tlFormatTime(g.start_sec) + ' → ' + tlFormatTime(g.end_sec) + '</td>' +
+      '<td><div class="ex-conf"><div class="ex-conf-bar"><div class="ex-conf-fill" style="width:' + confPct + '%;background:' + (confPct >= 90 ? '#10b981' : confPct >= 70 ? '#f59e0b' : '#ef4444') + '"></div></div>' + confPct + '%</div></td>';
+    tr.addEventListener('click', function() {
+      if (tlVideo.readyState >= 1) {
+        tlVideo.currentTime = g.start_sec;
+        tlVideo.play();
+        document.getElementById('timeline-section').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+    tbody.appendChild(tr);
+  });
+}
+
 async function init() {
   try {
     var [daily, weekly, calendar, userInfo] = await Promise.all([
@@ -738,6 +1159,10 @@ async function init() {
 
     // Card 1 + Card 2
     renderDailyData(daily);
+
+    // Timeline + Exercise Table (below cards)
+    renderTimeline(daily.all_segments || daily.raw_segments || [], daily.total_sec || 0, daily.video_file || '');
+    renderExerciseTable(daily.all_segments || daily.raw_segments || []);
 
     // Card 3: weekly KPIs + chart
     // 数据不足判定：本周没有任何训练（无热量且无组数）→ 整块灰显
