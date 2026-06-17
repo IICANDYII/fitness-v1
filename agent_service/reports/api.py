@@ -14,6 +14,7 @@ import uuid as _uuid
 from datetime import datetime, timedelta, date
 from collections import defaultdict
 from pathlib import Path
+import os
 
 app = FastAPI(title="Fitness Dashboard API")
 app.add_middleware(
@@ -21,7 +22,14 @@ app.add_middleware(
     allow_methods=["*"], allow_headers=["*"]
 )
 
-DB          = dict(host="localhost", port=5432, dbname="fitness", user="postgres", password="666666")
+DB = dict(
+    host=os.getenv("DB_HOST", os.getenv("POSTGRES_HOST", "localhost")),
+    port=int(os.getenv("DB_PORT", os.getenv("POSTGRES_PORT", "5432"))),
+    dbname=os.getenv("DB_NAME", os.getenv("POSTGRES_DB", "fitness")),
+    user=os.getenv("DB_USER", os.getenv("POSTGRES_USER", "postgres")),
+    password=os.getenv("DB_PASSWORD", os.getenv("POSTGRES_PASSWORD", "666666")),
+    connect_timeout=int(os.getenv("DB_CONNECT_TIMEOUT", "3")),
+)
 USER_ID     = "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
 RESULTS_DIR = Path(__file__).parent.parent.parent / "gym_analyzer" / "results"
 
@@ -110,11 +118,141 @@ MAJOR_GROUPS: dict[str, list[str]] = {
     "胸":   ["chest"],
     "肩":   ["shoulders", "front-shoulders", "rear-shoulders"],
     "臂":   ["triceps", "biceps"],
-    "背":   ["lats", "traps", "traps-middle", "lowerback", "scapula"],
+    "背":   ["lats", "traps", "lowerback", "scapula"],
     "腿":   ["quads", "hamstrings", "calves"],
     "臀":   ["glutes", "hips"],
     "腹":   ["abdominals", "obliques"],
 }
+
+MUSCLE_CN: dict[str, str] = {
+    "chest": "胸部", "front-shoulders": "肩前束", "rear-shoulders": "肩后束",
+    "shoulders": "肩部", "triceps": "肱三头肌", "biceps": "肱二头肌",
+    "lats": "背阔肌", "traps": "斜方肌", "lowerback": "下背", "scapula": "肩胛",
+    "quads": "股四头肌", "hamstrings": "腘绳肌", "calves": "小腿",
+    "glutes": "臀大肌", "hips": "髋部", "abdominals": "腹直肌", "obliques": "腹斜肌",
+    "forearms": "前臂",
+}
+
+
+def compute_muscle_summary(raw_scores: dict[str, float]) -> dict:
+    group_scores = {
+        g: sum(raw_scores.get(m, 0) for m in ms)
+        for g, ms in MAJOR_GROUPS.items()
+    }
+    trained = [(g, s) for g, s in group_scores.items() if s > 0]
+    trained.sort(key=lambda x: x[1], reverse=True)
+    missing = [g for g, s in group_scores.items() if s == 0]
+    if not trained:
+        return {"primary": [], "secondary": [], "missing": []}
+    top = trained[0][1]
+    primary = [g for g, s in trained if s >= top * 0.5]
+    secondary = [g for g, s in trained if s < top * 0.5]
+    return {"primary": primary, "secondary": secondary, "missing": missing}
+
+
+BALANCE_MUSCLE_TO_GROUP: dict[str, str] = {}
+for _bg, _bms in MAJOR_GROUPS.items():
+    for _bm in _bms:
+        BALANCE_MUSCLE_TO_GROUP[_bm] = _bg
+
+_DEFAULT_TARGET: dict[str, float] = {
+    "腿": 0.16, "臀": 0.14, "背": 0.16, "腹": 0.14,
+    "胸": 0.14, "肩": 0.14, "臂": 0.12,
+}
+
+
+def compute_fitness_balance(cur, uid: str, ref_date) -> dict:
+    """Rolling 7-day Fitness Balance v3 = 0.15*G + 0.40*S + 0.20*E + 0.25*C."""
+    from gym_analyzer.db import get_exercise_muscles
+    window_start = ref_date - timedelta(days=6)
+    cur.execute("""
+        SELECT DATE(ws.start_time) AS day, ee.exercise_name AS name,
+               COALESCE(SUM(ee.sets), 0) AS sets,
+               COALESCE(MAX(ee.confidence), 0.85) AS confidence
+        FROM workout_session ws
+        JOIN exercise_execution ee ON ee.session_id = ws.session_id
+        WHERE ws.user_id = %s AND DATE(ws.start_time) BETWEEN %s AND %s
+        GROUP BY DATE(ws.start_time), ee.exercise_name
+    """, (uid, window_start, ref_date))
+    rows = cur.fetchall()
+
+    strength_days: set = set()
+    covered_groups: set = set()
+    muscle_exposure: dict[str, float] = {g: 0.0 for g in MAJOR_GROUPS}
+    exercises_data: list = []
+    total_exercise_units: float = 0.0
+
+    for r in rows:
+        raw_sets = int(r["sets"] or 0)
+        if raw_sets == 0:
+            continue
+        exercise_unit = min(raw_sets, 4)
+        confidence = float(r["confidence"] or 0.85)
+        strength_days.add(r["day"])
+        total_exercise_units += exercise_unit
+        mdata = get_exercise_muscles(r["name"])
+        for mid in mdata.get("primary", []):
+            bare = mid.lstrip("b-") if mid.startswith("b-") else mid
+            grp = BALANCE_MUSCLE_TO_GROUP.get(bare)
+            if grp:
+                covered_groups.add(grp)
+                muscle_exposure[grp] += exercise_unit * 1.0 * confidence
+        for mid in mdata.get("secondary", []):
+            bare = mid.lstrip("b-") if mid.startswith("b-") else mid
+            grp = BALANCE_MUSCLE_TO_GROUP.get(bare)
+            if grp:
+                covered_groups.add(grp)
+                muscle_exposure[grp] += exercise_unit * 0.5 * confidence
+        unit_suf = min(exercise_unit / 2, 1)
+        evidence_i = 0.35 * confidence + 0.25 * 0.7 + 0.25 * unit_suf + 0.15 * 0
+        exercises_data.append({"unit": exercise_unit, "evidence": evidence_i})
+
+    strength_days_7d = len(strength_days)
+    covered_count = len(covered_groups)
+    missing = [g for g in MAJOR_GROUPS if g not in covered_groups]
+
+    if strength_days_7d == 0:
+        return {"score": 0, "status": "insufficient_data",
+                "G": 0, "S": 0, "E": 0, "C": 0,
+                "strength_days": 0, "covered_count": 0,
+                "missing_groups": missing}
+
+    # --- G: Guideline Reference Score (15%) ---
+    freq_ratio = min(strength_days_7d / 2, 1)
+    cov_ratio = covered_count / 7
+    G = 100 * min(freq_ratio, cov_ratio)
+
+    # --- S: Preference-Adjusted Structure Score (40%) ---
+    total_exposure = sum(muscle_exposure.values())
+    if total_exposure > 0:
+        actual_share = {g: muscle_exposure[g] / total_exposure for g in MAJOR_GROUPS}
+        target = dict(_DEFAULT_TARGET)
+        deviation = sum(abs(actual_share[g] - target[g]) for g in MAJOR_GROUPS)
+        S = 100 * max(1 - 0.5 * deviation, 0)
+    else:
+        S = 0
+
+    # --- E: Effective Training Evidence Score (20%) ---
+    total_units = sum(e["unit"] for e in exercises_data)
+    if total_units > 0:
+        E = 100 * sum(e["evidence"] * e["unit"] for e in exercises_data) / total_units
+    else:
+        E = 0
+
+    # --- C: Strength Consistency & Dose Score (25%) ---
+    day_consistency = min(strength_days_7d / 4, 1)
+    unit_dose = min(total_exercise_units / 8, 1)
+    C = 100 * (0.6 * day_consistency + 0.4 * unit_dose)
+
+    score = round(0.15 * G + 0.40 * S + 0.20 * E + 0.25 * C)
+    status = "active" if score > 0 else "insufficient_data"
+    return {
+        "score": min(score, 100), "status": status,
+        "G": round(G), "S": round(S), "E": round(E), "C": round(C),
+        "strength_days": strength_days_7d,
+        "covered_count": covered_count,
+        "missing_groups": missing,
+    }
 
 
 def group_peak(muscles: list[str], svg_scores: dict[str, float]) -> float:
@@ -247,9 +385,15 @@ def compute_muscles(cur, rows: list) -> tuple[dict[str, float], dict[str, float]
         bm        = m.get("backBodyMap",  {})
 
         for muscle in fm.get("text-mw-red", []):
+            svg_scores[muscle]        += sets * 2
+            raw_scores[muscle]        += sets * 2
+        for muscle in bm.get("text-mw-red", []):
+            svg_scores["b-" + muscle] += sets * 2
+            raw_scores[muscle]        += sets * 2
+        for muscle in fm.get("text-mw-gray", []):
             svg_scores[muscle]        += sets
             raw_scores[muscle]        += sets
-        for muscle in bm.get("text-mw-red", []):
+        for muscle in bm.get("text-mw-gray", []):
             svg_scores["b-" + muscle] += sets
             raw_scores[muscle]        += sets
 
@@ -258,7 +402,7 @@ def compute_muscles(cur, rows: list) -> tuple[dict[str, float], dict[str, float]
 
 # SVG muscle IDs that live on the back body map
 _BACK_MUSCLES = {"lats", "lowerback", "hamstrings", "glutes",
-                 "rear-shoulders", "triceps", "traps-middle", "traps", "scapula"}
+                 "rear-shoulders", "triceps", "traps", "scapula"}
 
 
 def compute_muscles_from_segs(cur, segs: list[dict]) -> tuple[dict[str, float], dict[str, float]]:
@@ -308,19 +452,26 @@ def compute_muscles_from_segs(cur, segs: list[dict]) -> tuple[dict[str, float], 
         primary   = seg.get("primary_muscles") or []
         secondary = seg.get("secondary_muscles") or []
 
-        # Fall back to DB primary-only when JSON has no muscle data
+        # Fall back to DB when JSON has no muscle data
         if not primary:
             canonical = EXERCISE_ALIAS.get(name, name)
             m  = db_map.get(canonical, {})
             fm = m.get("frontBodyMap", {})
             bm = m.get("backBodyMap",  {})
-            primary = fm.get("text-mw-red", []) + [("b-" + x) for x in bm.get("text-mw-red", [])]
+            primary   = fm.get("text-mw-red", []) + [("b-" + x) for x in bm.get("text-mw-red", [])]
+            secondary = fm.get("text-mw-gray", []) + [("b-" + x) for x in bm.get("text-mw-gray", [])]
 
         for muscle in primary:
             back = muscle.startswith("b-") or muscle in _BACK_MUSCLES
             key  = muscle if muscle.startswith("b-") else ("b-" + muscle if back else muscle)
-            svg_scores[key]                                                          += sets
-            raw_scores[muscle[2:] if muscle.startswith("b-") else muscle]           += sets
+            svg_scores[key]                                                += sets * 2
+            raw_scores[muscle[2:] if muscle.startswith("b-") else muscle] += sets * 2
+
+        for muscle in secondary:
+            back = muscle.startswith("b-") or muscle in _BACK_MUSCLES
+            key  = muscle if muscle.startswith("b-") else ("b-" + muscle if back else muscle)
+            svg_scores[key]                                                += sets
+            raw_scores[muscle[2:] if muscle.startswith("b-") else muscle] += sets
 
     return dict(svg_scores), dict(raw_scores)
 
@@ -385,6 +536,44 @@ def _calc_met_calories(cur, session_id: str,
     return round(total, 1)
 
 
+@app.get("/api/users")
+def users_list():
+    """列出所有用户画像，供前端选择。"""
+    conn = get_conn()
+    cur  = conn.cursor()
+    cur.execute("""
+        SELECT u.user_id, u.gender, u.age, u.height, u.weight, u.fitness_goal,
+               u.experience_level,
+               COUNT(ws.session_id) AS session_count,
+               MAX(DATE(ws.start_time)) AS last_workout,
+               MIN(u.created_at) AS created_at
+        FROM user_profile_long_term u
+        LEFT JOIN workout_session ws ON ws.user_id = u.user_id
+        GROUP BY u.user_id, u.gender, u.age, u.height, u.weight,
+                 u.fitness_goal, u.experience_level
+        ORDER BY last_workout DESC NULLS LAST, created_at
+    """)
+    rows = cur.fetchall()
+    conn.close()
+    result = []
+    for r in rows:
+        g = (r["gender"] or "").lower()
+        gender_cn = "女" if g in ("female", "f", "女") else "男"
+        label = f"{gender_cn} {r['age'] or '?'}岁 {r['height'] or '?'}cm/{r['weight'] or '?'}kg {r['fitness_goal'] or ''}"
+        result.append({
+            "user_id": str(r["user_id"]),
+            "label": label.strip(),
+            "gender": r["gender"],
+            "age": r["age"],
+            "height": r["height"],
+            "weight": r["weight"],
+            "fitness_goal": r["fitness_goal"],
+            "session_count": r["session_count"],
+            "last_workout": str(r["last_workout"]) if r["last_workout"] else None,
+        })
+    return result
+
+
 @app.get("/api/user")
 def user(user_id: str | None = None):
     """返回当前用户基本信息（性别等），供前端切换人体图性别。"""
@@ -434,8 +623,10 @@ def daily(date: str | None = None, user_id: str | None = None):
 
     session = cur.fetchone()
     if not session:
+        bal_date = target_date if date else __import__('datetime').date.today()
+        fitness_balance = compute_fitness_balance(cur, uid, bal_date)
         conn.close()
-        return {}
+        return {"fitness_balance": fitness_balance}
 
     sid = session["session_id"]
 
@@ -516,8 +707,18 @@ def daily(date: str | None = None, user_id: str | None = None):
         else:
             muscle_trend[label] = "flat"
 
+    # Build CN→EN name lookup
+    cn_names = list({r["exercise_name"] for r in executions})
+    _en_conn = get_conn()
+    _en_cur = _en_conn.cursor()
+    _en_cur.execute("SELECT name_cn, name FROM exercises WHERE name_cn = ANY(%s)", (cn_names,))
+    _cn_to_en = {r["name_cn"]: r["name"] for r in _en_cur.fetchall()}
+    _en_conn.close()
+
     exercises_list = [
-        {"name": r["exercise_name"], "sets": int(r["sets"] or 0), "reps": int(r["reps"] or 0)}
+        {"name": r["exercise_name"],
+         "name_en": _cn_to_en.get(r["exercise_name"], r["exercise_name"]),
+         "sets": int(r["sets"] or 0), "reps": int(r["reps"] or 0)}
         for r in executions
     ]
 
@@ -526,6 +727,11 @@ def daily(date: str | None = None, user_id: str | None = None):
         cat = seg.get("category", "力量")
         if cat in category_duration:
             category_duration[cat] += int(round(seg["end_sec"] - seg["start_sec"]))
+
+    balance_conn = get_conn()
+    balance_cur = balance_conn.cursor()
+    fitness_balance = compute_fitness_balance(balance_cur, uid, session["start_time"].date())
+    balance_conn.close()
 
     return {
         "date":              date_str,
@@ -536,6 +742,8 @@ def daily(date: str | None = None, user_id: str | None = None):
         "muscle_distribution": muscle_distribution,
         "muscle_trend":        muscle_trend,
         "muscle_heatmap":      muscle_heatmap,
+        "muscle_summary":      compute_muscle_summary(raw_scores),
+        "fitness_balance":     fitness_balance,
         "exercises":           exercises_list,
         "category_duration":   {k: v for k, v in category_duration.items() if v > 0},
         "raw_segments":        raw_segs,
@@ -559,8 +767,11 @@ def weekly(user_id: str | None = None):
     if not latest:
         conn.close()
         return {}
-    end_date:   date = latest["day"]
-    start_date: date = end_date - timedelta(days=6)
+    ref_date:   date = latest["day"]
+    # Week runs Sunday(0) to Saturday(6); find the Sunday of the current week
+    sun_offset = (ref_date.weekday() + 1) % 7
+    start_date: date = ref_date - timedelta(days=sun_offset)
+    end_date:   date = start_date + timedelta(days=6)
 
     # 每日总组数
     cur.execute("""
@@ -600,10 +811,61 @@ def weekly(user_id: str | None = None):
 
     days_list  = [start_date + timedelta(days=i) for i in range(7)]
     daily_sets = [daily_rows.get(d, 0) for d in days_list]
-    day_labels = ["周" + "一二三四五六日"[d.weekday()] for d in days_list]
+    day_labels = ["周" + "日一二三四五六"[(d.weekday() + 1) % 7] for d in days_list]
 
     total_sets = sum(daily_sets)
     total_kcal = sum(daily_kcal.values())
+
+    # 本周训练频率 / 每日时长(分钟) / 每日推拉腿覆盖
+    _c2 = get_conn(); _cur2 = _c2.cursor()
+    _cur2.execute("""
+        SELECT DATE(start_time) AS day,
+               COALESCE(SUM(ROUND(EXTRACT(EPOCH FROM (end_time - start_time)) / 60)), 0) AS dur
+        FROM workout_session
+        WHERE user_id = %s AND DATE(start_time) BETWEEN %s AND %s
+        GROUP BY DATE(start_time)
+    """, (uid, start_date, end_date))
+    _dur_rows = {r["day"]: int(r["dur"] or 0) for r in _cur2.fetchall()}
+    daily_duration = [_dur_rows.get(d, 0) for d in days_list]
+    total_duration = sum(daily_duration)
+    # 按有 workout_session 记录的天数算频率（不依赖 exercise_execution）
+    training_frequency = sum(1 for v in daily_duration if v > 0)
+
+    _cur2.execute("""
+        SELECT DATE(ws.start_time) AS day, ee.exercise_name AS name,
+               COALESCE(SUM(ee.sets), 0) AS sets
+        FROM workout_session ws
+        JOIN exercise_execution ee ON ee.session_id = ws.session_id
+        WHERE ws.user_id = %s AND DATE(ws.start_time) BETWEEN %s AND %s
+        GROUP BY DATE(ws.start_time), ee.exercise_name
+    """, (uid, start_date, end_date))
+    from gym_analyzer.db import get_exercise_muscles
+    _muscle_group_totals: dict[str, float] = {g: 0 for g in MAJOR_GROUPS}
+    _muscle_to_group = {}
+    for g, ms in MAJOR_GROUPS.items():
+        for m in ms:
+            _muscle_to_group[m] = g
+    for r in _cur2.fetchall():
+        sets = int(r["sets"] or 0)
+        mdata = get_exercise_muscles(r["name"])
+        for mid in mdata.get("primary", []):
+            bare = mid.lstrip("b-") if mid.startswith("b-") else mid
+            grp = _muscle_to_group.get(bare)
+            if grp:
+                _muscle_group_totals[grp] += sets * 2
+        for mid in mdata.get("secondary", []):
+            bare = mid.lstrip("b-") if mid.startswith("b-") else mid
+            grp = _muscle_to_group.get(bare)
+            if grp:
+                _muscle_group_totals[grp] += sets * 1
+    _mg_total = sum(_muscle_group_totals.values())
+    muscle_coverage = []
+    if _mg_total > 0:
+        for g in MAJOR_GROUPS:
+            pct = round(_muscle_group_totals[g] / _mg_total * 100)
+            if pct > 0:
+                muscle_coverage.append({"group": g, "pct": pct})
+    _c2.close()
 
     def trend_pct(cur_val: float, prev_val: float) -> float:
         if prev_val == 0:
@@ -617,6 +879,10 @@ def weekly(user_id: str | None = None):
         "calories_trend_pct": trend_pct(total_kcal, prev_kcal),
         "daily_sets":        daily_sets,
         "day_labels":        day_labels,
+        "training_frequency": training_frequency,
+        "total_duration":    total_duration,
+        "daily_duration":    daily_duration,
+        "muscle_coverage":   muscle_coverage,
     }
 
 
@@ -1145,6 +1411,10 @@ _REPORTS_DIR = Path(__file__).parent
 
 @app.get("/", include_in_schema=False)
 def dashboard_page():
+    return FileResponse(_REPORTS_DIR / "training_dashboard.html")
+
+@app.get("/report", include_in_schema=False)
+def report_page():
     return FileResponse(_REPORTS_DIR / "training_dashboard.html")
 
 @app.get("/plan-viewer", include_in_schema=False)

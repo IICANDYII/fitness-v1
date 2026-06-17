@@ -1,0 +1,50 @@
+﻿standard_action,product_action_cn,standard_equipment,training_part_cn,action_pattern,source_count,source_ids,source_names,mapping_notes
+assisted_dip,辅助双杠臂屈伸,assisted_machine,胸,push,2,"0009, 0019",assisted chest dip (kneeling) | assisted triceps dip (kneeling),triceps/chest variants merged
+assisted_pullup,辅助引体向上,assisted_machine,背,pull,2,"0017, 0015",assisted pull-up | assisted parallel close grip pull-up,close grip variant merged
+barbell_bench_press,杠铃卧推,barbell,胸,push,1,0025,barbell bench press,bench angle limits first-person view
+barbell_bent_over_row,杠铃俯身划船,barbell,背,pull,2,"0027, 0118",barbell bent over row | barbell reverse grip bent over row,reverse grip variant merged
+barbell_biceps_curl,杠铃弯举,barbell,手臂,curl,2,"0031, 0080",barbell curl | barbell reverse curl,grip variant merged
+barbell_deadlift,杠铃硬拉,barbell,腿/臀,hinge,1,0032,barbell deadlift,
+barbell_incline_bench_press,杠铃上斜卧推,barbell,胸,push,1,0047,barbell incline bench press,
+barbell_overhead_press,杠铃推举,barbell,肩,push,1,1456,barbell standing military press,name in repo may be standing press/military press variant
+barbell_squat,杠铃深蹲,barbell,腿,squat,2,"0043, 0042",barbell full squat | barbell front squat,front squat variant merged | full squat merged into barbell squat
+bodyweight_dip,双杠臂屈伸,no_equipment,胸/手臂,push,1,0251,chest dip,id may need manual verification if strict source exactness required
+bodyweight_lunge,箭步蹲,no_equipment,腿,squat,1,1460,walking lunge,
+bodyweight_squat,自重深蹲,no_equipment,腿,squat,1,1685,squat to overhead reach,variant merged
+cable_biceps_curl,绳索弯举,cable,手臂,curl,2,"0868, 0165",cable curl | cable hammer curl (with rope),hammer curl variant merged
+cable_chest_fly,绳索夹胸,cable,胸,push,2,"0227, 1269",cable standing fly | cable standing up straight crossovers,standing crossover merged into cable chest fly | standing fly/crossover merged
+cable_lat_pulldown,高位下拉,cable,背,pull,3,"0007, 2330, 2616",alternate lateral pulldown | cable lat pulldown full range of motion | cable close grip front lat pulldown,close grip/v-bar merged into lat pulldown | merge pulldown variants
+cable_lateral_raise,绳索侧平举,cable,肩,raise,1,0178,cable lateral raise,
+cable_overhead_triceps_extension,绳索过顶臂屈伸,cable,手臂,extension,2,"1722, 1724",cable high pulley overhead tricep extension | cable rope high pulley overhead tricep extension,rope variant merged
+cable_seated_row,坐姿绳索划船,cable,背,pull,3,"0861, 1320, 1321",cable seated row | cable rope seated row | cable rope elevated seated row,elevated variant merged | rope attachment variant merged
+cable_triceps_pushdown,绳索下压,cable,手臂,extension,1,0241,cable triceps pushdown (v-bar),
+cycle_cross_trainer,交叉训练车,cardio_bike,有氧,cardio,1,2331,cycle cross trainer,merge under cardio bike/cross trainer family
+dumbbell_bench_press,哑铃卧推,dumbbell,胸,push,2,"0289, 0340",dumbbell bench press | dumbbell lying hammer press,bench angle limits first-person view | hammer press variant merged
+dumbbell_biceps_curl,哑铃弯举,dumbbell,手臂,curl,3,"0294, 1654, 1669",dumbbell biceps curl | dumbbell biceps curl reverse | dumbbell one arm seated hammer curl,grip variant merged | hammer/single-arm variant merged
+dumbbell_calf_raise,哑铃提踵,dumbbell,腿,extension,1,0417,dumbbell standing calf raise,small range of motion
+dumbbell_deadlift,哑铃硬拉,dumbbell,腿/臀,hinge,1,0300,dumbbell deadlift,
+dumbbell_lateral_raise,哑铃侧平举,dumbbell,肩,raise,1,0334,dumbbell lateral raise,
+dumbbell_romanian_deadlift,哑铃罗马尼亚硬拉,dumbbell,腿/臀,hinge,1,1459,dumbbell romanian deadlift,
+dumbbell_shoulder_press,哑铃推肩,dumbbell,肩,push,3,"0426, 0405, 0361",dumbbell standing overhead press | dumbbell shoulder press | dumbbell one arm shoulder press,seated/standing variants merged | single-arm variant merged | standing overhead press merged into dumbbell shoulder press
+dumbbell_squat,哑铃深蹲,dumbbell,腿,squat,1,0413,dumbbell squat,
+dumbbell_step_up,哑铃上台阶,dumbbell,腿,squat,1,2796,dumbbell step-up,
+elliptical,椭圆机,cardio_elliptical,有氧,cardio,1,2141,walk elliptical cross trainer,
+machine_calf_raise,固定器械提踵,fixed_machine,腿,extension,1,1385,lever seated calf raise,small range of motion
+machine_chest_fly,蝴蝶机夹胸,fixed_machine,胸,push,1,0596,lever seated fly,needs real-device validation
+machine_chest_press,固定器械推胸,fixed_machine,胸,push,2,"0577, 0576",lever chest press | lever chest press,variant merged
+machine_lateral_raise,固定器械侧平举,fixed_machine,肩,raise,1,0584,lever lateral raise,
+machine_leg_extension,坐姿腿屈伸,fixed_machine,腿,extension,1,0585,lever leg extension,
+machine_leg_press,腿举,fixed_machine,腿,squat,2,"2287, 2611",lever alternate leg press | lever horizontal one leg press,one-leg variant merged | single-leg/alternate variant merged
+machine_seated_leg_curl,坐姿腿弯举,fixed_machine,腿,curl,1,0599,lever seated leg curl,
+machine_seated_row,固定器械坐姿划船,fixed_machine,背,pull,1,1350,lever seated row,keep as B due chest-pad risk
+machine_shoulder_press,固定器械推肩,fixed_machine,肩,push,2,"0603, 0869",lever shoulder press | lever shoulder press v.2,variant merged
+pullup,引体向上,no_equipment,背,pull,2,"0652, 3293",pull-up | archer pull up,advanced variant merged
+pushup,俯卧撑,no_equipment,胸,push,2,"0662, 0283",push-up | diamond push-up,camera may face floor | variant merged
+smith_bench_press,史密斯卧推,smith_machine,胸,push,3,"0748, 1308, 0751",smith bench press | smith wide grip bench press | smith close-grip bench press,bench angle limits first-person view | close grip variant merged | wide grip variant merged
+smith_deadlift,史密斯硬拉,smith_machine,腿,hinge,1,0752,smith deadlift,
+smith_incline_bench_press,史密斯上斜卧推,smith_machine,胸,push,1,0757,smith incline bench press,
+smith_shoulder_press,史密斯推肩,smith_machine,肩,push,2,"0766, 0765",smith shoulder press | smith seated shoulder press,seated variant merged
+smith_squat,史密斯深蹲,smith_machine,腿,squat,1,0770,smith squat,
+stationary_bike,健身车/动感单车,cardio_bike,有氧,cardio,2,"2138, 0798",stationary bike run v.3 | stationary bike walk,name contains stationary bike; remap from leverage machine
+stepmill,登阶机/爬楼机,cardio_stepmill,有氧,cardio,1,2311,walking on stepmill,
+treadmill_walk_run,跑步机,cardio_treadmill,有氧,cardio,1,3666,walking on incline treadmill,name contains treadmill; remap from leverage machine

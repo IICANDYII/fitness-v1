@@ -1,0 +1,815 @@
+{
+  "treadmill_walk_run": {
+    "product_action_cn": "跑步机",
+    "standard_equipment": "cardio_treadmill",
+    "training_part_cn": "有氧",
+    "action_pattern": "cardio",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "3666"
+    ],
+    "source_names": [
+      "walking on incline treadmill"
+    ],
+    "mapping_notes": [
+      "name contains treadmill; remap from leverage machine"
+    ]
+  },
+  "elliptical": {
+    "product_action_cn": "椭圆机",
+    "standard_equipment": "cardio_elliptical",
+    "training_part_cn": "有氧",
+    "action_pattern": "cardio",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "2141"
+    ],
+    "source_names": [
+      "walk elliptical cross trainer"
+    ],
+    "mapping_notes": []
+  },
+  "stepmill": {
+    "product_action_cn": "登阶机/爬楼机",
+    "standard_equipment": "cardio_stepmill",
+    "training_part_cn": "有氧",
+    "action_pattern": "cardio",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "2311"
+    ],
+    "source_names": [
+      "walking on stepmill"
+    ],
+    "mapping_notes": []
+  },
+  "stationary_bike": {
+    "product_action_cn": "健身车/动感单车",
+    "standard_equipment": "cardio_bike",
+    "training_part_cn": "有氧",
+    "action_pattern": "cardio",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "2138",
+      "0798"
+    ],
+    "source_names": [
+      "stationary bike run v.3",
+      "stationary bike walk"
+    ],
+    "mapping_notes": [
+      "name contains stationary bike; remap from leverage machine"
+    ]
+  },
+  "cycle_cross_trainer": {
+    "product_action_cn": "交叉训练车",
+    "standard_equipment": "cardio_bike",
+    "training_part_cn": "有氧",
+    "action_pattern": "cardio",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "2331"
+    ],
+    "source_names": [
+      "cycle cross trainer"
+    ],
+    "mapping_notes": [
+      "merge under cardio bike/cross trainer family"
+    ]
+  },
+  "cable_lat_pulldown": {
+    "product_action_cn": "高位下拉",
+    "standard_equipment": "cable",
+    "training_part_cn": "背",
+    "action_pattern": "pull",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0007",
+      "2330",
+      "2616"
+    ],
+    "source_names": [
+      "alternate lateral pulldown",
+      "cable lat pulldown full range of motion",
+      "cable close grip front lat pulldown"
+    ],
+    "mapping_notes": [
+      "merge pulldown variants",
+      "merge pulldown variants",
+      "close grip/v-bar merged into lat pulldown"
+    ]
+  },
+  "cable_seated_row": {
+    "product_action_cn": "坐姿绳索划船",
+    "standard_equipment": "cable",
+    "training_part_cn": "背",
+    "action_pattern": "pull",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0861",
+      "1320",
+      "1321"
+    ],
+    "source_names": [
+      "cable seated row",
+      "cable rope seated row",
+      "cable rope elevated seated row"
+    ],
+    "mapping_notes": [
+      "rope attachment variant merged",
+      "elevated variant merged"
+    ]
+  },
+  "cable_triceps_pushdown": {
+    "product_action_cn": "绳索下压",
+    "standard_equipment": "cable",
+    "training_part_cn": "手臂",
+    "action_pattern": "extension",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0241"
+    ],
+    "source_names": [
+      "cable triceps pushdown (v-bar)"
+    ],
+    "mapping_notes": []
+  },
+  "cable_chest_fly": {
+    "product_action_cn": "绳索夹胸",
+    "standard_equipment": "cable",
+    "training_part_cn": "胸",
+    "action_pattern": "push",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0227",
+      "1269"
+    ],
+    "source_names": [
+      "cable standing fly",
+      "cable standing up straight crossovers"
+    ],
+    "mapping_notes": [
+      "standing fly/crossover merged",
+      "standing crossover merged into cable chest fly"
+    ]
+  },
+  "cable_lateral_raise": {
+    "product_action_cn": "绳索侧平举",
+    "standard_equipment": "cable",
+    "training_part_cn": "肩",
+    "action_pattern": "raise",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0178"
+    ],
+    "source_names": [
+      "cable lateral raise"
+    ],
+    "mapping_notes": []
+  },
+  "cable_overhead_triceps_extension": {
+    "product_action_cn": "绳索过顶臂屈伸",
+    "standard_equipment": "cable",
+    "training_part_cn": "手臂",
+    "action_pattern": "extension",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "1722",
+      "1724"
+    ],
+    "source_names": [
+      "cable high pulley overhead tricep extension",
+      "cable rope high pulley overhead tricep extension"
+    ],
+    "mapping_notes": [
+      "rope variant merged"
+    ]
+  },
+  "cable_biceps_curl": {
+    "product_action_cn": "绳索弯举",
+    "standard_equipment": "cable",
+    "training_part_cn": "手臂",
+    "action_pattern": "curl",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0868",
+      "0165"
+    ],
+    "source_names": [
+      "cable curl",
+      "cable hammer curl (with rope)"
+    ],
+    "mapping_notes": [
+      "hammer curl variant merged"
+    ]
+  },
+  "machine_chest_press": {
+    "product_action_cn": "固定器械推胸",
+    "standard_equipment": "fixed_machine",
+    "training_part_cn": "胸",
+    "action_pattern": "push",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0577",
+      "0576"
+    ],
+    "source_names": [
+      "lever chest press",
+      "lever chest press"
+    ],
+    "mapping_notes": [
+      "variant merged"
+    ]
+  },
+  "machine_chest_fly": {
+    "product_action_cn": "蝴蝶机夹胸",
+    "standard_equipment": "fixed_machine",
+    "training_part_cn": "胸",
+    "action_pattern": "push",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "0596"
+    ],
+    "source_names": [
+      "lever seated fly"
+    ],
+    "mapping_notes": [
+      "needs real-device validation"
+    ]
+  },
+  "machine_shoulder_press": {
+    "product_action_cn": "固定器械推肩",
+    "standard_equipment": "fixed_machine",
+    "training_part_cn": "肩",
+    "action_pattern": "push",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0603",
+      "0869"
+    ],
+    "source_names": [
+      "lever shoulder press",
+      "lever shoulder press v.2"
+    ],
+    "mapping_notes": [
+      "variant merged"
+    ]
+  },
+  "machine_lateral_raise": {
+    "product_action_cn": "固定器械侧平举",
+    "standard_equipment": "fixed_machine",
+    "training_part_cn": "肩",
+    "action_pattern": "raise",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0584"
+    ],
+    "source_names": [
+      "lever lateral raise"
+    ],
+    "mapping_notes": []
+  },
+  "machine_leg_extension": {
+    "product_action_cn": "坐姿腿屈伸",
+    "standard_equipment": "fixed_machine",
+    "training_part_cn": "腿",
+    "action_pattern": "extension",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0585"
+    ],
+    "source_names": [
+      "lever leg extension"
+    ],
+    "mapping_notes": []
+  },
+  "machine_seated_leg_curl": {
+    "product_action_cn": "坐姿腿弯举",
+    "standard_equipment": "fixed_machine",
+    "training_part_cn": "腿",
+    "action_pattern": "curl",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0599"
+    ],
+    "source_names": [
+      "lever seated leg curl"
+    ],
+    "mapping_notes": []
+  },
+  "machine_leg_press": {
+    "product_action_cn": "腿举",
+    "standard_equipment": "fixed_machine",
+    "training_part_cn": "腿",
+    "action_pattern": "squat",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "2287",
+      "2611"
+    ],
+    "source_names": [
+      "lever alternate leg press",
+      "lever horizontal one leg press"
+    ],
+    "mapping_notes": [
+      "single-leg/alternate variant merged",
+      "one-leg variant merged"
+    ]
+  },
+  "machine_calf_raise": {
+    "product_action_cn": "固定器械提踵",
+    "standard_equipment": "fixed_machine",
+    "training_part_cn": "腿",
+    "action_pattern": "extension",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "1385"
+    ],
+    "source_names": [
+      "lever seated calf raise"
+    ],
+    "mapping_notes": [
+      "small range of motion"
+    ]
+  },
+  "assisted_pullup": {
+    "product_action_cn": "辅助引体向上",
+    "standard_equipment": "assisted_machine",
+    "training_part_cn": "背",
+    "action_pattern": "pull",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0017",
+      "0015"
+    ],
+    "source_names": [
+      "assisted pull-up",
+      "assisted parallel close grip pull-up"
+    ],
+    "mapping_notes": [
+      "close grip variant merged"
+    ]
+  },
+  "assisted_dip": {
+    "product_action_cn": "辅助双杠臂屈伸",
+    "standard_equipment": "assisted_machine",
+    "training_part_cn": "胸",
+    "action_pattern": "push",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0009",
+      "0019"
+    ],
+    "source_names": [
+      "assisted chest dip (kneeling)",
+      "assisted triceps dip (kneeling)"
+    ],
+    "mapping_notes": [
+      "triceps/chest variants merged"
+    ]
+  },
+  "machine_seated_row": {
+    "product_action_cn": "固定器械坐姿划船",
+    "standard_equipment": "fixed_machine",
+    "training_part_cn": "背",
+    "action_pattern": "pull",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "1350"
+    ],
+    "source_names": [
+      "lever seated row"
+    ],
+    "mapping_notes": [
+      "keep as B due chest-pad risk"
+    ]
+  },
+  "smith_squat": {
+    "product_action_cn": "史密斯深蹲",
+    "standard_equipment": "smith_machine",
+    "training_part_cn": "腿",
+    "action_pattern": "squat",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0770"
+    ],
+    "source_names": [
+      "smith squat"
+    ],
+    "mapping_notes": []
+  },
+  "smith_deadlift": {
+    "product_action_cn": "史密斯硬拉",
+    "standard_equipment": "smith_machine",
+    "training_part_cn": "腿",
+    "action_pattern": "hinge",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0752"
+    ],
+    "source_names": [
+      "smith deadlift"
+    ],
+    "mapping_notes": []
+  },
+  "smith_shoulder_press": {
+    "product_action_cn": "史密斯推肩",
+    "standard_equipment": "smith_machine",
+    "training_part_cn": "肩",
+    "action_pattern": "push",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0766",
+      "0765"
+    ],
+    "source_names": [
+      "smith shoulder press",
+      "smith seated shoulder press"
+    ],
+    "mapping_notes": [
+      "seated variant merged"
+    ]
+  },
+  "smith_bench_press": {
+    "product_action_cn": "史密斯卧推",
+    "standard_equipment": "smith_machine",
+    "training_part_cn": "胸",
+    "action_pattern": "push",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "0748",
+      "1308",
+      "0751"
+    ],
+    "source_names": [
+      "smith bench press",
+      "smith wide grip bench press",
+      "smith close-grip bench press"
+    ],
+    "mapping_notes": [
+      "bench angle limits first-person view",
+      "wide grip variant merged",
+      "close grip variant merged"
+    ]
+  },
+  "smith_incline_bench_press": {
+    "product_action_cn": "史密斯上斜卧推",
+    "standard_equipment": "smith_machine",
+    "training_part_cn": "胸",
+    "action_pattern": "push",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "0757"
+    ],
+    "source_names": [
+      "smith incline bench press"
+    ],
+    "mapping_notes": []
+  },
+  "barbell_deadlift": {
+    "product_action_cn": "杠铃硬拉",
+    "standard_equipment": "barbell",
+    "training_part_cn": "腿/臀",
+    "action_pattern": "hinge",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0032"
+    ],
+    "source_names": [
+      "barbell deadlift"
+    ],
+    "mapping_notes": []
+  },
+  "barbell_squat": {
+    "product_action_cn": "杠铃深蹲",
+    "standard_equipment": "barbell",
+    "training_part_cn": "腿",
+    "action_pattern": "squat",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0043",
+      "0042"
+    ],
+    "source_names": [
+      "barbell full squat",
+      "barbell front squat"
+    ],
+    "mapping_notes": [
+      "full squat merged into barbell squat",
+      "front squat variant merged"
+    ]
+  },
+  "barbell_bent_over_row": {
+    "product_action_cn": "杠铃俯身划船",
+    "standard_equipment": "barbell",
+    "training_part_cn": "背",
+    "action_pattern": "pull",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0027",
+      "0118"
+    ],
+    "source_names": [
+      "barbell bent over row",
+      "barbell reverse grip bent over row"
+    ],
+    "mapping_notes": [
+      "reverse grip variant merged"
+    ]
+  },
+  "barbell_biceps_curl": {
+    "product_action_cn": "杠铃弯举",
+    "standard_equipment": "barbell",
+    "training_part_cn": "手臂",
+    "action_pattern": "curl",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0031",
+      "0080"
+    ],
+    "source_names": [
+      "barbell curl",
+      "barbell reverse curl"
+    ],
+    "mapping_notes": [
+      "grip variant merged"
+    ]
+  },
+  "barbell_bench_press": {
+    "product_action_cn": "杠铃卧推",
+    "standard_equipment": "barbell",
+    "training_part_cn": "胸",
+    "action_pattern": "push",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "0025"
+    ],
+    "source_names": [
+      "barbell bench press"
+    ],
+    "mapping_notes": [
+      "bench angle limits first-person view"
+    ]
+  },
+  "barbell_incline_bench_press": {
+    "product_action_cn": "杠铃上斜卧推",
+    "standard_equipment": "barbell",
+    "training_part_cn": "胸",
+    "action_pattern": "push",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "0047"
+    ],
+    "source_names": [
+      "barbell incline bench press"
+    ],
+    "mapping_notes": []
+  },
+  "barbell_overhead_press": {
+    "product_action_cn": "杠铃推举",
+    "standard_equipment": "barbell",
+    "training_part_cn": "肩",
+    "action_pattern": "push",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "1456"
+    ],
+    "source_names": [
+      "barbell standing military press"
+    ],
+    "mapping_notes": [
+      "name in repo may be standing press/military press variant"
+    ]
+  },
+  "dumbbell_biceps_curl": {
+    "product_action_cn": "哑铃弯举",
+    "standard_equipment": "dumbbell",
+    "training_part_cn": "手臂",
+    "action_pattern": "curl",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0294",
+      "1654",
+      "1669"
+    ],
+    "source_names": [
+      "dumbbell biceps curl",
+      "dumbbell biceps curl reverse",
+      "dumbbell one arm seated hammer curl"
+    ],
+    "mapping_notes": [
+      "grip variant merged",
+      "hammer/single-arm variant merged"
+    ]
+  },
+  "dumbbell_lateral_raise": {
+    "product_action_cn": "哑铃侧平举",
+    "standard_equipment": "dumbbell",
+    "training_part_cn": "肩",
+    "action_pattern": "raise",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0334"
+    ],
+    "source_names": [
+      "dumbbell lateral raise"
+    ],
+    "mapping_notes": []
+  },
+  "dumbbell_shoulder_press": {
+    "product_action_cn": "哑铃推肩",
+    "standard_equipment": "dumbbell",
+    "training_part_cn": "肩",
+    "action_pattern": "push",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0426",
+      "0405",
+      "0361"
+    ],
+    "source_names": [
+      "dumbbell standing overhead press",
+      "dumbbell shoulder press",
+      "dumbbell one arm shoulder press"
+    ],
+    "mapping_notes": [
+      "standing overhead press merged into dumbbell shoulder press",
+      "seated/standing variants merged",
+      "single-arm variant merged"
+    ]
+  },
+  "dumbbell_squat": {
+    "product_action_cn": "哑铃深蹲",
+    "standard_equipment": "dumbbell",
+    "training_part_cn": "腿",
+    "action_pattern": "squat",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0413"
+    ],
+    "source_names": [
+      "dumbbell squat"
+    ],
+    "mapping_notes": []
+  },
+  "dumbbell_deadlift": {
+    "product_action_cn": "哑铃硬拉",
+    "standard_equipment": "dumbbell",
+    "training_part_cn": "腿/臀",
+    "action_pattern": "hinge",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0300"
+    ],
+    "source_names": [
+      "dumbbell deadlift"
+    ],
+    "mapping_notes": []
+  },
+  "dumbbell_romanian_deadlift": {
+    "product_action_cn": "哑铃罗马尼亚硬拉",
+    "standard_equipment": "dumbbell",
+    "training_part_cn": "腿/臀",
+    "action_pattern": "hinge",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "1459"
+    ],
+    "source_names": [
+      "dumbbell romanian deadlift"
+    ],
+    "mapping_notes": []
+  },
+  "dumbbell_step_up": {
+    "product_action_cn": "哑铃上台阶",
+    "standard_equipment": "dumbbell",
+    "training_part_cn": "腿",
+    "action_pattern": "squat",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "2796"
+    ],
+    "source_names": [
+      "dumbbell step-up"
+    ],
+    "mapping_notes": []
+  },
+  "dumbbell_calf_raise": {
+    "product_action_cn": "哑铃提踵",
+    "standard_equipment": "dumbbell",
+    "training_part_cn": "腿",
+    "action_pattern": "extension",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "0417"
+    ],
+    "source_names": [
+      "dumbbell standing calf raise"
+    ],
+    "mapping_notes": [
+      "small range of motion"
+    ]
+  },
+  "dumbbell_bench_press": {
+    "product_action_cn": "哑铃卧推",
+    "standard_equipment": "dumbbell",
+    "training_part_cn": "胸",
+    "action_pattern": "push",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "0289",
+      "0340"
+    ],
+    "source_names": [
+      "dumbbell bench press",
+      "dumbbell lying hammer press"
+    ],
+    "mapping_notes": [
+      "bench angle limits first-person view",
+      "hammer press variant merged"
+    ]
+  },
+  "pullup": {
+    "product_action_cn": "引体向上",
+    "standard_equipment": "no_equipment",
+    "training_part_cn": "背",
+    "action_pattern": "pull",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0652",
+      "3293"
+    ],
+    "source_names": [
+      "pull-up",
+      "archer pull up"
+    ],
+    "mapping_notes": [
+      "advanced variant merged"
+    ]
+  },
+  "pushup": {
+    "product_action_cn": "俯卧撑",
+    "standard_equipment": "no_equipment",
+    "training_part_cn": "胸",
+    "action_pattern": "push",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "0662",
+      "0283"
+    ],
+    "source_names": [
+      "push-up",
+      "diamond push-up"
+    ],
+    "mapping_notes": [
+      "camera may face floor",
+      "variant merged"
+    ]
+  },
+  "bodyweight_lunge": {
+    "product_action_cn": "箭步蹲",
+    "standard_equipment": "no_equipment",
+    "training_part_cn": "腿",
+    "action_pattern": "squat",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "1460"
+    ],
+    "source_names": [
+      "walking lunge"
+    ],
+    "mapping_notes": []
+  },
+  "bodyweight_squat": {
+    "product_action_cn": "自重深蹲",
+    "standard_equipment": "no_equipment",
+    "training_part_cn": "腿",
+    "action_pattern": "squat",
+    "first_person_level_min": "B",
+    "source_ids": [
+      "1685"
+    ],
+    "source_names": [
+      "squat to overhead reach"
+    ],
+    "mapping_notes": [
+      "variant merged"
+    ]
+  },
+  "bodyweight_dip": {
+    "product_action_cn": "双杠臂屈伸",
+    "standard_equipment": "no_equipment",
+    "training_part_cn": "胸/手臂",
+    "action_pattern": "push",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0251"
+    ],
+    "source_names": [
+      "chest dip"
+    ],
+    "mapping_notes": [
+      "id may need manual verification if strict source exactness required"
+    ]
+  }
+}

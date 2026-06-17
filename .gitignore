@@ -21,10 +21,35 @@ Thumbs.db
 # Claude Code
 .claude/
 
-# Large media (videos and extracted keyframe outputs)
+# Large media (videos, images, extracted keyframe outputs)
 video/
 output/
 *.mp4
+*.avi
+*.mov
+*.mkv
+*.m4v
+*.wmv
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.ico
+*.webp
+*.tiff
+*.tif
+
+# Frames / results (generated data)
+gym_analyzer/frames/
+gym_analyzer/results/
+recognize/visualize/raw/
+recognize/visualize/result/
+
+# Debug / temp artifacts
+conf_*.txt
+*.zip
+.thumbnail
 
 # Local debug artifacts
 _calibrate_polygons.png

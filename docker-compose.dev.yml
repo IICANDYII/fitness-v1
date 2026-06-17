@@ -1,0 +1,27 @@
+version: "3.9"
+
+# 本地开发用：只启动 PostgreSQL，API/前端在宿主机跑
+# 用法: docker compose -f docker-compose.dev.yml up -d
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: fitness_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "666666"
+      POSTGRES_DB: fitness
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./deployment/init:/docker-entrypoint-initdb.d:ro   # 首次启动自动建表
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d fitness"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_dev_data:

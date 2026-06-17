@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>视频区间标注工具</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #1a1a2e; color: #e0e0e0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+.header { display: flex; align-items: center; gap: 16px; padding: 12px 20px; background: #16213e; border-bottom: 1px solid #0f3460; }
+.header h1 { font-size: 18px; color: #e94560; flex-shrink: 0; }
+.file-select { flex: 1; display: flex; align-items: center; gap: 10px; }
+.file-select label { font-size: 14px; color: #aaa; flex-shrink: 0; }
+#videoSelect { background: #0a0a1a; color: #e0e0e0; border: 1px solid #0f3460; border-radius: 4px; padding: 6px 12px; font-size: 13px; min-width: 200px; cursor: pointer; }
+#videoSelect:focus { border-color: #e94560; outline: none; }
+.refresh-btn { padding: 6px 12px; background: #0f3460; border: 1px solid #555; color: #aaa; border-radius: 4px; cursor: pointer; font-size: 13px; }
+.refresh-btn:hover { border-color: #e94560; color: #e94560; }
+
+.main { flex: 1; display: flex; overflow: hidden; }
+
+.video-panel { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.video-container { flex: 1; display: flex; align-items: center; justify-content: center; background: #000; position: relative; overflow: hidden; }
+video { max-width: 100%; max-height: 100%; }
+.no-video { color: #555; font-size: 16px; }
+
+.controls { padding: 12px 20px; background: #16213e; border-top: 1px solid #0f3460; }
+.timeline-bar { position: relative; height: 32px; background: #0a0a1a; border-radius: 4px; margin-bottom: 10px; cursor: pointer; overflow: hidden; }
+.timeline-progress { height: 100%; background: #0f3460; position: absolute; left: 0; top: 0; pointer-events: none; }
+.timeline-markers { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; }
+.timeline-marker { position: absolute; top: 0; bottom: 0; width: 2px; background: #e94560; pointer-events: none; }
+.timeline-marker.paired { background: #00d2ff; }
+.timeline-region { position: absolute; top: 0; bottom: 0; background: rgba(0, 210, 255, 0.15); border-left: 2px solid #00d2ff; border-right: 2px solid #00d2ff; pointer-events: none; }
+.timeline-region .region-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10px; color: #00d2ff; white-space: nowrap; pointer-events: none; }
+.time-display { display: flex; align-items: center; gap: 16px; }
+.time-text { font-size: 14px; color: #aaa; font-variant-numeric: tabular-nums; }
+.ctrl-buttons { display: flex; gap: 8px; flex: 1; justify-content: center; }
+.ctrl-btn { padding: 6px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; transition: all 0.15s; }
+.btn-play { background: #0f3460; color: #2ed573; border: 1px solid #2ed573; min-width: 80px; }
+.btn-play:hover { background: #2ed573; color: #0a0a1a; }
+.btn-mark { background: #e94560; color: #fff; }
+.btn-mark:hover { background: #ff6b81; }
+.marker-count { background: rgba(255,255,255,0.2); padding: 1px 6px; border-radius: 8px; font-size: 11px; margin-left: 4px; }
+.btn-export { background: #0f3460; color: #00d2ff; border: 1px solid #00d2ff; }
+.btn-export:hover { background: #00d2ff; color: #0a0a1a; }
+.btn-import { background: #0f3460; color: #ffa502; border: 1px solid #ffa502; }
+.btn-import:hover { background: #ffa502; color: #0a0a1a; }
+.btn-undo { background: #333; color: #ccc; }
+.btn-undo:hover { background: #555; }
+.btn-clear { background: #333; color: #e94560; }
+.btn-clear:hover { background: #e94560; color: #fff; }
+
+.speed-control { display: flex; align-items: center; gap: 6px; }
+.speed-control label { font-size: 12px; color: #888; }
+.speed-control select { background: #0a0a1a; color: #e0e0e0; border: 1px solid #333; border-radius: 3px; padding: 2px 6px; font-size: 12px; }
+
+.sidebar { width: 360px; background: #16213e; border-left: 1px solid #0f3460; display: flex; flex-direction: column; flex-shrink: 0; }
+.sidebar-header { padding: 12px 16px; border-bottom: 1px solid #0f3460; font-size: 15px; font-weight: 600; color: #00d2ff; display: flex; justify-content: space-between; align-items: center; }
+.sidebar-header span { font-size: 12px; color: #888; font-weight: normal; }
+.intervals-list { flex: 1; overflow-y: auto; padding: 8px; }
+.interval-card { background: #0a0a1a; border-radius: 6px; padding: 10px 12px; margin-bottom: 6px; border-left: 3px solid #e94560; cursor: pointer; transition: all 0.15s; }
+.interval-card:hover { background: #1a1a3e; }
+.interval-card.active { border-left-color: #00d2ff; background: #1a1a3e; }
+.interval-card.unpaired { border-left-color: #ffa502; border-style: dashed; border-left-style: dashed; }
+.interval-time { font-size: 13px; color: #aaa; margin-bottom: 6px; font-variant-numeric: tabular-nums; }
+.interval-fields { display: flex; flex-direction: column; gap: 6px; }
+.field-row { display: flex; align-items: center; gap: 8px; }
+.field-row label { font-size: 12px; color: #888; width: 50px; flex-shrink: 0; text-align: right; }
+.field-row input, .field-row select { flex: 1; background: #16213e; border: 1px solid #333; color: #e0e0e0; padding: 4px 8px; border-radius: 3px; font-size: 13px; }
+.field-row input:focus, .field-row select:focus { border-color: #00d2ff; outline: none; }
+.interval-actions { display: flex; gap: 6px; margin-top: 8px; }
+.interval-actions button { padding: 3px 10px; border: none; border-radius: 3px; cursor: pointer; font-size: 11px; }
+.btn-goto { background: #0f3460; color: #00d2ff; }
+.btn-goto:hover { background: #00d2ff; color: #0a0a1a; }
+.btn-del { background: #333; color: #e94560; }
+.btn-del:hover { background: #e94560; color: #fff; }
+
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; align-items: center; justify-content: center; }
+.modal-overlay.active { display: flex; }
+.modal { background: #16213e; border: 1px solid #0f3460; border-radius: 8px; padding: 20px; width: 600px; max-height: 80vh; overflow-y: auto; }
+.modal h3 { margin-bottom: 12px; color: #00d2ff; }
+.modal textarea { width: 100%; height: 300px; background: #0a0a1a; border: 1px solid #333; color: #e0e0e0; padding: 10px; border-radius: 4px; font-family: "Consolas", monospace; font-size: 13px; resize: vertical; }
+.modal-buttons { display: flex; gap: 8px; margin-top: 12px; justify-content: flex-end; }
+.modal-buttons button { padding: 6px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; }
+
+.keyboard-hints { padding: 8px 16px; border-top: 1px solid #0f3460; font-size: 11px; color: #555; }
+.keyboard-hints kbd { background: #0a0a1a; padding: 1px 5px; border-radius: 3px; border: 1px solid #333; font-family: inherit; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>视频区间标注</h1>
+  <div class="file-select">
+    <label>选择视频:</label>
+    <select id="videoSelect" onchange="loadVideo(this.value)">
+      <option value="">-- 请选择视频 --</option>
+    </select>
+    <button class="refresh-btn" onclick="loadVideoList()">刷新</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="video-panel">
+    <div class="video-container">
+      <video id="video" preload="auto"></video>
+      <div class="no-video" id="noVideo">请选择视频文件</div>
+    </div>
+    <div class="controls">
+      <div class="timeline-bar" id="timeline">
+        <div class="timeline-progress" id="timelineProgress"></div>
+        <div class="timeline-markers" id="timelineMarkers"></div>
+      </div>
+      <div class="time-display">
+        <span class="time-text" id="timeText">00:00.0 / 00:00.0</span>
+        <div class="ctrl-buttons">
+          <button class="ctrl-btn btn-play" id="playBtn" onclick="togglePlay()">播放</button>
+          <button class="ctrl-btn btn-mark" id="markBtn" onclick="addMarker()" title="Space">添加标记 <span class="marker-count" id="markerCount">0</span></button>
+          <button class="ctrl-btn btn-undo" onclick="undoMarker()">撤销标记</button>
+          <button class="ctrl-btn btn-clear" onclick="clearAll()">清空</button>
+          <button class="ctrl-btn btn-export" onclick="exportIntervals()">导出区间</button>
+          <button class="ctrl-btn btn-import" onclick="showImport()">导入区间</button>
+        </div>
+        <div class="speed-control">
+          <label>速度:</label>
+          <select id="speedSelect" onchange="setSpeed(this.value)">
+            <option value="0.25">0.25x</option>
+            <option value="0.5">0.5x</option>
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2x</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      运动区间列表
+      <span id="intervalCount">0 个区间</span>
+    </div>
+    <div class="intervals-list" id="intervalsList"></div>
+    <div class="keyboard-hints">
+      <kbd>Space</kbd> 添加标记 &nbsp; <kbd>←</kbd><kbd>→</kbd> 前进/后退5s &nbsp; <kbd>K</kbd> 播放/暂停 &nbsp; <kbd>J</kbd><kbd>L</kbd> ±10s
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="exportModal">
+  <div class="modal">
+    <h3>导出区间数据</h3>
+    <textarea id="exportText" readonly></textarea>
+    <div class="modal-buttons">
+      <button style="background:#0f3460;color:#00d2ff;" onclick="copyExport()">复制</button>
+      <button style="background:#0f3460;color:#ffa502;" onclick="downloadExport()">下载JSON</button>
+      <button style="background:#333;color:#ccc;" onclick="closeModal('exportModal')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="importModal">
+  <div class="modal">
+    <h3>导入区间数据</h3>
+    <textarea id="importText" placeholder='粘贴JSON数组，格式如: [{"start": 0, "end": 20, "type": "exercise", "label": "卧推", "equipment": "杠铃"}, ...]'></textarea>
+    <div class="modal-buttons">
+      <button style="background:#ffa502;color:#0a0a1a;" onclick="doImport()">导入</button>
+      <button style="background:#333;color:#ccc;" onclick="closeModal('importModal')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const video = document.getElementById('video');
+const timeline = document.getElementById('timeline');
+const timelineProgress = document.getElementById('timelineProgress');
+const timelineMarkers = document.getElementById('timelineMarkers');
+const intervalsList = document.getElementById('intervalsList');
+
+let markers = [];
+let intervals = [];
+let currentVideoName = '';
+
+function loadVideoList() {
+  fetch('/api/videos')
+    .then(r => r.json())
+    .then(files => {
+      const sel = document.getElementById('videoSelect');
+      const prev = sel.value;
+      sel.innerHTML = '<option value="">-- 请选择视频 --</option>';
+      files.forEach(f => {
+        const opt = document.createElement('option');
+        opt.value = f;
+        opt.textContent = f;
+        sel.appendChild(opt);
+      });
+      if (prev && files.includes(prev)) sel.value = prev;
+    });
+}
+
+function loadVideo(name) {
+  if (!name) return;
+  currentVideoName = name;
+  document.getElementById('noVideo').style.display = 'none';
+  video.src = '/raw/' + encodeURIComponent(name);
+  video.style.display = 'block';
+  markers = [];
+  intervals = [];
+  render();
+}
+
+loadVideoList();
+
+video.addEventListener('timeupdate', updateTimeline);
+video.addEventListener('loadedmetadata', updateTimeline);
+
+function updateTimeline() {
+  if (!video.duration) return;
+  const pct = (video.currentTime / video.duration) * 100;
+  timelineProgress.style.width = pct + '%';
+  document.getElementById('timeText').textContent =
+    formatTime(video.currentTime) + ' / ' + formatTime(video.duration);
+}
+
+timeline.addEventListener('click', (e) => {
+  if (!video.duration) return;
+  const rect = timeline.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  video.currentTime = pct * video.duration;
+});
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = (s % 60).toFixed(1);
+  return String(m).padStart(2, '0') + ':' + sec.padStart(4, '0');
+}
+
+function formatTimeShort(s) {
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + String(sec).padStart(2, '0');
+}
+
+function addMarker() {
+  if (!video.duration) return;
+  const t = Math.round(video.currentTime * 10) / 10;
+
+  const unpaired = markers.find(m => !m.paired);
+  if (unpaired) {
+    const start = Math.min(unpaired.time, t);
+    const end = Math.max(unpaired.time, t);
+    unpaired.paired = true;
+    const interval = { start, end, type: 'exercise', label: '', equipment: '' };
+    intervals.push(interval);
+    intervals.sort((a, b) => a.start - b.start);
+    markers = [];
+  } else {
+    markers.push({ time: t, paired: false });
+  }
+  render();
+}
+
+function undoMarker() {
+  const unpaired = markers.find(m => !m.paired);
+  if (unpaired) {
+    markers = markers.filter(m => m !== unpaired);
+  } else if (intervals.length > 0) {
+    intervals.pop();
+  }
+  render();
+}
+
+function clearAll() {
+  if (intervals.length === 0 && markers.length === 0) return;
+  if (!confirm('确定清空所有标注？')) return;
+  markers = [];
+  intervals = [];
+  render();
+}
+
+function deleteInterval(idx) {
+  intervals.splice(idx, 1);
+  render();
+}
+
+function seekTo(t) {
+  video.currentTime = t;
+}
+
+function togglePlay() {
+  if (!video.src) return;
+  video.paused ? video.play() : video.pause();
+}
+
+video.addEventListener('play', () => { document.getElementById('playBtn').textContent = '暂停'; });
+video.addEventListener('pause', () => { document.getElementById('playBtn').textContent = '播放'; });
+
+function setSpeed(v) {
+  video.playbackRate = parseFloat(v);
+}
+
+function buildFullIntervals() {
+  if (intervals.length === 0) return [];
+  const dur = video.duration || 0;
+  const result = [];
+  const sorted = [...intervals].sort((a, b) => a.start - b.start);
+
+  let cursor = 0;
+  for (const iv of sorted) {
+    if (iv.start > cursor + 0.05) {
+      result.push({ start: round1(cursor), end: round1(iv.start), type: 'transition', label: '过渡' });
+    }
+    const entry = { start: round1(iv.start), end: round1(iv.end), type: 'exercise', label: iv.label || '' };
+    if (iv.equipment) entry.equipment = iv.equipment;
+    result.push(entry);
+    cursor = iv.end;
+  }
+  if (dur > 0 && cursor < dur - 0.05) {
+    result.push({ start: round1(cursor), end: round1(dur), type: 'transition', label: '过渡' });
+  }
+  return result;
+}
+
+function round1(n) { return Math.round(n * 10) / 10; }
+
+function exportIntervals() {
+  const full = buildFullIntervals();
+  if (full.length === 0) { alert('暂无标注区间'); return; }
+
+  const lines = full.map(iv => {
+    let s = `    {"start": ${String(iv.start).padStart(5)}, "end": ${String(iv.end).padStart(5)}, "type": "${iv.type}"`;
+    s += `, "label": "${iv.label}"`;
+    if (iv.equipment) s += `, "equipment": "${iv.equipment}"`;
+    s += '}';
+    return s;
+  });
+  const text = '[\n' + lines.join(',\n') + '\n]';
+  document.getElementById('exportText').value = text;
+  document.getElementById('exportModal').classList.add('active');
+}
+
+function copyExport() {
+  const ta = document.getElementById('exportText');
+  ta.select();
+  navigator.clipboard.writeText(ta.value);
+}
+
+function downloadExport() {
+  const text = document.getElementById('exportText').value;
+  const blob = new Blob([text], { type: 'application/json' });
+  const a = document.createElement('a');
+  const name = currentVideoName.replace(/\.[^.]+$/, '') || 'intervals';
+  a.href = URL.createObjectURL(blob);
+  a.download = name + '_intervals.json';
+  a.click();
+}
+
+function showImport() {
+  document.getElementById('importText').value = '';
+  document.getElementById('importModal').classList.add('active');
+}
+
+function doImport() {
+  try {
+    const text = document.getElementById('importText').value.trim();
+    const data = JSON.parse(text);
+    if (!Array.isArray(data)) throw new Error('需要JSON数组');
+    intervals = data.filter(d => d.type === 'exercise').map(d => ({
+      start: d.start, end: d.end, type: 'exercise',
+      label: d.label || '', equipment: d.equipment || ''
+    }));
+    intervals.sort((a, b) => a.start - b.start);
+    markers = [];
+    render();
+    closeModal('importModal');
+  } catch (e) {
+    alert('导入失败: ' + e.message);
+  }
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+
+function render() {
+  renderTimeline();
+  renderSidebar();
+}
+
+function renderTimeline() {
+  timelineMarkers.innerHTML = '';
+  const dur = video.duration || 1;
+
+  for (const iv of intervals) {
+    const left = (iv.start / dur) * 100;
+    const width = ((iv.end - iv.start) / dur) * 100;
+    const region = document.createElement('div');
+    region.className = 'timeline-region';
+    region.style.left = left + '%';
+    region.style.width = width + '%';
+    const lbl = document.createElement('span');
+    lbl.className = 'region-label';
+    lbl.textContent = iv.label || '运动';
+    region.appendChild(lbl);
+    timelineMarkers.appendChild(region);
+  }
+
+  for (const m of markers) {
+    const left = (m.time / dur) * 100;
+    const el = document.createElement('div');
+    el.className = 'timeline-marker' + (m.paired ? ' paired' : '');
+    el.style.left = left + '%';
+    timelineMarkers.appendChild(el);
+  }
+}
+
+function renderSidebar() {
+  intervalsList.innerHTML = '';
+  document.getElementById('intervalCount').textContent = intervals.length + ' 个区间';
+  document.getElementById('markerCount').textContent = intervals.length;
+
+  for (const m of markers.filter(x => !x.paired)) {
+    const card = document.createElement('div');
+    card.className = 'interval-card unpaired';
+    card.innerHTML = `
+      <div class="interval-time">⏱ 起始标记: ${formatTime(m.time)}</div>
+      <div style="font-size:12px;color:#ffa502;">等待结束标记...</div>
+    `;
+    card.onclick = () => seekTo(m.time);
+    intervalsList.appendChild(card);
+  }
+
+  intervals.forEach((iv, idx) => {
+    const card = document.createElement('div');
+    card.className = 'interval-card';
+    card.innerHTML = `
+      <div class="interval-time">${formatTime(iv.start)} → ${formatTime(iv.end)}  (${(iv.end - iv.start).toFixed(1)}s)</div>
+      <div class="interval-fields">
+        <div class="field-row">
+          <label>标签:</label>
+          <input type="text" value="${escHtml(iv.label)}" placeholder="如: 卧推" data-idx="${idx}" data-field="label" />
+        </div>
+        <div class="field-row">
+          <label>器械:</label>
+          <input type="text" value="${escHtml(iv.equipment)}" placeholder="如: 杠铃" data-idx="${idx}" data-field="equipment" />
+        </div>
+      </div>
+      <div class="interval-actions">
+        <button class="btn-goto" onclick="event.stopPropagation();seekTo(${iv.start})">跳转起始</button>
+        <button class="btn-goto" onclick="event.stopPropagation();seekTo(${iv.end})">跳转结束</button>
+        <button class="btn-del" onclick="event.stopPropagation();deleteInterval(${idx})">删除</button>
+      </div>
+    `;
+    card.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('input', (e) => {
+        intervals[e.target.dataset.idx][e.target.dataset.field] = e.target.value;
+        renderTimeline();
+      });
+      inp.addEventListener('click', (e) => e.stopPropagation());
+    });
+    card.onclick = () => seekTo(iv.start);
+    intervalsList.appendChild(card);
+  });
+}
+
+function escHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  switch (e.code) {
+    case 'Space':
+      e.preventDefault();
+      addMarker();
+      break;
+    case 'KeyK':
+      video.paused ? video.play() : video.pause();
+      break;
+    case 'ArrowLeft':
+      e.preventDefault();
+      video.currentTime = Math.max(0, video.currentTime - 5);
+      break;
+    case 'ArrowRight':
+      e.preventDefault();
+      video.currentTime = Math.min(video.duration || 0, video.currentTime + 5);
+      break;
+    case 'KeyJ':
+      video.currentTime = Math.max(0, video.currentTime - 10);
+      break;
+    case 'KeyL':
+      video.currentTime = Math.min(video.duration || 0, video.currentTime + 10);
+      break;
+  }
+});
+</script>
+</body>
+</html>

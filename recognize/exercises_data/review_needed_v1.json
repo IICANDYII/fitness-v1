@@ -1,0 +1,145 @@
+[
+  {
+    "source_id": "0001",
+    "source_name": "3/4 sit-up",
+    "source_equipment": "body weight",
+    "suggested_standard_action": "situp",
+    "suggested_standard_equipment": "no_equipment",
+    "issue_reason": "仰卧地面核心，胸前视角大概率拍到天花板/身体遮挡。",
+    "recommendation": "exclude_or_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  },
+  {
+    "source_id": "0003",
+    "source_name": "air bike",
+    "source_equipment": "body weight",
+    "suggested_standard_action": "air_bike",
+    "suggested_standard_equipment": "no_equipment",
+    "issue_reason": "地面核心且动作在躯干/腿部，第一人称不可见性高。",
+    "recommendation": "exclude_or_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  },
+  {
+    "source_id": "0464",
+    "source_name": "front plank with twist",
+    "source_equipment": "body weight",
+    "suggested_standard_action": "plank",
+    "suggested_standard_equipment": "no_equipment",
+    "issue_reason": "平板支撑类胸前设备朝地，识别和计数稳定性低。",
+    "recommendation": "exclude_or_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  },
+  {
+    "source_id": "0664",
+    "source_name": "push-up to side plank",
+    "source_equipment": "body weight",
+    "suggested_standard_action": "pushup_side_plank",
+    "suggested_standard_equipment": "no_equipment",
+    "issue_reason": "复合地面动作，第一阶段容易混淆。",
+    "recommendation": "exclude_or_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  },
+  {
+    "source_id": "1291",
+    "source_name": "dumbbell one arm pullover on exercise ball",
+    "source_equipment": "dumbbell",
+    "suggested_standard_action": "dumbbell_pullover",
+    "suggested_standard_equipment": "dumbbell",
+    "issue_reason": "不进入主白名单：仰卧/球上动作视角不稳定，仅保留在 review。",
+    "recommendation": "review_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  },
+  {
+    "source_id": "0358",
+    "source_name": "dumbbell one arm reverse wrist curl",
+    "source_equipment": "dumbbell",
+    "suggested_standard_action": "wrist_curl",
+    "suggested_standard_equipment": "dumbbell",
+    "issue_reason": "手腕/前臂细节动作幅度小，不适合第一阶段识别。",
+    "recommendation": "exclude_or_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  },
+  {
+    "source_id": "1415",
+    "source_name": "dumbbell one arm seated neutral wrist curl",
+    "source_equipment": "dumbbell",
+    "suggested_standard_action": "wrist_curl",
+    "suggested_standard_equipment": "dumbbell",
+    "issue_reason": "手腕角度细节难以从胸前视角稳定判断。",
+    "recommendation": "exclude_or_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  },
+  {
+    "source_id": "1496",
+    "source_name": "sledge hammer",
+    "source_equipment": "hammer",
+    "suggested_standard_action": "sledge_hammer",
+    "suggested_standard_equipment": "functional_equipment",
+    "issue_reason": "大锤砸轮胎偏 CrossFit/功能训练，不是一般健身房默认动作，且安全风险高。",
+    "recommendation": "exclude_or_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  },
+  {
+    "source_id": "0586",
+    "source_name": "lever lying leg curl",
+    "source_equipment": "leverage machine",
+    "suggested_standard_action": "machine_lying_leg_curl",
+    "suggested_standard_equipment": "fixed_machine",
+    "issue_reason": "俯卧腿弯举胸前设备会被垫子压住/遮挡。",
+    "recommendation": "exclude_or_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  },
+  {
+    "source_id": "0602",
+    "source_name": "lever seated reverse fly",
+    "source_equipment": "leverage machine",
+    "suggested_standard_action": "machine_reverse_fly",
+    "suggested_standard_equipment": "fixed_machine",
+    "issue_reason": "反向飞鸟/胸托类容易被胸垫或器械挡住。",
+    "recommendation": "exclude_or_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  },
+  {
+    "source_id": "TBD",
+    "source_name": "skierg machine",
+    "source_equipment": "skierg machine",
+    "suggested_standard_action": "skierg",
+    "suggested_standard_equipment": "cardio_ski",
+    "issue_reason": "偏 CrossFit/高端功能区，普通健身房覆盖率不足。",
+    "recommendation": "exclude_or_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  },
+  {
+    "source_id": "TBD",
+    "source_name": "tire flip",
+    "source_equipment": "tire",
+    "suggested_standard_action": "tire_flip",
+    "suggested_standard_equipment": "functional_equipment",
+    "issue_reason": "轮胎类设备小众，不适合作为员工通用训练库。",
+    "recommendation": "exclude_or_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  },
+  {
+    "source_id": "TBD",
+    "source_name": "upper body ergometer",
+    "source_equipment": "upper body ergometer",
+    "suggested_standard_action": "upper_body_ergometer",
+    "suggested_standard_equipment": "cardio_arm",
+    "issue_reason": "偏康复/特殊有氧，不适合作为默认白名单。",
+    "recommendation": "exclude_or_later",
+    "source_repo": "https://github.com/hasaneyldrm/exercises-dataset",
+    "source_data_url": "https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/data/exercises.json"
+  }
+]

@@ -49,24 +49,31 @@ def _latest_result() -> dict:
 
 
 def _merge_weekly(results: dict) -> dict:
-    """Build /api/weekly from stored results (last 7 days)."""
+    """Build /api/weekly from stored results (Sunday–Saturday week)."""
+    from datetime import timedelta
     today = date.today()
+    # Find the Sunday that starts the current week
+    sun_offset = (today.weekday() + 1) % 7   # Mon=0…Sun=6 → offset 1…0
+    week_start = today - timedelta(days=sun_offset)
+
     day_labels, daily_sets = [], []
     total_sets = 0
     total_calories = 0
+    training_frequency = 0
 
-    for i in range(6, -1, -1):
-        d = today.replace(day=today.day - i) if today.day > i else today  # simple fallback
-        from datetime import timedelta
-        d = today - timedelta(days=6 - i)
+    for i in range(7):
+        d = week_start + timedelta(days=i)
         label = f"{d.month}/{d.day}"
         day_labels.append(label)
         r = results.get(d.isoformat(), {})
-        sets = r.get("daily", {}).get("completion_rate", 0) // 10 if r else 0
         kcal = r.get("daily", {}).get("calories", 0) if r else 0
+        dur  = r.get("daily", {}).get("duration_min", 0) if r else 0
+        sets = r.get("daily", {}).get("completion_rate", 0) // 10 if r else 0
         daily_sets.append(sets)
         total_sets += sets
         total_calories += kcal
+        if dur and dur > 0:
+            training_frequency += 1
 
     return {
         "total_sets": total_sets,
@@ -75,6 +82,7 @@ def _merge_weekly(results: dict) -> dict:
         "calories_trend_pct": 0,
         "daily_sets": daily_sets,
         "day_labels": day_labels,
+        "training_frequency": training_frequency,
     }
 
 

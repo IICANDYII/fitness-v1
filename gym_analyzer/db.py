@@ -128,15 +128,17 @@ def write_exercises(session_id: str, segments: list[dict],
         start_sec = float(seg.get("start_sec", 0))
         end_sec   = float(seg.get("end_sec", start_sec))
         seg_dur   = max(0.0, end_sec - start_sec)
+        confidence = float(seg.get("confidence", 0.85) or 0.85)
         if name not in agg:
             agg[name] = {"sets": sets, "reps": reps,
                          "start_sec": start_sec, "end_sec": end_sec,
-                         "total_duration": seg_dur}
+                         "total_duration": seg_dur, "confidence": confidence}
         else:
             agg[name]["sets"]           += sets
             agg[name]["reps"]            = max(agg[name]["reps"], reps)
             agg[name]["end_sec"]         = max(agg[name]["end_sec"], end_sec)
-            agg[name]["total_duration"] += seg_dur   # 累加各组实际时长，排除组间休息
+            agg[name]["total_duration"] += seg_dur
+            agg[name]["confidence"]      = max(agg[name]["confidence"], confidence)
 
     for name, a in agg.items():
         ts_start     = base_dt + timedelta(seconds=a["start_sec"])
@@ -146,11 +148,11 @@ def write_exercises(session_id: str, segments: list[dict],
             INSERT INTO exercise_execution
                 (user_id, session_id, exercise_name,
                  timestamp, end_time, duration_sec,
-                 sets, reps, tempo, rom)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                 sets, reps, tempo, rom, confidence)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """, (user_id, session_id, name,
               ts_start, ts_end, duration_sec,
-              a["sets"], a["reps"], None, None))
+              a["sets"], a["reps"], None, None, a.get("confidence", 0.85)))
 
 
 # ── biometric_stream ──────────────────────────────────────────────────────────
@@ -206,7 +208,7 @@ def load_hr_csv(csv_path: str, session_date: str) -> list[dict]:
 _FRONT = {"chest", "abdominals", "obliques", "front-shoulders",
           "biceps", "forearms", "quads", "calves", "traps"}
 _BACK  = {"lats", "lowerback", "hamstrings", "glutes",
-          "rear-shoulders", "triceps", "traps-middle"}
+          "rear-shoulders", "triceps", "traps"}
 
 
 def _build_source_data(primary: list[str], secondary: list[str]) -> dict:
@@ -222,6 +224,109 @@ def _build_source_data(primary: list[str], secondary: list[str]) -> dict:
             },
         }
     }
+
+
+def get_exercise_muscles(name_cn: str, cur=None) -> dict[str, list[str]]:
+    """Query primary/secondary SVG muscle IDs from exercises table by Chinese name.
+
+    Returns {"primary": [...], "secondary": [...]} or empty lists if not found.
+    Tries exact match first, then substring match.
+    """
+    close = False
+    if cur is None:
+        conn = get_conn()
+        cur = conn.cursor()
+        close = True
+    try:
+        cur.execute(
+            "SELECT source_data->'muscles' AS m FROM exercises WHERE name_cn = %s "
+            "ORDER BY CASE WHEN exercise_id NOT LIKE '%%\\_001' THEN 0 ELSE 1 END LIMIT 1",
+            (name_cn,),
+        )
+        row = cur.fetchone()
+        if not row:
+            cur.execute(
+                "SELECT source_data->'muscles' AS m FROM exercises "
+                "WHERE name_cn LIKE %s "
+                "ORDER BY CASE WHEN exercise_id NOT LIKE '%%\\_001' THEN 0 ELSE 1 END, LENGTH(name_cn) LIMIT 1",
+                (f'%{name_cn}%',),
+            )
+            row = cur.fetchone()
+        if not row or not row["m"]:
+            return {"primary": [], "secondary": []}
+        m = row["m"] if isinstance(row["m"], dict) else json.loads(row["m"])
+        fm = m.get("frontBodyMap", {})
+        bm = m.get("backBodyMap", {})
+        primary = list(dict.fromkeys(fm.get("text-mw-red", []) + bm.get("text-mw-red", [])))
+        secondary = list(dict.fromkeys(fm.get("text-mw-gray", []) + bm.get("text-mw-gray", [])))
+        return {"primary": primary, "secondary": secondary}
+    finally:
+        if close:
+            conn.close()
+
+
+def get_exercise_met(name_cn: str, cur=None) -> float:
+    """Query estimated MET value from exercises table by Chinese name.
+
+    Returns the MET value or 4.0 as default (moderate resistance training).
+    """
+    close = False
+    if cur is None:
+        conn = get_conn()
+        cur = conn.cursor()
+        close = True
+    try:
+        cur.execute(
+            "SELECT estimated_mets FROM exercises WHERE name_cn = %s "
+            "AND estimated_mets IS NOT NULL "
+            "ORDER BY CASE WHEN exercise_id NOT LIKE '%%\\_001' THEN 0 ELSE 1 END LIMIT 1",
+            (name_cn,),
+        )
+        row = cur.fetchone()
+        if not row:
+            cur.execute(
+                "SELECT estimated_mets FROM exercises "
+                "WHERE name_cn LIKE %s AND estimated_mets IS NOT NULL "
+                "ORDER BY CASE WHEN exercise_id NOT LIKE '%%\\_001' THEN 0 ELSE 1 END, LENGTH(name_cn) LIMIT 1",
+                (f'%{name_cn}%',),
+            )
+            row = cur.fetchone()
+        return float(row["estimated_mets"]) if row and row["estimated_mets"] else 4.0
+    finally:
+        if close:
+            conn.close()
+
+
+def get_exercise_met_batch(names: list[str]) -> dict[str, float]:
+    """Batch query MET values for multiple exercise names. Returns {name_cn: met}."""
+    if not names:
+        return {}
+    conn = get_conn()
+    cur = conn.cursor()
+    try:
+        cur.execute("""
+            SELECT DISTINCT ON (name_cn) name_cn, estimated_mets
+            FROM exercises
+            WHERE name_cn = ANY(%s) AND estimated_mets IS NOT NULL
+            ORDER BY name_cn,
+                     CASE WHEN exercise_id NOT LIKE '%%\\_001' THEN 0 ELSE 1 END,
+                     exercise_id
+        """, (list(set(names)),))
+        result = {r["name_cn"]: float(r["estimated_mets"]) for r in cur.fetchall()}
+        missing = [n for n in names if n not in result]
+        for name in missing:
+            cur.execute(
+                "SELECT estimated_mets FROM exercises "
+                "WHERE name_cn LIKE %s AND estimated_mets IS NOT NULL "
+                "ORDER BY CASE WHEN exercise_id NOT LIKE '%%\\_001' THEN 0 ELSE 1 END, LENGTH(name_cn) LIMIT 1",
+                (f'%{name}%',),
+            )
+            row = cur.fetchone()
+            if row and row["estimated_mets"]:
+                result[name] = float(row["estimated_mets"])
+        return result
+    finally:
+        conn.close()
 
 
 def upsert_exercises(exercise_names: list[str]) -> int:
@@ -261,6 +366,137 @@ def upsert_exercises(exercise_names: list[str]) -> int:
     finally:
         conn.close()
     return inserted
+
+
+# ── 批量导入 exercise_mapping_v1.json + SVG 肌群映射 ────────────────────────
+
+_EXERCISE_MUSCLES_SVG: dict[str, dict[str, list[str]]] = {
+    "跑步机":           {"primary": ["quads", "hamstrings", "calves"], "secondary": ["glutes"]},
+    "椭圆机":           {"primary": ["quads", "hamstrings"], "secondary": ["glutes", "calves"]},
+    "登阶机/爬楼机":    {"primary": ["quads", "glutes", "calves"], "secondary": ["hamstrings"]},
+    "健身车/动感单车":   {"primary": ["quads", "hamstrings"], "secondary": ["calves", "glutes"]},
+    "交叉训练车":       {"primary": ["quads", "hamstrings"], "secondary": ["glutes", "calves"]},
+    "高位下拉":         {"primary": ["lats"], "secondary": ["biceps", "rear-shoulders"]},
+    "坐姿绳索划船":     {"primary": ["lats", "traps"], "secondary": ["biceps", "rear-shoulders"]},
+    "绳索下压":         {"primary": ["triceps"], "secondary": []},
+    "绳索夹胸":         {"primary": ["chest"], "secondary": []},
+    "绳索侧平举":       {"primary": ["front-shoulders"], "secondary": ["rear-shoulders"]},
+    "绳索过顶臂屈伸":   {"primary": ["triceps"], "secondary": []},
+    "绳索弯举":         {"primary": ["biceps"], "secondary": ["forearms"]},
+    "固定器械推胸":     {"primary": ["chest"], "secondary": ["front-shoulders", "triceps"]},
+    "蝴蝶机夹胸":       {"primary": ["chest"], "secondary": []},
+    "固定器械推肩":     {"primary": ["front-shoulders"], "secondary": ["triceps", "traps"]},
+    "固定器械侧平举":   {"primary": ["front-shoulders"], "secondary": ["rear-shoulders"]},
+    "坐姿腿屈伸":       {"primary": ["quads"], "secondary": []},
+    "坐姿腿弯举":       {"primary": ["hamstrings"], "secondary": []},
+    "腿举":             {"primary": ["quads", "glutes"], "secondary": ["hamstrings"]},
+    "固定器械提踵":     {"primary": ["calves"], "secondary": []},
+    "辅助引体向上":     {"primary": ["lats"], "secondary": ["biceps", "rear-shoulders"]},
+    "辅助双杠臂屈伸":   {"primary": ["chest", "triceps"], "secondary": ["front-shoulders"]},
+    "固定器械坐姿划船": {"primary": ["lats", "traps"], "secondary": ["biceps", "rear-shoulders"]},
+    "史密斯深蹲":       {"primary": ["quads", "glutes"], "secondary": ["hamstrings", "lowerback"]},
+    "史密斯硬拉":       {"primary": ["hamstrings", "lowerback"], "secondary": ["glutes", "traps", "lats"]},
+    "史密斯推肩":       {"primary": ["front-shoulders"], "secondary": ["triceps", "traps"]},
+    "史密斯卧推":       {"primary": ["chest"], "secondary": ["front-shoulders", "triceps"]},
+    "史密斯上斜卧推":   {"primary": ["chest"], "secondary": ["front-shoulders", "triceps"]},
+    "杠铃硬拉":         {"primary": ["hamstrings", "lowerback"], "secondary": ["glutes", "traps", "lats"]},
+    "杠铃深蹲":         {"primary": ["quads", "glutes"], "secondary": ["hamstrings", "lowerback"]},
+    "杠铃俯身划船":     {"primary": ["lats", "traps"], "secondary": ["biceps", "lowerback"]},
+    "杠铃弯举":         {"primary": ["biceps"], "secondary": ["forearms"]},
+    "杠铃卧推":         {"primary": ["chest"], "secondary": ["front-shoulders", "triceps"]},
+    "杠铃上斜卧推":     {"primary": ["chest"], "secondary": ["front-shoulders", "triceps"]},
+    "杠铃推举":         {"primary": ["front-shoulders"], "secondary": ["triceps", "traps"]},
+    "哑铃弯举":         {"primary": ["biceps"], "secondary": ["forearms"]},
+    "哑铃侧平举":       {"primary": ["front-shoulders"], "secondary": ["rear-shoulders"]},
+    "哑铃推肩":         {"primary": ["front-shoulders"], "secondary": ["triceps", "traps"]},
+    "哑铃深蹲":         {"primary": ["quads", "glutes"], "secondary": ["hamstrings"]},
+    "哑铃硬拉":         {"primary": ["hamstrings", "lowerback"], "secondary": ["glutes", "traps"]},
+    "哑铃罗马尼亚硬拉": {"primary": ["hamstrings", "glutes"], "secondary": ["lowerback"]},
+    "哑铃上台阶":       {"primary": ["quads", "glutes"], "secondary": ["hamstrings"]},
+    "哑铃提踵":         {"primary": ["calves"], "secondary": []},
+    "哑铃卧推":         {"primary": ["chest"], "secondary": ["front-shoulders", "triceps"]},
+    "引体向上":         {"primary": ["lats"], "secondary": ["biceps", "rear-shoulders"]},
+    "俯卧撑":           {"primary": ["chest", "triceps"], "secondary": ["front-shoulders"]},
+    "箭步蹲":           {"primary": ["quads", "glutes"], "secondary": ["hamstrings"]},
+    "自重深蹲":         {"primary": ["quads", "glutes"], "secondary": ["hamstrings"]},
+    "双杠臂屈伸":       {"primary": ["chest", "triceps"], "secondary": ["front-shoulders"]},
+}
+
+
+_EXERCISE_METS: dict[str, float] = {
+    "跑步机": 8.3, "椭圆机": 5.0, "登阶机/爬楼机": 7.0,
+    "健身车/动感单车": 6.8, "交叉训练车": 5.0,
+    "高位下拉": 4.5, "坐姿绳索划船": 4.5, "绳索下压": 3.5,
+    "绳索夹胸": 3.5, "绳索侧平举": 3.0, "绳索过顶臂屈伸": 3.5,
+    "绳索弯举": 3.0,
+    "固定器械推胸": 5.0, "蝴蝶机夹胸": 3.5, "固定器械推肩": 4.5,
+    "固定器械侧平举": 3.0, "坐姿腿屈伸": 3.5, "坐姿腿弯举": 3.5,
+    "腿举": 5.0, "固定器械提踵": 3.0, "辅助引体向上": 5.0,
+    "辅助双杠臂屈伸": 5.0, "固定器械坐姿划船": 4.5,
+    "史密斯深蹲": 6.0, "史密斯硬拉": 6.0, "史密斯推肩": 4.5,
+    "史密斯卧推": 5.5, "史密斯上斜卧推": 5.5,
+    "杠铃硬拉": 6.0, "杠铃深蹲": 6.0, "杠铃俯身划船": 5.0,
+    "杠铃弯举": 3.0, "杠铃卧推": 5.5, "杠铃上斜卧推": 5.5,
+    "杠铃推举": 5.0,
+    "哑铃弯举": 3.0, "哑铃侧平举": 3.0, "哑铃推肩": 4.5,
+    "哑铃深蹲": 5.5, "哑铃硬拉": 5.5, "哑铃罗马尼亚硬拉": 5.5,
+    "哑铃上台阶": 5.0, "哑铃提踵": 3.0, "哑铃卧推": 5.5,
+    "引体向上": 8.0, "俯卧撑": 3.8, "箭步蹲": 5.0,
+    "自重深蹲": 5.0, "双杠臂屈伸": 5.5,
+}
+
+
+def import_exercise_mapping(json_path: str | Path | None = None) -> int:
+    """Import exercise_mapping_v1.json into the exercises table with SVG muscle data.
+
+    Merges exercise metadata from the JSON with SVG muscle IDs from _EXERCISE_MUSCLES_SVG.
+    Returns the number of rows upserted.
+    """
+    if json_path is None:
+        json_path = Path(__file__).parent / "exercises_data" / "exercise_mapping_v1.json"
+    json_path = Path(json_path)
+
+    with open(json_path, "r", encoding="utf-8") as f:
+        mapping = json.load(f)
+
+    conn = get_conn()
+    cur = conn.cursor()
+    count = 0
+    try:
+        for exercise_id, info in mapping.items():
+            name_cn = info.get("product_action_cn", "")
+            equipment = info.get("standard_equipment", "")
+            training_part = info.get("training_part_cn", "")
+            action_pattern = info.get("action_pattern", "")
+            level = info.get("first_person_level_min", "")
+
+            muscles = _EXERCISE_MUSCLES_SVG.get(name_cn, {"primary": [], "secondary": []})
+            source_data = _build_source_data(muscles["primary"], muscles.get("secondary", []))
+            source_data["equipment"] = equipment
+            source_data["training_part"] = training_part
+
+            met_value = _EXERCISE_METS.get(name_cn)
+
+            cur.execute("""
+                INSERT INTO exercises (exercise_id, name, name_cn, source_data,
+                                      movement_pattern, difficulty, estimated_mets)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (exercise_id) DO UPDATE
+                    SET name_cn          = EXCLUDED.name_cn,
+                        source_data      = EXCLUDED.source_data,
+                        movement_pattern = EXCLUDED.movement_pattern,
+                        difficulty       = EXCLUDED.difficulty,
+                        estimated_mets   = COALESCE(EXCLUDED.estimated_mets, exercises.estimated_mets)
+            """, (exercise_id, exercise_id.replace("_", " "), name_cn,
+                  json.dumps(source_data, ensure_ascii=False),
+                  action_pattern, level, met_value))
+            count += cur.rowcount
+
+        conn.commit()
+        print(f"  [import] {count} exercises upserted into DB")
+    finally:
+        conn.close()
+    return count
 
 
 # ── Main tool function ────────────────────────────────────────────────────────
