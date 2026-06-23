@@ -3,7 +3,7 @@ recognizer.py - 两阶段 LLM 识别
 
 Phase 1：粗区间识别（period_recognize）
   - 全部窗口拼图 + 光流摘要 → 一次调用
-  - 输出：segments（EXERCISE / REST / TRANSITION）
+  - 输出：segments（EXERCISE / REST）
 
 Phase 2：运动精细识别（exercise_recognize）
   - 每个 EXERCISE 区间独立调用（可并发）
@@ -756,15 +756,15 @@ def run_phase1(
         f"共 {len(frame_metas)} 帧 (1fps)，总时长 {total_dur:.0f}s ({sec_to_hhmmss(total_dur)})。\n\n"
         f"按时间顺序分成 {len(grids)} 个窗口，每个窗口一张网格图 + 对应光流摘要。\n"
         f"网格读取顺序：从左到右、从上到下。\n\n"
-        f"请综合所有窗口的关键帧画面与光流信息，将整段视频划分为 EXERCISE / REST / TRANSITION，\n"
+        f"请综合所有窗口的关键帧画面与光流信息，将整段视频划分为 EXERCISE / REST 两种状态，\n"
         f"并在每个时间段上标注用户当前最可能交互的器材名称。\n\n"
         f"关键规则：\n"
         f"- 第一人称胸前相机，用户本人不完整出现在画面中\n"
         f"- 画面中其他人、镜子中其他人均非分析对象\n"
         f"- 仅关注用户双手、正在接触的器械、视角运动变化\n"
         f"- 用户双手与器械持续交互 + 光流显示周期性运动 → EXERCISE\n"
-        f"- 不同器械上的运动必须拆分为不同 EXERCISE 段（如跑步机 → 深蹲架 = 两段独立 EXERCISE，中间有 TRANSITION）\n"
-        f"- 器械切换、行走、调整位置 → TRANSITION\n"
+        f"- 不同器械上的运动必须拆分为不同 EXERCISE 段（如跑步机 → 深蹲架 = 两段独立 EXERCISE，中间有 REST）\n"
+        f"- 器械切换、行走、调整位置、组间休息 → 全部归为 REST\n"
         f"- 每个 segment 都必须填写 equipment 字段（当前最可能交互的器材），REST 段也不例外\n"
         f"- 相同器材的连续使用区间（含组间休息）视为一个器材交互周期\n"
     )
@@ -791,7 +791,7 @@ def run_phase1(
         f"\n\n请输出覆盖 00:00:00 ~ {sec_to_hhmmss(total_dur)} 的完整时间线，"
         f"严格按 JSON 格式，不要包含 Markdown 代码块或注释：\n"
         f'{{"segments": [{{"start_time": "HH:MM:SS", "end_time": "HH:MM:SS", '
-        f'"state": "EXERCISE|REST|TRANSITION", "confidence": 0.0~1.0, '
+        f'"state": "EXERCISE|REST", "confidence": 0.0~1.0, '
         f'"reason": "判断依据", '
         f'"equipment": "器材英文名或UNKNOWN", '
         f'"posture": "standing|seated|supine|prone|bending"'
@@ -893,14 +893,14 @@ def _run_phase1_single_chunk(
         f"时间范围 {sec_to_hhmmss(chunk_start)} ~ {sec_to_hhmmss(chunk_end)}，"
         f"包含 {len(grids_chunk)} 个窗口。\n"
         f"网格读取顺序：从左到右、从上到下。\n\n"
-        f"请将本段时间范围内的视频划分为 EXERCISE / REST / TRANSITION。\n\n"
+        f"请将本段时间范围内的视频划分为 EXERCISE / REST 两种状态。\n\n"
         f"关键规则：\n"
         f"- 第一人称胸前相机，用户本人不完整出现在画面中\n"
         f"- 画面中其他人、镜子中其他人均非分析对象\n"
         f"- 仅关注用户双手、正在接触的器械、视角运动变化\n"
         f"- 用户双手与器械持续交互 + 光流显示周期性运动 → EXERCISE\n"
         f"- 不同器械上的运动必须拆分为不同 EXERCISE 段\n"
-        f"- 器械切换、行走、调整位置 → TRANSITION\n"
+        f"- 器械切换、行走、调整位置、组间休息 → 全部归为 REST\n"
     )
     if imu_chunk_text:
         intro += f"\n\n{imu_chunk_text}\n"
@@ -925,8 +925,12 @@ def _run_phase1_single_chunk(
         f"\n\n请输出覆盖 {sec_to_hhmmss(chunk_start)} ~ {sec_to_hhmmss(chunk_end)} 的时间线，"
         f"严格按 JSON 格式，不要包含 Markdown 代码块或注释：\n"
         f'{{"segments": [{{"start_time": "HH:MM:SS", "end_time": "HH:MM:SS", '
-        f'"state": "EXERCISE|REST|TRANSITION", "confidence": 0.0~1.0, '
-        f'"reason": "判断依据"}}]}}'
+        f'"state": "EXERCISE|REST", "confidence": 0.0~1.0, '
+        f'"reason": "判断依据", '
+        f'"equipment": "器材英文名或UNKNOWN", '
+        f'"posture": "standing|seated|supine|prone|bending"'
+        f'}}], '
+        f'"equipment_timeline": [{{"time": "HH:MM:SS", "equipment": "器材名", "event": "开始使用|切换到新器材"}}]}}'
     )
     user_content.append({"type": "text", "text": output_fmt})
 

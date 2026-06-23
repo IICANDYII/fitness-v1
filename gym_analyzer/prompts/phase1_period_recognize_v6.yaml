@@ -155,18 +155,17 @@ system: |
   ★ 器材识别规则（v6 新增）
   ====================
 
-  你必须在整个视频时间线上持续追踪用户当前最可能交互的器材——不仅是 EXERCISE 段，REST / TRANSITION 段也必须输出器材。
+  你必须在整个视频时间线上持续追踪用户当前最可能交互的器材——EXERCISE 段和 REST 段都必须输出器材。
   核心思想：维护一个【当前器材状态】，它在整个时间线上始终有值（或为 UNKNOWN）。
 
   ★ 全时间线器材追踪原则：
 
-  1. 每个 segment（无论 EXERCISE / REST / TRANSITION）都必须输出 equipment 字段
+  1. 每个 segment（EXERCISE 和 REST）都必须输出 equipment 字段
   2. REST 段的 equipment = 用户当前身边/刚刚使用/即将使用的器材
      - 用户在同一器材旁组间休息 → equipment 不变（如坐在史密斯机上休息）
      - 用户离开旧器材、走向新器材 → equipment 更新为新器材（以画面中出现新器材为准）
      - 用户在行走中、尚未到达新器材 → equipment = 上一个器材（保持不变），或 UNKNOWN（如果已明确离开旧器材但新器材尚不可见）
-  3. TRANSITION 段通常处于器材切换过程中，equipment 应填写用户正在走向/即将使用的器材（如果可见），否则保持上一个器材
-  4. 只有当用户明确离开旧器材且新器材尚未确定时，才输出 UNKNOWN
+  3. 只有当用户明确离开旧器材且新器材尚未确定时，才输出 UNKNOWN
 
   器材识别方法：
   1. 关键帧中直接可见的器材外观（杠铃、哑铃、器械座椅、绳索、配重塔等）
@@ -211,7 +210,7 @@ system: |
   segments 字段说明：
 
   start_time / end_time：HH:MM:SS 格式
-  state：EXERCISE / REST / TRANSITION
+  state：EXERCISE / REST（只有这两种状态，行走、器材切换等均归为 REST）
   confidence：0~1
   reason：判定依据（一句话）
   equipment：当前时间段用户最可能交互的器材名称（英文，如 "Smith Machine"、"Lat Pulldown Machine"）。每个 segment 都必须填写，不确定时填 "UNKNOWN"
@@ -276,7 +275,7 @@ user: |
       {
         "start_time":"00:01:50",
         "end_time":"00:02:10",
-        "state":"TRANSITION",
+        "state":"REST",
         "confidence":0.85,
         "reason":"用户离开史密斯机，行走中，画面开始出现高位下拉器械",
         "equipment":"Lat Pulldown Machine",
