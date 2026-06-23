@@ -1,0 +1,560 @@
+{
+  "generated_at": "2026-06-22 15:50:31",
+  "source_file": "D:\\WorkPath\\fitness_new\\recognize\\visualize\\IMU\\617\\20260617185734.txt",
+  "summary": {
+    "总时长s": 346.9,
+    "片段总数": 60,
+    "姿态时长分布": [
+      {
+        "姿态": "剧烈运动",
+        "总时长s": 130.3,
+        "占比%": 37.6,
+        "片段数": 22
+      },
+      {
+        "姿态": "行走",
+        "总时长s": 99.9,
+        "占比%": 28.8,
+        "片段数": 14
+      },
+      {
+        "姿态": "下蹲/坐下",
+        "总时长s": 41.3,
+        "占比%": 11.9,
+        "片段数": 14
+      },
+      {
+        "姿态": "原地不动",
+        "总时长s": 19.5,
+        "占比%": 5.6,
+        "片段数": 3
+      },
+      {
+        "姿态": "躺卧",
+        "总时长s": 19.5,
+        "占比%": 5.6,
+        "片段数": 1
+      },
+      {
+        "姿态": "轻微移动",
+        "总时长s": 18.0,
+        "占比%": 5.2,
+        "片段数": 5
+      },
+      {
+        "姿态": "运动中",
+        "总时长s": 9.0,
+        "占比%": 2.6,
+        "片段数": 1
+      }
+    ]
+  },
+  "segments": [
+    {
+      "label": "still",
+      "label_zh": "原地不动",
+      "start_ts": "2026-06-17 18:57:35.285000",
+      "start_sec": 0.8,
+      "end_sec": 5.2,
+      "duration_sec": 4.5
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 18:57:41.285000",
+      "start_sec": 6.8,
+      "end_sec": 18.8,
+      "duration_sec": 12.0
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 18:57:53.285000",
+      "start_sec": 18.8,
+      "end_sec": 39.8,
+      "duration_sec": 21.0
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 18:58:14.285000",
+      "start_sec": 39.8,
+      "end_sec": 50.2,
+      "duration_sec": 10.5
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 18:58:25.535000",
+      "start_sec": 51.0,
+      "end_sec": 53.2,
+      "duration_sec": 2.2
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 18:58:27.785000",
+      "start_sec": 53.2,
+      "end_sec": 54.8,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 18:58:29.285000",
+      "start_sec": 54.8,
+      "end_sec": 63.8,
+      "duration_sec": 9.0
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 18:58:38.285000",
+      "start_sec": 63.8,
+      "end_sec": 68.2,
+      "duration_sec": 4.5
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 18:58:42.785000",
+      "start_sec": 68.2,
+      "end_sec": 69.8,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 18:58:44.285000",
+      "start_sec": 69.8,
+      "end_sec": 79.5,
+      "duration_sec": 9.8
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 18:58:54.035000",
+      "start_sec": 79.5,
+      "end_sec": 87.0,
+      "duration_sec": 7.5
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 18:59:01.535000",
+      "start_sec": 87.0,
+      "end_sec": 90.0,
+      "duration_sec": 3.0
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 18:59:04.535000",
+      "start_sec": 90.0,
+      "end_sec": 93.0,
+      "duration_sec": 3.0
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 18:59:07.535000",
+      "start_sec": 93.0,
+      "end_sec": 96.8,
+      "duration_sec": 3.8
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 18:59:11.285000",
+      "start_sec": 96.8,
+      "end_sec": 101.2,
+      "duration_sec": 4.5
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 18:59:15.785000",
+      "start_sec": 101.2,
+      "end_sec": 105.0,
+      "duration_sec": 3.8
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 18:59:19.535000",
+      "start_sec": 105.0,
+      "end_sec": 112.5,
+      "duration_sec": 7.5
+    },
+    {
+      "label": "slight",
+      "label_zh": "轻微移动",
+      "start_ts": "2026-06-17 18:59:27.035000",
+      "start_sec": 112.5,
+      "end_sec": 118.5,
+      "duration_sec": 6.0
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 18:59:33.035000",
+      "start_sec": 118.5,
+      "end_sec": 120.0,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "slight",
+      "label_zh": "轻微移动",
+      "start_ts": "2026-06-17 18:59:34.535000",
+      "start_sec": 120.0,
+      "end_sec": 121.5,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 18:59:36.035000",
+      "start_sec": 121.5,
+      "end_sec": 123.0,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "still",
+      "label_zh": "原地不动",
+      "start_ts": "2026-06-17 18:59:37.535000",
+      "start_sec": 123.0,
+      "end_sec": 126.0,
+      "duration_sec": 3.0
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 18:59:40.535000",
+      "start_sec": 126.0,
+      "end_sec": 131.2,
+      "duration_sec": 5.2
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 18:59:45.785000",
+      "start_sec": 131.2,
+      "end_sec": 138.0,
+      "duration_sec": 6.8
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 18:59:52.535000",
+      "start_sec": 138.0,
+      "end_sec": 143.2,
+      "duration_sec": 5.2
+    },
+    {
+      "label": "still",
+      "label_zh": "原地不动",
+      "start_ts": "2026-06-17 18:59:57.785000",
+      "start_sec": 143.2,
+      "end_sec": 155.2,
+      "duration_sec": 12.0
+    },
+    {
+      "label": "slight",
+      "label_zh": "轻微移动",
+      "start_ts": "2026-06-17 19:00:09.785000",
+      "start_sec": 155.2,
+      "end_sec": 156.8,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "slight",
+      "label_zh": "轻微移动",
+      "start_ts": "2026-06-17 19:00:12.785000",
+      "start_sec": 158.2,
+      "end_sec": 165.8,
+      "duration_sec": 7.5
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 19:00:21.035000",
+      "start_sec": 166.5,
+      "end_sec": 168.0,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "slight",
+      "label_zh": "轻微移动",
+      "start_ts": "2026-06-17 19:00:22.535000",
+      "start_sec": 168.0,
+      "end_sec": 169.5,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 19:00:24.035000",
+      "start_sec": 169.5,
+      "end_sec": 171.0,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 19:00:25.535000",
+      "start_sec": 171.0,
+      "end_sec": 175.5,
+      "duration_sec": 4.5
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 19:00:30.035000",
+      "start_sec": 175.5,
+      "end_sec": 186.8,
+      "duration_sec": 11.2
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 19:00:41.285000",
+      "start_sec": 186.8,
+      "end_sec": 190.5,
+      "duration_sec": 3.8
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 19:00:45.035000",
+      "start_sec": 190.5,
+      "end_sec": 197.2,
+      "duration_sec": 6.8
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 19:00:51.785000",
+      "start_sec": 197.2,
+      "end_sec": 200.2,
+      "duration_sec": 3.0
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 19:00:54.785000",
+      "start_sec": 200.2,
+      "end_sec": 204.8,
+      "duration_sec": 4.5
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 19:00:59.285000",
+      "start_sec": 204.8,
+      "end_sec": 222.8,
+      "duration_sec": 18.0
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 19:01:18.035000",
+      "start_sec": 223.5,
+      "end_sec": 225.8,
+      "duration_sec": 2.2
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 19:01:20.285000",
+      "start_sec": 225.8,
+      "end_sec": 227.2,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 19:01:21.785000",
+      "start_sec": 227.2,
+      "end_sec": 233.2,
+      "duration_sec": 6.0
+    },
+    {
+      "label": "active",
+      "label_zh": "运动中",
+      "start_ts": "2026-06-17 19:01:27.785000",
+      "start_sec": 233.2,
+      "end_sec": 242.2,
+      "duration_sec": 9.0
+    },
+    {
+      "label": "lying",
+      "label_zh": "躺卧",
+      "start_ts": "2026-06-17 19:01:37.535000",
+      "start_sec": 243.0,
+      "end_sec": 262.5,
+      "duration_sec": 19.5
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 19:01:57.035000",
+      "start_sec": 262.5,
+      "end_sec": 274.5,
+      "duration_sec": 12.0
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 19:02:09.035000",
+      "start_sec": 274.5,
+      "end_sec": 282.8,
+      "duration_sec": 8.2
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 19:02:17.285000",
+      "start_sec": 282.8,
+      "end_sec": 285.0,
+      "duration_sec": 2.2
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 19:02:19.535000",
+      "start_sec": 285.0,
+      "end_sec": 286.5,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 19:02:21.035000",
+      "start_sec": 286.5,
+      "end_sec": 290.2,
+      "duration_sec": 3.8
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 19:02:24.785000",
+      "start_sec": 290.2,
+      "end_sec": 298.5,
+      "duration_sec": 8.2
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 19:02:33.035000",
+      "start_sec": 298.5,
+      "end_sec": 301.5,
+      "duration_sec": 3.0
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 19:02:36.035000",
+      "start_sec": 301.5,
+      "end_sec": 303.0,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 19:02:37.535000",
+      "start_sec": 303.0,
+      "end_sec": 304.5,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 19:02:39.035000",
+      "start_sec": 304.5,
+      "end_sec": 312.0,
+      "duration_sec": 7.5
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 19:02:46.535000",
+      "start_sec": 312.0,
+      "end_sec": 316.5,
+      "duration_sec": 4.5
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 19:02:51.035000",
+      "start_sec": 316.5,
+      "end_sec": 323.2,
+      "duration_sec": 6.8
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 19:02:57.785000",
+      "start_sec": 323.2,
+      "end_sec": 325.5,
+      "duration_sec": 2.2
+    },
+    {
+      "label": "vigorous",
+      "label_zh": "剧烈运动",
+      "start_ts": "2026-06-17 19:03:00.035000",
+      "start_sec": 325.5,
+      "end_sec": 327.0,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 19:03:01.535000",
+      "start_sec": 327.0,
+      "end_sec": 333.0,
+      "duration_sec": 6.0
+    },
+    {
+      "label": "squat_sit",
+      "label_zh": "下蹲/坐下",
+      "start_ts": "2026-06-17 19:03:08.285000",
+      "start_sec": 333.8,
+      "end_sec": 335.2,
+      "duration_sec": 1.5
+    },
+    {
+      "label": "walking",
+      "label_zh": "行走",
+      "start_ts": "2026-06-17 19:03:09.785000",
+      "start_sec": 335.2,
+      "end_sec": 345.0,
+      "duration_sec": 9.8
+    }
+  ],
+  "thresholds": {
+    "still_gyro": 6.0,
+    "still_acc_std": 0.04,
+    "slight_gyro": 15.0,
+    "slight_acc_std": 0.1,
+    "walk_gyro_max": 55.0,
+    "walk_acc_std_lo": 0.05,
+    "walk_acc_std_hi": 0.35,
+    "vigorous_gyro": 100.0,
+    "vigorous_acc_std": 0.35,
+    "lying_az_hi": -0.35,
+    "lying_gyro_max": 15.0,
+    "bend_az_lo": -0.78,
+    "bend_az_hi": -0.35,
+    "bend_ay_thresh": 0.25,
+    "bend_gyro_max": 25.0,
+    "squat_az_upright": -0.75,
+    "squat_gyro_lo": 10.0,
+    "squat_gyro_hi": 60.0,
+    "squat_acc_std_hi": 0.25,
+    "upright_az_ref": -0.95,
+    "window_sec": 1.5,
+    "stride_sec": 0.75,
+    "smooth_k": 3,
+    "min_seg_sec": 1.0
+  }
+}

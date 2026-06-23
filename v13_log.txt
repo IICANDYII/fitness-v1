@@ -1,0 +1,1898 @@
+﻿�ҵ� 13 ����ƵĿ¼��['1', '2', '3', '4', '8', '9', '����-������', '�ž���-2026.06.11', '�ֱ�-��-���', '��-������', '��-��-������', '�米-Ҷ��', '��-�ſ�']
+
+
+######################################################################
+# [1/13] 1
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\1
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\1
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\1
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\1
+֡����291  ʱ����00:04:50
+Phase 2 ��������4
+============================================================
+
+[IMU] δ�ҵ� IMU_data.txt����������������
+[optical_flow] ʹ�û��棺290 ֡�ԣ�D:\WorkPath\fitness_new\recognize\visualize\result\shared\1\optical_flow.json��
+[Step 2] ����ʹ�� shared ���棺D:\WorkPath\fitness_new\recognize\visualize\result\shared\1\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��291 ֡ �� 5 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  281 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  286 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  277 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  304 KB
+[stitcher]   ���� 005  04:00 �� 04:50  (51 ֡)  7��8  255 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 5 ��ͼƬ
+  ��Ӧ����: 1255 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\1\period_result.json
+  Phase 1 ���: 7 ��, ���� EXERCISE 3 ��
+    00:00:00 �� 00:00:43  TRANSITION  conf=0.9  �û����������߲����뽡�������󿿽������������˶���е��
+    00:00:44 �� 00:02:55  EXERCISE  conf=0.95  �û���������е�ϳ����˶���������ʾ�ȶ�����Ļ�ӽ��ҹ���ǿ�ȳ������ڸ�λ��
+    00:02:56 �� 00:03:31  TRANSITION  conf=0.85  �û��뿪������������е��֮�����߲�Ѱ����һ��ѵ��λ�á�
+    00:03:32 �� 00:04:09  EXERCISE  conf=0.9  �û�����׼�/ʷ��˹��������ѵ����������ʾ���Ե����������˶�ģʽ��
+    00:04:10 �� 00:04:27  TRANSITION  conf=0.85  �û�������ǰ����ϰ���ɿ���е���ƶ�����һ̨����ѵ����е��
+    00:04:28 �� 00:04:41  EXERCISE  conf=0.9  �û�˫��������е�ֱ���������ʾ����ǿ�ȵĴ�ֱ�����˶���
+    00:04:42 �� 00:04:50  TRANSITION  conf=0.9  ѵ���������û��ɿ���е����ʼ�ڳ��������ߡ�
+  �� 7 �����䣬���� 3 �� EXERCISE
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 3 �� EXERCISE �δ�ʶ�𣨲���: 4��
+
+  ���� exercise_001: 00:00:44 ~ 00:02:55 (131s)
+    [exercise_001] ��չȡ֡��Χ: 00:00:29 ~ 00:03:10
+
+  ���� exercise_002: 00:03:32 ~ 00:04:09 (37s)
+    [exercise_002] ��չȡ֡��Χ: 00:03:17 ~ 00:04:24
+
+  ���� exercise_003: 00:04:28 ~ 00:04:41 (13s)
+    [exercise_003] ��չȡ֡��Χ: 00:04:13 ~ 00:04:50
+    [exercise_003] ƴͼ: 38 ֡, 7��6, 193 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ƴͼ: 68 ֡, 7��10, 320 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ƴͼ: 162 ֡, 7��24, 796 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ��Ӧ����: 674 �ַ�
+    [exercise_003] ��Ӧ����: 665 �ַ�
+    [exercise_001] ��Ӧ����: 688 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\1\exercise_result.json
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\1\period_result_adjusted.json
+
+  Phase 2 ���: 3 �� EXERCISE, �������� 3 ��
+
+============================================================
+��ɣ���ʱ 63.1s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\1\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\1\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\1\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\1\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\1\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\1\mid_result
+EXERCISE ʶ������
+  00:00:44��00:02:55  �ܲ��� / �ܲ���  [treadmill_walk_run]  1 ��  conf=0.95
+  00:03:32��00:04:09  ʷ��˹�� / ʷ��˹���  [smith_squat]  1 ��  conf=0.95
+  00:04:28��00:04:41  ���ż� / ��������  [cable_chest_fly]  1 ��  conf=0.95
+============================================================
+
+
+######################################################################
+# [2/13] 2
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\2
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\2
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\2
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\2
+֡����624  ʱ����00:10:23
+Phase 2 ��������4
+============================================================
+
+[IMU] δ�ҵ� IMU_data.txt����������������
+[optical_flow] ʹ�û��棺623 ֡�ԣ�D:\WorkPath\fitness_new\recognize\visualize\result\shared\2\optical_flow.json��
+[Step 2] ����ʹ�� shared ���棺D:\WorkPath\fitness_new\recognize\visualize\result\shared\2\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��624 ֡ �� 11 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  322 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  374 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  381 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  355 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  298 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  281 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  294 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  257 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  275 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  379 KB
+[stitcher]   ���� 011  10:00 �� 10:23  (24 ֡)  7��4  147 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 11 ��ͼƬ
+  ��Ӧ����: 3598 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\2\period_result.json
+  Phase 1 ���: 21 ��, ���� EXERCISE 9 ��
+    00:00:00 �� 00:01:15  TRANSITION  conf=0.85  �û��ڽ���������߲�Ѱ����е���ڼ���ʷ��˹���Խ��ж��ݵ����ͽ�����
+    00:01:16 �� 00:01:38  EXERCISE  conf=0.95  ˫����ס��λ�����˲���������������������������ʾ���Ե����º�����λ�ơ�
+    00:01:39 �� 00:01:59  REST  conf=0.9  �û�ͣ������е����Ϣ���۲���Χ����������ǿ�Ƚ��͡�
+    00:02:00 �� 00:02:29  EXERCISE  conf=0.95  �ٴν��и�λ�����˶���˫������е���������ҹ�������������ģʽ��
+    00:02:30 �� 00:03:15  TRANSITION  conf=0.9  �뿪��ǰ��е����ѵ�����ƶ���Ѱ����һ��ѵ��λ�á�
+    00:03:16 �� 00:03:51  EXERCISE  conf=0.95  ��������е�Ͻ��л���������˫����סV�Ͱ��ֽ����������졣
+    00:03:52 �� 00:04:13  TRANSITION  conf=0.85  ������������������λ�ò������˽��м�̽�����
+    00:04:14 �� 00:04:33  EXERCISE  conf=0.9  ��������е�Ͻ�����������ض�����������ʾ���Ե��������˶����ơ�
+    00:04:34 �� 00:04:38  REST  conf=0.8  ��������Ϣ����е�������־�ֹ��
+    00:04:39 �� 00:05:13  EXERCISE  conf=0.95  ������������������ϰ��˫�����˳�������������ǿ�Ƚϸߡ�
+    00:05:14 �� 00:05:27  REST  conf=0.9  ֹͣ�˶�������е����Ϣ���۲컷����
+    00:05:28 �� 00:06:08  EXERCISE  conf=0.95  �����µ�һ�����������˶������������ȶ��Ҿ��������ԡ�
+    00:06:09 �� 00:06:41  REST  conf=0.9  �˶����������Ϣ�׶Σ��û�ͣ����ԭ�ء�
+    00:06:42 �� 00:07:15  TRANSITION  conf=0.85  �ڲ�ͬѵ��������ƶ���Ѱ���µ���е��
+    00:07:16 �� 00:07:39  EXERCISE  conf=0.9  �����ػ��Ƽ���Ͻ�����ϰ��˫����ס�ֱ������������ƾ١�
+    00:07:40 �� 00:07:59  REST  conf=0.9  ��е��ϰ�����Ϣ������ǿ�������½���
+    00:08:00 �� 00:08:53  TRANSITION  conf=0.95  �û��������������в�������󷵻�ѵ������
+    00:08:54 �� 00:09:22  EXERCISE  conf=0.95  �ص���λ������е������ϰ��˫�������˴��ڳ���������������
+    00:09:23 �� 00:09:38  REST  conf=0.9  �����Ϣ���û��ɿ���е��������̬��
+    00:09:39 �� 00:10:13  EXERCISE  conf=0.95  �������һ���λ�����˶���������ʾ����������������ģʽ��
+    00:10:14 �� 00:10:23  TRANSITION  conf=0.9  ����ѵ�����뿪��е������ڷ������ߡ�
+  �� 21 �����䣬���� 9 �� EXERCISE
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 9 �� EXERCISE �δ�ʶ�𣨲���: 4��
+
+  ���� exercise_001: 00:01:16 ~ 00:01:38 (22s)
+    [exercise_001] ��չȡ֡��Χ: 00:01:01 ~ 00:01:53
+
+  ���� exercise_002: 00:02:00 ~ 00:02:29 (29s)
+    [exercise_002] ��չȡ֡��Χ: 00:01:45 ~ 00:02:44
+
+  ���� exercise_003: 00:03:16 ~ 00:03:51 (35s)
+    [exercise_003] ��չȡ֡��Χ: 00:03:01 ~ 00:04:06
+
+  ���� exercise_004: 00:04:14 ~ 00:04:33 (19s)
+    [exercise_004] ��չȡ֡��Χ: 00:03:59 ~ 00:04:48
+    [exercise_004] ƴͼ: 50 ֡, 7��8, 253 KB
+    [exercise_001] ƴͼ: 53 ֡, 7��8, 332 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ƴͼ: 60 ֡, 7��9, 360 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ƴͼ: 66 ֡, 7��10, 384 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_004] ��Ӧ����: 619 �ַ�
+
+  ���� exercise_005: 00:04:39 ~ 00:05:13 (34s)
+    [exercise_005] ��չȡ֡��Χ: 00:04:24 ~ 00:05:28
+    [exercise_005] ƴͼ: 65 ֡, 7��10, 318 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ��Ӧ����: 714 �ַ�
+
+  ���� exercise_006: 00:05:28 ~ 00:06:08 (40s)
+    [exercise_006] ��չȡ֡��Χ: 00:05:13 ~ 00:06:23
+    [exercise_006] ƴͼ: 71 ֡, 7��11, 338 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ��Ӧ����: 667 �ַ�
+
+  ���� exercise_007: 00:07:16 ~ 00:07:39 (23s)
+    [exercise_007] ��չȡ֡��Χ: 00:07:01 ~ 00:07:54
+    [exercise_007] ƴͼ: 54 ֡, 7��8, 235 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_006] ��Ӧ����: 659 �ַ�
+
+  ���� exercise_008: 00:08:54 ~ 00:09:22 (28s)
+    [exercise_008] ��չȡ֡��Χ: 00:08:39 ~ 00:09:37
+    [exercise_008] ƴͼ: 59 ֡, 7��9, 343 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_005] ��Ӧ����: 699 �ַ�
+
+  ���� exercise_009: 00:09:39 ~ 00:10:13 (34s)
+    [exercise_009] ��չȡ֡��Χ: 00:09:24 ~ 00:10:23
+    [exercise_007] ��Ӧ����: 651 �ַ�
+    [exercise_009] ƴͼ: 60 ֡, 7��9, 378 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ��Ӧ����: 693 �ַ�
+    [exercise_008] ��Ӧ����: 685 �ַ�
+    [exercise_009] ��Ӧ����: 667 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\2\exercise_result.json
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\2\period_result_adjusted.json
+
+  Phase 2 ���: 9 �� EXERCISE, �������� 14 ��
+
+============================================================
+��ɣ���ʱ 149.8s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\2\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\2\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\2\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\2\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\2\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\2\mid_result
+EXERCISE ʶ������
+  00:01:16��00:01:38  ��λ������ / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.95
+  00:02:00��00:02:29  ��λ������ / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.95
+  00:03:16��00:03:51  ���ż� / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.95
+  00:04:14��00:04:33  ���ż� / ��������  [cable_chest_fly]  1 ��  conf=0.95
+  00:04:39��00:05:13  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+  00:05:28��00:06:08  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+  00:07:16��00:07:39  ��λ������ / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.95
+  00:08:54��00:09:22  ��λ������ / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.95
+  00:09:39��00:10:13  ��λ������ / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.95
+============================================================
+
+
+######################################################################
+# [3/13] 3
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\3
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\3
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\3
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\3
+֡����1013  ʱ����00:16:52
+Phase 2 ��������4
+============================================================
+
+[IMU] δ�ҵ� IMU_data.txt����������������
+[optical_flow] ʹ�û��棺1012 ֡�ԣ�D:\WorkPath\fitness_new\recognize\visualize\result\shared\3\optical_flow.json��
+[Step 2] ����ʹ�� shared ���棺D:\WorkPath\fitness_new\recognize\visualize\result\shared\3\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��1013 ֡ �� 17 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  298 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  292 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  302 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  266 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  275 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  282 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  241 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  245 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  321 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  273 KB
+[stitcher]   ���� 011  10:00 �� 10:59  (60 ֡)  7��9  271 KB
+[stitcher]   ���� 012  11:00 �� 11:59  (60 ֡)  7��9  262 KB
+[stitcher]   ���� 013  12:00 �� 12:59  (60 ֡)  7��9  281 KB
+[stitcher]   ���� 014  13:00 �� 13:59  (60 ֡)  7��9  249 KB
+[stitcher]   ���� 015  14:00 �� 14:59  (60 ֡)  7��9  269 KB
+[stitcher]   ���� 016  15:00 �� 15:59  (60 ֡)  7��9  242 KB
+[stitcher]   ���� 017  16:00 �� 16:52  (53 ֡)  7��8  207 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 17 ��ͼƬ
+  ��Ӧ����: 5296 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\3\period_result.json
+  Phase 1 ���: 31 ��, ���� EXERCISE 15 ��
+    00:00:00 �� 00:00:10  TRANSITION  conf=0.9  �û��ڽ���������߲�Ѱ����е��������ʾ������λ�ơ�
+    00:00:11 �� 00:00:55  EXERCISE  conf=0.95  �û���������е�ϣ�˫����ס��������ƾ٣�������ʾ���Ե������������˶���
+    00:00:56 �� 00:01:10  REST  conf=0.85  �û������������ƣ�˫���뿪�����ֹͣ�˶�������ǿ�ȼ��͡�
+    00:01:11 �� 00:01:41  EXERCISE  conf=0.95  �û��������и����ƾ٣������ָ��������˶�ģʽ��
+    00:01:42 �� 00:03:11  TRANSITION  conf=0.9  �û������뿪��е���ڽ�������ƶ�����ѡ���壬����Ƶ�����ӽǱ仯��
+    00:03:12 �� 00:03:55  EXERCISE  conf=0.95  �û������ڳ����Ͻ��������ƾ٣������пɼ��컨��ƹ⣬���������ȶ��������ԡ�
+    00:03:56 �� 00:04:10  REST  conf=0.8  �û�������Ϣ��������£�����ǿ�Ƚ��͡�
+    00:04:11 �� 00:04:39  EXERCISE  conf=0.95  �û��ٴ����Խ��������ƾ٣�������ʾ�����������˶���
+    00:04:40 �� 00:04:59  REST  conf=0.85  �����Ϣ���û��ڳ��ʸ���ͣ���δ����е������
+    00:05:00 �� 00:05:30  EXERCISE  conf=0.95  �û�������һ�������ƾ٣��������������ԡ�
+    00:05:31 �� 00:05:59  TRANSITION  conf=0.9  �û��������岢�������������С��Χ�ƶ���
+    00:06:00 �� 00:06:34  EXERCISE  conf=0.95  �û��������������ƾ���ϰ��˫������е����������
+    00:06:35 �� 00:06:59  REST  conf=0.85  �û�ֹͣ�˶������ھ�ֹ��Ϣ״̬��
+    00:07:00 �� 00:07:45  EXERCISE  conf=0.95  �û��������һ�������ƾ٣�������ʾ���ɵ����������˶���
+    00:07:46 �� 00:08:30  TRANSITION  conf=0.9  �û��뿪�������������������������򣬹�����ʾ����λ�ơ�
+    00:08:31 �� 00:09:35  EXERCISE  conf=0.95  �û�ʹ��������������������������˫����ס��ˣ�������ʾ�����������˶���
+    00:09:36 �� 00:09:59  REST  conf=0.85  �û��ɿ���е������λ����Ϣ���۲���Χ������
+    00:10:00 �� 00:10:30  EXERCISE  conf=0.95  �û�������������������ϰ�������ָ�������ģʽ��
+    00:10:31 �� 00:10:59  REST  conf=0.85  �����Ϣ���û�ͣ������е�ԣ�����ǿ�ȼ��͡�
+    00:11:00 �� 00:11:45  EXERCISE  conf=0.95  �û�������һ������������˫������е���ڳ���������
+    00:11:46 �� 00:12:41  TRANSITION  conf=0.9  �û������������߶Ȳ��������ָ�����׼��������һ����ϰ��
+    00:12:42 �� 00:13:25  EXERCISE  conf=0.95  �û�ʹ��������������ͷ����ѹ������˫����ס���֣�������ʾ���Ե����������˶���
+    00:13:26 �� 00:13:59  REST  conf=0.85  �û�ֹͣ��ѹ������վ����еǰ��Ϣ��
+    00:14:00 �� 00:14:20  EXERCISE  conf=0.95  �û�����������ͷ����ѹ��ϰ���������������ԡ�
+    00:14:21 �� 00:14:45  REST  conf=0.85  �û��ɿ����֣�����е����Ϣ��
+    00:14:46 �� 00:15:22  EXERCISE  conf=0.95  �û�����Ϊ��������������ѹ��ϰ��˫����ס������������ʾ�������˶���
+    00:15:23 �� 00:15:41  REST  conf=0.85  �û�ֹͣ�˶������ھ�ֹ��Ϣ״̬��
+    00:15:42 �� 00:15:59  EXERCISE  conf=0.95  �û��������һ��������ѹ��������ʾ���ɵ������˶���
+    00:16:00 �� 00:16:15  REST  conf=0.85  �û����ѵ��������е������ͣ���
+    00:16:16 �� 00:16:33  EXERCISE  conf=0.9  �û�������󼸴β��䶯����˫������������������
+    00:16:34 �� 00:16:52  TRANSITION  conf=0.9  �û��뿪��е����������ڣ���Ƶ������
+  �� 31 �����䣬���� 15 �� EXERCISE
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 15 �� EXERCISE �δ�ʶ�𣨲���: 4��
+
+  ���� exercise_001: 00:00:11 ~ 00:00:55 (44s)
+    [exercise_001] ��չȡ֡��Χ: 00:00:00 ~ 00:01:10
+
+  ���� exercise_002: 00:01:11 ~ 00:01:41 (30s)
+    [exercise_002] ��չȡ֡��Χ: 00:00:56 ~ 00:01:56
+
+  ���� exercise_003: 00:03:12 ~ 00:03:55 (43s)
+    [exercise_003] ��չȡ֡��Χ: 00:02:57 ~ 00:04:10
+
+  ���� exercise_004: 00:04:11 ~ 00:04:39 (28s)
+    [exercise_004] ��չȡ֡��Χ: 00:03:56 ~ 00:04:54
+    [exercise_004] ƴͼ: 59 ֡, 7��9, 272 KB
+    [exercise_002] ƴͼ: 61 ֡, 7��9, 295 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ƴͼ: 71 ֡, 7��11, 356 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ƴͼ: 74 ֡, 7��11, 327 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ��Ӧ����: 636 �ַ�
+
+  ���� exercise_005: 00:05:00 ~ 00:05:30 (30s)
+    [exercise_005] ��չȡ֡��Χ: 00:04:45 ~ 00:05:45
+    [exercise_005] ƴͼ: 61 ֡, 7��9, 288 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ��Ӧ����: 658 �ַ�
+
+  ���� exercise_006: 00:06:00 ~ 00:06:34 (34s)
+    [exercise_006] ��չȡ֡��Χ: 00:05:45 ~ 00:06:49
+    [exercise_006] ƴͼ: 65 ֡, 7��10, 269 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_004] ��Ӧ����: 652 �ַ�
+
+  ���� exercise_007: 00:07:00 ~ 00:07:45 (45s)
+    [exercise_007] ��չȡ֡��Χ: 00:06:45 ~ 00:08:00
+    [exercise_007] ƴͼ: 76 ֡, 7��11, 316 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ��Ӧ����: 614 �ַ�
+
+  ���� exercise_008: 00:08:31 ~ 00:09:35 (64s)
+    [exercise_008] ��չȡ֡��Χ: 00:08:16 ~ 00:09:50
+    [exercise_008] ƴͼ: 95 ֡, 7��14, 466 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_007] ��Ӧ����: 653 �ַ�
+
+  ���� exercise_009: 00:10:00 ~ 00:10:30 (30s)
+    [exercise_009] ��չȡ֡��Χ: 00:09:45 ~ 00:10:45
+    [exercise_009] ƴͼ: 61 ֡, 7��9, 273 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_005] ��Ӧ����: 782 �ַ�
+
+  ���� exercise_010: 00:11:00 ~ 00:11:45 (45s)
+    [exercise_010] ��չȡ֡��Χ: 00:10:45 ~ 00:12:00
+    [exercise_010] ƴͼ: 76 ֡, 7��11, 332 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_006] ��Ӧ����: 730 �ַ�
+
+  ���� exercise_011: 00:12:42 ~ 00:13:25 (43s)
+    [exercise_011] ��չȡ֡��Χ: 00:12:27 ~ 00:13:40
+    [exercise_011] ƴͼ: 74 ֡, 7��11, 322 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_008] ��Ӧ����: 647 �ַ�
+
+  ���� exercise_012: 00:14:00 ~ 00:14:20 (20s)
+    [exercise_012] ��չȡ֡��Χ: 00:13:45 ~ 00:14:35
+    [exercise_012] ƴͼ: 51 ֡, 7��8, 223 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_010] ��Ӧ����: 672 �ַ�
+
+  ���� exercise_013: 00:14:46 ~ 00:15:22 (36s)
+    [exercise_013] ��չȡ֡��Χ: 00:14:31 ~ 00:15:37
+    [exercise_013] ƴͼ: 67 ֡, 7��10, 294 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_011] ��Ӧ����: 752 �ַ�
+
+  ���� exercise_014: 00:15:42 ~ 00:15:59 (17s)
+    [exercise_014] ��չȡ֡��Χ: 00:15:27 ~ 00:16:14
+    [exercise_014] ƴͼ: 48 ֡, 7��7, 188 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_012] ��Ӧ����: 660 �ַ�
+
+  ���� exercise_015: 00:16:16 ~ 00:16:33 (17s)
+    [exercise_015] ��չȡ֡��Χ: 00:16:01 ~ 00:16:48
+    [exercise_015] ƴͼ: 48 ֡, 7��7, 187 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_009] ��Ӧ����: 852 �ַ�
+    [exercise_013] ��Ӧ����: 705 �ַ�
+    [exercise_014] ��Ӧ����: 646 �ַ�
+    [exercise_015] ��Ӧ����: 716 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\3\exercise_result.json
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\3\period_result_adjusted.json
+
+  Phase 2 ���: 15 �� EXERCISE, �������� 26 ��
+
+============================================================
+��ɣ���ʱ 139.0s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\3\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\3\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\3\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\3\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\3\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\3\mid_result
+EXERCISE ʶ������
+  00:00:11��00:00:55  ʷ��˹�� / ʷ��˹����  [smith_bench_press]  1 ��  conf=0.95
+  00:01:11��00:01:41  ʷ��˹�� / ʷ��˹����  [smith_bench_press]  1 ��  conf=0.95
+  00:03:12��00:03:55  ���� / ��������  [dumbbell_bench_press]  1 ��  conf=0.95
+  00:04:11��00:04:39  ���� / ��������  [dumbbell_bench_press]  1 ��  conf=0.95
+  00:05:00��00:05:30  ���� / �����Ƽ�  [dumbbell_shoulder_press]  1 ��  conf=0.95
+  00:06:00��00:06:34  ���� / ��������  [dumbbell_bench_press]  1 ��  conf=0.95
+  00:07:00��00:07:45  ���� / �����Ƽ�  [dumbbell_shoulder_press]  1 ��  conf=0.95
+  00:08:31��00:09:35  ʷ��˹�� / ʷ��˹����  [smith_bench_press]  1 ��  conf=0.95
+  00:10:00��00:10:30  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+  00:11:00��00:11:45  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+  00:12:42��00:13:25  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+  00:14:00��00:14:20  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+  00:14:46��00:15:22  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+  00:15:42��00:15:59  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+  00:16:16��00:16:33  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+============================================================
+
+
+######################################################################
+# [4/13] 4
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\4
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\4
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\4
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\4
+֡����1248  ʱ����00:20:47
+Phase 2 ��������4
+============================================================
+
+[IMU] δ�ҵ� IMU_data.txt����������������
+[optical_flow] ʹ�û��棺1247 ֡�ԣ�D:\WorkPath\fitness_new\recognize\visualize\result\shared\4\optical_flow.json��
+[Step 2] ����ʹ�� shared ���棺D:\WorkPath\fitness_new\recognize\visualize\result\shared\4\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��1248 ֡ �� 21 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  367 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  372 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  377 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  406 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  378 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  391 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  378 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  359 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  413 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  394 KB
+[stitcher]   ���� 011  10:00 �� 10:59  (60 ֡)  7��9  407 KB
+[stitcher]   ���� 012  11:00 �� 11:59  (60 ֡)  7��9  313 KB
+[stitcher]   ���� 013  12:00 �� 12:59  (60 ֡)  7��9  322 KB
+[stitcher]   ���� 014  13:00 �� 13:59  (60 ֡)  7��9  324 KB
+[stitcher]   ���� 015  14:00 �� 14:59  (60 ֡)  7��9  338 KB
+[stitcher]   ���� 016  15:00 �� 15:59  (60 ֡)  7��9  367 KB
+[stitcher]   ���� 017  16:00 �� 16:59  (60 ֡)  7��9  348 KB
+[stitcher]   ���� 018  17:00 �� 17:59  (60 ֡)  7��9  338 KB
+[stitcher]   ���� 019  18:00 �� 18:59  (60 ֡)  7��9  352 KB
+[stitcher]   ���� 020  19:00 �� 19:59  (60 ֡)  7��9  399 KB
+[stitcher]   ���� 021  20:00 �� 20:47  (48 ֡)  7��7  333 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 21 ��ͼƬ
+  [����] ����Ӧ! finish_reason='length' ������Ӧ: {'id': 'chatcmpl-202606221024132075806708268d9d6YPfuihKu', 'model': 'gemini-3-flash-preview', 'object': 'chat.completion', 'created': 1782123958, 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': ''}, 'finish_reason': 'length'}], 'usage': {'prompt_tokens': 30222, 'completion_tokens': 16380, 'total_tokens': 46602, 'prompt_tokens_details': {'cached_tokens': 28605, 'text_tokens': 7282, 'audio_tokens': 0, 'image_tokens': 0}, 'completion_tokens_details': {'text_tokens': 656, 'audio
+  ��Ӧ����: 0 �ַ�
+  [����] JSON ����ʧ��: �޷����� JSON��
+
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\4\period_result.json
+  Phase 1 ���: 0 ��, ���� EXERCISE 0 ��
+  �� 0 �����䣬���� 0 �� EXERCISE
+  [WARN] Phase 1 δʶ����κ� EXERCISE ���䣬����ʶ��...
+[stitcher] Phase1 ƴͼ��1248 ֡ �� 21 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  367 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  372 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  377 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  406 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  378 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  391 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  378 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  359 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  413 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  394 KB
+[stitcher]   ���� 011  10:00 �� 10:59  (60 ֡)  7��9  407 KB
+[stitcher]   ���� 012  11:00 �� 11:59  (60 ֡)  7��9  313 KB
+[stitcher]   ���� 013  12:00 �� 12:59  (60 ֡)  7��9  322 KB
+[stitcher]   ���� 014  13:00 �� 13:59  (60 ֡)  7��9  324 KB
+[stitcher]   ���� 015  14:00 �� 14:59  (60 ֡)  7��9  338 KB
+[stitcher]   ���� 016  15:00 �� 15:59  (60 ֡)  7��9  367 KB
+[stitcher]   ���� 017  16:00 �� 16:59  (60 ֡)  7��9  348 KB
+[stitcher]   ���� 018  17:00 �� 17:59  (60 ֡)  7��9  338 KB
+[stitcher]   ���� 019  18:00 �� 18:59  (60 ֡)  7��9  352 KB
+[stitcher]   ���� 020  19:00 �� 19:59  (60 ֡)  7��9  399 KB
+[stitcher]   ���� 021  20:00 �� 20:47  (48 ֡)  7��7  333 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 21 ��ͼƬ
+  [����] ����Ӧ! finish_reason='length' ������Ӧ: {'id': 'chatcmpl-202606221026161398882828268d9d6Mg6tmLTp', 'model': 'gemini-3-flash-preview', 'object': 'chat.completion', 'created': 1782124073, 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': ''}, 'finish_reason': 'length'}], 'usage': {'prompt_tokens': 30222, 'completion_tokens': 16380, 'total_tokens': 46602, 'prompt_tokens_details': {'cached_tokens': 28605, 'text_tokens': 7282, 'audio_tokens': 0, 'image_tokens': 0}, 'completion_tokens_details': {'text_tokens': 656, 'audio
+  ��Ӧ����: 0 �ַ�
+  [����] JSON ����ʧ��: �޷����� JSON��
+
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\4\period_result.json
+  Phase 1 ���: 0 ��, ���� EXERCISE 0 ��
+  �� ���Խ����0 �����䣬���� 0 �� EXERCISE
+  [WARN] ���Ժ����� EXERCISE������ Phase 2
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 0 �� EXERCISE �δ�ʶ�𣨲���: 4��
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\4\exercise_result.json
+
+============================================================
+��ɣ���ʱ 234.1s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\4\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\4\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\4\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\4\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\4\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\4\mid_result
+EXERCISE ʶ������
+============================================================
+
+
+######################################################################
+# [5/13] 8
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\8
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\8
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\8
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\8
+֡����1494  ʱ����00:24:53
+Phase 2 ��������4
+============================================================
+
+[IMU] δ�ҵ� IMU_data.txt����������������
+[Step 2] �������
+[optical_flow] ���������1494 ֡
+[optical_flow]   �Ѵ��� 50/1493 ֡��
+[optical_flow]   �Ѵ��� 100/1493 ֡��
+[optical_flow]   �Ѵ��� 150/1493 ֡��
+[optical_flow]   �Ѵ��� 200/1493 ֡��
+[optical_flow]   �Ѵ��� 250/1493 ֡��
+[optical_flow]   �Ѵ��� 300/1493 ֡��
+[optical_flow]   �Ѵ��� 350/1493 ֡��
+[optical_flow]   �Ѵ��� 400/1493 ֡��
+[optical_flow]   �Ѵ��� 450/1493 ֡��
+[optical_flow]   �Ѵ��� 500/1493 ֡��
+[optical_flow]   �Ѵ��� 550/1493 ֡��
+[optical_flow]   �Ѵ��� 600/1493 ֡��
+[optical_flow]   �Ѵ��� 650/1493 ֡��
+[optical_flow]   �Ѵ��� 700/1493 ֡��
+[optical_flow]   �Ѵ��� 750/1493 ֡��
+[optical_flow]   �Ѵ��� 800/1493 ֡��
+[optical_flow]   �Ѵ��� 850/1493 ֡��
+[optical_flow]   �Ѵ��� 900/1493 ֡��
+[optical_flow]   �Ѵ��� 950/1493 ֡��
+[optical_flow]   �Ѵ��� 1000/1493 ֡��
+[optical_flow]   �Ѵ��� 1050/1493 ֡��
+[optical_flow]   �Ѵ��� 1100/1493 ֡��
+[optical_flow]   �Ѵ��� 1150/1493 ֡��
+[optical_flow]   �Ѵ��� 1200/1493 ֡��
+[optical_flow]   �Ѵ��� 1250/1493 ֡��
+[optical_flow]   �Ѵ��� 1300/1493 ֡��
+[optical_flow]   �Ѵ��� 1350/1493 ֡��
+[optical_flow]   �Ѵ��� 1400/1493 ֡��
+[optical_flow]   �Ѵ��� 1450/1493 ֡��
+[optical_flow]   ��ɣ��� 1493 ֡��
+[optical_flow] �ѱ��� �� D:\WorkPath\fitness_new\gym_analyzer\input\8\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��1494 ֡ �� 25 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  387 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  368 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  362 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  373 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  377 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  329 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  324 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  333 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  394 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  357 KB
+[stitcher]   ���� 011  10:00 �� 10:59  (60 ֡)  7��9  301 KB
+[stitcher]   ���� 012  11:00 �� 11:59  (60 ֡)  7��9  351 KB
+[stitcher]   ���� 013  12:00 �� 12:59  (60 ֡)  7��9  287 KB
+[stitcher]   ���� 014  13:00 �� 13:59  (60 ֡)  7��9  333 KB
+[stitcher]   ���� 015  14:00 �� 14:59  (60 ֡)  7��9  341 KB
+[stitcher]   ���� 016  15:00 �� 15:59  (60 ֡)  7��9  369 KB
+[stitcher]   ���� 017  16:00 �� 16:59  (60 ֡)  7��9  381 KB
+[stitcher]   ���� 018  17:00 �� 17:59  (60 ֡)  7��9  344 KB
+[stitcher]   ���� 019  18:00 �� 18:59  (60 ֡)  7��9  290 KB
+[stitcher]   ���� 020  19:00 �� 19:59  (60 ֡)  7��9  316 KB
+[stitcher]   ���� 021  20:00 �� 20:59  (60 ֡)  7��9  340 KB
+[stitcher]   ���� 022  21:00 �� 21:59  (60 ֡)  7��9  371 KB
+[stitcher]   ���� 023  22:00 �� 22:59  (60 ֡)  7��9  336 KB
+[stitcher]   ���� 024  23:00 �� 23:59  (60 ֡)  7��9  347 KB
+[stitcher]   ���� 025  24:00 �� 24:53  (54 ֡)  7��8  302 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 25 ��ͼƬ
+  ��Ӧ����: 3424 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\8\period_result.json
+  Phase 1 ���: 20 ��, ���� EXERCISE 9 ��
+    00:00:00 �� 00:01:04  TRANSITION  conf=0.9  �û����뽡�����Ѱ����е��������ʾ���ߺͻ����۲졣
+    00:01:05 �� 00:09:31  EXERCISE  conf=0.95  �û����ܲ������˶������������ʾ�ܲ���������壬����ǿ�ȸ��Ҿ��������ԡ�
+    00:09:32 �� 00:09:41  TRANSITION  conf=0.85  �û��뿪�ܲ������ڽ�������ƶ���
+    00:09:42 �� 00:11:13  EXERCISE  conf=0.9  �û�ʹ�ý����������������е��˫����ס�ֱ���������ʾ�ȶ����������˶���
+    00:11:14 �� 00:13:31  TRANSITION  conf=0.9  �û��ڽ���������ߣ��ڼ������ݲ��ƶ�����ͬ����
+    00:13:32 �� 00:14:10  EXERCISE  conf=0.9  �û�ʹ��������е��˫����ס�ֱ������������춯����
+    00:14:11 �� 00:15:41  TRANSITION  conf=0.85  �û�����е�����ߣ�Ѱ����һ��ѵ��Ŀ�ꡣ
+    00:15:42 �� 00:16:40  REST  conf=0.9  �û�ͣ���ڹ̶�λ�ù۲��ֻ�������ǿ�ȵ͡�
+    00:16:41 �� 00:18:15  TRANSITION  conf=0.85  �û�����������򲢵�����еλ�á�
+    00:18:16 �� 00:18:48  EXERCISE  conf=0.95  �û����и���ѵ����������ʾ����˵�����������λ�ơ�
+    00:18:49 �� 00:19:01  REST  conf=0.85  �����Ϣ���û�ͣ������е�ԡ�
+    00:19:02 �� 00:19:18  EXERCISE  conf=0.95  �û����еڶ������ѵ����������ʾ���Ե������˶�ģʽ��
+    00:19:19 �� 00:20:24  TRANSITION  conf=0.85  �û��뿪���������ƶ�������ѵ����е����
+    00:20:25 �� 00:21:00  EXERCISE  conf=0.9  �û�ʹ����ʽ���ػ򻮴�����˫������е����������������λ�ơ�
+    00:21:01 �� 00:21:23  TRANSITION  conf=0.8  �û�����е�Ե���λ�û�̾����ƶ���
+    00:21:24 �� 00:22:00  EXERCISE  conf=0.9  �û�ʹ��������е����ѵ����˫�ֳ����Ӵ���е���������������
+    00:22:01 �� 00:22:17  REST  conf=0.9  �û�ֹͣ�˶����鿴�ֻ�����Ϣ��
+    00:22:18 �� 00:22:35  EXERCISE  conf=0.9  �û�������һ����еѵ����������ʾ��е���������˶���
+    00:22:36 �� 00:24:20  TRANSITION  conf=0.85  �û��ڽ�����ڴ�Χ�ƶ���Ѱ������ѵ����е��
+    00:24:21 �� 00:24:53  EXERCISE  conf=0.9  �û�����ʽ��е�Ͻ������һ���˶���˫����ס�ֱ�����������������
+  �� 20 �����䣬���� 9 �� EXERCISE
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 9 �� EXERCISE �δ�ʶ�𣨲���: 4��
+
+  ���� exercise_001: 00:01:05 ~ 00:09:31 (506s)
+    [exercise_001] ��չȡ֡��Χ: 00:00:50 ~ 00:09:46
+
+  ���� exercise_002: 00:09:42 ~ 00:11:13 (91s)
+    [exercise_002] ��չȡ֡��Χ: 00:09:27 ~ 00:11:28
+
+  ���� exercise_003: 00:13:32 ~ 00:14:10 (38s)
+
+  ���� exercise_004: 00:18:16 ~ 00:18:48 (32s)
+    [exercise_003] ��չȡ֡��Χ: 00:13:17 ~ 00:14:25
+    [exercise_004] ��չȡ֡��Χ: 00:18:01 ~ 00:19:03
+    [exercise_004] ƴͼ: 63 ֡, 7��9, 303 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ    [exercise_003] ƴͼ: 69 ֡, 7��10, 389 KB
+
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ƴͼ: 122 ֡, 7��18, 644 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ƴͼ: 537 ֡, 7��77, 3195 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_004] ��Ӧ����: 679 �ַ�
+
+  ���� exercise_005: 00:19:02 ~ 00:19:18 (16s)
+    [exercise_005] ��չȡ֡��Χ: 00:18:47 ~ 00:19:33
+    [exercise_005] ƴͼ: 47 ֡, 7��7, 250 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ��Ӧ����: 678 �ַ�
+
+  ���� exercise_006: 00:20:25 ~ 00:21:00 (35s)
+    [exercise_006] ��չȡ֡��Χ: 00:20:10 ~ 00:21:15
+    [exercise_006] ƴͼ: 66 ֡, 7��10, 370 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ��Ӧ����: 633 �ַ�
+
+  ���� exercise_007: 00:21:24 ~ 00:22:00 (36s)
+    [exercise_007] ��չȡ֡��Χ: 00:21:09 ~ 00:22:15
+    [exercise_007] ƴͼ: 67 ֡, 7��10, 422 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_005] ��Ӧ����: 677 �ַ�
+
+  ���� exercise_008: 00:22:18 ~ 00:22:35 (17s)
+    [exercise_008] ��չȡ֡��Χ: 00:22:03 ~ 00:22:50
+    [exercise_008] ƴͼ: 48 ֡, 7��7, 264 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ��Ӧ����: 746 �ַ�
+
+  ���� exercise_009: 00:24:21 ~ 00:24:53 (32s)
+    [exercise_009] ��չȡ֡��Χ: 00:24:06 ~ 00:24:53
+    [exercise_009] ƴͼ: 48 ֡, 7��7, 268 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_008] ��Ӧ����: 656 �ַ�
+    [exercise_006] ��Ӧ����: 801 �ַ�
+    [exercise_009] ��Ӧ����: 740 �ַ�
+    [exercise_007] ��Ӧ����: 700 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\8\exercise_result.json
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\8\period_result_adjusted.json
+
+  Phase 2 ���: 9 �� EXERCISE, �������� 8 ��
+
+============================================================
+��ɣ���ʱ 154.4s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\8\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\8\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\8\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\8\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\8\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\8\mid_result
+EXERCISE ʶ������
+  00:01:05��00:09:31  �ܲ��� / �ܲ���  [treadmill_walk_run]  1 ��  conf=1.0
+  00:09:42��00:11:13  �ǽ׻�/��¥�� / �ǽ׻�/��¥��  [stepmill]  1 ��  conf=0.95
+  00:13:32��00:14:10  ���ż� / ������������  [cable_seated_row]  1 ��  conf=0.9
+  00:18:16��00:18:48  ��λ������ / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.95
+  00:19:02��00:19:18  ��λ������ / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.95
+  00:20:25��00:21:00  ������ / ����������  [machine_chest_fly]  1 ��  conf=0.9
+  00:21:24��00:22:00  ��λ������ / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.9
+  00:22:18��00:22:35  ���� / ���帩�����  [barbell_bent_over_row]  1 ��  conf=0.95
+  00:24:21��00:24:53  �̶���е���ػ� / �̶���е����  [machine_chest_press]  1 ��  conf=0.95
+============================================================
+
+
+######################################################################
+# [6/13] 9
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\9
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\9
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\9
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\9
+֡����1043  ʱ����00:17:22
+Phase 2 ��������4
+============================================================
+
+[IMU] δ�ҵ� IMU_data.txt����������������
+[Step 2] �������
+[optical_flow] ���������1043 ֡
+[optical_flow]   �Ѵ��� 50/1042 ֡��
+[optical_flow]   �Ѵ��� 100/1042 ֡��
+[optical_flow]   �Ѵ��� 150/1042 ֡��
+[optical_flow]   �Ѵ��� 200/1042 ֡��
+[optical_flow]   �Ѵ��� 250/1042 ֡��
+[optical_flow]   �Ѵ��� 300/1042 ֡��
+[optical_flow]   �Ѵ��� 350/1042 ֡��
+[optical_flow]   �Ѵ��� 400/1042 ֡��
+[optical_flow]   �Ѵ��� 450/1042 ֡��
+[optical_flow]   �Ѵ��� 500/1042 ֡��
+[optical_flow]   �Ѵ��� 550/1042 ֡��
+[optical_flow]   �Ѵ��� 600/1042 ֡��
+[optical_flow]   �Ѵ��� 650/1042 ֡��
+[optical_flow]   �Ѵ��� 700/1042 ֡��
+[optical_flow]   �Ѵ��� 750/1042 ֡��
+[optical_flow]   �Ѵ��� 800/1042 ֡��
+[optical_flow]   �Ѵ��� 850/1042 ֡��
+[optical_flow]   �Ѵ��� 900/1042 ֡��
+[optical_flow]   �Ѵ��� 950/1042 ֡��
+[optical_flow]   �Ѵ��� 1000/1042 ֡��
+[optical_flow]   ��ɣ��� 1042 ֡��
+[optical_flow] �ѱ��� �� D:\WorkPath\fitness_new\gym_analyzer\input\9\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��1043 ֡ �� 18 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  336 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  204 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  247 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  234 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  235 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  248 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  243 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  298 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  300 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  308 KB
+[stitcher]   ���� 011  10:00 �� 10:59  (60 ֡)  7��9  292 KB
+[stitcher]   ���� 012  11:00 �� 11:59  (60 ֡)  7��9  221 KB
+[stitcher]   ���� 013  12:00 �� 12:59  (60 ֡)  7��9  214 KB
+[stitcher]   ���� 014  13:00 �� 13:59  (60 ֡)  7��9  244 KB
+[stitcher]   ���� 015  14:00 �� 14:59  (60 ֡)  7��9  265 KB
+[stitcher]   ���� 016  15:00 �� 15:59  (60 ֡)  7��9  239 KB
+[stitcher]   ���� 017  16:00 �� 16:59  (60 ֡)  7��9  240 KB
+[stitcher]   ���� 018  17:00 �� 17:22  (23 ֡)  7��4  107 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 18 ��ͼƬ
+  ��Ӧ����: 912 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\9\period_result.json
+  Phase 1 ���: 5 ��, ���� EXERCISE 2 ��
+    00:00:00 �� 00:02:22  TRANSITION  conf=0.9  �û����뽡���������ǰ̨�͸�����������ǰ�������˶�����
+    00:02:23 �� 00:05:35  EXERCISE  conf=0.95  �û�˫����ס������е�ֱ������˶���������ʾ�ȶ�������������ģʽ��
+    00:05:36 �� 00:07:10  TRANSITION  conf=0.9  �û��뿪��������ͨ�������ƶ�����һ¥�������ѵ������
+    00:07:11 �� 00:15:35  EXERCISE  conf=0.95  �û�������ѵ����е�Ͻ��ж���ѵ����˫�ֳ�������е�����ҹ����������Ե���������ģʽ��
+    00:15:36 �� 00:17:22  TRANSITION  conf=0.9  �û�����ѵ���������뿪��������򲢳��������뿪������
+  �� 5 �����䣬���� 2 �� EXERCISE
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 2 �� EXERCISE �δ�ʶ�𣨲���: 4��
+
+  ���� exercise_001: 00:02:23 ~ 00:05:35 (192s)
+    [exercise_001] ��չȡ֡��Χ: 00:02:08 ~ 00:05:50
+
+  ���� exercise_002: 00:07:11 ~ 00:15:35 (504s)
+    [exercise_002] ��չȡ֡��Χ: 00:06:56 ~ 00:15:50
+    [exercise_001] ƴͼ: 223 ֡, 7��32, 857 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ƴͼ: 535 ֡, 7��77, 2358 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ��Ӧ����: 681 �ַ�
+    [exercise_002] ��Ӧ����: 861 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\9\exercise_result.json
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\9\period_result_adjusted.json
+
+  Phase 2 ���: 2 �� EXERCISE, �������� 2 ��
+
+============================================================
+��ɣ���ʱ 177.8s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\9\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\9\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\9\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\9\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\9\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\9\mid_result
+EXERCISE ʶ������
+  00:02:23��00:05:35  �ǽ׻�/��¥�� / �ǽ׻�/��¥��  [stepmill]  1 ��  conf=0.95
+  00:07:11��00:15:35  ���ż� / ��������  [cable_chest_fly]  3 ��  conf=0.95
+============================================================
+
+
+######################################################################
+# [7/13] ����-������
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\����-������
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\����-������
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\����-������
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\����-������
+֡����352  ʱ����00:05:51
+Phase 2 ��������4
+============================================================
+
+[IMU] �Ѽ��� 3424 ����¼��ʱ�� 347s��D:\WorkPath\fitness_new\gym_analyzer\input\����-������\IMU_data.txt
+[Step 2] �������
+[optical_flow] ���������352 ֡
+[optical_flow]   �Ѵ��� 50/351 ֡��
+[optical_flow]   �Ѵ��� 100/351 ֡��
+[optical_flow]   �Ѵ��� 150/351 ֡��
+[optical_flow]   �Ѵ��� 200/351 ֡��
+[optical_flow]   �Ѵ��� 250/351 ֡��
+[optical_flow]   �Ѵ��� 300/351 ֡��
+[optical_flow]   �Ѵ��� 350/351 ֡��
+[optical_flow]   ��ɣ��� 351 ֡��
+[optical_flow] �ѱ��� �� D:\WorkPath\fitness_new\gym_analyzer\input\����-������\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��352 ֡ �� 6 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  397 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  430 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  403 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  371 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  371 KB
+[stitcher]   ���� 006  05:00 �� 05:51  (52 ֡)  7��8  335 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 6 ��ͼƬ
+  ��Ӧ����: 1275 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\����-������\period_result.json
+  Phase 1 ���: 7 ��, ���� EXERCISE 3 ��
+    00:00:00 �� 00:01:42  TRANSITION  conf=0.9  �û��ڽ�����������ƶ����۲컷����Ѱ����е��������ʾ������ˮƽλ�ơ�
+    00:01:43 �� 00:02:05  EXERCISE  conf=0.85  �û�˫�ֳ�������п���ѵ��������������Ե����������°ڶ���
+    00:02:06 �� 00:03:47  TRANSITION  conf=0.9  �û��������壬�ڳ����ڴ�Χ�ƶ����ڼ��е�����е���غͲ鿴�ֻ�����Ϊ��
+    00:03:48 �� 00:04:18  EXERCISE  conf=0.9  �û�˫��ץ��˫������е����˫�ܱ���������ƶ�����������ʾǿ�ҵĴ�ֱ�����˶���
+    00:04:19 �� 00:04:38  TRANSITION  conf=0.85  ����˫���˶����ƶ�����������������׼����е��
+    00:04:39 �� 00:05:20  EXERCISE  conf=0.95  �û�˫��ץ������������ͷ����ѹѵ�������������ȶ�������������ģʽ��
+    00:05:21 �� 00:05:51  TRANSITION  conf=0.9  ѵ���������û��鿴�˶��ֱ���뿪��е��������ڷ������ߡ�
+  �� 7 �����䣬���� 3 �� EXERCISE
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 3 �� EXERCISE �δ�ʶ�𣨲���: 4��
+
+  ���� exercise_001: 00:01:43 ~ 00:02:05 (22s)
+    [exercise_001] ��չȡ֡��Χ: 00:01:28 ~ 00:02:20
+
+  ���� exercise_002: 00:03:48 ~ 00:04:18 (30s)
+    [exercise_002] ��չȡ֡��Χ: 00:03:33 ~ 00:04:33
+
+  ���� exercise_003: 00:04:39 ~ 00:05:20 (41s)
+    [exercise_003] ��չȡ֡��Χ: 00:04:24 ~ 00:05:35
+    [exercise_001] ƴͼ: 53 ֡, 7��8, 370 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ƴͼ: 61 ֡, 7��9, 356 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ƴͼ: 72 ֡, 7��11, 488 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ��Ӧ����: 632 �ַ�
+    [exercise_001] ��Ӧ����: 780 �ַ�
+    [exercise_002] ��Ӧ����: 667 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\����-������\exercise_result.json
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\����-������\period_result_adjusted.json
+
+  Phase 2 ���: 3 �� EXERCISE, �������� 6 ��
+
+============================================================
+��ɣ���ʱ 60.6s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\����-������\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\����-������\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\����-������\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\����-������\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\����-������\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\����-������\mid_result
+EXERCISE ʶ������
+  00:01:43��00:02:05  ���� / �����ƽ��  [dumbbell_lateral_raise]  1 ��  conf=0.95
+  00:03:48��00:04:18  ˫�� / ˫�ܱ�����  [bodyweight_dip]  1 ��  conf=1.0
+  00:04:39��00:05:20  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+============================================================
+
+
+######################################################################
+# [8/13] �ž���-2026.06.11
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\�ž���-2026.06.11
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ž���-2026.06.11
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\�ž���-2026.06.11
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ž���-2026.06.11
+֡����2923  ʱ����00:48:42
+Phase 2 ��������4
+============================================================
+
+[IMU] δ�ҵ� IMU_data.txt����������������
+[Step 2] �������
+[optical_flow] ���������2923 ֡
+[optical_flow]   �Ѵ��� 50/2922 ֡��
+[optical_flow]   �Ѵ��� 100/2922 ֡��
+[optical_flow]   �Ѵ��� 150/2922 ֡��
+[optical_flow]   �Ѵ��� 200/2922 ֡��
+[optical_flow]   �Ѵ��� 250/2922 ֡��
+[optical_flow]   �Ѵ��� 300/2922 ֡��
+[optical_flow]   �Ѵ��� 350/2922 ֡��
+[optical_flow]   �Ѵ��� 400/2922 ֡��
+[optical_flow]   �Ѵ��� 450/2922 ֡��
+[optical_flow]   �Ѵ��� 500/2922 ֡��
+[optical_flow]   �Ѵ��� 550/2922 ֡��
+[optical_flow]   �Ѵ��� 600/2922 ֡��
+[optical_flow]   �Ѵ��� 650/2922 ֡��
+[optical_flow]   �Ѵ��� 700/2922 ֡��
+[optical_flow]   �Ѵ��� 750/2922 ֡��
+[optical_flow]   �Ѵ��� 800/2922 ֡��
+[optical_flow]   �Ѵ��� 850/2922 ֡��
+[optical_flow]   �Ѵ��� 900/2922 ֡��
+[optical_flow]   �Ѵ��� 950/2922 ֡��
+[optical_flow]   �Ѵ��� 1000/2922 ֡��
+[optical_flow]   �Ѵ��� 1050/2922 ֡��
+[optical_flow]   �Ѵ��� 1100/2922 ֡��
+[optical_flow]   �Ѵ��� 1150/2922 ֡��
+[optical_flow]   �Ѵ��� 1200/2922 ֡��
+[optical_flow]   �Ѵ��� 1250/2922 ֡��
+[optical_flow]   �Ѵ��� 1300/2922 ֡��
+[optical_flow]   �Ѵ��� 1350/2922 ֡��
+[optical_flow]   �Ѵ��� 1400/2922 ֡��
+[optical_flow]   �Ѵ��� 1450/2922 ֡��
+[optical_flow]   �Ѵ��� 1500/2922 ֡��
+[optical_flow]   �Ѵ��� 1550/2922 ֡��
+[optical_flow]   �Ѵ��� 1600/2922 ֡��
+[optical_flow]   �Ѵ��� 1650/2922 ֡��
+[optical_flow]   �Ѵ��� 1700/2922 ֡��
+[optical_flow]   �Ѵ��� 1750/2922 ֡��
+[optical_flow]   �Ѵ��� 1800/2922 ֡��
+[optical_flow]   �Ѵ��� 1850/2922 ֡��
+[optical_flow]   �Ѵ��� 1900/2922 ֡��
+[optical_flow]   �Ѵ��� 1950/2922 ֡��
+[optical_flow]   �Ѵ��� 2000/2922 ֡��
+[optical_flow]   �Ѵ��� 2050/2922 ֡��
+[optical_flow]   �Ѵ��� 2100/2922 ֡��
+[optical_flow]   �Ѵ��� 2150/2922 ֡��
+[optical_flow]   �Ѵ��� 2200/2922 ֡��
+[optical_flow]   �Ѵ��� 2250/2922 ֡��
+[optical_flow]   �Ѵ��� 2300/2922 ֡��
+[optical_flow]   �Ѵ��� 2350/2922 ֡��
+[optical_flow]   �Ѵ��� 2400/2922 ֡��
+[optical_flow]   �Ѵ��� 2450/2922 ֡��
+[optical_flow]   �Ѵ��� 2500/2922 ֡��
+[optical_flow]   �Ѵ��� 2550/2922 ֡��
+[optical_flow]   �Ѵ��� 2600/2922 ֡��
+[optical_flow]   �Ѵ��� 2650/2922 ֡��
+[optical_flow]   �Ѵ��� 2700/2922 ֡��
+[optical_flow]   �Ѵ��� 2750/2922 ֡��
+[optical_flow]   �Ѵ��� 2800/2922 ֡��
+[optical_flow]   �Ѵ��� 2850/2922 ֡��
+[optical_flow]   �Ѵ��� 2900/2922 ֡��
+[optical_flow]   ��ɣ��� 2922 ֡��
+[optical_flow] �ѱ��� �� D:\WorkPath\fitness_new\gym_analyzer\input\�ž���-2026.06.11\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��2923 ֡ �� 49 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  352 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  325 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  302 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  303 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  324 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  335 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  346 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  342 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  417 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  211 KB
+[stitcher]   ���� 011  10:00 �� 10:59  (60 ֡)  7��9  233 KB
+[stitcher]   ���� 012  11:00 �� 11:59  (60 ֡)  7��9  364 KB
+[stitcher]   ���� 013  12:00 �� 12:59  (60 ֡)  7��9  380 KB
+[stitcher]   ���� 014  13:00 �� 13:59  (60 ֡)  7��9  371 KB
+[stitcher]   ���� 015  14:00 �� 14:59  (60 ֡)  7��9  396 KB
+[stitcher]   ���� 016  15:00 �� 15:59  (60 ֡)  7��9  391 KB
+[stitcher]   ���� 017  16:00 �� 16:59  (60 ֡)  7��9  370 KB
+[stitcher]   ���� 018  17:00 �� 17:59  (60 ֡)  7��9  412 KB
+[stitcher]   ���� 019  18:00 �� 18:59  (60 ֡)  7��9  384 KB
+[stitcher]   ���� 020  19:00 �� 19:59  (60 ֡)  7��9  380 KB
+[stitcher]   ���� 021  20:00 �� 20:59  (60 ֡)  7��9  366 KB
+[stitcher]   ���� 022  21:00 �� 21:59  (60 ֡)  7��9  336 KB
+[stitcher]   ���� 023  22:00 �� 22:59  (60 ֡)  7��9  358 KB
+[stitcher]   ���� 024  23:00 �� 23:59  (60 ֡)  7��9  333 KB
+[stitcher]   ���� 025  24:00 �� 24:59  (60 ֡)  7��9  371 KB
+[stitcher]   ���� 026  25:00 �� 25:59  (60 ֡)  7��9  353 KB
+[stitcher]   ���� 027  26:00 �� 26:59  (60 ֡)  7��9  370 KB
+[stitcher]   ���� 028  27:00 �� 27:59  (60 ֡)  7��9  344 KB
+[stitcher]   ���� 029  28:00 �� 28:59  (60 ֡)  7��9  369 KB
+[stitcher]   ���� 030  29:00 �� 29:59  (60 ֡)  7��9  369 KB
+[stitcher]   ���� 031  30:00 �� 30:59  (60 ֡)  7��9  469 KB
+[stitcher]   ���� 032  31:00 �� 31:59  (60 ֡)  7��9  350 KB
+[stitcher]   ���� 033  32:00 �� 32:59  (60 ֡)  7��9  458 KB
+[stitcher]   ���� 034  33:00 �� 33:59  (60 ֡)  7��9  478 KB
+[stitcher]   ���� 035  34:00 �� 34:59  (60 ֡)  7��9  353 KB
+[stitcher]   ���� 036  35:00 �� 35:59  (60 ֡)  7��9  356 KB
+[stitcher]   ���� 037  36:00 �� 36:59  (60 ֡)  7��9  342 KB
+[stitcher]   ���� 038  37:00 �� 37:59  (60 ֡)  7��9  366 KB
+[stitcher]   ���� 039  38:00 �� 38:59  (60 ֡)  7��9  320 KB
+[stitcher]   ���� 040  39:00 �� 39:59  (60 ֡)  7��9  379 KB
+[stitcher]   ���� 041  40:00 �� 40:59  (60 ֡)  7��9  371 KB
+[stitcher]   ���� 042  41:00 �� 41:59  (60 ֡)  7��9  328 KB
+[stitcher]   ���� 043  42:00 �� 42:59  (60 ֡)  7��9  374 KB
+[stitcher]   ���� 044  43:00 �� 43:59  (60 ֡)  7��9  330 KB
+[stitcher]   ���� 045  44:00 �� 44:59  (60 ֡)  7��9  338 KB
+[stitcher]   ���� 046  45:00 �� 45:59  (60 ֡)  7��9  338 KB
+[stitcher]   ���� 047  46:00 �� 46:59  (60 ֡)  7��9  348 KB
+[stitcher]   ���� 048  47:00 �� 47:59  (60 ֡)  7��9  411 KB
+[stitcher]   ���� 049  48:00 �� 48:42  (43 ֡)  7��7  236 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  ��Ƶ�ϴ� (49 grids > 25)�����÷ֿ鴦��
+  ��Ϊ 3 ��
+  [chunk 1/3] 00:00:00~00:19:59, 20 grids
+  �� LLM ����: model=gemini-3-flash-preview, 20 ��ͼƬ
+  [����] ����Ӧ! finish_reason='length' ������Ӧ: {'id': 'chatcmpl-202606221036176840781468268d9d62dmjQWWg', 'model': 'gemini-3-flash-preview', 'object': 'chat.completion', 'created': 1782124673, 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': ''}, 'finish_reason': 'length'}], 'usage': {'prompt_tokens': 28754, 'completion_tokens': 16380, 'total_tokens': 45134, 'prompt_tokens_details': {'cached_tokens': 28604, 'text_tokens': 6914, 'audio_tokens': 0, 'image_tokens': 0}, 'completion_tokens_details': {'text_tokens': 655, 'audio
+  [chunk 2/3] 00:18:00~00:37:59, 20 grids
+  �� LLM ����: model=gemini-3-flash-preview, 20 ��ͼƬ
+  [chunk 3/3] 00:36:00~00:48:42, 13 grids
+  �� LLM ����: model=gemini-3-flash-preview, 13 ��ͼƬ
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ž���-2026.06.11\period_result.json
+  Phase 1 (�ֿ�) ���: 20 ��, ���� EXERCISE 8 ��
+    00:18:00 �� 00:20:59  TRANSITION  conf=0.85  �û��ڵ������ӡ�����е��ǰ��ѡ���������壬����ڽ�����������ƶ���
+    00:20:59 �� 00:27:40  REST  conf=0.9  �û���ʱ��վ����������������ڼ�۲컷��������е������
+    00:27:40 �� 00:28:33  TRANSITION  conf=0.85  �û�����ѵ���ʲ���������׼����ʼѵ����
+    00:28:33 �� 00:29:48  EXERCISE  conf=0.95  �û������������ƣ�������ʾ�컨��ƹ⣬˫�ֳ�������������������˶���
+    00:29:48 �� 00:31:05  REST  conf=0.9  �û�����ѵ��������Ϣ���ڼ�鿴�ֱ���������̸��
+    00:31:05 �� 00:32:05  EXERCISE  conf=0.95  �û����еڶ����������ƣ�������ʾ���Ե��������˶�ģʽ��
+    00:32:05 �� 00:34:05  REST  conf=0.9  �����Ϣ���û�վ�������ڵ������������ͨ��
+    00:34:05 �� 00:35:15  EXERCISE  conf=0.95  �û����е������������ƣ��ӽǳ����컨�壬�������й����ԡ�
+    00:35:15 �� 00:35:59  TRANSITION  conf=0.85  �û��������岢�ƶ�������������е����
+    00:35:59 �� 00:36:39  EXERCISE  conf=0.95  �û�ʹ������������е��˫������е���������ҹ�����ʾ�ȶ��������˶���
+    00:36:39 �� 00:37:59  REST  conf=0.9  ѵ���������û��뿪��е�������վ����̸��
+    00:37:59 �� 00:39:00  EXERCISE  conf=0.9  �û�˫����������п�����ѵ����������ʾ�����������˶�ģʽ��
+    00:39:00 �� 00:41:15  REST  conf=0.95  �û�վ���������̸��˫��δ�Ӵ���е�����������Ϣ��
+    00:41:15 �� 00:42:00  EXERCISE  conf=0.9  �û��ٴ����������˫�ֿ�����ѵ��������ǿ���������ӡ�
+    00:42:00 �� 00:43:00  TRANSITION  conf=0.85  �û��۲����ʾ��������λ�ã�׼����һ�鶯����
+    00:43:00 �� 00:44:14  EXERCISE  conf=0.9  �û������������һ�ֵ�˫�ֿ��轻��ѵ����
+    00:44:14 �� 00:45:00  TRANSITION  conf=0.85  �û�ֹͣ�������ƶ�����������׼�����е���ѵ����
+    00:45:00 �� 00:47:11  REST  conf=0.9  �û������ڵ�����Ϣ����ȡ����ָ������������컨�塣
+    00:47:11 �� 00:48:28  EXERCISE  conf=0.85  �û��ڵ�����к��Ļ�����֫��ѵ����������ʾ�������˶����ơ�
+    00:48:28 �� 00:48:42  TRANSITION  conf=0.9  ѵ���������û�������뿪ѵ������
+  �� 20 �����䣬���� 8 �� EXERCISE
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 8 �� EXERCISE �δ�ʶ�𣨲���: 4��
+
+  ���� exercise_001: 00:28:33 ~ 00:29:48 (75s)
+    [exercise_001] ��չȡ֡��Χ: 00:28:18 ~ 00:30:03
+
+  ���� exercise_002: 00:31:05 ~ 00:32:05 (60s)
+    [exercise_002] ��չȡ֡��Χ: 00:30:50 ~ 00:32:20
+
+  ���� exercise_003: 00:34:05 ~ 00:35:15 (70s)
+    [exercise_003] ��չȡ֡��Χ: 00:33:50 ~ 00:35:30
+
+  ���� exercise_004: 00:35:59 ~ 00:36:39 (40s)
+    [exercise_004] ��չȡ֡��Χ: 00:35:44 ~ 00:36:54
+    [exercise_004] ƴͼ: 71 ֡, 7��11, 402 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ƴͼ: 91 ֡, 7��13, 565 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ƴͼ: 101 ֡, 7��15, 620 KB
+    [exercise_001] ƴͼ: 106 ֡, 7��16, 659 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ��Ӧ����: 670 �ַ�
+
+  ���� exercise_005: 00:37:59 ~ 00:39:00 (61s)
+    [exercise_005] ��չȡ֡��Χ: 00:37:44 ~ 00:39:15
+    [exercise_005] ƴͼ: 92 ֡, 7��14, 518 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ��Ӧ����: 648 �ַ�
+
+  ���� exercise_006: 00:41:15 ~ 00:42:00 (45s)
+    [exercise_006] ��չȡ֡��Χ: 00:41:00 ~ 00:42:15
+    [exercise_006] ƴͼ: 76 ֡, 7��11, 429 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ��Ӧ����: 633 �ַ�
+
+  ���� exercise_007: 00:43:00 ~ 00:44:14 (74s)
+    [exercise_007] ��չȡ֡��Χ: 00:42:45 ~ 00:44:29
+    [exercise_007] ƴͼ: 105 ֡, 7��15, 582 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_004] ��Ӧ����: 769 �ַ�
+
+  ���� exercise_008: 00:47:11 ~ 00:48:28 (77s)
+    [exercise_008] ��չȡ֡��Χ: 00:46:56 ~ 00:48:42
+    [exercise_008] ƴͼ: 107 ֡, 7��16, 670 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_006] ��Ӧ����: 723 �ַ�
+    [exercise_006] ʶ����Ϊ UNKNOWN_ACTION����Ӳ�����ʾ������ (1/3)...
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_005] ��Ӧ����: 712 �ַ�
+    [exercise_005] ʶ����Ϊ UNKNOWN_ACTION����Ӳ�����ʾ������ (1/3)...
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_007] ��Ӧ����: 781 �ַ�
+    [exercise_007] ʶ����Ϊ UNKNOWN_ACTION����Ӳ�����ʾ������ (1/3)...
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_006] ��Ӧ����: 643 �ַ�
+    [exercise_008] ��Ӧ����: 735 �ַ�
+    [exercise_008] ʶ����Ϊ UNKNOWN_ACTION����Ӳ�����ʾ������ (1/3)...
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_007] ��Ӧ����: 680 �ַ�
+    [exercise_008] ��Ӧ����: 844 �ַ�
+    [exercise_005] ��Ӧ����: 772 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ž���-2026.06.11\exercise_result.json
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ž���-2026.06.11\period_result_adjusted.json
+
+  Phase 2 ���: 8 �� EXERCISE, �������� 9 ��
+
+============================================================
+��ɣ���ʱ 450.1s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ž���-2026.06.11\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ž���-2026.06.11\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ž���-2026.06.11\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ž���-2026.06.11\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\�ž���-2026.06.11\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\�ž���-2026.06.11\mid_result
+EXERCISE ʶ������
+  00:28:33��00:29:48  ���� / ��������  [dumbbell_bench_press]  1 ��  conf=0.95
+  00:31:05��00:32:05  ���� / ��������  [dumbbell_bench_press]  1 ��  conf=1.0
+  00:34:05��00:35:15  ���� / ��������  [dumbbell_bench_press]  1 ��  conf=0.95
+  00:35:59��00:36:39  ����� / �̶���е���˻���  [machine_seated_row]  1 ��  conf=0.95
+  00:37:59��00:39:00  UNKNOWN_EQUIPMENT / ��������  [cable_chest_fly]  1 ��  conf=0.5
+  00:41:15��00:42:00  ���ż� / ��������  [cable_chest_fly]  1 ��  conf=0.6
+  00:43:00��00:44:14  ����е / ��������  [cable_chest_fly]  1 ��  conf=0.6
+  00:47:11��00:48:28  ����е / �������  [bodyweight_squat]  1 ��  conf=0.5
+============================================================
+
+
+######################################################################
+# [9/13] �ֱ�-��-���
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\�ֱ�-��-���
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ֱ�-��-���
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\�ֱ�-��-���
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ֱ�-��-���
+֡����1284  ʱ����00:21:23
+Phase 2 ��������4
+============================================================
+
+[IMU] δ�ҵ� IMU_data.txt����������������
+[optical_flow] ʹ�û��棺1283 ֡�ԣ�D:\WorkPath\fitness_new\recognize\visualize\result\shared\�ֱ�-��-���\optical_flow.json��
+[Step 2] ����ʹ�� shared ���棺D:\WorkPath\fitness_new\recognize\visualize\result\shared\�ֱ�-��-���\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��1284 ֡ �� 22 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  360 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  348 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  332 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  331 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  344 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  337 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  383 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  350 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  369 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  368 KB
+[stitcher]   ���� 011  10:00 �� 10:59  (60 ֡)  7��9  390 KB
+[stitcher]   ���� 012  11:00 �� 11:59  (60 ֡)  7��9  384 KB
+[stitcher]   ���� 013  12:00 �� 12:59  (60 ֡)  7��9  383 KB
+[stitcher]   ���� 014  13:00 �� 13:59  (60 ֡)  7��9  380 KB
+[stitcher]   ���� 015  14:00 �� 14:59  (60 ֡)  7��9  364 KB
+[stitcher]   ���� 016  15:00 �� 15:59  (60 ֡)  7��9  332 KB
+[stitcher]   ���� 017  16:00 �� 16:59  (60 ֡)  7��9  324 KB
+[stitcher]   ���� 018  17:00 �� 17:59  (60 ֡)  7��9  347 KB
+[stitcher]   ���� 019  18:00 �� 18:59  (60 ֡)  7��9  332 KB
+[stitcher]   ���� 020  19:00 �� 19:59  (60 ֡)  7��9  333 KB
+[stitcher]   ���� 021  20:00 �� 20:59  (60 ֡)  7��9  297 KB
+[stitcher]   ���� 022  21:00 �� 21:23  (24 ֡)  7��4  114 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 22 ��ͼƬ
+  ��Ӧ����: 1576 �ַ�
+  [����] JSON ����ʧ��: �޷����� JSON��
+{"segments": [{"start_time": "00:00:00", "end_time": "00:00:17", "state": "TRANSITION", "confidence": 0.9, "reason": "�û����뽡�������ʼ�����ܲ�������"}, {"start_time": "00:00:18", "end_time": "00:06:05", "state": "EXERCISE", "confidence": 0.95, "reason": "�û����ܲ������˶���������ʾ������������λ��"}, {"start_time": "00:06:06", "end_time": "00:06:34", "state": "TRANSITION", "confidence": 0.9, "reason": "�û��뿪�ܲ������ڽ�������ƶ�Ѱ����е"}, {"start_time": "00:06:35", "end_time": "00:07:10", "state": "EXERCISE", "confidence": 0.9, "reason": "�û�˫
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ֱ�-��-���\period_result.json
+  Phase 1 ���: 0 ��, ���� EXERCISE 0 ��
+  �� 0 �����䣬���� 0 �� EXERCISE
+  [WARN] Phase 1 δʶ����κ� EXERCISE ���䣬����ʶ��...
+[stitcher] Phase1 ƴͼ��1284 ֡ �� 22 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  360 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  348 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  332 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  331 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  344 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  337 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  383 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  350 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  369 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  368 KB
+[stitcher]   ���� 011  10:00 �� 10:59  (60 ֡)  7��9  390 KB
+[stitcher]   ���� 012  11:00 �� 11:59  (60 ֡)  7��9  384 KB
+[stitcher]   ���� 013  12:00 �� 12:59  (60 ֡)  7��9  383 KB
+[stitcher]   ���� 014  13:00 �� 13:59  (60 ֡)  7��9  380 KB
+[stitcher]   ���� 015  14:00 �� 14:59  (60 ֡)  7��9  364 KB
+[stitcher]   ���� 016  15:00 �� 15:59  (60 ֡)  7��9  332 KB
+[stitcher]   ���� 017  16:00 �� 16:59  (60 ֡)  7��9  324 KB
+[stitcher]   ���� 018  17:00 �� 17:59  (60 ֡)  7��9  347 KB
+[stitcher]   ���� 019  18:00 �� 18:59  (60 ֡)  7��9  332 KB
+[stitcher]   ���� 020  19:00 �� 19:59  (60 ֡)  7��9  333 KB
+[stitcher]   ���� 021  20:00 �� 20:59  (60 ֡)  7��9  297 KB
+[stitcher]   ���� 022  21:00 �� 21:23  (24 ֡)  7��4  114 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 22 ��ͼƬ
+  ��Ӧ����: 1576 �ַ�
+  [����] JSON ����ʧ��: �޷����� JSON��
+{"segments": [{"start_time": "00:00:00", "end_time": "00:00:17", "state": "TRANSITION", "confidence": 0.9, "reason": "�û����뽡�������ʼ�����ܲ�������"}, {"start_time": "00:00:18", "end_time": "00:06:05", "state": "EXERCISE", "confidence": 0.95, "reason": "�û����ܲ������˶���������ʾ������������λ��"}, {"start_time": "00:06:06", "end_time": "00:06:34", "state": "TRANSITION", "confidence": 0.9, "reason": "�û��뿪�ܲ������ڽ�������ƶ�Ѱ����е"}, {"start_time": "00:06:35", "end_time": "00:07:10", "state": "EXERCISE", "confidence": 0.9, "reason": "�û�˫
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ֱ�-��-���\period_result.json
+  Phase 1 ���: 0 ��, ���� EXERCISE 0 ��
+  �� ���Խ����0 �����䣬���� 0 �� EXERCISE
+  [WARN] ���Ժ����� EXERCISE������ Phase 2
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 0 �� EXERCISE �δ�ʶ�𣨲���: 4��
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ֱ�-��-���\exercise_result.json
+
+============================================================
+��ɣ���ʱ 70.5s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ֱ�-��-���\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ֱ�-��-���\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ֱ�-��-���\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\�ֱ�-��-���\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\�ֱ�-��-���\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\�ֱ�-��-���\mid_result
+EXERCISE ʶ������
+============================================================
+
+
+######################################################################
+# [10/13] ��-������
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\��-������
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-������
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\��-������
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-������
+֡����852  ʱ����00:14:11
+Phase 2 ��������4
+============================================================
+
+[IMU] δ�ҵ� IMU_data.txt����������������
+[Step 2] �������
+[optical_flow] ���������852 ֡
+[optical_flow]   �Ѵ��� 50/851 ֡��
+[optical_flow]   �Ѵ��� 100/851 ֡��
+[optical_flow]   �Ѵ��� 150/851 ֡��
+[optical_flow]   �Ѵ��� 200/851 ֡��
+[optical_flow]   �Ѵ��� 250/851 ֡��
+[optical_flow]   �Ѵ��� 300/851 ֡��
+[optical_flow]   �Ѵ��� 350/851 ֡��
+[optical_flow]   �Ѵ��� 400/851 ֡��
+[optical_flow]   �Ѵ��� 450/851 ֡��
+[optical_flow]   �Ѵ��� 500/851 ֡��
+[optical_flow]   �Ѵ��� 550/851 ֡��
+[optical_flow]   �Ѵ��� 600/851 ֡��
+[optical_flow]   �Ѵ��� 650/851 ֡��
+[optical_flow]   �Ѵ��� 700/851 ֡��
+[optical_flow]   �Ѵ��� 750/851 ֡��
+[optical_flow]   �Ѵ��� 800/851 ֡��
+[optical_flow]   �Ѵ��� 850/851 ֡��
+[optical_flow]   ��ɣ��� 851 ֡��
+[optical_flow] �ѱ��� �� D:\WorkPath\fitness_new\gym_analyzer\input\��-������\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��852 ֡ �� 15 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  274 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  254 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  246 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  265 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  334 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  341 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  320 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  298 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  300 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  297 KB
+[stitcher]   ���� 011  10:00 �� 10:59  (60 ֡)  7��9  302 KB
+[stitcher]   ���� 012  11:00 �� 11:59  (60 ֡)  7��9  307 KB
+[stitcher]   ���� 013  12:00 �� 12:59  (60 ֡)  7��9  298 KB
+[stitcher]   ���� 014  13:00 �� 13:59  (60 ֡)  7��9  296 KB
+[stitcher]   ���� 015  14:00 �� 14:11  (12 ֡)  7��2  46 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 15 ��ͼƬ
+  ��Ӧ����: 1622 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-������\period_result.json
+  Phase 1 ���: 9 ��, ���� EXERCISE 4 ��
+    00:00:00 �� 00:00:22  TRANSITION  conf=0.9  �û����뽡���������Ѱ����е���ӽǴ���Ȼζ���δ�Ӵ���е��
+    00:00:23 �� 00:03:48  EXERCISE  conf=0.95  �û�˫����ס������е�ֱ������������ʾ�˶�״̬�����������ȶ��������������˶���
+    00:03:49 �� 00:04:16  TRANSITION  conf=0.9  �û��뿪������е���ڽ�����������ƶ�������ѵ������
+    00:04:17 �� 00:06:10  EXERCISE  conf=0.95  �û�˫��ץ��������е�ֱ������������Ե�����/���춯����������ʾ���Ե���������ģʽ��
+    00:06:11 �� 00:07:09  TRANSITION  conf=0.85  �û��ɿ���е�����������߶����۲컷��������λ�á�
+    00:07:10 �� 00:09:50  EXERCISE  conf=0.95  �û�����ץ�������ֱ����еڶ�����ϰ������ǿ�������Ҿ��и߶������ԡ�
+    00:09:51 �� 00:10:04  TRANSITION  conf=0.8  �û�����ͣ�ٲ�������е���Ӵ���׼����һ�鶯����
+    00:10:05 �� 00:13:43  EXERCISE  conf=0.95  �û���������������е��ϰ��˫������е���ָ�Ƶ������������ʾ�ȶ����˶��켣��
+    00:13:44 �� 00:14:11  TRANSITION  conf=0.9  ѵ���������û�������е������������ڡ�
+  �� 9 �����䣬���� 4 �� EXERCISE
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 4 �� EXERCISE �δ�ʶ�𣨲���: 4��
+
+  ���� exercise_001: 00:00:23 ~ 00:03:48 (205s)
+    [exercise_001] ��չȡ֡��Χ: 00:00:08 ~ 00:04:03
+
+  ���� exercise_002: 00:04:17 ~ 00:06:10 (113s)
+
+  ���� exercise_003: 00:07:10 ~ 00:09:50 (160s)
+    [exercise_002] ��չȡ֡��Χ: 00:04:02 ~ 00:06:25
+    [exercise_003] ��չȡ֡��Χ: 00:06:55 ~ 00:10:05
+
+  ���� exercise_004: 00:10:05 ~ 00:13:43 (218s)
+    [exercise_004] ��չȡ֡��Χ: 00:09:50 ~ 00:13:58
+    [exercise_002] ƴͼ: 144 ֡, 7��21, 809 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ƴͼ: 191 ֡, 7��28, 948 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ƴͼ: 236 ֡, 7��34, 1016 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_004] ƴͼ: 249 ֡, 7��36, 1241 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ��Ӧ����: 669 �ַ�
+    [exercise_003] ��Ӧ����: 870 �ַ�
+    [exercise_004] ��Ӧ����: 1032 �ַ�
+    [exercise_001] ��Ӧ����: 755 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-������\exercise_result.json
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-������\period_result_adjusted.json
+
+  Phase 2 ���: 4 �� EXERCISE, �������� 4 ��
+
+============================================================
+��ɣ���ʱ 73.3s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-������\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-������\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-������\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-������\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\��-������\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\��-������\mid_result
+EXERCISE ʶ������
+  00:00:23��00:03:48  �ǽ׻�/��¥�� / �ǽ׻�/��¥��  [stepmill]  1 ��  conf=0.95
+  00:04:17��00:06:10  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+  00:07:10��00:09:50  ���ż� / ��������  [cable_chest_fly]  2 ��  conf=0.9
+  00:10:05��00:13:43  ���ż� / ������ѹ  [cable_triceps_pushdown]  5 ��  conf=0.95
+============================================================
+
+
+######################################################################
+# [11/13] ��-��-������
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\��-��-������
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-��-������
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\��-��-������
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-��-������
+֡����1151  ʱ����00:19:10
+Phase 2 ��������4
+============================================================
+
+[IMU] δ�ҵ� IMU_data.txt����������������
+[optical_flow] ʹ�û��棺1150 ֡�ԣ�D:\WorkPath\fitness_new\recognize\visualize\result\shared\��-��-������\optical_flow.json��
+[Step 2] ����ʹ�� shared ���棺D:\WorkPath\fitness_new\recognize\visualize\result\shared\��-��-������\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��1151 ֡ �� 20 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  308 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  280 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  280 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  276 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  265 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  270 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  350 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  391 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  399 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  380 KB
+[stitcher]   ���� 011  10:00 �� 10:59  (60 ֡)  7��9  401 KB
+[stitcher]   ���� 012  11:00 �� 11:59  (60 ֡)  7��9  373 KB
+[stitcher]   ���� 013  12:00 �� 12:59  (60 ֡)  7��9  378 KB
+[stitcher]   ���� 014  13:00 �� 13:59  (60 ֡)  7��9  360 KB
+[stitcher]   ���� 015  14:00 �� 14:59  (60 ֡)  7��9  361 KB
+[stitcher]   ���� 016  15:00 �� 15:59  (60 ֡)  7��9  329 KB
+[stitcher]   ���� 017  16:00 �� 16:59  (60 ֡)  7��9  216 KB
+[stitcher]   ���� 018  17:00 �� 17:59  (60 ֡)  7��9  216 KB
+[stitcher]   ���� 019  18:00 �� 18:59  (60 ֡)  7��9  285 KB
+[stitcher]   ���� 020  19:00 �� 19:10  (11 ֡)  7��2  48 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 20 ��ͼƬ
+  ��Ӧ����: 2308 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-��-������\period_result.json
+  Phase 1 ���: 13 ��, ���� EXERCISE 6 ��
+    00:00:00 �� 00:00:30  TRANSITION  conf=0.9  �û��ڽ���������߲�Ѱ����е������ͣ����������еǰ��
+    00:00:31 �� 00:06:10  EXERCISE  conf=0.95  �û�˫�ֳ����Ӵ�������е�ֱ���������ʾ�����Ҿ���һ�������Ե��˶�ģʽ��
+    00:06:11 �� 00:06:35  TRANSITION  conf=0.85  �û��뿪������е���ڽ�������ƶ�����������ѵ������
+    00:06:36 �� 00:09:35  EXERCISE  conf=0.95  �û�ʹ�ø�λ������е��������ʾ˫��ץ�պ�˲����������Ե��������춯����
+    00:09:36 �� 00:10:15  TRANSITION  conf=0.85  �û���������������������ƶ�����һ������ѵ����λ��
+    00:10:16 �� 00:12:45  EXERCISE  conf=0.9  �û��������˻���������������˫��ץ������������������ʾ������ˮƽ���������ԡ�
+    00:12:46 �� 00:13:15  TRANSITION  conf=0.85  �û�������е�������ƶ�λ�ã�׼��������һ�鶯����
+    00:13:16 �� 00:15:25  EXERCISE  conf=0.95  �û���������ͷ����ѹѵ����˫��ץ�����������������������Ե����������˶���
+    00:15:26 �� 00:16:05  TRANSITION  conf=0.85  �û���������ѵ�������ߴ��������ǰ���̶���е����
+    00:16:06 �� 00:17:35  EXERCISE  conf=0.85  �û��������ػ��Ƽ���е�ϣ�˫����ס���ֽ����������ƾٶ�����
+    00:17:36 �� 00:18:00  TRANSITION  conf=0.9  �û��뿪��е�������Ȳ�ѵ������
+    00:18:01 �� 00:18:30  EXERCISE  conf=0.9  �û����е���/�Ⱦ�ѵ��������ɼ�˫����̤���Ͻ��������Ե��졣
+    00:18:31 �� 00:19:10  TRANSITION  conf=0.95  ѵ���������û����ߴ��������������ڷ����ƶ���
+  �� 13 �����䣬���� 6 �� EXERCISE
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 6 �� EXERCISE �δ�ʶ�𣨲���: 4��
+
+  ���� exercise_001: 00:00:31 ~ 00:06:10 (339s)
+    [exercise_001] ��չȡ֡��Χ: 00:00:16 ~ 00:06:25
+
+  ���� exercise_002: 00:06:36 ~ 00:09:35 (179s)
+    [exercise_002] ��չȡ֡��Χ: 00:06:21 ~ 00:09:50
+
+  ���� exercise_003: 00:10:16 ~ 00:12:45 (149s)
+    [exercise_003] ��չȡ֡��Χ: 00:10:01 ~ 00:13:00
+
+  ���� exercise_004: 00:13:16 ~ 00:15:25 (129s)
+    [exercise_004] ��չȡ֡��Χ: 00:13:01 ~ 00:15:40
+    [exercise_004] ƴͼ: 160 ֡, 7��23, 949 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ƴͼ: 180 ֡, 7��26, 1146 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ƴͼ: 210 ֡, 7��30, 1340 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ƴͼ: 370 ֡, 7��53, 1707 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_004] ��Ӧ����: 644 �ַ�
+
+  ���� exercise_005: 00:16:06 ~ 00:17:35 (89s)
+    [exercise_005] ��չȡ֡��Χ: 00:15:51 ~ 00:17:50
+    [exercise_005] ƴͼ: 120 ֡, 7��18, 429 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ��Ӧ����: 841 �ַ�
+
+  ���� exercise_006: 00:18:01 ~ 00:18:30 (29s)
+    [exercise_006] ��չȡ֡��Χ: 00:17:46 ~ 00:18:45
+    [exercise_006] ƴͼ: 60 ֡, 7��9, 272 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ��Ӧ����: 668 �ַ�
+    [exercise_001] ��Ӧ����: 761 �ַ�
+    [exercise_006] ��Ӧ����: 631 �ַ�
+    [exercise_005] ��Ӧ����: 740 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-��-������\exercise_result.json
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-��-������\period_result_adjusted.json
+
+  Phase 2 ���: 6 �� EXERCISE, �������� 8 ��
+
+============================================================
+��ɣ���ʱ 88.2s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-��-������\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-��-������\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-��-������\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-��-������\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\��-��-������\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\��-��-������\mid_result
+EXERCISE ʶ������
+  00:00:31��00:06:10  �ܲ��� / �ܲ���  [treadmill_walk_run]  1 ��  conf=0.95
+  00:06:36��00:09:35  ��λ������ / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.95
+  00:10:16��00:12:45  ���ż� / ������������  [cable_seated_row]  3 ��  conf=0.95
+  00:13:16��00:15:25  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+  00:16:06��00:17:35  �̶���е���ػ� / �̶���е����  [machine_chest_press]  1 ��  conf=0.95
+  00:18:01��00:18:30  �ǽ׻�/��¥�� / �ǽ׻�/��¥��  [stepmill]  1 ��  conf=0.95
+============================================================
+
+
+######################################################################
+# [12/13] �米-Ҷ��
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\�米-Ҷ��
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\�米-Ҷ��
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\�米-Ҷ��
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\�米-Ҷ��
+֡����1145  ʱ����00:19:04
+Phase 2 ��������4
+============================================================
+
+[IMU] δ�ҵ� IMU_data.txt����������������
+[Step 2] �������
+[optical_flow] ���������1145 ֡
+[optical_flow]   �Ѵ��� 50/1144 ֡��
+[optical_flow]   �Ѵ��� 100/1144 ֡��
+[optical_flow]   �Ѵ��� 150/1144 ֡��
+[optical_flow]   �Ѵ��� 200/1144 ֡��
+[optical_flow]   �Ѵ��� 250/1144 ֡��
+[optical_flow]   �Ѵ��� 300/1144 ֡��
+[optical_flow]   �Ѵ��� 350/1144 ֡��
+[optical_flow]   �Ѵ��� 400/1144 ֡��
+[optical_flow]   �Ѵ��� 450/1144 ֡��
+[optical_flow]   �Ѵ��� 500/1144 ֡��
+[optical_flow]   �Ѵ��� 550/1144 ֡��
+[optical_flow]   �Ѵ��� 600/1144 ֡��
+[optical_flow]   �Ѵ��� 650/1144 ֡��
+[optical_flow]   �Ѵ��� 700/1144 ֡��
+[optical_flow]   �Ѵ��� 750/1144 ֡��
+[optical_flow]   �Ѵ��� 800/1144 ֡��
+[optical_flow]   �Ѵ��� 850/1144 ֡��
+[optical_flow]   �Ѵ��� 900/1144 ֡��
+[optical_flow]   �Ѵ��� 950/1144 ֡��
+[optical_flow]   �Ѵ��� 1000/1144 ֡��
+[optical_flow]   �Ѵ��� 1050/1144 ֡��
+[optical_flow]   �Ѵ��� 1100/1144 ֡��
+[optical_flow]   ��ɣ��� 1144 ֡��
+[optical_flow] �ѱ��� �� D:\WorkPath\fitness_new\gym_analyzer\input\�米-Ҷ��\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��1145 ֡ �� 20 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  365 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  350 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  330 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  335 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  341 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  404 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  416 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  429 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  421 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  443 KB
+[stitcher]   ���� 011  10:00 �� 10:59  (60 ֡)  7��9  416 KB
+[stitcher]   ���� 012  11:00 �� 11:59  (60 ֡)  7��9  443 KB
+[stitcher]   ���� 013  12:00 �� 12:59  (60 ֡)  7��9  453 KB
+[stitcher]   ���� 014  13:00 �� 13:59  (60 ֡)  7��9  458 KB
+[stitcher]   ���� 015  14:00 �� 14:59  (60 ֡)  7��9  442 KB
+[stitcher]   ���� 016  15:00 �� 15:59  (60 ֡)  7��9  409 KB
+[stitcher]   ���� 017  16:00 �� 16:59  (60 ֡)  7��9  420 KB
+[stitcher]   ���� 018  17:00 �� 17:59  (60 ֡)  7��9  418 KB
+[stitcher]   ���� 019  18:00 �� 18:59  (60 ֡)  7��9  364 KB
+[stitcher]   ���� 020  19:00 �� 19:04  (5 ֡)  5��1  21 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 20 ��ͼƬ
+  ��Ӧ����: 2918 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\�米-Ҷ��\period_result.json
+  Phase 1 ���: 17 ��, ���� EXERCISE 8 ��
+    00:00:00 �� 00:00:34  TRANSITION  conf=0.9  �û����뽡�����Ѱ����е���������Ե����߹�����
+    00:00:35 �� 00:04:52  EXERCISE  conf=0.95  �û���������е����ɽ��/�ܲ��������˶���˫�ַ�����������ʾ�������������˶���
+    00:04:53 �� 00:06:48  TRANSITION  conf=0.85  �û��뿪���������ƶ�������ѵ������������е��
+    00:06:49 �� 00:07:15  EXERCISE  conf=0.9  �û����е�һ���λ����������˫���ոܣ������������Ե���������ģʽ��
+    00:07:16 �� 00:08:18  REST  conf=0.9  �����Ϣ���û�ͣ����ԭ�ع۲컷����鿴�ֻ���
+    00:08:19 �� 00:08:55  EXERCISE  conf=0.9  �û����еڶ����λ������������е��˫�ִ��ڳ���������
+    00:08:56 �� 00:09:25  REST  conf=0.9  �����Ϣ������ǿ�ȼ��͡�
+    00:09:26 �� 00:09:55  EXERCISE  conf=0.9  �û����е������λ����������������ʾ������λ�ơ�
+    00:09:56 �� 00:11:28  TRANSITION  conf=0.85  �û�����ѵ��λ�ã��ƶ�����һ̨������е�����е�����
+    00:11:29 �� 00:12:30  EXERCISE  conf=0.9  �û���������е�Ͻ���ѵ����˫���������֣������ȶ���
+    00:12:31 �� 00:13:55  REST  conf=0.9  �����Ϣ���û������ֻ�����е�������˶���
+    00:13:56 �� 00:14:45  EXERCISE  conf=0.9  �û�ʹ������������������ѵ����������ʾ�����������˶�ģʽ��
+    00:14:46 �� 00:15:20  TRANSITION  conf=0.85  �û��ƶ������˻�����е������׼����
+    00:15:21 �� 00:16:45  EXERCISE  conf=0.95  �û��������˻���ѵ����˫��������е��������ʾ�����������ǰ���˶���
+    00:16:46 �� 00:17:30  REST  conf=0.9  �����Ϣ���û�ͣ������е����Ϣ��
+    00:17:31 �� 00:17:59  EXERCISE  conf=0.9  �û��������һ�黮����������������е���ڳ���������
+    00:18:00 �� 00:19:04  TRANSITION  conf=0.95  ѵ���������û��뿪����������������ƶ���ͣ������
+  �� 17 �����䣬���� 8 �� EXERCISE
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 8 �� EXERCISE �δ�ʶ�𣨲���: 4��
+
+  ���� exercise_001: 00:00:35 ~ 00:04:52 (257s)
+
+  ���� exercise_002: 00:06:49 ~ 00:07:15 (26s)
+    [exercise_001] ��չȡ֡��Χ: 00:00:20 ~ 00:05:07
+    [exercise_002] ��չȡ֡��Χ: 00:06:34 ~ 00:07:30
+
+  ���� exercise_003: 00:08:19 ~ 00:08:55 (36s)
+    [exercise_003] ��չȡ֡��Χ: 00:08:04 ~ 00:09:10
+
+  ���� exercise_004: 00:09:26 ~ 00:09:55 (29s)
+    [exercise_004] ��չȡ֡��Χ: 00:09:11 ~ 00:10:10
+    [exercise_002] ƴͼ: 57 ֡, 7��9, 400 KB
+    [exercise_004] ƴͼ: 60 ֡, 7��9, 430 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ƴͼ: 67 ֡, 7��10, 478 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ƴͼ: 288 ֡, 7��42, 1651 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_004] ��Ӧ����: 699 �ַ�
+
+  ���� exercise_005: 00:11:29 ~ 00:12:30 (61s)
+    [exercise_005] ��չȡ֡��Χ: 00:11:14 ~ 00:12:45
+    [exercise_005] ƴͼ: 92 ֡, 7��14, 688 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ��Ӧ����: 633 �ַ�
+
+  ���� exercise_006: 00:13:56 ~ 00:14:45 (49s)
+    [exercise_006] ��չȡ֡��Χ: 00:13:41 ~ 00:15:00
+    [exercise_003] ��Ӧ����: 740 �ַ�
+
+  ���� exercise_007: 00:15:21 ~ 00:16:45 (84s)
+    [exercise_007] ��չȡ֡��Χ: 00:15:06 ~ 00:17:00
+    [exercise_006] ƴͼ: 80 ֡, 7��12, 593 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_007] ƴͼ: 115 ֡, 7��17, 792 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ��Ӧ����: 671 �ַ�
+
+  ���� exercise_008: 00:17:31 ~ 00:17:59 (28s)
+    [exercise_008] ��չȡ֡��Χ: 00:17:16 ~ 00:18:14
+    [exercise_008] ƴͼ: 59 ֡, 7��9, 403 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_006] ��Ӧ����: 613 �ַ�
+    [exercise_005] ��Ӧ����: 765 �ַ�
+    [exercise_008] ��Ӧ����: 652 �ַ�
+    [exercise_007] ��Ӧ����: 787 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\�米-Ҷ��\exercise_result.json
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\�米-Ҷ��\period_result_adjusted.json
+
+  Phase 2 ���: 8 �� EXERCISE, �������� 9 ��
+
+============================================================
+��ɣ���ʱ 89.2s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\�米-Ҷ��\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\�米-Ҷ��\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\�米-Ҷ��\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\�米-Ҷ��\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\�米-Ҷ��\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\�米-Ҷ��\mid_result
+EXERCISE ʶ������
+  00:00:35��00:04:52  �ǽ׻�/��¥�� / �ǽ׻�/��¥��  [stepmill]  1 ��  conf=1.0
+  00:06:49��00:07:15  ��λ������ / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.95
+  00:08:19��00:08:55  ��λ������ / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.95
+  00:09:26��00:09:55  ���ż� / ��λ����  [cable_lat_pulldown]  1 ��  conf=0.95
+  00:11:29��00:12:30  ���ż� / ������ѹ  [cable_triceps_pushdown]  2 ��  conf=0.95
+  00:13:56��00:14:45  ���ż� / ������ѹ  [cable_triceps_pushdown]  1 ��  conf=0.95
+  00:15:21��00:16:45  ���ż� / ������������  [cable_seated_row]  2 ��  conf=0.95
+  00:17:31��00:17:59  ���ż� / ������������  [cable_seated_row]  1 ��  conf=0.95
+============================================================
+
+
+######################################################################
+# [13/13] ��-�ſ�
+#   work_dir:   D:\WorkPath\fitness_new\gym_analyzer\input\��-�ſ�
+#   output_dir: D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-�ſ�
+######################################################################
+[yaml_loader] Phase1 prompt: first_person_fitness_period_recognition  v5.0  (phase1_period_recognize_v5.yaml)
+[yaml_loader] Phase2 prompt: first_person_fitness_action_recognition_with_phase1_adjustment  v7.0  (phase2_exercise_recognize_v7.yaml)
+
+============================================================
+֡Ŀ¼��D:\WorkPath\fitness_new\gym_analyzer\input\��-�ſ�
+���Ŀ¼��D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-�ſ�
+֡����1044  ʱ����00:17:23
+Phase 2 ��������4
+============================================================
+
+[IMU] δ�ҵ� IMU_data.txt����������������
+[optical_flow] ʹ�û��棺1043 ֡�ԣ�D:\WorkPath\fitness_new\recognize\visualize\result\shared\��-�ſ�\optical_flow.json��
+[Step 2] ����ʹ�� shared ���棺D:\WorkPath\fitness_new\recognize\visualize\result\shared\��-�ſ�\optical_flow.json
+[Step 3] Phase 1��ƴͼ + ������ʶ��
+[stitcher] Phase1 ƴͼ��1044 ֡ �� 18 �����ڣ�ÿ�� 60s��7 �У�
+[stitcher]   ���� 001  00:00 �� 00:59  (60 ֡)  7��9  289 KB
+[stitcher]   ���� 002  01:00 �� 01:59  (60 ֡)  7��9  244 KB
+[stitcher]   ���� 003  02:00 �� 02:59  (60 ֡)  7��9  258 KB
+[stitcher]   ���� 004  03:00 �� 03:59  (60 ֡)  7��9  309 KB
+[stitcher]   ���� 005  04:00 �� 04:59  (60 ֡)  7��9  365 KB
+[stitcher]   ���� 006  05:00 �� 05:59  (60 ֡)  7��9  380 KB
+[stitcher]   ���� 007  06:00 �� 06:59  (60 ֡)  7��9  388 KB
+[stitcher]   ���� 008  07:00 �� 07:59  (60 ֡)  7��9  362 KB
+[stitcher]   ���� 009  08:00 �� 08:59  (60 ֡)  7��9  301 KB
+[stitcher]   ���� 010  09:00 �� 09:59  (60 ֡)  7��9  303 KB
+[stitcher]   ���� 011  10:00 �� 10:59  (60 ֡)  7��9  287 KB
+[stitcher]   ���� 012  11:00 �� 11:59  (60 ֡)  7��9  323 KB
+[stitcher]   ���� 013  12:00 �� 12:59  (60 ֡)  7��9  303 KB
+[stitcher]   ���� 014  13:00 �� 13:59  (60 ֡)  7��9  296 KB
+[stitcher]   ���� 015  14:00 �� 14:59  (60 ֡)  7��9  246 KB
+[stitcher]   ���� 016  15:00 �� 15:59  (60 ֡)  7��9  296 KB
+[stitcher]   ���� 017  16:00 �� 16:59  (60 ֡)  7��9  297 KB
+[stitcher]   ���� 018  17:00 �� 17:23  (24 ֡)  7��4  95 KB
+
+============================================================
+Phase 1: �׶λ��� (phase1_period_recognize_v5.yaml)
+============================================================
+  �� LLM ����: model=gemini-3-flash-preview, 18 ��ͼƬ
+  ��Ӧ����: 2300 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-�ſ�\period_result.json
+  Phase 1 ���: 13 ��, ���� EXERCISE 6 ��
+    00:00:00 �� 00:01:30  TRANSITION  conf=0.9  �û����뽡���������������е������ڿ�������Ͻ������õ�����
+    00:01:30 �� 00:03:20  EXERCISE  conf=0.85  �û�˫����ס��е���֣�������ʾ�����ĸ�ǿ���������˶�����������ѵ��״̬��
+    00:03:20 �� 00:04:55  TRANSITION  conf=0.9  �û��뿪���������ƶ�������ѵ������������׼ܴ����˸���Ƭ���м��ص�����
+    00:04:55 �� 00:05:15  EXERCISE  conf=0.8  �û��������壬ͨ�����ӵ�Ӱ�ɼ����Ե��������������
+    00:05:15 �� 00:06:00  REST  conf=0.9  �û�����׼���վ����Ϣ����е��λ�ƣ�����ǿ�Ƚ��͡�
+    00:06:00 �� 00:06:20  EXERCISE  conf=0.8  �û����еڶ������ѵ���������пɼ��������¶�������������
+    00:06:20 �� 00:07:05  REST  conf=0.9  �����Ϣ���û�ͣ����ԭ�ع۲컷����
+    00:07:05 �� 00:07:35  EXERCISE  conf=0.8  �û����е��������ѵ����������ʾ���Ե����������˶����ơ�
+    00:07:35 �� 00:10:00  TRANSITION  conf=0.9  �û�ж�¸���Ƭ���ڽ�����ڴ�Χ�ƶ���Ѱ�Ҳ�������һ��ѵ����е��
+    00:10:00 �� 00:10:25  EXERCISE  conf=0.85  �û������Ȳ���չ���ϣ�˫������е���ڳ���������������ʾ�������˶���
+    00:10:25 �� 00:14:15  TRANSITION  conf=0.8  �û��ڲ�ͬ��е�䴩�󣬰����������ˡ��۲����������Լ������Ⱦٻ���
+    00:14:15 �� 00:15:10  EXERCISE  conf=0.9  �û����Ⱦٻ��Ͻ���ѵ����˫�ŵ�̤̤��������Ե�������λ�ơ�
+    00:15:10 �� 00:17:23  TRANSITION  conf=0.95  ѵ���������û��������ߣ���������������������뿪��
+  �� 13 �����䣬���� 6 �� EXERCISE
+
+[Step 4] Phase 2���� EXERCISE ��ϸʶ��
+
+============================================================
+Phase 2: �˶�ʶ�� (phase2_exercise_recognize_v7.yaml)
+============================================================
+  �� 6 �� EXERCISE �δ�ʶ�𣨲���: 4��
+
+  ���� exercise_001: 00:01:30 ~ 00:03:20 (110s)
+    [exercise_001] ��չȡ֡��Χ: 00:01:15 ~ 00:03:35
+
+  ���� exercise_002: 00:04:55 ~ 00:05:15 (20s)
+    [exercise_002] ��չȡ֡��Χ: 00:04:40 ~ 00:05:30
+
+  ���� exercise_003: 00:06:00 ~ 00:06:20 (20s)
+    [exercise_003] ��չȡ֡��Χ: 00:05:45 ~ 00:06:35
+
+  ���� exercise_004: 00:07:05 ~ 00:07:35 (30s)
+    [exercise_004] ��չȡ֡��Χ: 00:06:50 ~ 00:07:50
+    [exercise_002] ƴͼ: 51 ֡, 7��8, 321 KB
+    [exercise_003] ƴͼ: 51 ֡, 7��8, 331 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_004] ƴͼ: 61 ֡, 7��9, 376 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_001] ƴͼ: 141 ֡, 7��21, 600 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_003] ��Ӧ����: 662 �ַ�
+
+  ���� exercise_005: 00:10:00 ~ 00:10:25 (25s)
+    [exercise_005] ��չȡ֡��Χ: 00:09:45 ~ 00:10:40
+    [exercise_005] ƴͼ: 56 ֡, 7��8, 266 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_004] ��Ӧ����: 668 �ַ�
+
+  ���� exercise_006: 00:14:15 ~ 00:15:10 (55s)
+    [exercise_006] ��չȡ֡��Χ: 00:14:00 ~ 00:15:25
+    [exercise_006] ƴͼ: 86 ֡, 7��13, 385 KB
+  �� LLM ����: model=gemini-3-flash-preview, 4 ��ͼƬ
+    [exercise_002] ��Ӧ����: 666 �ַ�
+    [exercise_001] ��Ӧ����: 676 �ַ�
+    [exercise_006] ��Ӧ����: 636 �ַ�
+    [exercise_005] ��Ӧ����: 702 �ַ�
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-�ſ�\exercise_result.json
+  [OK] �ѱ���: D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-�ſ�\period_result_adjusted.json
+
+  Phase 2 ���: 6 �� EXERCISE, �������� 8 ��
+
+============================================================
+��ɣ���ʱ 68.9s
+����ļ���
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-�ſ�\period_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-�ſ�\exercise_result.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-�ſ�\period_result_adjusted.json
+  D:\WorkPath\fitness_new\recognize\visualize\result\v13\��-�ſ�\period_raw_response.txt
+������棺
+  D:\WorkPath\fitness_new\gym_analyzer\input\��-�ſ�\optical_flow.json
+  D:\WorkPath\fitness_new\gym_analyzer\input\��-�ſ�\mid_result
+EXERCISE ʶ������
+  00:01:30��00:03:20  �ǽ׻�/��¥�� / �ǽ׻�/��¥��  [stepmill]  1 ��  conf=0.95
+  00:04:55��00:05:15  ���� / �������  [barbell_squat]  1 ��  conf=0.95
+  00:06:00��00:06:20  ���� / �������  [barbell_squat]  1 ��  conf=0.95
+  00:07:05��00:07:35  ���� / �������  [barbell_squat]  1 ��  conf=1.0
+  00:10:00��00:10:25  �̶���е / ����������  [machine_leg_extension]  1 ��  conf=0.95
+  00:14:15��00:15:10  �Ⱦٻ� / �Ⱦ�  [machine_leg_press]  1 ��  conf=1.0
+============================================================
+
+
+======================================================================
+Batch ���: 13/13 �ɹ�
+���Ŀ¼: D:\WorkPath\fitness_new\recognize\visualize\result\v13
+======================================================================

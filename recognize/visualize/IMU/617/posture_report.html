@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMU 运动姿态分析报告 — 617</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --border: #2a2d3e;
+    --text: #e2e8f0;
+    --muted: #8892a4;
+    --accent: #6366f1;
+
+    --c-vigorous: #ef4444;
+    --c-walking:  #22c55e;
+    --c-slight:   #3b82f6;
+    --c-active:   #f97316;
+    --c-still:    #a855f7;
+    --c-squat:    #eab308;
+    --c-lying:    #06b6d4;
+    --c-bending:  #ec4899;
+    --c-unknown:  #6b7280;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 24px 20px 48px;
+  }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  h2 { font-size: 14px; font-weight: 600; color: var(--muted); margin-bottom: 16px; letter-spacing: .05em; text-transform: uppercase; }
+  .meta { color: var(--muted); font-size: 12px; margin-bottom: 28px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 28px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .card .val { font-size: 28px; font-weight: 700; color: var(--accent); line-height: 1.1; }
+  .card .lbl { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  section { margin-bottom: 32px; }
+
+  /* ── Pie chart ── */
+  .pie-wrap { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+  #pieCanvas { flex-shrink: 0; }
+  .legend { display: flex; flex-direction: column; gap: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .legend-item .pct { color: var(--muted); font-size: 12px; margin-left: 2px; }
+
+  /* ── Timeline ── */
+  .timeline-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    overflow-x: auto;
+  }
+  .tl-bar {
+    position: relative;
+    height: 44px;
+    border-radius: 6px;
+    overflow: hidden;
+    min-width: 600px;
+    background: #111;
+  }
+  .tl-seg {
+    position: absolute;
+    top: 0; bottom: 0;
+    cursor: default;
+    transition: opacity .15s;
+  }
+  .tl-seg:hover { opacity: .85; }
+  .tl-ruler {
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 6px;
+    min-width: 600px;
+  }
+  /* tooltip */
+  .tooltip {
+    position: fixed;
+    background: #1e2130;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 999;
+    display: none;
+    max-width: 220px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  /* ── Segment table ── */
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .05em;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  td { padding: 7px 12px; border-bottom: 1px solid #1f2235; font-size: 13px; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1e2130; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 2px 8px; border-radius: 99px; font-size: 12px; font-weight: 500;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── Stat bar ── */
+  .stat-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+  .stat-label { width: 80px; text-align: right; font-size: 13px; flex-shrink: 0; }
+  .stat-bar-wrap { flex: 1; background: #1a1d27; border-radius: 4px; height: 14px; overflow: hidden; }
+  .stat-bar-fill { height: 100%; border-radius: 4px; transition: width .4s; }
+  .stat-pct { width: 40px; text-align: right; font-size: 12px; color: var(--muted); }
+
+  @media (max-width: 600px) {
+    .pie-wrap { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<h1>IMU 运动姿态分析报告</h1>
+<p class="meta">
+  设备: WT901BLE67 &nbsp;|&nbsp; 传感器位置: 腕部 &nbsp;|&nbsp;
+  数据文件: 20260617185734.txt &nbsp;|&nbsp; 生成时间: 2026-06-22 14:54
+</p>
+
+<!-- KPI 卡片 -->
+<div class="grid">
+  <div class="card"><div class="val">5.8</div><div class="lbl">录制时长（分钟）</div></div>
+  <div class="card"><div class="val">3424</div><div class="lbl">总采样点</div></div>
+  <div class="card"><div class="val">57</div><div class="lbl">识别姿态片段</div></div>
+  <div class="card"><div class="val">~10Hz</div><div class="lbl">采样频率</div></div>
+</div>
+
+<!-- 姿态分布饼图 -->
+<section>
+  <h2>姿态时长分布</h2>
+  <div class="card pie-wrap" style="padding:20px 24px;">
+    <canvas id="pieCanvas" width="180" height="180"></canvas>
+    <div class="legend" id="legend"></div>
+  </div>
+</section>
+
+<!-- 时长占比条形图 -->
+<section>
+  <h2>时长占比</h2>
+  <div class="card" style="padding:20px 24px;" id="statBars"></div>
+</section>
+
+<!-- 时间轴 -->
+<section>
+  <h2>运动时间轴</h2>
+  <div class="timeline-wrap">
+    <div class="tl-bar" id="tlBar"></div>
+    <div class="tl-ruler" id="tlRuler"></div>
+  </div>
+</section>
+
+<!-- 片段列表 -->
+<section>
+  <h2>姿态片段详情</h2>
+  <div class="card" style="padding:0; overflow:hidden;">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>时间戳</th>
+          <th>开始(s)</th>
+          <th>时长(s)</th>
+          <th>姿态</th>
+        </tr>
+      </thead>
+      <tbody id="segTable"></tbody>
+    </table>
+  </div>
+</section>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ─── 数据 ─────────────────────────────────────
+const TOTAL_SEC = 346.9;
+const SUMMARY = [
+  { label: "剧烈运动", dur: 136.9, pct: 39.5, cnt: 22, key: "vigorous" },
+  { label: "行走",     dur: 106.5, pct: 30.7, cnt: 16, key: "walking"  },
+  { label: "轻微移动", dur:  37.5, pct: 10.8, cnt:  6, key: "slight"   },
+  { label: "运动中",   dur:  21.7, pct:  6.3, cnt:  6, key: "active"   },
+  { label: "原地不动", dur:  19.5, pct:  5.6, cnt:  3, key: "still"    },
+  { label: "下蹲/坐下",dur:   9.8, pct:  2.8, cnt:  4, key: "squat"    },
+];
+const SEGMENTS = [
+  { label:"still",    zh:"原地不动",  start:0.8,   end:5.2,   dur:4.5  },
+  { label:"vigorous", zh:"剧烈运动",  start:6.8,   end:18.8,  dur:12.0 },
+  { label:"walking",  zh:"行走",      start:18.8,  end:39.8,  dur:21.0 },
+  { label:"vigorous", zh:"剧烈运动",  start:39.8,  end:50.2,  dur:10.5 },
+  { label:"vigorous", zh:"剧烈运动",  start:51.0,  end:53.2,  dur:2.2  },
+  { label:"walking",  zh:"行走",      start:53.2,  end:54.8,  dur:1.5  },
+  { label:"vigorous", zh:"剧烈运动",  start:54.8,  end:63.8,  dur:9.0  },
+  { label:"walking",  zh:"行走",      start:63.8,  end:68.2,  dur:4.5  },
+  { label:"vigorous", zh:"剧烈运动",  start:68.2,  end:69.8,  dur:1.5  },
+  { label:"walking",  zh:"行走",      start:69.8,  end:79.5,  dur:9.8  },
+  { label:"vigorous", zh:"剧烈运动",  start:79.5,  end:87.0,  dur:7.5  },
+  { label:"walking",  zh:"行走",      start:87.0,  end:90.0,  dur:3.0  },
+  { label:"vigorous", zh:"剧烈运动",  start:90.0,  end:93.0,  dur:3.0  },
+  { label:"squat",    zh:"下蹲/坐下", start:93.0,  end:96.8,  dur:3.8  },
+  { label:"vigorous", zh:"剧烈运动",  start:96.8,  end:102.0, dur:5.2  },
+  { label:"squat",    zh:"下蹲/坐下", start:102.0, end:105.0, dur:3.0  },
+  { label:"vigorous", zh:"剧烈运动",  start:105.0, end:112.5, dur:7.5  },
+  { label:"slight",   zh:"轻微移动",  start:112.5, end:121.5, dur:9.0  },
+  { label:"squat",    zh:"下蹲/坐下", start:121.5, end:123.0, dur:1.5  },
+  { label:"still",    zh:"原地不动",  start:123.0, end:126.0, dur:3.0  },
+  { label:"vigorous", zh:"剧烈运动",  start:126.0, end:132.0, dur:6.0  },
+  { label:"active",   zh:"运动中",    start:132.8, end:138.0, dur:5.2  },
+  { label:"vigorous", zh:"剧烈运动",  start:138.0, end:143.2, dur:5.2  },
+  { label:"still",    zh:"原地不动",  start:143.2, end:155.2, dur:12.0 },
+  { label:"slight",   zh:"轻微移动",  start:155.2, end:156.8, dur:1.5  },
+  { label:"slight",   zh:"轻微移动",  start:158.2, end:165.8, dur:7.5  },
+  { label:"vigorous", zh:"剧烈运动",  start:166.5, end:168.0, dur:1.5  },
+  { label:"slight",   zh:"轻微移动",  start:168.0, end:169.5, dur:1.5  },
+  { label:"vigorous", zh:"剧烈运动",  start:170.2, end:175.5, dur:5.2  },
+  { label:"walking",  zh:"行走",      start:175.5, end:186.8, dur:11.2 },
+  { label:"vigorous", zh:"剧烈运动",  start:186.8, end:190.5, dur:3.8  },
+  { label:"walking",  zh:"行走",      start:190.5, end:197.2, dur:6.8  },
+  { label:"vigorous", zh:"剧烈运动",  start:197.2, end:200.2, dur:3.0  },
+  { label:"walking",  zh:"行走",      start:200.2, end:205.5, dur:5.2  },
+  { label:"vigorous", zh:"剧烈运动",  start:205.5, end:225.8, dur:20.2 },
+  { label:"squat",    zh:"下蹲/坐下", start:225.8, end:227.2, dur:1.5  },
+  { label:"vigorous", zh:"剧烈运动",  start:227.2, end:234.0, dur:6.8  },
+  { label:"walking",  zh:"行走",      start:234.0, end:236.2, dur:2.2  },
+  { label:"active",   zh:"运动中",    start:237.8, end:241.5, dur:3.8  },
+  { label:"vigorous", zh:"剧烈运动",  start:241.5, end:243.8, dur:2.2  },
+  { label:"slight",   zh:"轻微移动",  start:243.8, end:247.5, dur:3.8  },
+  { label:"slight",   zh:"轻微移动",  start:248.2, end:262.5, dur:14.2 },
+  { label:"vigorous", zh:"剧烈运动",  start:262.5, end:273.8, dur:11.2 },
+  { label:"active",   zh:"运动中",    start:273.8, end:275.2, dur:1.5  },
+  { label:"walking",  zh:"行走",      start:275.2, end:283.5, dur:8.2  },
+  { label:"vigorous", zh:"剧烈运动",  start:283.5, end:286.5, dur:3.0  },
+  { label:"walking",  zh:"行走",      start:286.5, end:290.2, dur:3.8  },
+  { label:"vigorous", zh:"剧烈运动",  start:290.2, end:298.5, dur:8.2  },
+  { label:"active",   zh:"运动中",    start:298.5, end:301.5, dur:3.0  },
+  { label:"walking",  zh:"行走",      start:301.5, end:303.0, dur:1.5  },
+  { label:"walking",  zh:"行走",      start:303.8, end:313.5, dur:9.8  },
+  { label:"walking",  zh:"行走",      start:314.2, end:315.8, dur:1.5  },
+  { label:"walking",  zh:"行走",      start:316.5, end:324.0, dur:7.5  },
+  { label:"vigorous", zh:"剧烈运动",  start:324.8, end:327.0, dur:2.2  },
+  { label:"active",   zh:"运动中",    start:327.0, end:333.0, dur:6.0  },
+  { label:"active",   zh:"运动中",    start:333.8, end:336.0, dur:2.2  },
+  { label:"walking",  zh:"行走",      start:336.0, end:345.0, dur:9.0  },
+];
+
+// ─── 颜色映射 ─────────────────────────────────
+const COLOR = {
+  vigorous: "#ef4444",
+  walking:  "#22c55e",
+  slight:   "#3b82f6",
+  active:   "#f97316",
+  still:    "#a855f7",
+  squat:    "#eab308",
+  lying:    "#06b6d4",
+  bending:  "#ec4899",
+  unknown:  "#6b7280",
+};
+
+// ─── 饼图 ──────────────────────────────────────
+(function drawPie() {
+  const canvas = document.getElementById("pieCanvas");
+  const ctx = canvas.getContext("2d");
+  const cx = 90, cy = 90, r = 76;
+  let angle = -Math.PI / 2;
+  SUMMARY.forEach(d => {
+    const slice = (d.pct / 100) * 2 * Math.PI;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, angle, angle + slice);
+    ctx.closePath();
+    ctx.fillStyle = COLOR[d.key];
+    ctx.fill();
+    angle += slice;
+  });
+  // center hole
+  ctx.beginPath();
+  ctx.arc(cx, cy, 40, 0, 2 * Math.PI);
+  ctx.fillStyle = "#1a1d27";
+  ctx.fill();
+  // center text
+  ctx.fillStyle = "#e2e8f0";
+  ctx.font = "bold 13px system-ui";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("5.8 min", cx, cy);
+})();
+
+// ─── 图例 ──────────────────────────────────────
+(function buildLegend() {
+  const el = document.getElementById("legend");
+  SUMMARY.forEach(d => {
+    el.innerHTML += `
+      <div class="legend-item">
+        <span class="legend-dot" style="background:${COLOR[d.key]}"></span>
+        <span>${d.label}</span>
+        <span class="pct">${d.pct}% · ${d.dur}s</span>
+      </div>`;
+  });
+})();
+
+// ─── 占比条形图 ───────────────────────────────
+(function buildBars() {
+  const wrap = document.getElementById("statBars");
+  SUMMARY.forEach(d => {
+    wrap.innerHTML += `
+      <div class="stat-row">
+        <div class="stat-label">${d.label}</div>
+        <div class="stat-bar-wrap">
+          <div class="stat-bar-fill" style="width:${d.pct}%;background:${COLOR[d.key]}"></div>
+        </div>
+        <div class="stat-pct">${d.pct}%</div>
+      </div>`;
+  });
+})();
+
+// ─── 时间轴 ───────────────────────────────────
+(function buildTimeline() {
+  const bar = document.getElementById("tlBar");
+  const ruler = document.getElementById("tlRuler");
+  const tt = document.getElementById("tooltip");
+
+  SEGMENTS.forEach(seg => {
+    const left = (seg.start / TOTAL_SEC * 100).toFixed(3);
+    const width = (seg.dur / TOTAL_SEC * 100).toFixed(3);
+    const div = document.createElement("div");
+    div.className = "tl-seg";
+    div.style.left = left + "%";
+    div.style.width = width + "%";
+    div.style.background = COLOR[seg.label] || "#666";
+    div.style.opacity = "0.88";
+
+    div.addEventListener("mousemove", e => {
+      tt.style.display = "block";
+      tt.style.left = (e.clientX + 14) + "px";
+      tt.style.top  = (e.clientY - 36) + "px";
+      const ts = new Date(2026, 5, 17, 18, 57, 34 + seg.start);
+      const hh = String(ts.getHours()).padStart(2,'0');
+      const mm = String(ts.getMinutes()).padStart(2,'0');
+      const ss = String(ts.getSeconds()).padStart(2,'0');
+      tt.innerHTML = `<strong>${seg.zh}</strong><br>起: ${hh}:${mm}:${ss}<br>时长: ${seg.dur}s`;
+    });
+    div.addEventListener("mouseleave", () => { tt.style.display = "none"; });
+    bar.appendChild(div);
+  });
+
+  // ruler: 0, 1min, 2min, ... 5min
+  for (let m = 0; m <= 6; m++) {
+    const s = m * 60;
+    if (s > TOTAL_SEC + 5) break;
+    const tick = document.createElement("span");
+    tick.textContent = m + "min";
+    ruler.appendChild(tick);
+  }
+})();
+
+// ─── 片段表格 ─────────────────────────────────
+(function buildTable() {
+  const tbody = document.getElementById("segTable");
+  SEGMENTS.forEach((seg, i) => {
+    const color = COLOR[seg.label] || "#666";
+    const ts = new Date(2026, 5, 17, 18, 57, 34 + Math.round(seg.start));
+    const hh = String(ts.getHours()).padStart(2,'0');
+    const mm = String(ts.getMinutes()).padStart(2,'0');
+    const ssec = String(ts.getSeconds()).padStart(2,'0');
+    tbody.innerHTML += `
+      <tr>
+        <td style="color:var(--muted)">${i+1}</td>
+        <td style="font-size:12px;color:var(--muted)">18:57:34 + ${seg.start}s<br><span style="font-size:11px">${hh}:${mm}:${ssec}</span></td>
+        <td>${seg.start}</td>
+        <td>${seg.dur}</td>
+        <td>
+          <span class="badge" style="background:${color}22;color:${color}">
+            <span class="dot" style="background:${color}"></span>
+            ${seg.zh}
+          </span>
+        </td>
+      </tr>`;
+  });
+})();
+</script>
+</body>
+</html>

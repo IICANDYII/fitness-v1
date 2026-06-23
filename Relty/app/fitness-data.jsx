@@ -5,12 +5,35 @@ const API_BASE = 'http://localhost:8000/api';
 const DEFAULT_UID = '00000000-0000-0000-0000-000000025803';
 
 // ── Level → color mapping (shared by bars AND the body figure) ──
+// Colors match the plan_viewer orange heat palette
 function levelMeta(T) {
   return {
-    high: { label: 'High', color: T.blue, text: T.blue },
-    med: { label: 'Med', color: `color-mix(in srgb, ${T.blue} 58%, rgba(255,255,255,0.06))`, text: T.sub },
-    low: { label: 'Low', color: '#E0B45A', text: '#E0B45A' },
+    high: { label: 'High', color: 'rgb(238,122,90)',         text: 'rgb(238,122,90)' },
+    med:  { label: 'Med',  color: 'rgba(238,122,90,0.55)',   text: 'rgba(238,122,90,0.85)' },
+    low:  { label: 'Low',  color: 'rgba(238,122,90,0.25)',   text: 'rgba(238,122,90,0.60)' },
   };
+}
+
+// ── Inline SVG cache for body figure (fetched once per gender) ──
+const _svgCache = { front: null, back: null, gender: null };
+
+async function loadBodySvgs(gender) {
+  if (_svgCache.front && _svgCache.gender === gender) return;
+  const g = gender === 'female' ? 'female' : 'male';
+  const frontFile = g === 'female' ? 'female_front_body.svg' : 'front_body.svg';
+  const backFile  = g === 'female' ? 'female_back_body.svg'  : 'back_body.svg';
+  try {
+    const [fr, br] = await Promise.all([
+      fetch(`/svg/${frontFile}`),
+      fetch(`/svg/${backFile}`),
+    ]);
+    _svgCache.front  = fr.ok ? await fr.text() : null;
+    _svgCache.back   = br.ok ? await br.text() : null;
+    _svgCache.gender = gender;
+    fitStore._l.forEach(f => f());  // trigger re-render with loaded SVGs
+  } catch (e) {
+    console.warn('loadBodySvgs failed:', e);
+  }
 }
 
 // ── Backend → Frontend data transformers ──
@@ -146,6 +169,7 @@ function dailyToWorkout(daily, dateStr) {
     coverage: toCoverage(daily.muscle_distribution),
     figureFront: figures.front,
     figureBack: figures.back,
+    videoFile: null,
   };
 }
 
@@ -264,6 +288,7 @@ const fitStore = {
   loading: true,
   currentUid: DEFAULT_UID,
   users: [],
+  gender: 'male',
   _l: new Set(),
   set(patch) { Object.assign(fitStore, patch); fitStore._l.forEach((f) => f()); },
 };
@@ -329,6 +354,7 @@ async function loadDailyWorkout(dateStr) {
       return w;
     }
     const w = dailyToWorkout(daily, dateStr);
+    w.videoFile = daily.video_file || null;
     const idx = WORKOUTS.findIndex(x => x.id === dateStr);
     if (idx >= 0) WORKOUTS[idx] = w; else WORKOUTS.push(w);
     return w;
@@ -352,7 +378,8 @@ async function loadUsers() {
 
 // ── Switch to a different user and reload all data ──
 async function switchUser(uid) {
-  fitStore.set({ currentUid: uid, loading: true, selected: null });
+  fitStore.set({ currentUid: uid, loading: true, selected: null, gender: 'male' });
+  _svgCache.front = null; _svgCache.back = null; _svgCache.gender = null;
   WORKOUTS.length = 0;
   WEEK.length = 0;
   Object.keys(WORKOUT_DAYS).forEach(k => delete WORKOUT_DAYS[k]);
@@ -362,10 +389,13 @@ async function switchUser(uid) {
 // ── Initial data load from backend ──
 async function initFitnessData() {
   try {
-    const [calendar, weekly] = await Promise.all([
+    const [calendar, weekly, userInfo] = await Promise.all([
       apiFetch('/calendar'),
       apiFetch('/weekly'),
+      apiFetch('/user').catch(() => ({ gender: 'male' })),
     ]);
+    fitStore.set({ gender: userInfo.gender || 'male' });
+    loadBodySvgs(userInfo.gender || 'male');
 
     // Build calendar mapping
     const calDays = calendar.days || {};
@@ -388,7 +418,9 @@ async function initFitnessData() {
     WORKOUTS = [];
     dailyResults.forEach((daily, i) => {
       if (!daily || (!daily.date && !daily.duration_min)) return;
-      WORKOUTS.push(dailyToWorkout(daily, allTrainingDates[i]));
+      const w = dailyToWorkout(daily, allTrainingDates[i]);
+      w.videoFile = daily.video_file || null;
+      WORKOUTS.push(w);
     });
 
     // Weekly stats from the API response (mutate, don't reassign)
@@ -485,5 +517,5 @@ Object.assign(window, {
   COVERAGE_30D, COVERAGE_30D_FRONT, COVERAGE_30D_BACK, MONTH_LOAD, WORKOUT_DAYS,
   WEEK, WORKOUTS, WEEKLY_STATS, WEEKLY_INSIGHTS, MONTHLY_INSIGHTS, getWorkout, getPlan, MOVEMENT_ALTS, PLANS, fitStore, useFit,
   loadDailyWorkout, apiFetch, MUSCLE_CN_TO_EN, toCoverage, toBodyFigures,
-  switchUser, loadUsers,
+  switchUser, loadUsers, _svgCache, loadBodySvgs,
 });

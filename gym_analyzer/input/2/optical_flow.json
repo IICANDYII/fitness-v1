@@ -1,0 +1,7912 @@
+{
+  "total_keyframes": 624,
+  "interval_sec": 1.0,
+  "created_at": "2026-06-21T14:57:09.120566",
+  "flow": [
+    {
+      "frame_pair": [
+        0,
+        1
+      ],
+      "time_sec": 0.0,
+      "avg_flow": 9.896,
+      "max_flow": 19.211,
+      "motion_energy": 196.488,
+      "dominant_angle": 191.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        1,
+        2
+      ],
+      "time_sec": 1.0,
+      "avg_flow": 12.647,
+      "max_flow": 22.687,
+      "motion_energy": 218.398,
+      "dominant_angle": 121.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        2,
+        3
+      ],
+      "time_sec": 2.0,
+      "avg_flow": 1.723,
+      "max_flow": 2.945,
+      "motion_energy": 3.8,
+      "dominant_angle": 147.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        3,
+        4
+      ],
+      "time_sec": 3.0,
+      "avg_flow": 5.243,
+      "max_flow": 9.233,
+      "motion_energy": 36.44,
+      "dominant_angle": 159.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        4,
+        5
+      ],
+      "time_sec": 4.0,
+      "avg_flow": 1.099,
+      "max_flow": 2.334,
+      "motion_energy": 2.039,
+      "dominant_angle": 273.7,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        5,
+        6
+      ],
+      "time_sec": 5.0,
+      "avg_flow": 1.649,
+      "max_flow": 4.009,
+      "motion_energy": 4.075,
+      "dominant_angle": 52.8,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        6,
+        7
+      ],
+      "time_sec": 6.0,
+      "avg_flow": 1.996,
+      "max_flow": 6.539,
+      "motion_energy": 7.238,
+      "dominant_angle": 74.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        7,
+        8
+      ],
+      "time_sec": 7.0,
+      "avg_flow": 1.714,
+      "max_flow": 7.026,
+      "motion_energy": 7.555,
+      "dominant_angle": 82.8,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        8,
+        9
+      ],
+      "time_sec": 8.0,
+      "avg_flow": 0.904,
+      "max_flow": 2.666,
+      "motion_energy": 1.736,
+      "dominant_angle": 272.8,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        9,
+        10
+      ],
+      "time_sec": 9.0,
+      "avg_flow": 4.26,
+      "max_flow": 9.314,
+      "motion_energy": 26.043,
+      "dominant_angle": 191.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        10,
+        11
+      ],
+      "time_sec": 10.0,
+      "avg_flow": 2.611,
+      "max_flow": 6.524,
+      "motion_energy": 10.207,
+      "dominant_angle": 180.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        11,
+        12
+      ],
+      "time_sec": 11.0,
+      "avg_flow": 1.744,
+      "max_flow": 5.255,
+      "motion_energy": 6.213,
+      "dominant_angle": 101.9,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        12,
+        13
+      ],
+      "time_sec": 12.0,
+      "avg_flow": 9.241,
+      "max_flow": 14.816,
+      "motion_energy": 108.143,
+      "dominant_angle": 218.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        13,
+        14
+      ],
+      "time_sec": 13.0,
+      "avg_flow": 8.112,
+      "max_flow": 28.26,
+      "motion_energy": 159.952,
+      "dominant_angle": 176.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        14,
+        15
+      ],
+      "time_sec": 14.0,
+      "avg_flow": 6.802,
+      "max_flow": 22.084,
+      "motion_energy": 114.0,
+      "dominant_angle": 187.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        15,
+        16
+      ],
+      "time_sec": 15.0,
+      "avg_flow": 6.845,
+      "max_flow": 14.236,
+      "motion_energy": 75.915,
+      "dominant_angle": 154.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        16,
+        17
+      ],
+      "time_sec": 16.0,
+      "avg_flow": 7.548,
+      "max_flow": 21.814,
+      "motion_energy": 110.643,
+      "dominant_angle": 185.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        17,
+        18
+      ],
+      "time_sec": 17.0,
+      "avg_flow": 7.254,
+      "max_flow": 18.695,
+      "motion_energy": 88.813,
+      "dominant_angle": 194.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        18,
+        19
+      ],
+      "time_sec": 18.0,
+      "avg_flow": 9.284,
+      "max_flow": 28.583,
+      "motion_energy": 221.257,
+      "dominant_angle": 231.0,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        19,
+        20
+      ],
+      "time_sec": 19.0,
+      "avg_flow": 6.294,
+      "max_flow": 13.925,
+      "motion_energy": 64.503,
+      "dominant_angle": 127.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        20,
+        21
+      ],
+      "time_sec": 20.0,
+      "avg_flow": 14.577,
+      "max_flow": 61.474,
+      "motion_energy": 610.171,
+      "dominant_angle": 227.6,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        21,
+        22
+      ],
+      "time_sec": 21.0,
+      "avg_flow": 2.2,
+      "max_flow": 8.594,
+      "motion_energy": 13.067,
+      "dominant_angle": 178.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        22,
+        23
+      ],
+      "time_sec": 22.0,
+      "avg_flow": 2.481,
+      "max_flow": 7.437,
+      "motion_energy": 11.537,
+      "dominant_angle": 261.0,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        23,
+        24
+      ],
+      "time_sec": 23.0,
+      "avg_flow": 3.161,
+      "max_flow": 11.287,
+      "motion_energy": 22.061,
+      "dominant_angle": 209.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        24,
+        25
+      ],
+      "time_sec": 24.0,
+      "avg_flow": 1.863,
+      "max_flow": 5.51,
+      "motion_energy": 8.105,
+      "dominant_angle": 167.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        25,
+        26
+      ],
+      "time_sec": 25.0,
+      "avg_flow": 3.669,
+      "max_flow": 15.082,
+      "motion_energy": 36.231,
+      "dominant_angle": 243.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        26,
+        27
+      ],
+      "time_sec": 26.0,
+      "avg_flow": 4.601,
+      "max_flow": 14.345,
+      "motion_energy": 41.15,
+      "dominant_angle": 182.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        27,
+        28
+      ],
+      "time_sec": 27.0,
+      "avg_flow": 3.103,
+      "max_flow": 9.317,
+      "motion_energy": 19.153,
+      "dominant_angle": 276.8,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        28,
+        29
+      ],
+      "time_sec": 28.0,
+      "avg_flow": 1.917,
+      "max_flow": 7.816,
+      "motion_energy": 10.283,
+      "dominant_angle": 141.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        29,
+        30
+      ],
+      "time_sec": 29.0,
+      "avg_flow": 1.931,
+      "max_flow": 6.826,
+      "motion_energy": 8.27,
+      "dominant_angle": 249.6,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        30,
+        31
+      ],
+      "time_sec": 30.0,
+      "avg_flow": 2.135,
+      "max_flow": 8.668,
+      "motion_energy": 13.922,
+      "dominant_angle": 136.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        31,
+        32
+      ],
+      "time_sec": 31.0,
+      "avg_flow": 2.916,
+      "max_flow": 9.966,
+      "motion_energy": 22.591,
+      "dominant_angle": 165.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        32,
+        33
+      ],
+      "time_sec": 32.0,
+      "avg_flow": 6.729,
+      "max_flow": 27.195,
+      "motion_energy": 222.183,
+      "dominant_angle": 125.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        33,
+        34
+      ],
+      "time_sec": 33.0,
+      "avg_flow": 5.999,
+      "max_flow": 28.879,
+      "motion_energy": 126.393,
+      "dominant_angle": 196.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        34,
+        35
+      ],
+      "time_sec": 34.0,
+      "avg_flow": 2.516,
+      "max_flow": 8.222,
+      "motion_energy": 13.036,
+      "dominant_angle": 227.0,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        35,
+        36
+      ],
+      "time_sec": 35.0,
+      "avg_flow": 1.697,
+      "max_flow": 8.104,
+      "motion_energy": 10.494,
+      "dominant_angle": 160.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        36,
+        37
+      ],
+      "time_sec": 36.0,
+      "avg_flow": 1.914,
+      "max_flow": 8.256,
+      "motion_energy": 10.78,
+      "dominant_angle": 224.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        37,
+        38
+      ],
+      "time_sec": 37.0,
+      "avg_flow": 2.159,
+      "max_flow": 9.293,
+      "motion_energy": 17.884,
+      "dominant_angle": 113.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        38,
+        39
+      ],
+      "time_sec": 38.0,
+      "avg_flow": 3.581,
+      "max_flow": 16.953,
+      "motion_energy": 50.101,
+      "dominant_angle": 207.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        39,
+        40
+      ],
+      "time_sec": 39.0,
+      "avg_flow": 5.246,
+      "max_flow": 15.835,
+      "motion_energy": 55.514,
+      "dominant_angle": 112.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        40,
+        41
+      ],
+      "time_sec": 40.0,
+      "avg_flow": 6.538,
+      "max_flow": 17.675,
+      "motion_energy": 82.841,
+      "dominant_angle": 214.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        41,
+        42
+      ],
+      "time_sec": 41.0,
+      "avg_flow": 7.031,
+      "max_flow": 19.867,
+      "motion_energy": 141.922,
+      "dominant_angle": 188.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        42,
+        43
+      ],
+      "time_sec": 42.0,
+      "avg_flow": 8.119,
+      "max_flow": 25.737,
+      "motion_energy": 130.021,
+      "dominant_angle": 171.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        43,
+        44
+      ],
+      "time_sec": 43.0,
+      "avg_flow": 2.548,
+      "max_flow": 8.344,
+      "motion_energy": 15.101,
+      "dominant_angle": 102.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        44,
+        45
+      ],
+      "time_sec": 44.0,
+      "avg_flow": 7.078,
+      "max_flow": 27.088,
+      "motion_energy": 122.69,
+      "dominant_angle": 135.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        45,
+        46
+      ],
+      "time_sec": 45.0,
+      "avg_flow": 6.545,
+      "max_flow": 14.07,
+      "motion_energy": 66.343,
+      "dominant_angle": 177.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        46,
+        47
+      ],
+      "time_sec": 46.0,
+      "avg_flow": 8.173,
+      "max_flow": 19.424,
+      "motion_energy": 137.998,
+      "dominant_angle": 233.9,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        47,
+        48
+      ],
+      "time_sec": 47.0,
+      "avg_flow": 7.46,
+      "max_flow": 18.517,
+      "motion_energy": 83.274,
+      "dominant_angle": 204.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        48,
+        49
+      ],
+      "time_sec": 48.0,
+      "avg_flow": 7.95,
+      "max_flow": 28.217,
+      "motion_energy": 137.541,
+      "dominant_angle": 184.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        49,
+        50
+      ],
+      "time_sec": 49.0,
+      "avg_flow": 7.826,
+      "max_flow": 21.828,
+      "motion_energy": 111.134,
+      "dominant_angle": 201.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        50,
+        51
+      ],
+      "time_sec": 50.0,
+      "avg_flow": 5.34,
+      "max_flow": 12.159,
+      "motion_energy": 42.352,
+      "dominant_angle": 216.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        51,
+        52
+      ],
+      "time_sec": 51.0,
+      "avg_flow": 5.172,
+      "max_flow": 12.118,
+      "motion_energy": 41.193,
+      "dominant_angle": 204.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        52,
+        53
+      ],
+      "time_sec": 52.0,
+      "avg_flow": 5.993,
+      "max_flow": 16.694,
+      "motion_energy": 67.829,
+      "dominant_angle": 165.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        53,
+        54
+      ],
+      "time_sec": 53.0,
+      "avg_flow": 7.921,
+      "max_flow": 22.931,
+      "motion_energy": 128.917,
+      "dominant_angle": 157.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        54,
+        55
+      ],
+      "time_sec": 54.0,
+      "avg_flow": 8.082,
+      "max_flow": 18.255,
+      "motion_energy": 97.128,
+      "dominant_angle": 173.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        55,
+        56
+      ],
+      "time_sec": 55.0,
+      "avg_flow": 10.833,
+      "max_flow": 25.073,
+      "motion_energy": 193.223,
+      "dominant_angle": 185.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        56,
+        57
+      ],
+      "time_sec": 56.0,
+      "avg_flow": 7.763,
+      "max_flow": 15.306,
+      "motion_energy": 83.411,
+      "dominant_angle": 123.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        57,
+        58
+      ],
+      "time_sec": 57.0,
+      "avg_flow": 7.417,
+      "max_flow": 14.446,
+      "motion_energy": 80.125,
+      "dominant_angle": 201.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        58,
+        59
+      ],
+      "time_sec": 58.0,
+      "avg_flow": 7.347,
+      "max_flow": 17.373,
+      "motion_energy": 84.126,
+      "dominant_angle": 220.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        59,
+        60
+      ],
+      "time_sec": 59.0,
+      "avg_flow": 10.018,
+      "max_flow": 21.372,
+      "motion_energy": 203.0,
+      "dominant_angle": 133.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        60,
+        61
+      ],
+      "time_sec": 60.0,
+      "avg_flow": 7.743,
+      "max_flow": 20.868,
+      "motion_energy": 135.319,
+      "dominant_angle": 184.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        61,
+        62
+      ],
+      "time_sec": 61.0,
+      "avg_flow": 8.316,
+      "max_flow": 19.232,
+      "motion_energy": 115.447,
+      "dominant_angle": 168.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        62,
+        63
+      ],
+      "time_sec": 62.0,
+      "avg_flow": 8.965,
+      "max_flow": 19.071,
+      "motion_energy": 122.767,
+      "dominant_angle": 66.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        63,
+        64
+      ],
+      "time_sec": 63.0,
+      "avg_flow": 3.423,
+      "max_flow": 7.547,
+      "motion_energy": 16.732,
+      "dominant_angle": 109.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        64,
+        65
+      ],
+      "time_sec": 64.0,
+      "avg_flow": 7.516,
+      "max_flow": 12.9,
+      "motion_energy": 73.383,
+      "dominant_angle": 188.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        65,
+        66
+      ],
+      "time_sec": 65.0,
+      "avg_flow": 10.759,
+      "max_flow": 20.404,
+      "motion_energy": 159.828,
+      "dominant_angle": 237.4,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        66,
+        67
+      ],
+      "time_sec": 66.0,
+      "avg_flow": 10.126,
+      "max_flow": 19.84,
+      "motion_energy": 176.18,
+      "dominant_angle": 191.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        67,
+        68
+      ],
+      "time_sec": 67.0,
+      "avg_flow": 8.692,
+      "max_flow": 18.393,
+      "motion_energy": 136.998,
+      "dominant_angle": 163.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        68,
+        69
+      ],
+      "time_sec": 68.0,
+      "avg_flow": 9.663,
+      "max_flow": 20.005,
+      "motion_energy": 141.734,
+      "dominant_angle": 146.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        69,
+        70
+      ],
+      "time_sec": 69.0,
+      "avg_flow": 10.481,
+      "max_flow": 34.161,
+      "motion_energy": 229.776,
+      "dominant_angle": 171.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        70,
+        71
+      ],
+      "time_sec": 70.0,
+      "avg_flow": 7.513,
+      "max_flow": 16.961,
+      "motion_energy": 153.117,
+      "dominant_angle": 217.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        71,
+        72
+      ],
+      "time_sec": 71.0,
+      "avg_flow": 7.841,
+      "max_flow": 16.711,
+      "motion_energy": 132.271,
+      "dominant_angle": 200.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        72,
+        73
+      ],
+      "time_sec": 72.0,
+      "avg_flow": 9.096,
+      "max_flow": 19.397,
+      "motion_energy": 121.543,
+      "dominant_angle": 244.6,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        73,
+        74
+      ],
+      "time_sec": 73.0,
+      "avg_flow": 8.981,
+      "max_flow": 17.03,
+      "motion_energy": 116.234,
+      "dominant_angle": 91.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        74,
+        75
+      ],
+      "time_sec": 74.0,
+      "avg_flow": 11.106,
+      "max_flow": 28.709,
+      "motion_energy": 219.813,
+      "dominant_angle": 236.4,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        75,
+        76
+      ],
+      "time_sec": 75.0,
+      "avg_flow": 8.045,
+      "max_flow": 24.956,
+      "motion_energy": 133.067,
+      "dominant_angle": 208.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        76,
+        77
+      ],
+      "time_sec": 76.0,
+      "avg_flow": 8.718,
+      "max_flow": 20.423,
+      "motion_energy": 133.457,
+      "dominant_angle": 131.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        77,
+        78
+      ],
+      "time_sec": 77.0,
+      "avg_flow": 7.654,
+      "max_flow": 14.797,
+      "motion_energy": 77.166,
+      "dominant_angle": 176.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        78,
+        79
+      ],
+      "time_sec": 78.0,
+      "avg_flow": 9.463,
+      "max_flow": 18.68,
+      "motion_energy": 122.388,
+      "dominant_angle": 247.8,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        79,
+        80
+      ],
+      "time_sec": 79.0,
+      "avg_flow": 6.604,
+      "max_flow": 12.601,
+      "motion_energy": 57.833,
+      "dominant_angle": 182.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        80,
+        81
+      ],
+      "time_sec": 80.0,
+      "avg_flow": 5.672,
+      "max_flow": 13.737,
+      "motion_energy": 48.702,
+      "dominant_angle": 153.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        81,
+        82
+      ],
+      "time_sec": 81.0,
+      "avg_flow": 3.573,
+      "max_flow": 7.469,
+      "motion_energy": 17.841,
+      "dominant_angle": 142.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        82,
+        83
+      ],
+      "time_sec": 82.0,
+      "avg_flow": 9.277,
+      "max_flow": 14.391,
+      "motion_energy": 104.392,
+      "dominant_angle": 173.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        83,
+        84
+      ],
+      "time_sec": 83.0,
+      "avg_flow": 9.625,
+      "max_flow": 22.432,
+      "motion_energy": 163.51,
+      "dominant_angle": 166.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        84,
+        85
+      ],
+      "time_sec": 84.0,
+      "avg_flow": 10.495,
+      "max_flow": 26.172,
+      "motion_energy": 213.364,
+      "dominant_angle": 142.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        85,
+        86
+      ],
+      "time_sec": 85.0,
+      "avg_flow": 10.777,
+      "max_flow": 17.561,
+      "motion_energy": 138.042,
+      "dominant_angle": 29.2,
+      "dominant_direction": "RIGHT"
+    },
+    {
+      "frame_pair": [
+        86,
+        87
+      ],
+      "time_sec": 86.0,
+      "avg_flow": 3.506,
+      "max_flow": 6.264,
+      "motion_energy": 16.243,
+      "dominant_angle": 158.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        87,
+        88
+      ],
+      "time_sec": 87.0,
+      "avg_flow": 6.806,
+      "max_flow": 10.047,
+      "motion_energy": 56.014,
+      "dominant_angle": 124.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        88,
+        89
+      ],
+      "time_sec": 88.0,
+      "avg_flow": 3.943,
+      "max_flow": 10.256,
+      "motion_energy": 23.73,
+      "dominant_angle": 102.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        89,
+        90
+      ],
+      "time_sec": 89.0,
+      "avg_flow": 1.559,
+      "max_flow": 3.477,
+      "motion_energy": 3.681,
+      "dominant_angle": 91.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        90,
+        91
+      ],
+      "time_sec": 90.0,
+      "avg_flow": 1.274,
+      "max_flow": 4.285,
+      "motion_energy": 5.219,
+      "dominant_angle": 250.9,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        91,
+        92
+      ],
+      "time_sec": 91.0,
+      "avg_flow": 2.465,
+      "max_flow": 4.77,
+      "motion_energy": 8.316,
+      "dominant_angle": 180.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        92,
+        93
+      ],
+      "time_sec": 92.0,
+      "avg_flow": 2.273,
+      "max_flow": 4.066,
+      "motion_energy": 6.684,
+      "dominant_angle": 168.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        93,
+        94
+      ],
+      "time_sec": 93.0,
+      "avg_flow": 1.636,
+      "max_flow": 2.48,
+      "motion_energy": 3.388,
+      "dominant_angle": 178.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        94,
+        95
+      ],
+      "time_sec": 94.0,
+      "avg_flow": 1.386,
+      "max_flow": 3.689,
+      "motion_energy": 4.36,
+      "dominant_angle": 218.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        95,
+        96
+      ],
+      "time_sec": 95.0,
+      "avg_flow": 0.836,
+      "max_flow": 2.321,
+      "motion_energy": 1.494,
+      "dominant_angle": 146.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        96,
+        97
+      ],
+      "time_sec": 96.0,
+      "avg_flow": 0.615,
+      "max_flow": 1.988,
+      "motion_energy": 0.908,
+      "dominant_angle": 119.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        97,
+        98
+      ],
+      "time_sec": 97.0,
+      "avg_flow": 5.691,
+      "max_flow": 11.145,
+      "motion_energy": 44.295,
+      "dominant_angle": 122.9,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        98,
+        99
+      ],
+      "time_sec": 98.0,
+      "avg_flow": 6.841,
+      "max_flow": 14.385,
+      "motion_energy": 71.3,
+      "dominant_angle": 177.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        99,
+        100
+      ],
+      "time_sec": 99.0,
+      "avg_flow": 8.929,
+      "max_flow": 16.999,
+      "motion_energy": 115.674,
+      "dominant_angle": 193.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        100,
+        101
+      ],
+      "time_sec": 100.0,
+      "avg_flow": 8.835,
+      "max_flow": 20.044,
+      "motion_energy": 175.152,
+      "dominant_angle": 197.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        101,
+        102
+      ],
+      "time_sec": 101.0,
+      "avg_flow": 10.639,
+      "max_flow": 27.272,
+      "motion_energy": 239.846,
+      "dominant_angle": 177.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        102,
+        103
+      ],
+      "time_sec": 102.0,
+      "avg_flow": 7.461,
+      "max_flow": 15.958,
+      "motion_energy": 90.987,
+      "dominant_angle": 213.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        103,
+        104
+      ],
+      "time_sec": 103.0,
+      "avg_flow": 4.842,
+      "max_flow": 9.619,
+      "motion_energy": 31.136,
+      "dominant_angle": 220.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        104,
+        105
+      ],
+      "time_sec": 104.0,
+      "avg_flow": 11.314,
+      "max_flow": 37.058,
+      "motion_energy": 288.475,
+      "dominant_angle": 132.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        105,
+        106
+      ],
+      "time_sec": 105.0,
+      "avg_flow": 8.736,
+      "max_flow": 17.8,
+      "motion_energy": 110.883,
+      "dominant_angle": 98.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        106,
+        107
+      ],
+      "time_sec": 106.0,
+      "avg_flow": 2.394,
+      "max_flow": 6.128,
+      "motion_energy": 18.601,
+      "dominant_angle": 239.2,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        107,
+        108
+      ],
+      "time_sec": 107.0,
+      "avg_flow": 8.03,
+      "max_flow": 24.509,
+      "motion_energy": 146.542,
+      "dominant_angle": 106.9,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        108,
+        109
+      ],
+      "time_sec": 108.0,
+      "avg_flow": 8.356,
+      "max_flow": 33.902,
+      "motion_energy": 182.938,
+      "dominant_angle": 197.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        109,
+        110
+      ],
+      "time_sec": 109.0,
+      "avg_flow": 2.306,
+      "max_flow": 10.129,
+      "motion_energy": 15.509,
+      "dominant_angle": 167.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        110,
+        111
+      ],
+      "time_sec": 110.0,
+      "avg_flow": 2.648,
+      "max_flow": 5.47,
+      "motion_energy": 9.912,
+      "dominant_angle": 120.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        111,
+        112
+      ],
+      "time_sec": 111.0,
+      "avg_flow": 3.746,
+      "max_flow": 8.039,
+      "motion_energy": 20.231,
+      "dominant_angle": 220.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        112,
+        113
+      ],
+      "time_sec": 112.0,
+      "avg_flow": 1.999,
+      "max_flow": 3.459,
+      "motion_energy": 5.432,
+      "dominant_angle": 268.4,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        113,
+        114
+      ],
+      "time_sec": 113.0,
+      "avg_flow": 8.333,
+      "max_flow": 14.811,
+      "motion_energy": 90.385,
+      "dominant_angle": 239.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        114,
+        115
+      ],
+      "time_sec": 114.0,
+      "avg_flow": 12.473,
+      "max_flow": 22.682,
+      "motion_energy": 217.96,
+      "dominant_angle": 206.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        115,
+        116
+      ],
+      "time_sec": 115.0,
+      "avg_flow": 10.206,
+      "max_flow": 17.473,
+      "motion_energy": 145.446,
+      "dominant_angle": 219.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        116,
+        117
+      ],
+      "time_sec": 116.0,
+      "avg_flow": 4.232,
+      "max_flow": 7.439,
+      "motion_energy": 22.275,
+      "dominant_angle": 276.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        117,
+        118
+      ],
+      "time_sec": 117.0,
+      "avg_flow": 2.359,
+      "max_flow": 3.983,
+      "motion_energy": 6.856,
+      "dominant_angle": 262.7,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        118,
+        119
+      ],
+      "time_sec": 118.0,
+      "avg_flow": 12.9,
+      "max_flow": 23.281,
+      "motion_energy": 219.549,
+      "dominant_angle": 85.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        119,
+        120
+      ],
+      "time_sec": 119.0,
+      "avg_flow": 12.159,
+      "max_flow": 25.582,
+      "motion_energy": 218.513,
+      "dominant_angle": 147.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        120,
+        121
+      ],
+      "time_sec": 120.0,
+      "avg_flow": 10.999,
+      "max_flow": 30.853,
+      "motion_energy": 215.723,
+      "dominant_angle": 145.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        121,
+        122
+      ],
+      "time_sec": 121.0,
+      "avg_flow": 11.382,
+      "max_flow": 30.97,
+      "motion_energy": 282.336,
+      "dominant_angle": 152.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        122,
+        123
+      ],
+      "time_sec": 122.0,
+      "avg_flow": 7.011,
+      "max_flow": 16.722,
+      "motion_energy": 73.05,
+      "dominant_angle": 146.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        123,
+        124
+      ],
+      "time_sec": 123.0,
+      "avg_flow": 4.101,
+      "max_flow": 10.445,
+      "motion_energy": 25.384,
+      "dominant_angle": 232.4,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        124,
+        125
+      ],
+      "time_sec": 124.0,
+      "avg_flow": 4.561,
+      "max_flow": 7.652,
+      "motion_energy": 27.563,
+      "dominant_angle": 326.6,
+      "dominant_direction": "RIGHT"
+    },
+    {
+      "frame_pair": [
+        125,
+        126
+      ],
+      "time_sec": 125.0,
+      "avg_flow": 7.08,
+      "max_flow": 12.946,
+      "motion_energy": 65.713,
+      "dominant_angle": 43.0,
+      "dominant_direction": "RIGHT"
+    },
+    {
+      "frame_pair": [
+        126,
+        127
+      ],
+      "time_sec": 126.0,
+      "avg_flow": 6.4,
+      "max_flow": 9.423,
+      "motion_energy": 47.48,
+      "dominant_angle": 90.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        127,
+        128
+      ],
+      "time_sec": 127.0,
+      "avg_flow": 5.396,
+      "max_flow": 13.263,
+      "motion_energy": 45.667,
+      "dominant_angle": 201.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        128,
+        129
+      ],
+      "time_sec": 128.0,
+      "avg_flow": 4.48,
+      "max_flow": 13.73,
+      "motion_energy": 42.26,
+      "dominant_angle": 236.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        129,
+        130
+      ],
+      "time_sec": 129.0,
+      "avg_flow": 3.777,
+      "max_flow": 13.346,
+      "motion_energy": 37.548,
+      "dominant_angle": 135.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        130,
+        131
+      ],
+      "time_sec": 130.0,
+      "avg_flow": 2.923,
+      "max_flow": 5.485,
+      "motion_energy": 11.448,
+      "dominant_angle": 186.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        131,
+        132
+      ],
+      "time_sec": 131.0,
+      "avg_flow": 2.999,
+      "max_flow": 6.014,
+      "motion_energy": 15.951,
+      "dominant_angle": 163.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        132,
+        133
+      ],
+      "time_sec": 132.0,
+      "avg_flow": 4.154,
+      "max_flow": 8.987,
+      "motion_energy": 46.755,
+      "dominant_angle": 204.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        133,
+        134
+      ],
+      "time_sec": 133.0,
+      "avg_flow": 2.763,
+      "max_flow": 5.505,
+      "motion_energy": 10.979,
+      "dominant_angle": 166.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        134,
+        135
+      ],
+      "time_sec": 134.0,
+      "avg_flow": 2.884,
+      "max_flow": 5.462,
+      "motion_energy": 11.159,
+      "dominant_angle": 233.0,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        135,
+        136
+      ],
+      "time_sec": 135.0,
+      "avg_flow": 2.493,
+      "max_flow": 6.416,
+      "motion_energy": 11.968,
+      "dominant_angle": 219.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        136,
+        137
+      ],
+      "time_sec": 136.0,
+      "avg_flow": 6.354,
+      "max_flow": 11.855,
+      "motion_energy": 54.447,
+      "dominant_angle": 309.4,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        137,
+        138
+      ],
+      "time_sec": 137.0,
+      "avg_flow": 6.074,
+      "max_flow": 11.323,
+      "motion_energy": 69.216,
+      "dominant_angle": 198.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        138,
+        139
+      ],
+      "time_sec": 138.0,
+      "avg_flow": 2.901,
+      "max_flow": 6.802,
+      "motion_energy": 15.083,
+      "dominant_angle": 202.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        139,
+        140
+      ],
+      "time_sec": 139.0,
+      "avg_flow": 2.362,
+      "max_flow": 6.377,
+      "motion_energy": 10.209,
+      "dominant_angle": 252.4,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        140,
+        141
+      ],
+      "time_sec": 140.0,
+      "avg_flow": 2.845,
+      "max_flow": 5.028,
+      "motion_energy": 11.329,
+      "dominant_angle": 209.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        141,
+        142
+      ],
+      "time_sec": 141.0,
+      "avg_flow": 6.696,
+      "max_flow": 9.994,
+      "motion_energy": 51.502,
+      "dominant_angle": 125.2,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        142,
+        143
+      ],
+      "time_sec": 142.0,
+      "avg_flow": 6.85,
+      "max_flow": 10.92,
+      "motion_energy": 59.215,
+      "dominant_angle": 187.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        143,
+        144
+      ],
+      "time_sec": 143.0,
+      "avg_flow": 6.433,
+      "max_flow": 11.598,
+      "motion_energy": 51.614,
+      "dominant_angle": 43.5,
+      "dominant_direction": "RIGHT"
+    },
+    {
+      "frame_pair": [
+        144,
+        145
+      ],
+      "time_sec": 144.0,
+      "avg_flow": 9.289,
+      "max_flow": 16.981,
+      "motion_energy": 109.697,
+      "dominant_angle": 164.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        145,
+        146
+      ],
+      "time_sec": 145.0,
+      "avg_flow": 7.172,
+      "max_flow": 13.951,
+      "motion_energy": 70.382,
+      "dominant_angle": 217.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        146,
+        147
+      ],
+      "time_sec": 146.0,
+      "avg_flow": 2.763,
+      "max_flow": 6.366,
+      "motion_energy": 11.328,
+      "dominant_angle": 105.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        147,
+        148
+      ],
+      "time_sec": 147.0,
+      "avg_flow": 2.461,
+      "max_flow": 7.3,
+      "motion_energy": 12.304,
+      "dominant_angle": 229.2,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        148,
+        149
+      ],
+      "time_sec": 148.0,
+      "avg_flow": 2.242,
+      "max_flow": 5.498,
+      "motion_energy": 8.748,
+      "dominant_angle": 130.9,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        149,
+        150
+      ],
+      "time_sec": 149.0,
+      "avg_flow": 7.464,
+      "max_flow": 15.52,
+      "motion_energy": 81.652,
+      "dominant_angle": 197.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        150,
+        151
+      ],
+      "time_sec": 150.0,
+      "avg_flow": 6.452,
+      "max_flow": 15.69,
+      "motion_energy": 67.812,
+      "dominant_angle": 116.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        151,
+        152
+      ],
+      "time_sec": 151.0,
+      "avg_flow": 5.88,
+      "max_flow": 12.652,
+      "motion_energy": 47.79,
+      "dominant_angle": 192.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        152,
+        153
+      ],
+      "time_sec": 152.0,
+      "avg_flow": 6.378,
+      "max_flow": 13.006,
+      "motion_energy": 54.965,
+      "dominant_angle": 141.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        153,
+        154
+      ],
+      "time_sec": 153.0,
+      "avg_flow": 6.907,
+      "max_flow": 12.182,
+      "motion_energy": 68.687,
+      "dominant_angle": 170.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        154,
+        155
+      ],
+      "time_sec": 154.0,
+      "avg_flow": 6.711,
+      "max_flow": 13.665,
+      "motion_energy": 59.125,
+      "dominant_angle": 186.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        155,
+        156
+      ],
+      "time_sec": 155.0,
+      "avg_flow": 6.564,
+      "max_flow": 11.955,
+      "motion_energy": 54.55,
+      "dominant_angle": 161.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        156,
+        157
+      ],
+      "time_sec": 156.0,
+      "avg_flow": 10.632,
+      "max_flow": 19.275,
+      "motion_energy": 153.49,
+      "dominant_angle": 83.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        157,
+        158
+      ],
+      "time_sec": 157.0,
+      "avg_flow": 11.222,
+      "max_flow": 20.784,
+      "motion_energy": 165.814,
+      "dominant_angle": 129.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        158,
+        159
+      ],
+      "time_sec": 158.0,
+      "avg_flow": 8.243,
+      "max_flow": 16.63,
+      "motion_energy": 113.954,
+      "dominant_angle": 196.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        159,
+        160
+      ],
+      "time_sec": 159.0,
+      "avg_flow": 6.758,
+      "max_flow": 13.123,
+      "motion_energy": 62.194,
+      "dominant_angle": 170.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        160,
+        161
+      ],
+      "time_sec": 160.0,
+      "avg_flow": 5.939,
+      "max_flow": 10.499,
+      "motion_energy": 41.165,
+      "dominant_angle": 295.3,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        161,
+        162
+      ],
+      "time_sec": 161.0,
+      "avg_flow": 6.81,
+      "max_flow": 14.046,
+      "motion_energy": 61.455,
+      "dominant_angle": 132.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        162,
+        163
+      ],
+      "time_sec": 162.0,
+      "avg_flow": 5.256,
+      "max_flow": 11.681,
+      "motion_energy": 38.786,
+      "dominant_angle": 131.2,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        163,
+        164
+      ],
+      "time_sec": 163.0,
+      "avg_flow": 6.489,
+      "max_flow": 14.815,
+      "motion_energy": 72.88,
+      "dominant_angle": 216.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        164,
+        165
+      ],
+      "time_sec": 164.0,
+      "avg_flow": 7.718,
+      "max_flow": 13.896,
+      "motion_energy": 72.937,
+      "dominant_angle": 148.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        165,
+        166
+      ],
+      "time_sec": 165.0,
+      "avg_flow": 7.809,
+      "max_flow": 16.449,
+      "motion_energy": 111.911,
+      "dominant_angle": 161.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        166,
+        167
+      ],
+      "time_sec": 166.0,
+      "avg_flow": 7.199,
+      "max_flow": 14.256,
+      "motion_energy": 69.113,
+      "dominant_angle": 124.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        167,
+        168
+      ],
+      "time_sec": 167.0,
+      "avg_flow": 6.992,
+      "max_flow": 15.351,
+      "motion_energy": 71.087,
+      "dominant_angle": 135.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        168,
+        169
+      ],
+      "time_sec": 168.0,
+      "avg_flow": 14.928,
+      "max_flow": 50.863,
+      "motion_energy": 586.793,
+      "dominant_angle": 163.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        169,
+        170
+      ],
+      "time_sec": 169.0,
+      "avg_flow": 6.529,
+      "max_flow": 13.664,
+      "motion_energy": 62.253,
+      "dominant_angle": 194.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        170,
+        171
+      ],
+      "time_sec": 170.0,
+      "avg_flow": 10.632,
+      "max_flow": 19.081,
+      "motion_energy": 144.571,
+      "dominant_angle": 81.2,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        171,
+        172
+      ],
+      "time_sec": 171.0,
+      "avg_flow": 12.942,
+      "max_flow": 24.307,
+      "motion_energy": 262.803,
+      "dominant_angle": 146.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        172,
+        173
+      ],
+      "time_sec": 172.0,
+      "avg_flow": 12.566,
+      "max_flow": 19.933,
+      "motion_energy": 195.957,
+      "dominant_angle": 297.8,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        173,
+        174
+      ],
+      "time_sec": 173.0,
+      "avg_flow": 9.035,
+      "max_flow": 19.575,
+      "motion_energy": 115.158,
+      "dominant_angle": 183.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        174,
+        175
+      ],
+      "time_sec": 174.0,
+      "avg_flow": 7.702,
+      "max_flow": 15.629,
+      "motion_energy": 124.423,
+      "dominant_angle": 153.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        175,
+        176
+      ],
+      "time_sec": 175.0,
+      "avg_flow": 8.499,
+      "max_flow": 14.973,
+      "motion_energy": 92.042,
+      "dominant_angle": 203.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        176,
+        177
+      ],
+      "time_sec": 176.0,
+      "avg_flow": 10.92,
+      "max_flow": 16.235,
+      "motion_energy": 138.976,
+      "dominant_angle": 52.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        177,
+        178
+      ],
+      "time_sec": 177.0,
+      "avg_flow": 9.269,
+      "max_flow": 14.566,
+      "motion_energy": 103.548,
+      "dominant_angle": 264.8,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        178,
+        179
+      ],
+      "time_sec": 178.0,
+      "avg_flow": 8.024,
+      "max_flow": 17.776,
+      "motion_energy": 94.539,
+      "dominant_angle": 205.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        179,
+        180
+      ],
+      "time_sec": 179.0,
+      "avg_flow": 10.078,
+      "max_flow": 20.294,
+      "motion_energy": 146.892,
+      "dominant_angle": 216.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        180,
+        181
+      ],
+      "time_sec": 180.0,
+      "avg_flow": 8.348,
+      "max_flow": 17.103,
+      "motion_energy": 106.03,
+      "dominant_angle": 257.7,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        181,
+        182
+      ],
+      "time_sec": 181.0,
+      "avg_flow": 10.907,
+      "max_flow": 16.717,
+      "motion_energy": 181.69,
+      "dominant_angle": 105.2,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        182,
+        183
+      ],
+      "time_sec": 182.0,
+      "avg_flow": 1.688,
+      "max_flow": 5.277,
+      "motion_energy": 5.873,
+      "dominant_angle": 141.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        183,
+        184
+      ],
+      "time_sec": 183.0,
+      "avg_flow": 3.915,
+      "max_flow": 9.815,
+      "motion_energy": 21.974,
+      "dominant_angle": 225.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        184,
+        185
+      ],
+      "time_sec": 184.0,
+      "avg_flow": 4.033,
+      "max_flow": 7.105,
+      "motion_energy": 20.565,
+      "dominant_angle": 164.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        185,
+        186
+      ],
+      "time_sec": 185.0,
+      "avg_flow": 2.968,
+      "max_flow": 5.247,
+      "motion_energy": 11.228,
+      "dominant_angle": 77.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        186,
+        187
+      ],
+      "time_sec": 186.0,
+      "avg_flow": 2.491,
+      "max_flow": 5.122,
+      "motion_energy": 10.332,
+      "dominant_angle": 84.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        187,
+        188
+      ],
+      "time_sec": 187.0,
+      "avg_flow": 1.999,
+      "max_flow": 5.185,
+      "motion_energy": 6.514,
+      "dominant_angle": 106.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        188,
+        189
+      ],
+      "time_sec": 188.0,
+      "avg_flow": 2.355,
+      "max_flow": 5.005,
+      "motion_energy": 7.817,
+      "dominant_angle": 72.9,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        189,
+        190
+      ],
+      "time_sec": 189.0,
+      "avg_flow": 1.753,
+      "max_flow": 3.186,
+      "motion_energy": 4.01,
+      "dominant_angle": 149.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        190,
+        191
+      ],
+      "time_sec": 190.0,
+      "avg_flow": 1.835,
+      "max_flow": 6.479,
+      "motion_energy": 7.379,
+      "dominant_angle": 197.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        191,
+        192
+      ],
+      "time_sec": 191.0,
+      "avg_flow": 2.853,
+      "max_flow": 6.175,
+      "motion_energy": 11.259,
+      "dominant_angle": 90.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        192,
+        193
+      ],
+      "time_sec": 192.0,
+      "avg_flow": 2.647,
+      "max_flow": 5.815,
+      "motion_energy": 10.124,
+      "dominant_angle": 55.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        193,
+        194
+      ],
+      "time_sec": 193.0,
+      "avg_flow": 3.988,
+      "max_flow": 7.255,
+      "motion_energy": 20.952,
+      "dominant_angle": 171.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        194,
+        195
+      ],
+      "time_sec": 194.0,
+      "avg_flow": 6.808,
+      "max_flow": 16.054,
+      "motion_energy": 76.857,
+      "dominant_angle": 182.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        195,
+        196
+      ],
+      "time_sec": 195.0,
+      "avg_flow": 7.313,
+      "max_flow": 17.467,
+      "motion_energy": 84.249,
+      "dominant_angle": 181.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        196,
+        197
+      ],
+      "time_sec": 196.0,
+      "avg_flow": 6.456,
+      "max_flow": 13.56,
+      "motion_energy": 91.598,
+      "dominant_angle": 215.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        197,
+        198
+      ],
+      "time_sec": 197.0,
+      "avg_flow": 8.226,
+      "max_flow": 21.646,
+      "motion_energy": 114.877,
+      "dominant_angle": 184.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        198,
+        199
+      ],
+      "time_sec": 198.0,
+      "avg_flow": 6.085,
+      "max_flow": 13.299,
+      "motion_energy": 74.23,
+      "dominant_angle": 163.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        199,
+        200
+      ],
+      "time_sec": 199.0,
+      "avg_flow": 7.978,
+      "max_flow": 19.11,
+      "motion_energy": 100.934,
+      "dominant_angle": 143.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        200,
+        201
+      ],
+      "time_sec": 200.0,
+      "avg_flow": 11.058,
+      "max_flow": 18.964,
+      "motion_energy": 168.877,
+      "dominant_angle": 340.9,
+      "dominant_direction": "RIGHT"
+    },
+    {
+      "frame_pair": [
+        201,
+        202
+      ],
+      "time_sec": 201.0,
+      "avg_flow": 7.469,
+      "max_flow": 23.001,
+      "motion_energy": 125.415,
+      "dominant_angle": 175.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        202,
+        203
+      ],
+      "time_sec": 202.0,
+      "avg_flow": 10.372,
+      "max_flow": 31.03,
+      "motion_energy": 301.074,
+      "dominant_angle": 169.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        203,
+        204
+      ],
+      "time_sec": 203.0,
+      "avg_flow": 6.973,
+      "max_flow": 15.116,
+      "motion_energy": 74.761,
+      "dominant_angle": 107.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        204,
+        205
+      ],
+      "time_sec": 204.0,
+      "avg_flow": 9.3,
+      "max_flow": 21.438,
+      "motion_energy": 174.167,
+      "dominant_angle": 132.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        205,
+        206
+      ],
+      "time_sec": 205.0,
+      "avg_flow": 8.549,
+      "max_flow": 17.601,
+      "motion_energy": 99.452,
+      "dominant_angle": 125.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        206,
+        207
+      ],
+      "time_sec": 206.0,
+      "avg_flow": 6.838,
+      "max_flow": 13.528,
+      "motion_energy": 65.521,
+      "dominant_angle": 282.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        207,
+        208
+      ],
+      "time_sec": 207.0,
+      "avg_flow": 8.582,
+      "max_flow": 17.884,
+      "motion_energy": 108.169,
+      "dominant_angle": 112.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        208,
+        209
+      ],
+      "time_sec": 208.0,
+      "avg_flow": 5.66,
+      "max_flow": 15.16,
+      "motion_energy": 59.815,
+      "dominant_angle": 104.8,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        209,
+        210
+      ],
+      "time_sec": 209.0,
+      "avg_flow": 7.251,
+      "max_flow": 15.236,
+      "motion_energy": 78.99,
+      "dominant_angle": 214.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        210,
+        211
+      ],
+      "time_sec": 210.0,
+      "avg_flow": 7.792,
+      "max_flow": 16.902,
+      "motion_energy": 87.363,
+      "dominant_angle": 117.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        211,
+        212
+      ],
+      "time_sec": 211.0,
+      "avg_flow": 4.923,
+      "max_flow": 12.303,
+      "motion_energy": 38.305,
+      "dominant_angle": 283.2,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        212,
+        213
+      ],
+      "time_sec": 212.0,
+      "avg_flow": 6.548,
+      "max_flow": 14.788,
+      "motion_energy": 67.528,
+      "dominant_angle": 133.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        213,
+        214
+      ],
+      "time_sec": 213.0,
+      "avg_flow": 4.682,
+      "max_flow": 14.758,
+      "motion_energy": 53.2,
+      "dominant_angle": 121.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        214,
+        215
+      ],
+      "time_sec": 214.0,
+      "avg_flow": 7.277,
+      "max_flow": 13.929,
+      "motion_energy": 79.005,
+      "dominant_angle": 292.7,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        215,
+        216
+      ],
+      "time_sec": 215.0,
+      "avg_flow": 5.852,
+      "max_flow": 11.621,
+      "motion_energy": 77.248,
+      "dominant_angle": 135.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        216,
+        217
+      ],
+      "time_sec": 216.0,
+      "avg_flow": 4.112,
+      "max_flow": 9.279,
+      "motion_energy": 27.016,
+      "dominant_angle": 269.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        217,
+        218
+      ],
+      "time_sec": 217.0,
+      "avg_flow": 4.522,
+      "max_flow": 10.318,
+      "motion_energy": 32.919,
+      "dominant_angle": 103.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        218,
+        219
+      ],
+      "time_sec": 218.0,
+      "avg_flow": 4.631,
+      "max_flow": 14.007,
+      "motion_energy": 43.553,
+      "dominant_angle": 144.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        219,
+        220
+      ],
+      "time_sec": 219.0,
+      "avg_flow": 5.046,
+      "max_flow": 17.423,
+      "motion_energy": 54.134,
+      "dominant_angle": 217.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        220,
+        221
+      ],
+      "time_sec": 220.0,
+      "avg_flow": 3.476,
+      "max_flow": 11.896,
+      "motion_energy": 26.802,
+      "dominant_angle": 133.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        221,
+        222
+      ],
+      "time_sec": 221.0,
+      "avg_flow": 7.531,
+      "max_flow": 15.866,
+      "motion_energy": 89.557,
+      "dominant_angle": 264.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        222,
+        223
+      ],
+      "time_sec": 222.0,
+      "avg_flow": 6.255,
+      "max_flow": 17.5,
+      "motion_energy": 70.302,
+      "dominant_angle": 121.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        223,
+        224
+      ],
+      "time_sec": 223.0,
+      "avg_flow": 3.173,
+      "max_flow": 9.061,
+      "motion_energy": 18.526,
+      "dominant_angle": 248.2,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        224,
+        225
+      ],
+      "time_sec": 224.0,
+      "avg_flow": 5.229,
+      "max_flow": 10.494,
+      "motion_energy": 39.662,
+      "dominant_angle": 250.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        225,
+        226
+      ],
+      "time_sec": 225.0,
+      "avg_flow": 5.678,
+      "max_flow": 11.138,
+      "motion_energy": 46.755,
+      "dominant_angle": 159.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        226,
+        227
+      ],
+      "time_sec": 226.0,
+      "avg_flow": 5.155,
+      "max_flow": 9.827,
+      "motion_energy": 39.649,
+      "dominant_angle": 292.4,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        227,
+        228
+      ],
+      "time_sec": 227.0,
+      "avg_flow": 3.678,
+      "max_flow": 11.428,
+      "motion_energy": 41.885,
+      "dominant_angle": 214.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        228,
+        229
+      ],
+      "time_sec": 228.0,
+      "avg_flow": 6.045,
+      "max_flow": 15.013,
+      "motion_energy": 58.521,
+      "dominant_angle": 143.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        229,
+        230
+      ],
+      "time_sec": 229.0,
+      "avg_flow": 7.436,
+      "max_flow": 15.782,
+      "motion_energy": 84.71,
+      "dominant_angle": 262.6,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        230,
+        231
+      ],
+      "time_sec": 230.0,
+      "avg_flow": 9.943,
+      "max_flow": 19.523,
+      "motion_energy": 137.661,
+      "dominant_angle": 212.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        231,
+        232
+      ],
+      "time_sec": 231.0,
+      "avg_flow": 7.0,
+      "max_flow": 16.539,
+      "motion_energy": 77.091,
+      "dominant_angle": 163.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        232,
+        233
+      ],
+      "time_sec": 232.0,
+      "avg_flow": 7.261,
+      "max_flow": 15.222,
+      "motion_energy": 79.359,
+      "dominant_angle": 215.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        233,
+        234
+      ],
+      "time_sec": 233.0,
+      "avg_flow": 7.073,
+      "max_flow": 14.653,
+      "motion_energy": 69.826,
+      "dominant_angle": 209.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        234,
+        235
+      ],
+      "time_sec": 234.0,
+      "avg_flow": 8.396,
+      "max_flow": 17.828,
+      "motion_energy": 134.495,
+      "dominant_angle": 239.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        235,
+        236
+      ],
+      "time_sec": 235.0,
+      "avg_flow": 9.618,
+      "max_flow": 19.503,
+      "motion_energy": 147.956,
+      "dominant_angle": 170.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        236,
+        237
+      ],
+      "time_sec": 236.0,
+      "avg_flow": 8.703,
+      "max_flow": 17.233,
+      "motion_energy": 144.942,
+      "dominant_angle": 248.3,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        237,
+        238
+      ],
+      "time_sec": 237.0,
+      "avg_flow": 6.404,
+      "max_flow": 16.093,
+      "motion_energy": 80.262,
+      "dominant_angle": 168.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        238,
+        239
+      ],
+      "time_sec": 238.0,
+      "avg_flow": 11.409,
+      "max_flow": 20.67,
+      "motion_energy": 792.477,
+      "dominant_angle": 254.2,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        239,
+        240
+      ],
+      "time_sec": 239.0,
+      "avg_flow": 8.309,
+      "max_flow": 19.732,
+      "motion_energy": 124.284,
+      "dominant_angle": 149.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        240,
+        241
+      ],
+      "time_sec": 240.0,
+      "avg_flow": 5.147,
+      "max_flow": 13.718,
+      "motion_energy": 47.043,
+      "dominant_angle": 188.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        241,
+        242
+      ],
+      "time_sec": 241.0,
+      "avg_flow": 6.601,
+      "max_flow": 15.57,
+      "motion_energy": 75.429,
+      "dominant_angle": 149.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        242,
+        243
+      ],
+      "time_sec": 242.0,
+      "avg_flow": 6.104,
+      "max_flow": 13.977,
+      "motion_energy": 58.957,
+      "dominant_angle": 203.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        243,
+        244
+      ],
+      "time_sec": 243.0,
+      "avg_flow": 6.892,
+      "max_flow": 13.875,
+      "motion_energy": 99.478,
+      "dominant_angle": 241.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        244,
+        245
+      ],
+      "time_sec": 244.0,
+      "avg_flow": 6.872,
+      "max_flow": 16.663,
+      "motion_energy": 82.82,
+      "dominant_angle": 191.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        245,
+        246
+      ],
+      "time_sec": 245.0,
+      "avg_flow": 7.823,
+      "max_flow": 18.241,
+      "motion_energy": 104.417,
+      "dominant_angle": 223.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        246,
+        247
+      ],
+      "time_sec": 246.0,
+      "avg_flow": 6.792,
+      "max_flow": 14.376,
+      "motion_energy": 65.788,
+      "dominant_angle": 167.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        247,
+        248
+      ],
+      "time_sec": 247.0,
+      "avg_flow": 7.957,
+      "max_flow": 17.542,
+      "motion_energy": 97.13,
+      "dominant_angle": 140.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        248,
+        249
+      ],
+      "time_sec": 248.0,
+      "avg_flow": 8.714,
+      "max_flow": 19.637,
+      "motion_energy": 125.826,
+      "dominant_angle": 242.6,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        249,
+        250
+      ],
+      "time_sec": 249.0,
+      "avg_flow": 6.419,
+      "max_flow": 14.856,
+      "motion_energy": 63.603,
+      "dominant_angle": 197.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        250,
+        251
+      ],
+      "time_sec": 250.0,
+      "avg_flow": 5.95,
+      "max_flow": 15.259,
+      "motion_energy": 72.664,
+      "dominant_angle": 190.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        251,
+        252
+      ],
+      "time_sec": 251.0,
+      "avg_flow": 3.049,
+      "max_flow": 8.042,
+      "motion_energy": 19.794,
+      "dominant_angle": 204.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        252,
+        253
+      ],
+      "time_sec": 252.0,
+      "avg_flow": 6.841,
+      "max_flow": 17.861,
+      "motion_energy": 101.449,
+      "dominant_angle": 127.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        253,
+        254
+      ],
+      "time_sec": 253.0,
+      "avg_flow": 5.116,
+      "max_flow": 14.438,
+      "motion_energy": 51.138,
+      "dominant_angle": 173.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        254,
+        255
+      ],
+      "time_sec": 254.0,
+      "avg_flow": 6.292,
+      "max_flow": 14.574,
+      "motion_energy": 75.893,
+      "dominant_angle": 233.2,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        255,
+        256
+      ],
+      "time_sec": 255.0,
+      "avg_flow": 4.267,
+      "max_flow": 10.041,
+      "motion_energy": 32.756,
+      "dominant_angle": 202.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        256,
+        257
+      ],
+      "time_sec": 256.0,
+      "avg_flow": 6.692,
+      "max_flow": 19.965,
+      "motion_energy": 92.277,
+      "dominant_angle": 220.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        257,
+        258
+      ],
+      "time_sec": 257.0,
+      "avg_flow": 5.772,
+      "max_flow": 13.65,
+      "motion_energy": 58.619,
+      "dominant_angle": 216.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        258,
+        259
+      ],
+      "time_sec": 258.0,
+      "avg_flow": 5.514,
+      "max_flow": 12.44,
+      "motion_energy": 53.202,
+      "dominant_angle": 210.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        259,
+        260
+      ],
+      "time_sec": 259.0,
+      "avg_flow": 6.252,
+      "max_flow": 17.4,
+      "motion_energy": 76.943,
+      "dominant_angle": 164.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        260,
+        261
+      ],
+      "time_sec": 260.0,
+      "avg_flow": 5.084,
+      "max_flow": 15.199,
+      "motion_energy": 56.188,
+      "dominant_angle": 209.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        261,
+        262
+      ],
+      "time_sec": 261.0,
+      "avg_flow": 5.311,
+      "max_flow": 12.869,
+      "motion_energy": 54.585,
+      "dominant_angle": 176.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        262,
+        263
+      ],
+      "time_sec": 262.0,
+      "avg_flow": 5.987,
+      "max_flow": 14.76,
+      "motion_energy": 61.851,
+      "dominant_angle": 184.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        263,
+        264
+      ],
+      "time_sec": 263.0,
+      "avg_flow": 8.426,
+      "max_flow": 22.265,
+      "motion_energy": 256.874,
+      "dominant_angle": 153.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        264,
+        265
+      ],
+      "time_sec": 264.0,
+      "avg_flow": 8.252,
+      "max_flow": 15.909,
+      "motion_energy": 96.723,
+      "dominant_angle": 125.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        265,
+        266
+      ],
+      "time_sec": 265.0,
+      "avg_flow": 11.349,
+      "max_flow": 21.167,
+      "motion_energy": 427.359,
+      "dominant_angle": 130.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        266,
+        267
+      ],
+      "time_sec": 266.0,
+      "avg_flow": 2.46,
+      "max_flow": 7.077,
+      "motion_energy": 17.311,
+      "dominant_angle": 121.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        267,
+        268
+      ],
+      "time_sec": 267.0,
+      "avg_flow": 5.47,
+      "max_flow": 10.599,
+      "motion_energy": 62.88,
+      "dominant_angle": 170.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        268,
+        269
+      ],
+      "time_sec": 268.0,
+      "avg_flow": 1.767,
+      "max_flow": 6.104,
+      "motion_energy": 6.39,
+      "dominant_angle": 139.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        269,
+        270
+      ],
+      "time_sec": 269.0,
+      "avg_flow": 1.346,
+      "max_flow": 4.195,
+      "motion_energy": 3.887,
+      "dominant_angle": 163.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        270,
+        271
+      ],
+      "time_sec": 270.0,
+      "avg_flow": 0.837,
+      "max_flow": 3.903,
+      "motion_energy": 2.354,
+      "dominant_angle": 131.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        271,
+        272
+      ],
+      "time_sec": 271.0,
+      "avg_flow": 1.477,
+      "max_flow": 3.519,
+      "motion_energy": 4.005,
+      "dominant_angle": 162.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        272,
+        273
+      ],
+      "time_sec": 272.0,
+      "avg_flow": 11.512,
+      "max_flow": 25.671,
+      "motion_energy": 196.539,
+      "dominant_angle": 187.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        273,
+        274
+      ],
+      "time_sec": 273.0,
+      "avg_flow": 3.443,
+      "max_flow": 6.972,
+      "motion_energy": 17.214,
+      "dominant_angle": 177.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        274,
+        275
+      ],
+      "time_sec": 274.0,
+      "avg_flow": 7.763,
+      "max_flow": 19.178,
+      "motion_energy": 136.767,
+      "dominant_angle": 204.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        275,
+        276
+      ],
+      "time_sec": 275.0,
+      "avg_flow": 5.576,
+      "max_flow": 11.172,
+      "motion_energy": 47.463,
+      "dominant_angle": 205.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        276,
+        277
+      ],
+      "time_sec": 276.0,
+      "avg_flow": 7.076,
+      "max_flow": 18.39,
+      "motion_energy": 78.773,
+      "dominant_angle": 222.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        277,
+        278
+      ],
+      "time_sec": 277.0,
+      "avg_flow": 7.183,
+      "max_flow": 19.015,
+      "motion_energy": 81.527,
+      "dominant_angle": 203.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        278,
+        279
+      ],
+      "time_sec": 278.0,
+      "avg_flow": 6.996,
+      "max_flow": 16.779,
+      "motion_energy": 78.765,
+      "dominant_angle": 137.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        279,
+        280
+      ],
+      "time_sec": 279.0,
+      "avg_flow": 6.554,
+      "max_flow": 15.436,
+      "motion_energy": 80.934,
+      "dominant_angle": 186.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        280,
+        281
+      ],
+      "time_sec": 280.0,
+      "avg_flow": 4.311,
+      "max_flow": 12.447,
+      "motion_energy": 41.05,
+      "dominant_angle": 235.4,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        281,
+        282
+      ],
+      "time_sec": 281.0,
+      "avg_flow": 8.441,
+      "max_flow": 18.214,
+      "motion_energy": 132.425,
+      "dominant_angle": 139.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        282,
+        283
+      ],
+      "time_sec": 282.0,
+      "avg_flow": 2.894,
+      "max_flow": 8.34,
+      "motion_energy": 14.99,
+      "dominant_angle": 126.9,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        283,
+        284
+      ],
+      "time_sec": 283.0,
+      "avg_flow": 5.186,
+      "max_flow": 9.014,
+      "motion_energy": 34.76,
+      "dominant_angle": 94.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        284,
+        285
+      ],
+      "time_sec": 284.0,
+      "avg_flow": 6.278,
+      "max_flow": 12.397,
+      "motion_energy": 63.856,
+      "dominant_angle": 263.6,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        285,
+        286
+      ],
+      "time_sec": 285.0,
+      "avg_flow": 7.968,
+      "max_flow": 15.691,
+      "motion_energy": 94.29,
+      "dominant_angle": 252.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        286,
+        287
+      ],
+      "time_sec": 286.0,
+      "avg_flow": 4.503,
+      "max_flow": 11.415,
+      "motion_energy": 36.117,
+      "dominant_angle": 188.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        287,
+        288
+      ],
+      "time_sec": 287.0,
+      "avg_flow": 7.756,
+      "max_flow": 13.118,
+      "motion_energy": 77.115,
+      "dominant_angle": 116.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        288,
+        289
+      ],
+      "time_sec": 288.0,
+      "avg_flow": 4.441,
+      "max_flow": 10.328,
+      "motion_energy": 28.806,
+      "dominant_angle": 61.2,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        289,
+        290
+      ],
+      "time_sec": 289.0,
+      "avg_flow": 4.966,
+      "max_flow": 13.858,
+      "motion_energy": 41.173,
+      "dominant_angle": 257.8,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        290,
+        291
+      ],
+      "time_sec": 290.0,
+      "avg_flow": 5.803,
+      "max_flow": 12.323,
+      "motion_energy": 59.683,
+      "dominant_angle": 282.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        291,
+        292
+      ],
+      "time_sec": 291.0,
+      "avg_flow": 4.021,
+      "max_flow": 7.353,
+      "motion_energy": 21.434,
+      "dominant_angle": 212.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        292,
+        293
+      ],
+      "time_sec": 292.0,
+      "avg_flow": 3.584,
+      "max_flow": 9.53,
+      "motion_energy": 22.751,
+      "dominant_angle": 114.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        293,
+        294
+      ],
+      "time_sec": 293.0,
+      "avg_flow": 5.137,
+      "max_flow": 12.711,
+      "motion_energy": 38.067,
+      "dominant_angle": 290.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        294,
+        295
+      ],
+      "time_sec": 294.0,
+      "avg_flow": 3.544,
+      "max_flow": 10.085,
+      "motion_energy": 22.653,
+      "dominant_angle": 203.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        295,
+        296
+      ],
+      "time_sec": 295.0,
+      "avg_flow": 4.98,
+      "max_flow": 11.142,
+      "motion_energy": 35.991,
+      "dominant_angle": 117.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        296,
+        297
+      ],
+      "time_sec": 296.0,
+      "avg_flow": 2.505,
+      "max_flow": 5.13,
+      "motion_energy": 9.903,
+      "dominant_angle": 232.9,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        297,
+        298
+      ],
+      "time_sec": 297.0,
+      "avg_flow": 4.542,
+      "max_flow": 12.184,
+      "motion_energy": 32.781,
+      "dominant_angle": 51.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        298,
+        299
+      ],
+      "time_sec": 298.0,
+      "avg_flow": 3.291,
+      "max_flow": 7.941,
+      "motion_energy": 19.009,
+      "dominant_angle": 118.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        299,
+        300
+      ],
+      "time_sec": 299.0,
+      "avg_flow": 2.588,
+      "max_flow": 7.749,
+      "motion_energy": 15.53,
+      "dominant_angle": 152.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        300,
+        301
+      ],
+      "time_sec": 300.0,
+      "avg_flow": 2.62,
+      "max_flow": 8.436,
+      "motion_energy": 13.196,
+      "dominant_angle": 229.0,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        301,
+        302
+      ],
+      "time_sec": 301.0,
+      "avg_flow": 3.747,
+      "max_flow": 6.914,
+      "motion_energy": 19.872,
+      "dominant_angle": 274.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        302,
+        303
+      ],
+      "time_sec": 302.0,
+      "avg_flow": 3.25,
+      "max_flow": 9.928,
+      "motion_energy": 20.301,
+      "dominant_angle": 99.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        303,
+        304
+      ],
+      "time_sec": 303.0,
+      "avg_flow": 5.288,
+      "max_flow": 8.964,
+      "motion_energy": 36.255,
+      "dominant_angle": 144.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        304,
+        305
+      ],
+      "time_sec": 304.0,
+      "avg_flow": 4.383,
+      "max_flow": 7.246,
+      "motion_energy": 26.244,
+      "dominant_angle": 290.3,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        305,
+        306
+      ],
+      "time_sec": 305.0,
+      "avg_flow": 2.266,
+      "max_flow": 7.671,
+      "motion_energy": 12.909,
+      "dominant_angle": 172.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        306,
+        307
+      ],
+      "time_sec": 306.0,
+      "avg_flow": 4.882,
+      "max_flow": 11.032,
+      "motion_energy": 33.4,
+      "dominant_angle": 298.8,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        307,
+        308
+      ],
+      "time_sec": 307.0,
+      "avg_flow": 4.256,
+      "max_flow": 9.04,
+      "motion_energy": 29.563,
+      "dominant_angle": 146.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        308,
+        309
+      ],
+      "time_sec": 308.0,
+      "avg_flow": 1.943,
+      "max_flow": 5.744,
+      "motion_energy": 7.893,
+      "dominant_angle": 129.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        309,
+        310
+      ],
+      "time_sec": 309.0,
+      "avg_flow": 5.078,
+      "max_flow": 8.85,
+      "motion_energy": 34.147,
+      "dominant_angle": 262.9,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        310,
+        311
+      ],
+      "time_sec": 310.0,
+      "avg_flow": 6.438,
+      "max_flow": 14.605,
+      "motion_energy": 61.764,
+      "dominant_angle": 178.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        311,
+        312
+      ],
+      "time_sec": 311.0,
+      "avg_flow": 7.86,
+      "max_flow": 19.727,
+      "motion_energy": 110.58,
+      "dominant_angle": 135.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        312,
+        313
+      ],
+      "time_sec": 312.0,
+      "avg_flow": 5.013,
+      "max_flow": 11.803,
+      "motion_energy": 43.756,
+      "dominant_angle": 184.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        313,
+        314
+      ],
+      "time_sec": 313.0,
+      "avg_flow": 6.517,
+      "max_flow": 16.461,
+      "motion_energy": 73.014,
+      "dominant_angle": 114.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        314,
+        315
+      ],
+      "time_sec": 314.0,
+      "avg_flow": 6.991,
+      "max_flow": 16.527,
+      "motion_energy": 86.704,
+      "dominant_angle": 200.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        315,
+        316
+      ],
+      "time_sec": 315.0,
+      "avg_flow": 3.299,
+      "max_flow": 9.42,
+      "motion_energy": 20.633,
+      "dominant_angle": 211.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        316,
+        317
+      ],
+      "time_sec": 316.0,
+      "avg_flow": 6.497,
+      "max_flow": 16.334,
+      "motion_energy": 85.334,
+      "dominant_angle": 205.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        317,
+        318
+      ],
+      "time_sec": 317.0,
+      "avg_flow": 4.845,
+      "max_flow": 12.163,
+      "motion_energy": 43.03,
+      "dominant_angle": 155.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        318,
+        319
+      ],
+      "time_sec": 318.0,
+      "avg_flow": 6.166,
+      "max_flow": 15.871,
+      "motion_energy": 99.868,
+      "dominant_angle": 150.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        319,
+        320
+      ],
+      "time_sec": 319.0,
+      "avg_flow": 5.99,
+      "max_flow": 14.716,
+      "motion_energy": 61.857,
+      "dominant_angle": 232.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        320,
+        321
+      ],
+      "time_sec": 320.0,
+      "avg_flow": 5.972,
+      "max_flow": 14.047,
+      "motion_energy": 61.503,
+      "dominant_angle": 209.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        321,
+        322
+      ],
+      "time_sec": 321.0,
+      "avg_flow": 8.16,
+      "max_flow": 19.662,
+      "motion_energy": 223.252,
+      "dominant_angle": 113.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        322,
+        323
+      ],
+      "time_sec": 322.0,
+      "avg_flow": 1.404,
+      "max_flow": 6.422,
+      "motion_energy": 5.6,
+      "dominant_angle": 131.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        323,
+        324
+      ],
+      "time_sec": 323.0,
+      "avg_flow": 2.561,
+      "max_flow": 6.888,
+      "motion_energy": 12.079,
+      "dominant_angle": 287.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        324,
+        325
+      ],
+      "time_sec": 324.0,
+      "avg_flow": 5.78,
+      "max_flow": 15.27,
+      "motion_energy": 62.376,
+      "dominant_angle": 103.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        325,
+        326
+      ],
+      "time_sec": 325.0,
+      "avg_flow": 4.275,
+      "max_flow": 9.565,
+      "motion_energy": 38.578,
+      "dominant_angle": 220.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        326,
+        327
+      ],
+      "time_sec": 326.0,
+      "avg_flow": 5.37,
+      "max_flow": 12.658,
+      "motion_energy": 48.189,
+      "dominant_angle": 160.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        327,
+        328
+      ],
+      "time_sec": 327.0,
+      "avg_flow": 7.817,
+      "max_flow": 15.519,
+      "motion_energy": 93.661,
+      "dominant_angle": 127.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        328,
+        329
+      ],
+      "time_sec": 328.0,
+      "avg_flow": 6.274,
+      "max_flow": 16.284,
+      "motion_energy": 71.873,
+      "dominant_angle": 245.4,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        329,
+        330
+      ],
+      "time_sec": 329.0,
+      "avg_flow": 4.983,
+      "max_flow": 11.312,
+      "motion_energy": 41.334,
+      "dominant_angle": 263.6,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        330,
+        331
+      ],
+      "time_sec": 330.0,
+      "avg_flow": 3.6,
+      "max_flow": 8.464,
+      "motion_energy": 22.697,
+      "dominant_angle": 148.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        331,
+        332
+      ],
+      "time_sec": 331.0,
+      "avg_flow": 4.704,
+      "max_flow": 12.298,
+      "motion_energy": 40.17,
+      "dominant_angle": 125.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        332,
+        333
+      ],
+      "time_sec": 332.0,
+      "avg_flow": 6.206,
+      "max_flow": 15.668,
+      "motion_energy": 63.981,
+      "dominant_angle": 214.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        333,
+        334
+      ],
+      "time_sec": 333.0,
+      "avg_flow": 6.759,
+      "max_flow": 16.031,
+      "motion_energy": 74.732,
+      "dominant_angle": 113.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        334,
+        335
+      ],
+      "time_sec": 334.0,
+      "avg_flow": 7.925,
+      "max_flow": 19.093,
+      "motion_energy": 111.384,
+      "dominant_angle": 132.9,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        335,
+        336
+      ],
+      "time_sec": 335.0,
+      "avg_flow": 3.205,
+      "max_flow": 7.091,
+      "motion_energy": 15.904,
+      "dominant_angle": 203.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        336,
+        337
+      ],
+      "time_sec": 336.0,
+      "avg_flow": 3.272,
+      "max_flow": 9.169,
+      "motion_energy": 18.343,
+      "dominant_angle": 177.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        337,
+        338
+      ],
+      "time_sec": 337.0,
+      "avg_flow": 5.863,
+      "max_flow": 11.275,
+      "motion_energy": 46.486,
+      "dominant_angle": 78.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        338,
+        339
+      ],
+      "time_sec": 338.0,
+      "avg_flow": 1.869,
+      "max_flow": 4.338,
+      "motion_energy": 6.152,
+      "dominant_angle": 84.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        339,
+        340
+      ],
+      "time_sec": 339.0,
+      "avg_flow": 1.211,
+      "max_flow": 3.461,
+      "motion_energy": 3.089,
+      "dominant_angle": 220.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        340,
+        341
+      ],
+      "time_sec": 340.0,
+      "avg_flow": 1.941,
+      "max_flow": 4.976,
+      "motion_energy": 6.914,
+      "dominant_angle": 266.0,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        341,
+        342
+      ],
+      "time_sec": 341.0,
+      "avg_flow": 1.017,
+      "max_flow": 2.806,
+      "motion_energy": 3.83,
+      "dominant_angle": 223.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        342,
+        343
+      ],
+      "time_sec": 342.0,
+      "avg_flow": 2.771,
+      "max_flow": 6.286,
+      "motion_energy": 11.62,
+      "dominant_angle": 186.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        343,
+        344
+      ],
+      "time_sec": 343.0,
+      "avg_flow": 4.397,
+      "max_flow": 8.908,
+      "motion_energy": 31.271,
+      "dominant_angle": 133.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        344,
+        345
+      ],
+      "time_sec": 344.0,
+      "avg_flow": 8.661,
+      "max_flow": 24.608,
+      "motion_energy": 124.886,
+      "dominant_angle": 237.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        345,
+        346
+      ],
+      "time_sec": 345.0,
+      "avg_flow": 6.665,
+      "max_flow": 13.568,
+      "motion_energy": 62.269,
+      "dominant_angle": 82.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        346,
+        347
+      ],
+      "time_sec": 346.0,
+      "avg_flow": 6.942,
+      "max_flow": 11.369,
+      "motion_energy": 63.367,
+      "dominant_angle": 125.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        347,
+        348
+      ],
+      "time_sec": 347.0,
+      "avg_flow": 8.072,
+      "max_flow": 12.998,
+      "motion_energy": 88.084,
+      "dominant_angle": 202.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        348,
+        349
+      ],
+      "time_sec": 348.0,
+      "avg_flow": 2.145,
+      "max_flow": 5.748,
+      "motion_energy": 8.165,
+      "dominant_angle": 153.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        349,
+        350
+      ],
+      "time_sec": 349.0,
+      "avg_flow": 4.007,
+      "max_flow": 10.412,
+      "motion_energy": 24.5,
+      "dominant_angle": 132.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        350,
+        351
+      ],
+      "time_sec": 350.0,
+      "avg_flow": 2.703,
+      "max_flow": 7.591,
+      "motion_energy": 13.516,
+      "dominant_angle": 112.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        351,
+        352
+      ],
+      "time_sec": 351.0,
+      "avg_flow": 1.991,
+      "max_flow": 4.713,
+      "motion_energy": 7.94,
+      "dominant_angle": 147.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        352,
+        353
+      ],
+      "time_sec": 352.0,
+      "avg_flow": 9.056,
+      "max_flow": 19.19,
+      "motion_energy": 120.543,
+      "dominant_angle": 149.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        353,
+        354
+      ],
+      "time_sec": 353.0,
+      "avg_flow": 6.51,
+      "max_flow": 15.314,
+      "motion_energy": 67.536,
+      "dominant_angle": 234.3,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        354,
+        355
+      ],
+      "time_sec": 354.0,
+      "avg_flow": 5.364,
+      "max_flow": 15.237,
+      "motion_energy": 53.823,
+      "dominant_angle": 148.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        355,
+        356
+      ],
+      "time_sec": 355.0,
+      "avg_flow": 6.531,
+      "max_flow": 14.42,
+      "motion_energy": 70.225,
+      "dominant_angle": 255.2,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        356,
+        357
+      ],
+      "time_sec": 356.0,
+      "avg_flow": 5.233,
+      "max_flow": 14.072,
+      "motion_energy": 51.495,
+      "dominant_angle": 202.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        357,
+        358
+      ],
+      "time_sec": 357.0,
+      "avg_flow": 4.72,
+      "max_flow": 14.557,
+      "motion_energy": 43.365,
+      "dominant_angle": 167.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        358,
+        359
+      ],
+      "time_sec": 358.0,
+      "avg_flow": 6.889,
+      "max_flow": 19.262,
+      "motion_energy": 101.83,
+      "dominant_angle": 159.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        359,
+        360
+      ],
+      "time_sec": 359.0,
+      "avg_flow": 4.709,
+      "max_flow": 8.832,
+      "motion_energy": 33.007,
+      "dominant_angle": 126.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        360,
+        361
+      ],
+      "time_sec": 360.0,
+      "avg_flow": 2.586,
+      "max_flow": 6.192,
+      "motion_energy": 11.247,
+      "dominant_angle": 91.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        361,
+        362
+      ],
+      "time_sec": 361.0,
+      "avg_flow": 1.839,
+      "max_flow": 5.277,
+      "motion_energy": 5.829,
+      "dominant_angle": 119.9,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        362,
+        363
+      ],
+      "time_sec": 362.0,
+      "avg_flow": 0.792,
+      "max_flow": 2.783,
+      "motion_energy": 1.64,
+      "dominant_angle": 152.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        363,
+        364
+      ],
+      "time_sec": 363.0,
+      "avg_flow": 0.746,
+      "max_flow": 1.658,
+      "motion_energy": 0.895,
+      "dominant_angle": 172.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        364,
+        365
+      ],
+      "time_sec": 364.0,
+      "avg_flow": 5.286,
+      "max_flow": 12.219,
+      "motion_energy": 45.385,
+      "dominant_angle": 185.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        365,
+        366
+      ],
+      "time_sec": 365.0,
+      "avg_flow": 5.938,
+      "max_flow": 14.332,
+      "motion_energy": 82.633,
+      "dominant_angle": 151.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        366,
+        367
+      ],
+      "time_sec": 366.0,
+      "avg_flow": 5.007,
+      "max_flow": 11.74,
+      "motion_energy": 41.454,
+      "dominant_angle": 195.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        367,
+        368
+      ],
+      "time_sec": 367.0,
+      "avg_flow": 4.112,
+      "max_flow": 10.772,
+      "motion_energy": 29.665,
+      "dominant_angle": 133.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        368,
+        369
+      ],
+      "time_sec": 368.0,
+      "avg_flow": 1.529,
+      "max_flow": 4.712,
+      "motion_energy": 5.943,
+      "dominant_angle": 171.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        369,
+        370
+      ],
+      "time_sec": 369.0,
+      "avg_flow": 7.554,
+      "max_flow": 19.219,
+      "motion_energy": 101.684,
+      "dominant_angle": 71.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        370,
+        371
+      ],
+      "time_sec": 370.0,
+      "avg_flow": 6.486,
+      "max_flow": 14.977,
+      "motion_energy": 72.555,
+      "dominant_angle": 160.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        371,
+        372
+      ],
+      "time_sec": 371.0,
+      "avg_flow": 5.646,
+      "max_flow": 12.954,
+      "motion_energy": 59.364,
+      "dominant_angle": 186.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        372,
+        373
+      ],
+      "time_sec": 372.0,
+      "avg_flow": 5.655,
+      "max_flow": 12.624,
+      "motion_energy": 54.385,
+      "dominant_angle": 227.2,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        373,
+        374
+      ],
+      "time_sec": 373.0,
+      "avg_flow": 6.153,
+      "max_flow": 16.334,
+      "motion_energy": 73.55,
+      "dominant_angle": 216.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        374,
+        375
+      ],
+      "time_sec": 374.0,
+      "avg_flow": 6.042,
+      "max_flow": 13.294,
+      "motion_energy": 61.554,
+      "dominant_angle": 192.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        375,
+        376
+      ],
+      "time_sec": 375.0,
+      "avg_flow": 3.465,
+      "max_flow": 5.695,
+      "motion_energy": 15.896,
+      "dominant_angle": 290.4,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        376,
+        377
+      ],
+      "time_sec": 376.0,
+      "avg_flow": 7.637,
+      "max_flow": 16.499,
+      "motion_energy": 84.935,
+      "dominant_angle": 242.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        377,
+        378
+      ],
+      "time_sec": 377.0,
+      "avg_flow": 4.138,
+      "max_flow": 6.649,
+      "motion_energy": 21.818,
+      "dominant_angle": 75.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        378,
+        379
+      ],
+      "time_sec": 378.0,
+      "avg_flow": 3.846,
+      "max_flow": 6.379,
+      "motion_energy": 18.933,
+      "dominant_angle": 100.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        379,
+        380
+      ],
+      "time_sec": 379.0,
+      "avg_flow": 6.147,
+      "max_flow": 10.83,
+      "motion_energy": 49.746,
+      "dominant_angle": 104.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        380,
+        381
+      ],
+      "time_sec": 380.0,
+      "avg_flow": 4.927,
+      "max_flow": 9.454,
+      "motion_energy": 33.556,
+      "dominant_angle": 79.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        381,
+        382
+      ],
+      "time_sec": 381.0,
+      "avg_flow": 3.406,
+      "max_flow": 7.18,
+      "motion_energy": 20.46,
+      "dominant_angle": 88.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        382,
+        383
+      ],
+      "time_sec": 382.0,
+      "avg_flow": 1.416,
+      "max_flow": 5.251,
+      "motion_energy": 5.903,
+      "dominant_angle": 186.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        383,
+        384
+      ],
+      "time_sec": 383.0,
+      "avg_flow": 1.058,
+      "max_flow": 2.113,
+      "motion_energy": 1.574,
+      "dominant_angle": 290.8,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        384,
+        385
+      ],
+      "time_sec": 384.0,
+      "avg_flow": 2.133,
+      "max_flow": 5.246,
+      "motion_energy": 7.655,
+      "dominant_angle": 96.8,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        385,
+        386
+      ],
+      "time_sec": 385.0,
+      "avg_flow": 2.488,
+      "max_flow": 5.692,
+      "motion_energy": 10.877,
+      "dominant_angle": 111.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        386,
+        387
+      ],
+      "time_sec": 386.0,
+      "avg_flow": 1.56,
+      "max_flow": 5.458,
+      "motion_energy": 4.935,
+      "dominant_angle": 106.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        387,
+        388
+      ],
+      "time_sec": 387.0,
+      "avg_flow": 2.09,
+      "max_flow": 5.241,
+      "motion_energy": 7.755,
+      "dominant_angle": 256.4,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        388,
+        389
+      ],
+      "time_sec": 388.0,
+      "avg_flow": 1.87,
+      "max_flow": 6.832,
+      "motion_energy": 7.393,
+      "dominant_angle": 264.7,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        389,
+        390
+      ],
+      "time_sec": 389.0,
+      "avg_flow": 0.851,
+      "max_flow": 2.411,
+      "motion_energy": 1.699,
+      "dominant_angle": 97.2,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        390,
+        391
+      ],
+      "time_sec": 390.0,
+      "avg_flow": 1.17,
+      "max_flow": 2.002,
+      "motion_energy": 1.729,
+      "dominant_angle": 269.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        391,
+        392
+      ],
+      "time_sec": 391.0,
+      "avg_flow": 1.473,
+      "max_flow": 2.178,
+      "motion_energy": 4.262,
+      "dominant_angle": 180.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        392,
+        393
+      ],
+      "time_sec": 392.0,
+      "avg_flow": 1.529,
+      "max_flow": 2.589,
+      "motion_energy": 3.914,
+      "dominant_angle": 55.9,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        393,
+        394
+      ],
+      "time_sec": 393.0,
+      "avg_flow": 1.596,
+      "max_flow": 6.399,
+      "motion_energy": 8.773,
+      "dominant_angle": 161.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        394,
+        395
+      ],
+      "time_sec": 394.0,
+      "avg_flow": 2.634,
+      "max_flow": 7.572,
+      "motion_energy": 13.395,
+      "dominant_angle": 270.3,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        395,
+        396
+      ],
+      "time_sec": 395.0,
+      "avg_flow": 1.347,
+      "max_flow": 5.8,
+      "motion_energy": 7.054,
+      "dominant_angle": 153.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        396,
+        397
+      ],
+      "time_sec": 396.0,
+      "avg_flow": 1.8,
+      "max_flow": 7.296,
+      "motion_energy": 9.965,
+      "dominant_angle": 245.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        397,
+        398
+      ],
+      "time_sec": 397.0,
+      "avg_flow": 1.197,
+      "max_flow": 4.496,
+      "motion_energy": 4.587,
+      "dominant_angle": 156.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        398,
+        399
+      ],
+      "time_sec": 398.0,
+      "avg_flow": 1.371,
+      "max_flow": 4.228,
+      "motion_energy": 4.247,
+      "dominant_angle": 226.0,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        399,
+        400
+      ],
+      "time_sec": 399.0,
+      "avg_flow": 0.91,
+      "max_flow": 2.375,
+      "motion_energy": 1.603,
+      "dominant_angle": 153.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        400,
+        401
+      ],
+      "time_sec": 400.0,
+      "avg_flow": 7.316,
+      "max_flow": 16.921,
+      "motion_energy": 93.032,
+      "dominant_angle": 207.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        401,
+        402
+      ],
+      "time_sec": 401.0,
+      "avg_flow": 7.524,
+      "max_flow": 20.002,
+      "motion_energy": 108.948,
+      "dominant_angle": 160.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        402,
+        403
+      ],
+      "time_sec": 402.0,
+      "avg_flow": 5.841,
+      "max_flow": 14.777,
+      "motion_energy": 60.244,
+      "dominant_angle": 138.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        403,
+        404
+      ],
+      "time_sec": 403.0,
+      "avg_flow": 5.463,
+      "max_flow": 16.768,
+      "motion_energy": 59.649,
+      "dominant_angle": 207.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        404,
+        405
+      ],
+      "time_sec": 404.0,
+      "avg_flow": 4.956,
+      "max_flow": 11.763,
+      "motion_energy": 38.851,
+      "dominant_angle": 128.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        405,
+        406
+      ],
+      "time_sec": 405.0,
+      "avg_flow": 5.557,
+      "max_flow": 13.819,
+      "motion_energy": 48.624,
+      "dominant_angle": 242.9,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        406,
+        407
+      ],
+      "time_sec": 406.0,
+      "avg_flow": 4.769,
+      "max_flow": 9.89,
+      "motion_energy": 33.228,
+      "dominant_angle": 171.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        407,
+        408
+      ],
+      "time_sec": 407.0,
+      "avg_flow": 5.295,
+      "max_flow": 12.317,
+      "motion_energy": 61.116,
+      "dominant_angle": 163.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        408,
+        409
+      ],
+      "time_sec": 408.0,
+      "avg_flow": 4.835,
+      "max_flow": 11.975,
+      "motion_energy": 42.599,
+      "dominant_angle": 129.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        409,
+        410
+      ],
+      "time_sec": 409.0,
+      "avg_flow": 6.125,
+      "max_flow": 14.767,
+      "motion_energy": 102.673,
+      "dominant_angle": 181.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        410,
+        411
+      ],
+      "time_sec": 410.0,
+      "avg_flow": 6.012,
+      "max_flow": 19.198,
+      "motion_energy": 73.106,
+      "dominant_angle": 208.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        411,
+        412
+      ],
+      "time_sec": 411.0,
+      "avg_flow": 4.689,
+      "max_flow": 12.449,
+      "motion_energy": 39.176,
+      "dominant_angle": 173.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        412,
+        413
+      ],
+      "time_sec": 412.0,
+      "avg_flow": 6.88,
+      "max_flow": 16.766,
+      "motion_energy": 82.185,
+      "dominant_angle": 163.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        413,
+        414
+      ],
+      "time_sec": 413.0,
+      "avg_flow": 6.601,
+      "max_flow": 15.401,
+      "motion_energy": 75.079,
+      "dominant_angle": 121.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        414,
+        415
+      ],
+      "time_sec": 414.0,
+      "avg_flow": 5.94,
+      "max_flow": 14.3,
+      "motion_energy": 56.543,
+      "dominant_angle": 161.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        415,
+        416
+      ],
+      "time_sec": 415.0,
+      "avg_flow": 5.904,
+      "max_flow": 14.325,
+      "motion_energy": 59.728,
+      "dominant_angle": 156.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        416,
+        417
+      ],
+      "time_sec": 416.0,
+      "avg_flow": 5.758,
+      "max_flow": 14.201,
+      "motion_energy": 57.052,
+      "dominant_angle": 105.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        417,
+        418
+      ],
+      "time_sec": 417.0,
+      "avg_flow": 1.172,
+      "max_flow": 3.902,
+      "motion_energy": 3.027,
+      "dominant_angle": 74.2,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        418,
+        419
+      ],
+      "time_sec": 418.0,
+      "avg_flow": 1.089,
+      "max_flow": 3.083,
+      "motion_energy": 2.395,
+      "dominant_angle": 71.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        419,
+        420
+      ],
+      "time_sec": 419.0,
+      "avg_flow": 0.977,
+      "max_flow": 4.753,
+      "motion_energy": 3.756,
+      "dominant_angle": 191.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        420,
+        421
+      ],
+      "time_sec": 420.0,
+      "avg_flow": 1.484,
+      "max_flow": 8.017,
+      "motion_energy": 7.42,
+      "dominant_angle": 139.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        421,
+        422
+      ],
+      "time_sec": 421.0,
+      "avg_flow": 1.172,
+      "max_flow": 3.084,
+      "motion_energy": 2.458,
+      "dominant_angle": 149.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        422,
+        423
+      ],
+      "time_sec": 422.0,
+      "avg_flow": 7.92,
+      "max_flow": 17.481,
+      "motion_energy": 101.865,
+      "dominant_angle": 71.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        423,
+        424
+      ],
+      "time_sec": 423.0,
+      "avg_flow": 2.864,
+      "max_flow": 5.567,
+      "motion_energy": 13.404,
+      "dominant_angle": 197.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        424,
+        425
+      ],
+      "time_sec": 424.0,
+      "avg_flow": 6.164,
+      "max_flow": 13.73,
+      "motion_energy": 61.716,
+      "dominant_angle": 264.7,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        425,
+        426
+      ],
+      "time_sec": 425.0,
+      "avg_flow": 5.979,
+      "max_flow": 14.839,
+      "motion_energy": 68.383,
+      "dominant_angle": 197.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        426,
+        427
+      ],
+      "time_sec": 426.0,
+      "avg_flow": 7.277,
+      "max_flow": 22.323,
+      "motion_energy": 112.778,
+      "dominant_angle": 220.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        427,
+        428
+      ],
+      "time_sec": 427.0,
+      "avg_flow": 5.886,
+      "max_flow": 16.334,
+      "motion_energy": 65.686,
+      "dominant_angle": 195.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        428,
+        429
+      ],
+      "time_sec": 428.0,
+      "avg_flow": 7.476,
+      "max_flow": 21.123,
+      "motion_energy": 111.003,
+      "dominant_angle": 132.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        429,
+        430
+      ],
+      "time_sec": 429.0,
+      "avg_flow": 6.222,
+      "max_flow": 14.639,
+      "motion_energy": 61.491,
+      "dominant_angle": 200.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        430,
+        431
+      ],
+      "time_sec": 430.0,
+      "avg_flow": 6.657,
+      "max_flow": 15.129,
+      "motion_energy": 84.987,
+      "dominant_angle": 160.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        431,
+        432
+      ],
+      "time_sec": 431.0,
+      "avg_flow": 8.308,
+      "max_flow": 16.937,
+      "motion_energy": 109.785,
+      "dominant_angle": 266.0,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        432,
+        433
+      ],
+      "time_sec": 432.0,
+      "avg_flow": 7.667,
+      "max_flow": 14.111,
+      "motion_energy": 86.705,
+      "dominant_angle": 99.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        433,
+        434
+      ],
+      "time_sec": 433.0,
+      "avg_flow": 7.209,
+      "max_flow": 19.809,
+      "motion_energy": 98.468,
+      "dominant_angle": 112.9,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        434,
+        435
+      ],
+      "time_sec": 434.0,
+      "avg_flow": 8.24,
+      "max_flow": 16.575,
+      "motion_energy": 111.23,
+      "dominant_angle": 75.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        435,
+        436
+      ],
+      "time_sec": 435.0,
+      "avg_flow": 1.65,
+      "max_flow": 8.665,
+      "motion_energy": 10.876,
+      "dominant_angle": 172.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        436,
+        437
+      ],
+      "time_sec": 436.0,
+      "avg_flow": 2.44,
+      "max_flow": 10.457,
+      "motion_energy": 16.688,
+      "dominant_angle": 112.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        437,
+        438
+      ],
+      "time_sec": 437.0,
+      "avg_flow": 1.331,
+      "max_flow": 3.891,
+      "motion_energy": 3.781,
+      "dominant_angle": 308.9,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        438,
+        439
+      ],
+      "time_sec": 438.0,
+      "avg_flow": 1.657,
+      "max_flow": 4.013,
+      "motion_energy": 5.281,
+      "dominant_angle": 220.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        439,
+        440
+      ],
+      "time_sec": 439.0,
+      "avg_flow": 0.981,
+      "max_flow": 2.327,
+      "motion_energy": 1.728,
+      "dominant_angle": 290.4,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        440,
+        441
+      ],
+      "time_sec": 440.0,
+      "avg_flow": 2.04,
+      "max_flow": 4.769,
+      "motion_energy": 7.476,
+      "dominant_angle": 157.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        441,
+        442
+      ],
+      "time_sec": 441.0,
+      "avg_flow": 1.308,
+      "max_flow": 3.279,
+      "motion_energy": 3.25,
+      "dominant_angle": 326.0,
+      "dominant_direction": "RIGHT"
+    },
+    {
+      "frame_pair": [
+        442,
+        443
+      ],
+      "time_sec": 442.0,
+      "avg_flow": 1.214,
+      "max_flow": 3.317,
+      "motion_energy": 3.07,
+      "dominant_angle": 117.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        443,
+        444
+      ],
+      "time_sec": 443.0,
+      "avg_flow": 1.415,
+      "max_flow": 4.038,
+      "motion_energy": 4.173,
+      "dominant_angle": 295.2,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        444,
+        445
+      ],
+      "time_sec": 444.0,
+      "avg_flow": 0.715,
+      "max_flow": 1.614,
+      "motion_energy": 0.921,
+      "dominant_angle": 214.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        445,
+        446
+      ],
+      "time_sec": 445.0,
+      "avg_flow": 1.071,
+      "max_flow": 2.552,
+      "motion_energy": 2.149,
+      "dominant_angle": 189.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        446,
+        447
+      ],
+      "time_sec": 446.0,
+      "avg_flow": 5.255,
+      "max_flow": 16.547,
+      "motion_energy": 61.872,
+      "dominant_angle": 174.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        447,
+        448
+      ],
+      "time_sec": 447.0,
+      "avg_flow": 4.995,
+      "max_flow": 19.208,
+      "motion_energy": 73.074,
+      "dominant_angle": 150.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        448,
+        449
+      ],
+      "time_sec": 448.0,
+      "avg_flow": 1.046,
+      "max_flow": 2.643,
+      "motion_energy": 2.156,
+      "dominant_angle": 276.6,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        449,
+        450
+      ],
+      "time_sec": 449.0,
+      "avg_flow": 2.185,
+      "max_flow": 4.655,
+      "motion_energy": 8.478,
+      "dominant_angle": 116.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        450,
+        451
+      ],
+      "time_sec": 450.0,
+      "avg_flow": 1.158,
+      "max_flow": 2.572,
+      "motion_energy": 2.452,
+      "dominant_angle": 306.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        451,
+        452
+      ],
+      "time_sec": 451.0,
+      "avg_flow": 2.046,
+      "max_flow": 5.458,
+      "motion_energy": 8.361,
+      "dominant_angle": 121.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        452,
+        453
+      ],
+      "time_sec": 452.0,
+      "avg_flow": 1.442,
+      "max_flow": 3.348,
+      "motion_energy": 4.036,
+      "dominant_angle": 295.9,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        453,
+        454
+      ],
+      "time_sec": 453.0,
+      "avg_flow": 2.332,
+      "max_flow": 10.327,
+      "motion_energy": 17.505,
+      "dominant_angle": 170.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        454,
+        455
+      ],
+      "time_sec": 454.0,
+      "avg_flow": 4.129,
+      "max_flow": 14.936,
+      "motion_energy": 40.611,
+      "dominant_angle": 166.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        455,
+        456
+      ],
+      "time_sec": 455.0,
+      "avg_flow": 3.049,
+      "max_flow": 9.673,
+      "motion_energy": 24.104,
+      "dominant_angle": 169.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        456,
+        457
+      ],
+      "time_sec": 456.0,
+      "avg_flow": 2.719,
+      "max_flow": 11.067,
+      "motion_energy": 22.246,
+      "dominant_angle": 176.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        457,
+        458
+      ],
+      "time_sec": 457.0,
+      "avg_flow": 3.718,
+      "max_flow": 12.346,
+      "motion_energy": 37.343,
+      "dominant_angle": 173.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        458,
+        459
+      ],
+      "time_sec": 458.0,
+      "avg_flow": 8.176,
+      "max_flow": 25.275,
+      "motion_energy": 158.525,
+      "dominant_angle": 135.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        459,
+        460
+      ],
+      "time_sec": 459.0,
+      "avg_flow": 6.343,
+      "max_flow": 17.614,
+      "motion_energy": 70.767,
+      "dominant_angle": 154.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        460,
+        461
+      ],
+      "time_sec": 460.0,
+      "avg_flow": 5.285,
+      "max_flow": 15.715,
+      "motion_energy": 81.162,
+      "dominant_angle": 179.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        461,
+        462
+      ],
+      "time_sec": 461.0,
+      "avg_flow": 4.671,
+      "max_flow": 11.943,
+      "motion_energy": 39.412,
+      "dominant_angle": 191.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        462,
+        463
+      ],
+      "time_sec": 462.0,
+      "avg_flow": 9.758,
+      "max_flow": 39.424,
+      "motion_energy": 304.176,
+      "dominant_angle": 147.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        463,
+        464
+      ],
+      "time_sec": 463.0,
+      "avg_flow": 7.587,
+      "max_flow": 25.779,
+      "motion_energy": 199.606,
+      "dominant_angle": 137.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        464,
+        465
+      ],
+      "time_sec": 464.0,
+      "avg_flow": 7.517,
+      "max_flow": 20.313,
+      "motion_energy": 123.897,
+      "dominant_angle": 239.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        465,
+        466
+      ],
+      "time_sec": 465.0,
+      "avg_flow": 9.286,
+      "max_flow": 20.008,
+      "motion_energy": 193.207,
+      "dominant_angle": 201.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        466,
+        467
+      ],
+      "time_sec": 466.0,
+      "avg_flow": 8.591,
+      "max_flow": 34.239,
+      "motion_energy": 178.014,
+      "dominant_angle": 137.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        467,
+        468
+      ],
+      "time_sec": 467.0,
+      "avg_flow": 7.853,
+      "max_flow": 21.403,
+      "motion_energy": 147.373,
+      "dominant_angle": 169.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        468,
+        469
+      ],
+      "time_sec": 468.0,
+      "avg_flow": 6.819,
+      "max_flow": 21.726,
+      "motion_energy": 114.734,
+      "dominant_angle": 168.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        469,
+        470
+      ],
+      "time_sec": 469.0,
+      "avg_flow": 6.46,
+      "max_flow": 17.522,
+      "motion_energy": 81.003,
+      "dominant_angle": 145.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        470,
+        471
+      ],
+      "time_sec": 470.0,
+      "avg_flow": 3.906,
+      "max_flow": 13.342,
+      "motion_energy": 39.58,
+      "dominant_angle": 204.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        471,
+        472
+      ],
+      "time_sec": 471.0,
+      "avg_flow": 4.51,
+      "max_flow": 15.496,
+      "motion_energy": 58.791,
+      "dominant_angle": 218.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        472,
+        473
+      ],
+      "time_sec": 472.0,
+      "avg_flow": 7.145,
+      "max_flow": 36.725,
+      "motion_energy": 570.899,
+      "dominant_angle": 238.7,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        473,
+        474
+      ],
+      "time_sec": 473.0,
+      "avg_flow": 0.017,
+      "max_flow": 0.105,
+      "motion_energy": 0.005,
+      "dominant_angle": 217.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        474,
+        475
+      ],
+      "time_sec": 474.0,
+      "avg_flow": 0.128,
+      "max_flow": 0.378,
+      "motion_energy": 0.456,
+      "dominant_angle": 198.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        475,
+        476
+      ],
+      "time_sec": 475.0,
+      "avg_flow": 2.241,
+      "max_flow": 10.086,
+      "motion_energy": 30.125,
+      "dominant_angle": 139.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        476,
+        477
+      ],
+      "time_sec": 476.0,
+      "avg_flow": 3.71,
+      "max_flow": 15.433,
+      "motion_energy": 65.786,
+      "dominant_angle": 122.8,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        477,
+        478
+      ],
+      "time_sec": 477.0,
+      "avg_flow": 5.599,
+      "max_flow": 20.625,
+      "motion_energy": 100.652,
+      "dominant_angle": 145.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        478,
+        479
+      ],
+      "time_sec": 478.0,
+      "avg_flow": 5.872,
+      "max_flow": 18.73,
+      "motion_energy": 69.444,
+      "dominant_angle": 184.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        479,
+        480
+      ],
+      "time_sec": 479.0,
+      "avg_flow": 6.714,
+      "max_flow": 20.987,
+      "motion_energy": 111.19,
+      "dominant_angle": 183.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        480,
+        481
+      ],
+      "time_sec": 480.0,
+      "avg_flow": 5.372,
+      "max_flow": 15.504,
+      "motion_energy": 58.839,
+      "dominant_angle": 107.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        481,
+        482
+      ],
+      "time_sec": 481.0,
+      "avg_flow": 5.544,
+      "max_flow": 12.482,
+      "motion_energy": 46.38,
+      "dominant_angle": 187.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        482,
+        483
+      ],
+      "time_sec": 482.0,
+      "avg_flow": 6.837,
+      "max_flow": 14.354,
+      "motion_energy": 66.708,
+      "dominant_angle": 159.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        483,
+        484
+      ],
+      "time_sec": 483.0,
+      "avg_flow": 6.848,
+      "max_flow": 14.689,
+      "motion_energy": 76.056,
+      "dominant_angle": 178.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        484,
+        485
+      ],
+      "time_sec": 484.0,
+      "avg_flow": 9.302,
+      "max_flow": 34.264,
+      "motion_energy": 288.222,
+      "dominant_angle": 208.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        485,
+        486
+      ],
+      "time_sec": 485.0,
+      "avg_flow": 9.05,
+      "max_flow": 21.74,
+      "motion_energy": 148.144,
+      "dominant_angle": 240.8,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        486,
+        487
+      ],
+      "time_sec": 486.0,
+      "avg_flow": 6.407,
+      "max_flow": 19.456,
+      "motion_energy": 81.919,
+      "dominant_angle": 145.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        487,
+        488
+      ],
+      "time_sec": 487.0,
+      "avg_flow": 6.599,
+      "max_flow": 17.029,
+      "motion_energy": 72.477,
+      "dominant_angle": 213.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        488,
+        489
+      ],
+      "time_sec": 488.0,
+      "avg_flow": 8.522,
+      "max_flow": 24.793,
+      "motion_energy": 134.712,
+      "dominant_angle": 222.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        489,
+        490
+      ],
+      "time_sec": 489.0,
+      "avg_flow": 9.2,
+      "max_flow": 20.395,
+      "motion_energy": 152.409,
+      "dominant_angle": 229.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        490,
+        491
+      ],
+      "time_sec": 490.0,
+      "avg_flow": 7.521,
+      "max_flow": 20.16,
+      "motion_energy": 102.771,
+      "dominant_angle": 191.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        491,
+        492
+      ],
+      "time_sec": 491.0,
+      "avg_flow": 7.756,
+      "max_flow": 20.618,
+      "motion_energy": 305.227,
+      "dominant_angle": 168.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        492,
+        493
+      ],
+      "time_sec": 492.0,
+      "avg_flow": 2.189,
+      "max_flow": 9.508,
+      "motion_energy": 18.758,
+      "dominant_angle": 193.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        493,
+        494
+      ],
+      "time_sec": 493.0,
+      "avg_flow": 1.711,
+      "max_flow": 9.055,
+      "motion_energy": 12.295,
+      "dominant_angle": 156.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        494,
+        495
+      ],
+      "time_sec": 494.0,
+      "avg_flow": 2.048,
+      "max_flow": 8.743,
+      "motion_energy": 21.764,
+      "dominant_angle": 143.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        495,
+        496
+      ],
+      "time_sec": 495.0,
+      "avg_flow": 0.959,
+      "max_flow": 5.188,
+      "motion_energy": 3.843,
+      "dominant_angle": 211.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        496,
+        497
+      ],
+      "time_sec": 496.0,
+      "avg_flow": 0.755,
+      "max_flow": 3.647,
+      "motion_energy": 2.133,
+      "dominant_angle": 77.2,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        497,
+        498
+      ],
+      "time_sec": 497.0,
+      "avg_flow": 0.693,
+      "max_flow": 3.517,
+      "motion_energy": 1.834,
+      "dominant_angle": 177.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        498,
+        499
+      ],
+      "time_sec": 498.0,
+      "avg_flow": 0.574,
+      "max_flow": 2.828,
+      "motion_energy": 1.279,
+      "dominant_angle": 75.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        499,
+        500
+      ],
+      "time_sec": 499.0,
+      "avg_flow": 0.581,
+      "max_flow": 2.723,
+      "motion_energy": 1.322,
+      "dominant_angle": 258.6,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        500,
+        501
+      ],
+      "time_sec": 500.0,
+      "avg_flow": 0.355,
+      "max_flow": 1.584,
+      "motion_energy": 0.517,
+      "dominant_angle": 105.8,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        501,
+        502
+      ],
+      "time_sec": 501.0,
+      "avg_flow": 0.297,
+      "max_flow": 1.316,
+      "motion_energy": 0.378,
+      "dominant_angle": 270.7,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        502,
+        503
+      ],
+      "time_sec": 502.0,
+      "avg_flow": 1.767,
+      "max_flow": 8.78,
+      "motion_energy": 19.042,
+      "dominant_angle": 265.8,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        503,
+        504
+      ],
+      "time_sec": 503.0,
+      "avg_flow": 3.663,
+      "max_flow": 17.155,
+      "motion_energy": 51.324,
+      "dominant_angle": 196.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        504,
+        505
+      ],
+      "time_sec": 504.0,
+      "avg_flow": 6.545,
+      "max_flow": 17.667,
+      "motion_energy": 89.447,
+      "dominant_angle": 177.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        505,
+        506
+      ],
+      "time_sec": 505.0,
+      "avg_flow": 7.346,
+      "max_flow": 15.879,
+      "motion_energy": 81.231,
+      "dominant_angle": 168.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        506,
+        507
+      ],
+      "time_sec": 506.0,
+      "avg_flow": 8.317,
+      "max_flow": 18.205,
+      "motion_energy": 103.27,
+      "dominant_angle": 138.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        507,
+        508
+      ],
+      "time_sec": 507.0,
+      "avg_flow": 6.736,
+      "max_flow": 13.878,
+      "motion_energy": 90.482,
+      "dominant_angle": 157.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        508,
+        509
+      ],
+      "time_sec": 508.0,
+      "avg_flow": 6.178,
+      "max_flow": 13.11,
+      "motion_energy": 65.571,
+      "dominant_angle": 209.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        509,
+        510
+      ],
+      "time_sec": 509.0,
+      "avg_flow": 5.365,
+      "max_flow": 13.022,
+      "motion_energy": 42.593,
+      "dominant_angle": 143.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        510,
+        511
+      ],
+      "time_sec": 510.0,
+      "avg_flow": 6.624,
+      "max_flow": 14.574,
+      "motion_energy": 63.425,
+      "dominant_angle": 199.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        511,
+        512
+      ],
+      "time_sec": 511.0,
+      "avg_flow": 6.133,
+      "max_flow": 12.93,
+      "motion_energy": 53.388,
+      "dominant_angle": 187.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        512,
+        513
+      ],
+      "time_sec": 512.0,
+      "avg_flow": 6.811,
+      "max_flow": 18.601,
+      "motion_energy": 86.49,
+      "dominant_angle": 234.8,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        513,
+        514
+      ],
+      "time_sec": 513.0,
+      "avg_flow": 6.746,
+      "max_flow": 16.069,
+      "motion_energy": 82.395,
+      "dominant_angle": 170.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        514,
+        515
+      ],
+      "time_sec": 514.0,
+      "avg_flow": 6.746,
+      "max_flow": 16.439,
+      "motion_energy": 92.694,
+      "dominant_angle": 172.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        515,
+        516
+      ],
+      "time_sec": 515.0,
+      "avg_flow": 6.383,
+      "max_flow": 13.574,
+      "motion_energy": 55.61,
+      "dominant_angle": 227.8,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        516,
+        517
+      ],
+      "time_sec": 516.0,
+      "avg_flow": 7.194,
+      "max_flow": 14.904,
+      "motion_energy": 70.306,
+      "dominant_angle": 231.0,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        517,
+        518
+      ],
+      "time_sec": 517.0,
+      "avg_flow": 5.609,
+      "max_flow": 12.769,
+      "motion_energy": 51.723,
+      "dominant_angle": 195.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        518,
+        519
+      ],
+      "time_sec": 518.0,
+      "avg_flow": 5.839,
+      "max_flow": 12.898,
+      "motion_energy": 66.77,
+      "dominant_angle": 203.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        519,
+        520
+      ],
+      "time_sec": 519.0,
+      "avg_flow": 9.148,
+      "max_flow": 17.523,
+      "motion_energy": 118.965,
+      "dominant_angle": 169.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        520,
+        521
+      ],
+      "time_sec": 520.0,
+      "avg_flow": 5.558,
+      "max_flow": 14.678,
+      "motion_energy": 51.425,
+      "dominant_angle": 224.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        521,
+        522
+      ],
+      "time_sec": 521.0,
+      "avg_flow": 9.56,
+      "max_flow": 18.807,
+      "motion_energy": 125.413,
+      "dominant_angle": 194.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        522,
+        523
+      ],
+      "time_sec": 522.0,
+      "avg_flow": 5.183,
+      "max_flow": 11.153,
+      "motion_energy": 38.705,
+      "dominant_angle": 206.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        523,
+        524
+      ],
+      "time_sec": 523.0,
+      "avg_flow": 5.713,
+      "max_flow": 14.222,
+      "motion_energy": 56.024,
+      "dominant_angle": 164.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        524,
+        525
+      ],
+      "time_sec": 524.0,
+      "avg_flow": 2.672,
+      "max_flow": 10.461,
+      "motion_energy": 15.133,
+      "dominant_angle": 218.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        525,
+        526
+      ],
+      "time_sec": 525.0,
+      "avg_flow": 1.069,
+      "max_flow": 4.048,
+      "motion_energy": 2.471,
+      "dominant_angle": 256.0,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        526,
+        527
+      ],
+      "time_sec": 526.0,
+      "avg_flow": 6.352,
+      "max_flow": 16.936,
+      "motion_energy": 72.181,
+      "dominant_angle": 189.6,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        527,
+        528
+      ],
+      "time_sec": 527.0,
+      "avg_flow": 4.78,
+      "max_flow": 10.587,
+      "motion_energy": 34.645,
+      "dominant_angle": 178.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        528,
+        529
+      ],
+      "time_sec": 528.0,
+      "avg_flow": 6.626,
+      "max_flow": 14.284,
+      "motion_energy": 71.022,
+      "dominant_angle": 139.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        529,
+        530
+      ],
+      "time_sec": 529.0,
+      "avg_flow": 6.95,
+      "max_flow": 14.579,
+      "motion_energy": 76.939,
+      "dominant_angle": 221.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        530,
+        531
+      ],
+      "time_sec": 530.0,
+      "avg_flow": 6.378,
+      "max_flow": 15.888,
+      "motion_energy": 72.51,
+      "dominant_angle": 178.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        531,
+        532
+      ],
+      "time_sec": 531.0,
+      "avg_flow": 7.398,
+      "max_flow": 16.22,
+      "motion_energy": 91.959,
+      "dominant_angle": 209.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        532,
+        533
+      ],
+      "time_sec": 532.0,
+      "avg_flow": 8.944,
+      "max_flow": 16.771,
+      "motion_energy": 111.587,
+      "dominant_angle": 320.8,
+      "dominant_direction": "RIGHT"
+    },
+    {
+      "frame_pair": [
+        533,
+        534
+      ],
+      "time_sec": 533.0,
+      "avg_flow": 8.294,
+      "max_flow": 18.747,
+      "motion_energy": 106.356,
+      "dominant_angle": 184.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        534,
+        535
+      ],
+      "time_sec": 534.0,
+      "avg_flow": 12.351,
+      "max_flow": 41.875,
+      "motion_energy": 291.446,
+      "dominant_angle": 132.2,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        535,
+        536
+      ],
+      "time_sec": 535.0,
+      "avg_flow": 5.456,
+      "max_flow": 14.484,
+      "motion_energy": 52.498,
+      "dominant_angle": 151.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        536,
+        537
+      ],
+      "time_sec": 536.0,
+      "avg_flow": 8.512,
+      "max_flow": 19.263,
+      "motion_energy": 127.189,
+      "dominant_angle": 211.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        537,
+        538
+      ],
+      "time_sec": 537.0,
+      "avg_flow": 6.828,
+      "max_flow": 14.122,
+      "motion_energy": 68.982,
+      "dominant_angle": 177.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        538,
+        539
+      ],
+      "time_sec": 538.0,
+      "avg_flow": 1.79,
+      "max_flow": 6.505,
+      "motion_energy": 8.173,
+      "dominant_angle": 143.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        539,
+        540
+      ],
+      "time_sec": 539.0,
+      "avg_flow": 2.864,
+      "max_flow": 5.92,
+      "motion_energy": 12.885,
+      "dominant_angle": 155.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        540,
+        541
+      ],
+      "time_sec": 540.0,
+      "avg_flow": 1.029,
+      "max_flow": 2.859,
+      "motion_energy": 2.344,
+      "dominant_angle": 155.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        541,
+        542
+      ],
+      "time_sec": 541.0,
+      "avg_flow": 1.491,
+      "max_flow": 3.315,
+      "motion_energy": 3.424,
+      "dominant_angle": 172.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        542,
+        543
+      ],
+      "time_sec": 542.0,
+      "avg_flow": 5.726,
+      "max_flow": 10.922,
+      "motion_energy": 46.518,
+      "dominant_angle": 154.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        543,
+        544
+      ],
+      "time_sec": 543.0,
+      "avg_flow": 4.051,
+      "max_flow": 8.891,
+      "motion_energy": 23.703,
+      "dominant_angle": 142.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        544,
+        545
+      ],
+      "time_sec": 544.0,
+      "avg_flow": 4.503,
+      "max_flow": 7.635,
+      "motion_energy": 25.445,
+      "dominant_angle": 146.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        545,
+        546
+      ],
+      "time_sec": 545.0,
+      "avg_flow": 4.432,
+      "max_flow": 7.527,
+      "motion_energy": 25.437,
+      "dominant_angle": 83.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        546,
+        547
+      ],
+      "time_sec": 546.0,
+      "avg_flow": 2.726,
+      "max_flow": 5.859,
+      "motion_energy": 10.017,
+      "dominant_angle": 81.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        547,
+        548
+      ],
+      "time_sec": 547.0,
+      "avg_flow": 2.117,
+      "max_flow": 5.935,
+      "motion_energy": 8.714,
+      "dominant_angle": 104.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        548,
+        549
+      ],
+      "time_sec": 548.0,
+      "avg_flow": 2.173,
+      "max_flow": 5.06,
+      "motion_energy": 7.546,
+      "dominant_angle": 107.8,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        549,
+        550
+      ],
+      "time_sec": 549.0,
+      "avg_flow": 6.934,
+      "max_flow": 18.476,
+      "motion_energy": 77.677,
+      "dominant_angle": 197.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        550,
+        551
+      ],
+      "time_sec": 550.0,
+      "avg_flow": 7.138,
+      "max_flow": 17.055,
+      "motion_energy": 78.849,
+      "dominant_angle": 127.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        551,
+        552
+      ],
+      "time_sec": 551.0,
+      "avg_flow": 1.278,
+      "max_flow": 2.806,
+      "motion_energy": 2.501,
+      "dominant_angle": 98.9,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        552,
+        553
+      ],
+      "time_sec": 552.0,
+      "avg_flow": 3.147,
+      "max_flow": 6.202,
+      "motion_energy": 13.75,
+      "dominant_angle": 88.2,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        553,
+        554
+      ],
+      "time_sec": 553.0,
+      "avg_flow": 1.765,
+      "max_flow": 4.524,
+      "motion_energy": 4.984,
+      "dominant_angle": 124.9,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        554,
+        555
+      ],
+      "time_sec": 554.0,
+      "avg_flow": 0.895,
+      "max_flow": 2.982,
+      "motion_energy": 2.338,
+      "dominant_angle": 246.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        555,
+        556
+      ],
+      "time_sec": 555.0,
+      "avg_flow": 1.132,
+      "max_flow": 4.535,
+      "motion_energy": 3.348,
+      "dominant_angle": 86.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        556,
+        557
+      ],
+      "time_sec": 556.0,
+      "avg_flow": 1.341,
+      "max_flow": 6.925,
+      "motion_energy": 6.326,
+      "dominant_angle": 169.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        557,
+        558
+      ],
+      "time_sec": 557.0,
+      "avg_flow": 1.743,
+      "max_flow": 8.85,
+      "motion_energy": 11.729,
+      "dominant_angle": 205.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        558,
+        559
+      ],
+      "time_sec": 558.0,
+      "avg_flow": 1.138,
+      "max_flow": 4.407,
+      "motion_energy": 3.274,
+      "dominant_angle": 207.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        559,
+        560
+      ],
+      "time_sec": 559.0,
+      "avg_flow": 1.611,
+      "max_flow": 5.581,
+      "motion_energy": 5.826,
+      "dominant_angle": 233.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        560,
+        561
+      ],
+      "time_sec": 560.0,
+      "avg_flow": 3.165,
+      "max_flow": 6.397,
+      "motion_energy": 14.454,
+      "dominant_angle": 234.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        561,
+        562
+      ],
+      "time_sec": 561.0,
+      "avg_flow": 7.627,
+      "max_flow": 17.032,
+      "motion_energy": 84.104,
+      "dominant_angle": 196.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        562,
+        563
+      ],
+      "time_sec": 562.0,
+      "avg_flow": 6.965,
+      "max_flow": 15.405,
+      "motion_energy": 74.842,
+      "dominant_angle": 152.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        563,
+        564
+      ],
+      "time_sec": 563.0,
+      "avg_flow": 7.151,
+      "max_flow": 12.598,
+      "motion_energy": 86.656,
+      "dominant_angle": 227.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        564,
+        565
+      ],
+      "time_sec": 564.0,
+      "avg_flow": 5.884,
+      "max_flow": 13.633,
+      "motion_energy": 57.912,
+      "dominant_angle": 159.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        565,
+        566
+      ],
+      "time_sec": 565.0,
+      "avg_flow": 6.591,
+      "max_flow": 13.57,
+      "motion_energy": 59.964,
+      "dominant_angle": 168.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        566,
+        567
+      ],
+      "time_sec": 566.0,
+      "avg_flow": 7.023,
+      "max_flow": 15.132,
+      "motion_energy": 83.753,
+      "dominant_angle": 160.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        567,
+        568
+      ],
+      "time_sec": 567.0,
+      "avg_flow": 6.938,
+      "max_flow": 14.912,
+      "motion_energy": 68.751,
+      "dominant_angle": 221.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        568,
+        569
+      ],
+      "time_sec": 568.0,
+      "avg_flow": 10.343,
+      "max_flow": 20.206,
+      "motion_energy": 144.04,
+      "dominant_angle": 203.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        569,
+        570
+      ],
+      "time_sec": 569.0,
+      "avg_flow": 13.719,
+      "max_flow": 21.61,
+      "motion_energy": 229.51,
+      "dominant_angle": 251.0,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        570,
+        571
+      ],
+      "time_sec": 570.0,
+      "avg_flow": 3.131,
+      "max_flow": 6.406,
+      "motion_energy": 12.651,
+      "dominant_angle": 170.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        571,
+        572
+      ],
+      "time_sec": 571.0,
+      "avg_flow": 8.193,
+      "max_flow": 14.028,
+      "motion_energy": 80.741,
+      "dominant_angle": 284.6,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        572,
+        573
+      ],
+      "time_sec": 572.0,
+      "avg_flow": 4.145,
+      "max_flow": 10.811,
+      "motion_energy": 25.421,
+      "dominant_angle": 212.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        573,
+        574
+      ],
+      "time_sec": 573.0,
+      "avg_flow": 3.053,
+      "max_flow": 7.429,
+      "motion_energy": 14.115,
+      "dominant_angle": 224.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        574,
+        575
+      ],
+      "time_sec": 574.0,
+      "avg_flow": 10.246,
+      "max_flow": 20.624,
+      "motion_energy": 138.098,
+      "dominant_angle": 170.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        575,
+        576
+      ],
+      "time_sec": 575.0,
+      "avg_flow": 7.608,
+      "max_flow": 12.069,
+      "motion_energy": 70.663,
+      "dominant_angle": 314.3,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        576,
+        577
+      ],
+      "time_sec": 576.0,
+      "avg_flow": 8.855,
+      "max_flow": 12.329,
+      "motion_energy": 86.837,
+      "dominant_angle": 165.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        577,
+        578
+      ],
+      "time_sec": 577.0,
+      "avg_flow": 9.008,
+      "max_flow": 23.361,
+      "motion_energy": 170.491,
+      "dominant_angle": 173.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        578,
+        579
+      ],
+      "time_sec": 578.0,
+      "avg_flow": 9.687,
+      "max_flow": 18.741,
+      "motion_energy": 128.264,
+      "dominant_angle": 247.7,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        579,
+        580
+      ],
+      "time_sec": 579.0,
+      "avg_flow": 9.334,
+      "max_flow": 15.608,
+      "motion_energy": 112.941,
+      "dominant_angle": 175.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        580,
+        581
+      ],
+      "time_sec": 580.0,
+      "avg_flow": 11.39,
+      "max_flow": 18.287,
+      "motion_energy": 159.622,
+      "dominant_angle": 87.5,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        581,
+        582
+      ],
+      "time_sec": 581.0,
+      "avg_flow": 5.494,
+      "max_flow": 9.347,
+      "motion_energy": 36.585,
+      "dominant_angle": 68.2,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        582,
+        583
+      ],
+      "time_sec": 582.0,
+      "avg_flow": 3.717,
+      "max_flow": 9.566,
+      "motion_energy": 21.474,
+      "dominant_angle": 270.1,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        583,
+        584
+      ],
+      "time_sec": 583.0,
+      "avg_flow": 3.733,
+      "max_flow": 14.477,
+      "motion_energy": 33.034,
+      "dominant_angle": 134.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        584,
+        585
+      ],
+      "time_sec": 584.0,
+      "avg_flow": 3.617,
+      "max_flow": 6.692,
+      "motion_energy": 17.236,
+      "dominant_angle": 119.8,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        585,
+        586
+      ],
+      "time_sec": 585.0,
+      "avg_flow": 4.547,
+      "max_flow": 6.697,
+      "motion_energy": 24.529,
+      "dominant_angle": 121.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        586,
+        587
+      ],
+      "time_sec": 586.0,
+      "avg_flow": 3.458,
+      "max_flow": 6.985,
+      "motion_energy": 17.24,
+      "dominant_angle": 153.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        587,
+        588
+      ],
+      "time_sec": 587.0,
+      "avg_flow": 2.371,
+      "max_flow": 7.23,
+      "motion_energy": 12.131,
+      "dominant_angle": 152.0,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        588,
+        589
+      ],
+      "time_sec": 588.0,
+      "avg_flow": 3.83,
+      "max_flow": 8.056,
+      "motion_energy": 20.698,
+      "dominant_angle": 270.3,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        589,
+        590
+      ],
+      "time_sec": 589.0,
+      "avg_flow": 4.145,
+      "max_flow": 6.171,
+      "motion_energy": 20.304,
+      "dominant_angle": 233.0,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        590,
+        591
+      ],
+      "time_sec": 590.0,
+      "avg_flow": 1.543,
+      "max_flow": 2.776,
+      "motion_energy": 2.948,
+      "dominant_angle": 225.2,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        591,
+        592
+      ],
+      "time_sec": 591.0,
+      "avg_flow": 9.843,
+      "max_flow": 14.087,
+      "motion_energy": 107.404,
+      "dominant_angle": 94.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        592,
+        593
+      ],
+      "time_sec": 592.0,
+      "avg_flow": 11.301,
+      "max_flow": 17.082,
+      "motion_energy": 166.77,
+      "dominant_angle": 88.0,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        593,
+        594
+      ],
+      "time_sec": 593.0,
+      "avg_flow": 5.393,
+      "max_flow": 12.545,
+      "motion_energy": 42.399,
+      "dominant_angle": 138.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        594,
+        595
+      ],
+      "time_sec": 594.0,
+      "avg_flow": 8.353,
+      "max_flow": 13.651,
+      "motion_energy": 95.389,
+      "dominant_angle": 81.3,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        595,
+        596
+      ],
+      "time_sec": 595.0,
+      "avg_flow": 5.158,
+      "max_flow": 8.472,
+      "motion_energy": 39.523,
+      "dominant_angle": 104.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        596,
+        597
+      ],
+      "time_sec": 596.0,
+      "avg_flow": 9.713,
+      "max_flow": 17.044,
+      "motion_energy": 126.471,
+      "dominant_angle": 257.2,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        597,
+        598
+      ],
+      "time_sec": 597.0,
+      "avg_flow": 6.282,
+      "max_flow": 10.978,
+      "motion_energy": 59.519,
+      "dominant_angle": 67.7,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        598,
+        599
+      ],
+      "time_sec": 598.0,
+      "avg_flow": 4.056,
+      "max_flow": 9.571,
+      "motion_energy": 27.689,
+      "dominant_angle": 220.4,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        599,
+        600
+      ],
+      "time_sec": 599.0,
+      "avg_flow": 3.011,
+      "max_flow": 8.556,
+      "motion_energy": 25.79,
+      "dominant_angle": 232.3,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        600,
+        601
+      ],
+      "time_sec": 600.0,
+      "avg_flow": 4.181,
+      "max_flow": 9.019,
+      "motion_energy": 25.096,
+      "dominant_angle": 107.8,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        601,
+        602
+      ],
+      "time_sec": 601.0,
+      "avg_flow": 7.762,
+      "max_flow": 14.488,
+      "motion_energy": 95.255,
+      "dominant_angle": 236.3,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        602,
+        603
+      ],
+      "time_sec": 602.0,
+      "avg_flow": 8.735,
+      "max_flow": 15.847,
+      "motion_energy": 105.525,
+      "dominant_angle": 96.1,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        603,
+        604
+      ],
+      "time_sec": 603.0,
+      "avg_flow": 5.124,
+      "max_flow": 9.907,
+      "motion_energy": 40.529,
+      "dominant_angle": 235.7,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        604,
+        605
+      ],
+      "time_sec": 604.0,
+      "avg_flow": 9.937,
+      "max_flow": 17.05,
+      "motion_energy": 132.229,
+      "dominant_angle": 83.6,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        605,
+        606
+      ],
+      "time_sec": 605.0,
+      "avg_flow": 7.011,
+      "max_flow": 13.29,
+      "motion_energy": 71.823,
+      "dominant_angle": 257.6,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        606,
+        607
+      ],
+      "time_sec": 606.0,
+      "avg_flow": 3.297,
+      "max_flow": 9.062,
+      "motion_energy": 23.792,
+      "dominant_angle": 78.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        607,
+        608
+      ],
+      "time_sec": 607.0,
+      "avg_flow": 2.002,
+      "max_flow": 6.915,
+      "motion_energy": 10.329,
+      "dominant_angle": 152.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        608,
+        609
+      ],
+      "time_sec": 608.0,
+      "avg_flow": 3.382,
+      "max_flow": 8.427,
+      "motion_energy": 23.254,
+      "dominant_angle": 184.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        609,
+        610
+      ],
+      "time_sec": 609.0,
+      "avg_flow": 5.788,
+      "max_flow": 10.204,
+      "motion_energy": 55.919,
+      "dominant_angle": 179.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        610,
+        611
+      ],
+      "time_sec": 610.0,
+      "avg_flow": 6.12,
+      "max_flow": 12.621,
+      "motion_energy": 54.109,
+      "dominant_angle": 253.5,
+      "dominant_direction": "UP"
+    },
+    {
+      "frame_pair": [
+        611,
+        612
+      ],
+      "time_sec": 611.0,
+      "avg_flow": 6.12,
+      "max_flow": 15.779,
+      "motion_energy": 58.567,
+      "dominant_angle": 99.4,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        612,
+        613
+      ],
+      "time_sec": 612.0,
+      "avg_flow": 8.645,
+      "max_flow": 20.768,
+      "motion_energy": 119.884,
+      "dominant_angle": 170.9,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        613,
+        614
+      ],
+      "time_sec": 613.0,
+      "avg_flow": 10.774,
+      "max_flow": 27.977,
+      "motion_energy": 197.963,
+      "dominant_angle": 222.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        614,
+        615
+      ],
+      "time_sec": 614.0,
+      "avg_flow": 1.853,
+      "max_flow": 4.119,
+      "motion_energy": 5.056,
+      "dominant_angle": 179.8,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        615,
+        616
+      ],
+      "time_sec": 615.0,
+      "avg_flow": 5.969,
+      "max_flow": 10.446,
+      "motion_energy": 41.81,
+      "dominant_angle": 67.2,
+      "dominant_direction": "DOWN"
+    },
+    {
+      "frame_pair": [
+        616,
+        617
+      ],
+      "time_sec": 616.0,
+      "avg_flow": 9.588,
+      "max_flow": 19.761,
+      "motion_energy": 134.581,
+      "dominant_angle": 138.1,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        617,
+        618
+      ],
+      "time_sec": 617.0,
+      "avg_flow": 6.813,
+      "max_flow": 13.934,
+      "motion_energy": 65.039,
+      "dominant_angle": 157.2,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        618,
+        619
+      ],
+      "time_sec": 618.0,
+      "avg_flow": 6.848,
+      "max_flow": 16.5,
+      "motion_energy": 86.867,
+      "dominant_angle": 214.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        619,
+        620
+      ],
+      "time_sec": 619.0,
+      "avg_flow": 6.789,
+      "max_flow": 15.43,
+      "motion_energy": 66.219,
+      "dominant_angle": 179.7,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        620,
+        621
+      ],
+      "time_sec": 620.0,
+      "avg_flow": 6.382,
+      "max_flow": 14.183,
+      "motion_energy": 70.922,
+      "dominant_angle": 168.5,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        621,
+        622
+      ],
+      "time_sec": 621.0,
+      "avg_flow": 6.077,
+      "max_flow": 17.389,
+      "motion_energy": 81.806,
+      "dominant_angle": 150.3,
+      "dominant_direction": "LEFT"
+    },
+    {
+      "frame_pair": [
+        622,
+        623
+      ],
+      "time_sec": 622.0,
+      "avg_flow": 7.485,
+      "max_flow": 16.424,
+      "motion_energy": 92.838,
+      "dominant_angle": 142.4,
+      "dominant_direction": "LEFT"
+    }
+  ],
+  "periodicity": [
+    {
+      "start_sec": 0.0,
+      "end_sec": 20.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.282
+    },
+    {
+      "start_sec": 10.0,
+      "end_sec": 30.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.226
+    },
+    {
+      "start_sec": 20.0,
+      "end_sec": 40.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.189
+    },
+    {
+      "start_sec": 30.0,
+      "end_sec": 50.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.288
+    },
+    {
+      "start_sec": 40.0,
+      "end_sec": 60.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.176
+    },
+    {
+      "start_sec": 50.0,
+      "end_sec": 70.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.118
+    },
+    {
+      "start_sec": 60.0,
+      "end_sec": 80.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.141
+    },
+    {
+      "start_sec": 70.0,
+      "end_sec": 90.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.188
+    },
+    {
+      "start_sec": 80.0,
+      "end_sec": 100.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.456
+    },
+    {
+      "start_sec": 90.0,
+      "end_sec": 110.0,
+      "periodic": true,
+      "period_sec": 3.0,
+      "strength": 0.5
+    },
+    {
+      "start_sec": 100.0,
+      "end_sec": 120.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.123
+    },
+    {
+      "start_sec": 110.0,
+      "end_sec": 130.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.162
+    },
+    {
+      "start_sec": 120.0,
+      "end_sec": 140.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.246
+    },
+    {
+      "start_sec": 130.0,
+      "end_sec": 150.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.265
+    },
+    {
+      "start_sec": 140.0,
+      "end_sec": 160.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.109
+    },
+    {
+      "start_sec": 150.0,
+      "end_sec": 170.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.09
+    },
+    {
+      "start_sec": 160.0,
+      "end_sec": 180.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.228
+    },
+    {
+      "start_sec": 170.0,
+      "end_sec": 190.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.547
+    },
+    {
+      "start_sec": 180.0,
+      "end_sec": 200.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.322
+    },
+    {
+      "start_sec": 190.0,
+      "end_sec": 210.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.513
+    },
+    {
+      "start_sec": 200.0,
+      "end_sec": 220.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.566
+    },
+    {
+      "start_sec": 210.0,
+      "end_sec": 230.0,
+      "periodic": true,
+      "period_sec": 7.0,
+      "strength": 0.358
+    },
+    {
+      "start_sec": 220.0,
+      "end_sec": 240.0,
+      "periodic": true,
+      "period_sec": 3.0,
+      "strength": 0.342
+    },
+    {
+      "start_sec": 230.0,
+      "end_sec": 250.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.203
+    },
+    {
+      "start_sec": 240.0,
+      "end_sec": 260.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.358
+    },
+    {
+      "start_sec": 250.0,
+      "end_sec": 270.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.229
+    },
+    {
+      "start_sec": 260.0,
+      "end_sec": 280.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.306
+    },
+    {
+      "start_sec": 270.0,
+      "end_sec": 290.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.22
+    },
+    {
+      "start_sec": 280.0,
+      "end_sec": 300.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.299
+    },
+    {
+      "start_sec": 290.0,
+      "end_sec": 310.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.264
+    },
+    {
+      "start_sec": 300.0,
+      "end_sec": 320.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.255
+    },
+    {
+      "start_sec": 310.0,
+      "end_sec": 330.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.27
+    },
+    {
+      "start_sec": 320.0,
+      "end_sec": 340.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.13
+    },
+    {
+      "start_sec": 330.0,
+      "end_sec": 350.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.182
+    },
+    {
+      "start_sec": 340.0,
+      "end_sec": 360.0,
+      "periodic": true,
+      "period_sec": 8.0,
+      "strength": 0.357
+    },
+    {
+      "start_sec": 350.0,
+      "end_sec": 370.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.002
+    },
+    {
+      "start_sec": 360.0,
+      "end_sec": 380.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.186
+    },
+    {
+      "start_sec": 370.0,
+      "end_sec": 390.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.503
+    },
+    {
+      "start_sec": 380.0,
+      "end_sec": 400.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.151
+    },
+    {
+      "start_sec": 390.0,
+      "end_sec": 410.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.468
+    },
+    {
+      "start_sec": 400.0,
+      "end_sec": 420.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.242
+    },
+    {
+      "start_sec": 410.0,
+      "end_sec": 430.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.467
+    },
+    {
+      "start_sec": 420.0,
+      "end_sec": 440.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.39
+    },
+    {
+      "start_sec": 430.0,
+      "end_sec": 450.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.418
+    },
+    {
+      "start_sec": 440.0,
+      "end_sec": 460.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.055
+    },
+    {
+      "start_sec": 450.0,
+      "end_sec": 470.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.526
+    },
+    {
+      "start_sec": 460.0,
+      "end_sec": 480.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.375
+    },
+    {
+      "start_sec": 470.0,
+      "end_sec": 490.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.329
+    },
+    {
+      "start_sec": 480.0,
+      "end_sec": 500.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.645
+    },
+    {
+      "start_sec": 490.0,
+      "end_sec": 510.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.504
+    },
+    {
+      "start_sec": 500.0,
+      "end_sec": 520.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.326
+    },
+    {
+      "start_sec": 510.0,
+      "end_sec": 530.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.297
+    },
+    {
+      "start_sec": 520.0,
+      "end_sec": 540.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.223
+    },
+    {
+      "start_sec": 530.0,
+      "end_sec": 550.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.459
+    },
+    {
+      "start_sec": 540.0,
+      "end_sec": 560.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.152
+    },
+    {
+      "start_sec": 550.0,
+      "end_sec": 570.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.468
+    },
+    {
+      "start_sec": 560.0,
+      "end_sec": 580.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.242
+    },
+    {
+      "start_sec": 570.0,
+      "end_sec": 590.0,
+      "periodic": true,
+      "period_sec": 2.0,
+      "strength": 0.388
+    },
+    {
+      "start_sec": 580.0,
+      "end_sec": 600.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.04
+    },
+    {
+      "start_sec": 590.0,
+      "end_sec": 610.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.209
+    },
+    {
+      "start_sec": 600.0,
+      "end_sec": 620.0,
+      "periodic": false,
+      "period_sec": null,
+      "strength": 0.18
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析：进场帧清晰显示用户正面对一台龙门架（Cable Machine），滑轮位于高位，连接着绳索（Rope）配件，背景可见健身房镜子和配重塔。
+Step 2 — 器械识别：用户采用站姿，双手握住从上方垂下的绳索配件，肘部固定在身体两侧，符合龙门架站姿训练特征，排除坐姿的高位下拉。
+Step 3 — 光流验证：光流显示明显的 UP/DOWN 交替模式（如 t=850s DOWN, t=852s UP），且能量集中在垂直方向，验证了前臂上下摆动的下压动作。
+Step 4 — 动作判定：结合站姿、高位绳索来向、肘部固定及向下推压的动作特征，判定为绳索下压（cable_triceps_pushdown）。
+Step 5 — 组次统计：从 13:57 开始抓握发力，至 14:29 彻底放回器械，期间通过光流周期观察到 6 次完整的下压动作。
+
+{"equipment": "龙门架", "exercise": "绳索下压", "exercise_id": "cable_triceps_pushdown", "confidence": 1.0, "sets": [{"start_time": "00:13:57", "end_time": "00:14:29", "reps": 6}], "phase1_adjustment": {"expand_before_sec": 0, "expand_after_sec": 4, "reason": "动作在14:25后仍有最后一次重复及放回器械的过程，需向后扩展以覆盖完整结束动作"}}

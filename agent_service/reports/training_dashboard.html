@@ -426,6 +426,108 @@ body {
 .ex-conf-bar { width: 50px; height: 6px; background: #e9ecf5; border-radius: 3px; overflow: hidden; }
 .ex-conf-fill { height: 100%; border-radius: 3px; background: #10b981; }
 .ex-table-empty { text-align: center; color: #9ca3af; padding: 32px 0; font-size: 14px; }
+
+/* ═══ Ground Truth vs Recognized comparison ═══ */
+.gt-comparison {
+  max-width: 1440px;
+  margin: 16px auto 0;
+  background: #fff;
+  border-radius: 18px;
+  padding: 20px 18px 18px;
+  box-shadow: 0 2px 14px rgba(80,100,160,0.07);
+  display: none;
+}
+.gt-comparison .card-title { font-size: 16px; font-weight: 700; color: #1e2340; text-align: center; margin-bottom: 14px; }
+.gt-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.gt-summary-box {
+  text-align: center;
+  min-width: 100px;
+}
+.gt-summary-label { font-size: 12px; color: #8b92b0; margin-bottom: 4px; }
+.gt-summary-val { font-size: 28px; font-weight: 800; line-height: 1.1; }
+.gt-summary-val.gt-color { color: #10b981; }
+.gt-summary-val.rec-color { color: #3b82f6; }
+.gt-summary-badge {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 16px;
+  border-radius: 20px;
+}
+.gt-summary-badge.match { background: rgba(16,185,129,0.12); color: #10b981; }
+.gt-summary-badge.mismatch { background: rgba(239,68,68,0.12); color: #ef4444; }
+.gt-detail-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.gt-detail-table thead th {
+  background: #f4f6fc; font-size: 12px; font-weight: 600; color: #6b7396;
+  padding: 8px 10px; text-align: left; border-bottom: 2px solid #e9ecf5;
+}
+.gt-detail-table thead th:first-child { border-radius: 8px 0 0 0; }
+.gt-detail-table thead th:last-child { border-radius: 0 8px 0 0; }
+.gt-detail-table tbody td {
+  padding: 8px 10px; font-size: 13px; color: #374151;
+  border-bottom: 1px solid #f0f1f6;
+}
+.gt-detail-table tbody tr:hover { background: #f9fafd; }
+.gt-match-icon { display: inline-block; width: 20px; height: 20px; border-radius: 50%; text-align: center; line-height: 20px; font-size: 11px; font-weight: 700; }
+.gt-match-icon.ok { background: rgba(16,185,129,0.15); color: #10b981; }
+.gt-match-icon.miss { background: rgba(239,68,68,0.15); color: #ef4444; }
+.gt-match-icon.extra { background: rgba(245,158,11,0.15); color: #f59e0b; }
+/* Dual timeline bars */
+.tl-bar-label { font-size: 11px; font-weight: 600; color: #6b7396; margin-bottom: 2px; }
+.tl-bar-label.gt-label { color: #10b981; }
+.tl-bar-label.rec-label { color: #6c7ae0; }
+.tl-bar-group { display: flex; flex-direction: column; gap: 6px; }
+.tl-bar.gt-bar .tl-segment.type-exercise { background: #10b981; }
+.tl-bar.gt-bar .tl-segment.type-transition { background: #b0e0cd; color: #065f46; }
+
+/* Shared time tick marks between GT and rec bars */
+.tl-time-ticks-container {
+  position: relative;
+  height: 18px;
+  margin: -2px 0;
+}
+.tl-tick {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: #9ca3af;
+  font-weight: 500;
+  top: 2px;
+  white-space: nowrap;
+}
+.tl-tick-line {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: #e2e5f1;
+  pointer-events: none;
+}
+
+/* Version selector pills */
+.tl-version-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.tl-version-label { font-size: 12px; font-weight: 600; color: #6b7396; }
+.tl-version-pill {
+  padding: 3px 12px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid #d0d3e0;
+  background: #f7f8fc;
+  color: #6b7396;
+  transition: all .15s;
+}
+.tl-version-pill:hover { border-color: #6c7ae0; color: #6c7ae0; }
+.tl-version-pill.active { background: #6c7ae0; color: #fff; border-color: #6c7ae0; }
+
 @media (max-width: 960px) {
   .timeline-main { flex-direction: column; }
   .timeline-video-wrap { flex: none; width: 100%; }
@@ -456,6 +558,7 @@ body {
       <div class="stats-col">
         <div class="stat-box"><div class="stat-lbl">训练时长</div><div class="stat-val" id="s-duration">--<span class="stat-unit"> min</span></div></div>
         <div class="stat-box"><div class="stat-lbl">消耗热量</div><div class="stat-val" id="s-calories">--<span class="stat-unit">kcal</span></div></div>
+        <div class="stat-box"><div class="stat-lbl">识别动作数</div><div class="stat-val" id="s-exercises">--<span class="stat-unit"> 个</span></div></div>
         <div class="stat-box"><div class="stat-lbl">平均心率</div><div class="stat-val" id="s-hr">--<span class="stat-unit">bpm</span></div></div>
       </div>
     </div>
@@ -546,16 +649,32 @@ body {
       </div>
     </div>
     <div class="timeline-right">
-      <div class="tl-bar-container">
-        <div class="tl-bar" id="tl-bar"></div>
-        <div class="tl-playhead" id="tl-playhead" style="left:0%"></div>
+      <div class="tl-bar-group">
+        <div>
+          <div class="tl-bar-label gt-label">真实 Ground Truth</div>
+          <div class="tl-bar-container">
+            <div class="tl-bar gt-bar" id="tl-bar-gt"></div>
+          </div>
+        </div>
+        <div class="tl-time-ticks-container" id="tl-time-ticks"></div>
+        <div>
+          <div class="tl-bar-label rec-label">识别 Recognition</div>
+          <div class="tl-bar-container">
+            <div class="tl-bar" id="tl-bar"></div>
+            <div class="tl-playhead" id="tl-playhead" style="left:0%"></div>
+          </div>
+        </div>
         <div class="tl-time-labels">
           <span id="tl-time-start">00:00</span>
           <span id="tl-time-end">00:00</span>
         </div>
       </div>
+      <div class="tl-version-row" id="tl-version-row" style="display:none;">
+        <span class="tl-version-label">识别版本：</span>
+      </div>
       <div class="tl-legend">
-        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#6c7ae0"></div>运动</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#10b981"></div>真实运动</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#6c7ae0"></div>识别运动</div>
         <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#d0d3e0"></div>过渡</div>
         <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#fde68a"></div>休息</div>
       </div>
@@ -565,22 +684,44 @@ body {
 </div>
 
 <div class="exercise-table-section" id="exercise-table-section" style="display:none;">
-  <div class="card-title">识别运动详情</div>
+  <div class="card-title">运动详情对比</div>
   <table class="ex-table" id="ex-table">
     <thead>
       <tr>
         <th>#</th>
-        <th>动作名称</th>
-        <th>器械</th>
+        <th>真实动作</th>
+        <th>真实组数</th>
+        <th>真实个数</th>
+        <th>识别动作</th>
         <th>识别组数</th>
-        <th>持续时间</th>
+        <th>识别个数</th>
         <th>时间区间</th>
-        <th>置信度</th>
+        <th>状态</th>
       </tr>
     </thead>
     <tbody id="ex-table-body"></tbody>
   </table>
   <div class="ex-table-empty" id="ex-table-empty" style="display:none;">暂无识别数据</div>
+</div>
+
+<div class="gt-comparison" id="gt-comparison">
+  <div class="card-title">真实标注 vs 识别结果 对比</div>
+  <div class="gt-summary" id="gt-summary"></div>
+  <table class="gt-detail-table" id="gt-detail-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>真实动作</th>
+        <th>真实组数</th>
+        <th>真实每组个数</th>
+        <th>识别动作</th>
+        <th>识别组数</th>
+        <th>识别每组个数</th>
+        <th>状态</th>
+      </tr>
+    </thead>
+    <tbody id="gt-detail-body"></tbody>
+  </table>
 </div>
 
 <script>
@@ -830,10 +971,12 @@ async function loadDailyForDate(date) {
     renderDailyData(daily);
     renderTimeline(daily.all_segments || daily.raw_segments || [], daily.total_sec || 0, daily.video_file || '');
     renderExerciseTable(daily.all_segments || daily.raw_segments || []);
+    loadAndRenderGtComparison(daily.video_file, daily.all_segments || daily.raw_segments || []);
   } catch (e) {
     renderDailyData({});
     renderTimeline([], 0);
     renderExerciseTable([]);
+    document.getElementById('gt-comparison').style.display = 'none';
   }
 }
 
@@ -884,6 +1027,7 @@ function renderBalanceTooltip(fb) {
 function renderDailyData(daily) {
   document.getElementById('s-duration').innerHTML = safeVal(daily.duration_min) + '<span class="stat-unit"> min</span>';
   document.getElementById('s-calories').innerHTML = safeVal(daily.calories) + '<span class="stat-unit">kcal</span>';
+  document.getElementById('s-exercises').innerHTML = safeVal(daily.exercises ? daily.exercises.length : 0) + '<span class="stat-unit"> 个</span>';
   document.getElementById('s-hr').innerHTML = safeVal(daily.avg_hr) + '<span class="stat-unit">bpm</span>';
   var completion = Number(daily.completion_rate || 0);
   var fb = daily.fitness_balance || {};
@@ -969,12 +1113,14 @@ function tlTogglePlay() {
 }
 tlVideo.addEventListener('play', function() { document.getElementById('tl-play-btn').textContent = '暂停'; });
 tlVideo.addEventListener('pause', function() { document.getElementById('tl-play-btn').textContent = '播放'; });
+tlVideo.addEventListener('loadedmetadata', function() { syncBothBars(); });
 
 function tlSetSpeed(v) { tlVideo.playbackRate = parseFloat(v); }
 
 tlVideo.addEventListener('timeupdate', function() {
   if (!tlVideo.duration) return;
-  var pct = (tlVideo.currentTime / tlVideo.duration) * 100;
+  var dur = getUnifiedDur();
+  var pct = (tlVideo.currentTime / dur) * 100;
   document.getElementById('tl-playhead').style.left = pct + '%';
   document.getElementById('tl-time-text').textContent =
     tlFormatTime(tlVideo.currentTime) + ' / ' + tlFormatTime(tlVideo.duration);
@@ -1003,23 +1149,24 @@ document.getElementById('tl-bar').addEventListener('click', function(e) {
   if (!tlVideo.duration) return;
   var rect = this.getBoundingClientRect();
   var pct = (e.clientX - rect.left) / rect.width;
-  tlVideo.currentTime = pct * tlVideo.duration;
+  tlVideo.currentTime = pct * getUnifiedDur();
+});
+document.getElementById('tl-bar-gt').addEventListener('click', function(e) {
+  if (!tlVideo.duration) return;
+  var rect = this.getBoundingClientRect();
+  var pct = (e.clientX - rect.left) / rect.width;
+  tlVideo.currentTime = pct * getUnifiedDur();
 });
 
-function renderTimeline(segments, totalSec, videoFile) {
-  tlSegments = segments || [];
-  tlTotalSec = totalSec || 0;
-  var section = document.getElementById('timeline-section');
-  if (!tlSegments.length) { section.style.display = 'none'; return; }
-  section.style.display = '';
+var tlCurrentVideoFile = '';
+var tlCurrentVersion = '';
+var tlGtSegments = [];
+var tlGtBarSegs = [];    // processed GT segments for the bar
+var tlRecBarSegs = [];   // processed rec segments for the bar
 
-  var bar = document.getElementById('tl-bar');
-  bar.innerHTML = '';
-  document.getElementById('tl-time-start').textContent = '00:00';
-  document.getElementById('tl-time-end').textContent = tlFormatTime(tlTotalSec);
-
-  var dur = tlTotalSec || 1;
-  tlSegments.forEach(function(seg) {
+function fillBar(barEl, segments, dur) {
+  barEl.innerHTML = '';
+  (segments || []).forEach(function(seg) {
     var left = (seg.start_sec / dur) * 100;
     var width = ((seg.end_sec - seg.start_sec) / dur) * 100;
     if (width < 0.3) return;
@@ -1028,9 +1175,9 @@ function renderTimeline(segments, totalSec, videoFile) {
     el.style.left = left + '%';
     el.style.width = width + '%';
     if (seg.type === 'exercise') {
-      el.textContent = seg.exercise_name || '运动';
+      el.textContent = seg.exercise_name || seg.label || '运动';
     }
-    el.title = (seg.exercise_name || seg.type || '') + ' ' + tlFormatTime(seg.start_sec) + '→' + tlFormatTime(seg.end_sec);
+    el.title = (seg.exercise_name || seg.label || seg.type || '') + ' ' + tlFormatTime(seg.start_sec) + '→' + tlFormatTime(seg.end_sec);
     el.addEventListener('click', function(ev) {
       ev.stopPropagation();
       if (tlVideo.readyState >= 1) {
@@ -1038,8 +1185,196 @@ function renderTimeline(segments, totalSec, videoFile) {
         tlVideo.play();
       }
     });
-    bar.appendChild(el);
+    barEl.appendChild(el);
   });
+}
+
+function getUnifiedDur() {
+  if (tlVideo.duration && isFinite(tlVideo.duration)) return tlVideo.duration;
+  return tlTotalSec || 1;
+}
+
+function syncBothBars() {
+  var dur = getUnifiedDur();
+  fillBar(document.getElementById('tl-bar-gt'), tlGtBarSegs, dur);
+  fillBar(document.getElementById('tl-bar'), tlRecBarSegs, dur);
+  document.getElementById('tl-time-end').textContent = tlFormatTime(dur);
+  renderTimeTickMarks(dur);
+}
+
+function renderTimeTickMarks(dur) {
+  var container = document.getElementById('tl-time-ticks');
+  if (!container) return;
+  container.innerHTML = '';
+  if (dur <= 0) return;
+  var interval;
+  if (dur <= 300) interval = 60;
+  else if (dur <= 900) interval = 120;
+  else if (dur <= 1800) interval = 300;
+  else if (dur <= 3600) interval = 600;
+  else interval = 900;
+  for (var t = 0; t <= dur; t += interval) {
+    var tick = document.createElement('span');
+    tick.className = 'tl-tick';
+    tick.style.left = (t / dur * 100) + '%';
+    tick.textContent = tlFormatTime(t);
+    container.appendChild(tick);
+    if (t > 0 && t < dur) {
+      var line = document.createElement('span');
+      line.className = 'tl-tick-line';
+      line.style.left = (t / dur * 100) + '%';
+      container.appendChild(line);
+    }
+  }
+}
+
+function loadGtTimeline(videoFile, dur) {
+  document.getElementById('tl-bar-gt').innerHTML = '';
+  tlGtSegments = [];
+  tlGtBarSegs = [];
+  if (!videoFile) { syncBothBars(); return; }
+  fetch(apiUrl('/ground-truth?video=' + encodeURIComponent(videoFile)))
+    .then(function(r) { return r.json(); })
+    .then(function(resp) {
+      if (!resp.found) return;
+      var exercises = resp.exercises || [];
+      tlGtSegments = exercises;
+      var segs = exercises.map(function(ex) {
+        return { start_sec: ex.start, end_sec: ex.end, type: ex.type || 'exercise', exercise_name: ex.label, label: ex.label };
+      });
+      tlGtBarSegs = segs;
+      syncBothBars();
+    })
+    .catch(function(e) { console.warn('GT timeline error:', e); });
+}
+
+function loadVersions(videoFile) {
+  var row = document.getElementById('tl-version-row');
+  row.style.display = 'none';
+  // remove old pills (keep the label span)
+  while (row.children.length > 1) row.removeChild(row.lastChild);
+  if (!videoFile) return;
+
+  fetch(apiUrl('/recognition-versions?video=' + encodeURIComponent(videoFile)))
+    .then(function(r) { return r.json(); })
+    .then(function(versions) {
+      if (!versions || !versions.length) return;
+      row.style.display = '';
+      versions.forEach(function(v, idx) {
+        var pill = document.createElement('span');
+        pill.className = 'tl-version-pill';
+        pill.textContent = v;
+        pill.dataset.version = v;
+        pill.addEventListener('click', function() {
+          row.querySelectorAll('.tl-version-pill').forEach(function(p) { p.classList.remove('active'); });
+          pill.classList.add('active');
+          tlCurrentVersion = v;
+          loadRecognitionResult(v, videoFile);
+        });
+        row.appendChild(pill);
+      });
+      // auto-select last version
+      var lastPill = row.querySelector('.tl-version-pill:last-child');
+      if (lastPill) lastPill.click();
+    })
+    .catch(function(e) { console.warn('loadVersions error:', e); });
+}
+
+function loadRecognitionResult(version, videoFile) {
+  fetch(apiUrl('/recognition-result?version=' + encodeURIComponent(version) + '&video=' + encodeURIComponent(videoFile)))
+    .then(function(r) { return r.json(); })
+    .then(function(resp) {
+      if (!resp.found) {
+        fillBar(document.getElementById('tl-bar'), [], 1);
+        renderExerciseTable([], tlGtSegments);
+        renderGtComparisonFromApi(tlGtSegments, []);
+        return;
+      }
+      var timeline = resp.timeline || [];
+      var exercises = resp.exercises || [];
+      // Convert to unified segments for the rec bar
+      var recSegs = timeline.map(function(seg) {
+        var type = (seg.state || '').toLowerCase();
+        if (type === 'exercise') type = 'exercise';
+        else if (type === 'rest') type = 'rest';
+        else type = 'transition';
+        return {
+          start_sec: seg.start_sec,
+          end_sec: seg.end_sec,
+          type: type,
+          exercise_name: seg.exercise_name || '',
+          segmentId: seg.segmentId || ''
+        };
+      });
+      // Merge exercise details for sets/reps
+      var exMap = {};
+      exercises.forEach(function(ex) {
+        exMap[ex.segmentId] = ex;
+      });
+      recSegs.forEach(function(seg) {
+        if (seg.segmentId && exMap[seg.segmentId]) {
+          var detail = exMap[seg.segmentId];
+          var r = detail.result || detail;
+          seg.exercise_name = seg.exercise_name || r.exercise || detail.exercise || '';
+          seg.equipment = r.equipment || detail.equipment || '';
+          var sets = r.sets || detail.sets || [];
+          seg.sets_count = sets.length || (r.total_sets || 0);
+          seg.reps_estimate = r.total_reps || sets.reduce(function(sum, s) { return sum + (s.reps || 0); }, 0);
+          seg.reps_per_set = sets.map(function(s) { return s.reps || 0; });
+          seg.confidence = r.confidence || detail.confidence || 0;
+        }
+      });
+
+      tlSegments = recSegs;
+      tlRecBarSegs = recSegs;
+      syncBothBars();
+      renderExerciseTable(recSegs, tlGtSegments);
+      renderGtComparisonFromApi(tlGtSegments, recSegs);
+    })
+    .catch(function(e) { console.warn('loadRecognitionResult error:', e); });
+}
+
+function renderGtComparisonFromApi(gtExercises, recSegs) {
+  var exerciseOnly = (gtExercises || []).filter(function(ex) { return ex.type === 'exercise'; });
+  var recExerciseSegs = (recSegs || []).filter(function(s) { return s.type === 'exercise'; });
+  var grouped = [];
+  var last = null;
+  recExerciseSegs.forEach(function(seg) {
+    if (last && last.exercise_name === seg.exercise_name) {
+      last.sets_count += (seg.sets_count || 1);
+      last.end_sec = seg.end_sec;
+      last.repsPerSet = last.repsPerSet.concat(seg.reps_per_set || [seg.reps_estimate || 0]);
+    } else {
+      last = {
+        exercise_name: seg.exercise_name || '未知动作',
+        sets_count: seg.sets_count || 1,
+        start_sec: seg.start_sec,
+        end_sec: seg.end_sec,
+        repsPerSet: seg.reps_per_set || [seg.reps_estimate || 0]
+      };
+      grouped.push(last);
+    }
+  });
+  grouped.forEach(function(g) {
+    g.repsDetail = g.repsPerSet.filter(function(r) { return r > 0; }).join(', ') || '-';
+  });
+  renderGtComparison(exerciseOnly, grouped);
+}
+
+function renderTimeline(segments, totalSec, videoFile) {
+  tlSegments = segments || [];
+  tlTotalSec = totalSec || 0;
+  tlCurrentVideoFile = videoFile || '';
+  var section = document.getElementById('timeline-section');
+  if (!tlSegments.length && !videoFile) { section.style.display = 'none'; return; }
+  section.style.display = '';
+
+  // Reset unified state
+  tlRecBarSegs = tlSegments;
+  tlGtBarSegs = [];
+
+  document.getElementById('tl-time-start').textContent = '00:00';
+  syncBothBars();
 
   // Load video list then auto-select if mapping available
   loadVideoList().then(function() {
@@ -1082,22 +1417,25 @@ document.getElementById('tl-video-select').addEventListener('change', function()
   video.style.display = 'block';
   video.src = '/video/' + encodeURIComponent(name);
   video.load();
+  tlCurrentVideoFile = name;
+  loadGtTimeline(name, tlTotalSec || 600);
+  loadVersions(name);
 });
 
-function renderExerciseTable(segments) {
+function renderExerciseTable(segments, gtExercises) {
   var section = document.getElementById('exercise-table-section');
   var tbody = document.getElementById('ex-table-body');
   var empty = document.getElementById('ex-table-empty');
   var exerciseSegs = (segments || []).filter(function(s) { return s.type === 'exercise'; });
 
-  if (!exerciseSegs.length) {
-    section.style.display = 'none';
-    return;
-  }
-  section.style.display = '';
-  empty.style.display = 'none';
+  // Parse GT exercises
+  var gtParsed = (gtExercises || []).filter(function(ex) { return ex.type === 'exercise'; }).map(function(ex) {
+    var p = parseGtReps(ex.reps);
+    if (p.sets === 0) p.sets = 1;
+    return { label: ex.label || '运动', sets: p.sets, repsDetail: p.detail, start: ex.start, end: ex.end };
+  });
 
-  // Aggregate: group consecutive same-exercise segments into logical exercises with set count
+  // Group recognized segments
   var grouped = [];
   var lastGroup = null;
   for (var i = 0; i < exerciseSegs.length; i++) {
@@ -1106,6 +1444,7 @@ function renderExerciseTable(segments) {
       lastGroup.sets_count += (seg.sets_count || 1);
       lastGroup.end_sec = seg.end_sec;
       lastGroup.reps_total += (seg.reps_estimate || 0);
+      lastGroup.repsPerSet = lastGroup.repsPerSet.concat(seg.reps_per_set || [seg.reps_estimate || 0]);
       lastGroup.confidences.push(seg.confidence || 0);
     } else {
       lastGroup = {
@@ -1115,35 +1454,258 @@ function renderExerciseTable(segments) {
         start_sec: seg.start_sec,
         end_sec: seg.end_sec,
         reps_total: seg.reps_estimate || 0,
+        repsPerSet: seg.reps_per_set || [seg.reps_estimate || 0],
         confidences: [seg.confidence || 0],
       };
       grouped.push(lastGroup);
     }
   }
+  grouped.forEach(function(g) {
+    g.repsDetail = g.repsPerSet.filter(function(r) { return r > 0; }).join(', ') || '-';
+  });
+
+  if (!gtParsed.length && !grouped.length) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = '';
+  empty.style.display = 'none';
+
+  // Time-overlap matching: pair GT ↔ Rec by max overlap
+  var recUsed = {};
+  var gtToRec = {};
+  gtParsed.forEach(function(gt, gi) {
+    var bestIdx = -1, bestOverlap = 0;
+    grouped.forEach(function(rec, ri) {
+      if (recUsed[ri]) return;
+      var oStart = Math.max(gt.start, rec.start_sec);
+      var oEnd = Math.min(gt.end, rec.end_sec);
+      var overlap = Math.max(0, oEnd - oStart);
+      if (overlap > bestOverlap) { bestOverlap = overlap; bestIdx = ri; }
+    });
+    if (bestIdx >= 0 && bestOverlap > 0) {
+      gtToRec[gi] = bestIdx;
+      recUsed[bestIdx] = true;
+    }
+  });
+
+  // Build rows: matched pairs sorted by time, then unmatched GT (缺), then unmatched Rec (多)
+  var rows = [];
+  gtParsed.forEach(function(gt, gi) {
+    var rec = gtToRec[gi] !== undefined ? grouped[gtToRec[gi]] : null;
+    rows.push({ gt: gt, rec: rec, sortTime: gt.start });
+  });
+  grouped.forEach(function(rec, ri) {
+    if (!recUsed[ri]) {
+      rows.push({ gt: null, rec: rec, sortTime: rec.start_sec });
+    }
+  });
+  rows.sort(function(a, b) { return a.sortTime - b.sortTime; });
 
   tbody.innerHTML = '';
-  grouped.forEach(function(g, idx) {
-    var duration = g.end_sec - g.start_sec;
-    var avgConf = g.confidences.reduce(function(a, b) { return a + b; }, 0) / g.confidences.length;
-    var confPct = Math.round(avgConf * 100);
+  rows.forEach(function(row, i) {
+    var gt = row.gt;
+    var rec = row.rec;
+    var gtName = gt ? gt.label : '-';
+    var gtSets = gt ? ('<b>' + gt.sets + '</b> 组') : '-';
+    var gtReps = gt ? gt.repsDetail : '-';
+    var recName = rec ? rec.exercise_name : '-';
+    var recSets = rec ? ('<b>' + rec.sets_count + '</b> 组') : '-';
+    var recReps = rec ? rec.repsDetail : '-';
+    var timeRange = rec
+      ? (tlFormatTime(rec.start_sec) + ' → ' + tlFormatTime(rec.end_sec))
+      : (gt ? (tlFormatTime(gt.start) + ' → ' + tlFormatTime(gt.end)) : '-');
+
+    var status, cls;
+    if (gt && rec) {
+      status = (gt.sets === rec.sets_count) ? '✓' : '≈';
+      cls = (gt.sets === rec.sets_count) ? 'ok' : 'extra';
+    } else if (gt && !rec) {
+      status = '缺'; cls = 'miss';
+    } else {
+      status = '多'; cls = 'extra';
+    }
+
     var tr = document.createElement('tr');
     tr.innerHTML =
-      '<td>' + (idx + 1) + '</td>' +
-      '<td class="ex-name">' + g.exercise_name + '</td>' +
-      '<td>' + (g.equipment || '-') + '</td>' +
-      '<td><b>' + g.sets_count + '</b> 组</td>' +
-      '<td>' + tlFormatTime(duration) + '</td>' +
-      '<td style="font-variant-numeric:tabular-nums;color:#6b7396;">' + tlFormatTime(g.start_sec) + ' → ' + tlFormatTime(g.end_sec) + '</td>' +
-      '<td><div class="ex-conf"><div class="ex-conf-bar"><div class="ex-conf-fill" style="width:' + confPct + '%;background:' + (confPct >= 90 ? '#10b981' : confPct >= 70 ? '#f59e0b' : '#ef4444') + '"></div></div>' + confPct + '%</div></td>';
-    tr.addEventListener('click', function() {
-      if (tlVideo.readyState >= 1) {
-        tlVideo.currentTime = g.start_sec;
-        tlVideo.play();
-        document.getElementById('timeline-section').scrollIntoView({ behavior: 'smooth' });
-      }
-    });
+      '<td>' + (i + 1) + '</td>' +
+      '<td class="ex-name" style="color:#10b981">' + gtName + '</td>' +
+      '<td>' + gtSets + '</td>' +
+      '<td>' + gtReps + '</td>' +
+      '<td class="ex-name" style="color:#6c7ae0">' + recName + '</td>' +
+      '<td>' + recSets + '</td>' +
+      '<td>' + recReps + '</td>' +
+      '<td style="font-variant-numeric:tabular-nums;color:#6b7396;">' + timeRange + '</td>' +
+      '<td><span class="gt-match-icon ' + cls + '">' + status + '</span></td>';
+    var clickSec = rec ? rec.start_sec : (gt ? gt.start : null);
+    if (clickSec !== null) {
+      (function(sec) {
+        tr.addEventListener('click', function() {
+          if (tlVideo.readyState >= 1) {
+            tlVideo.currentTime = sec;
+            tlVideo.play();
+            document.getElementById('timeline-section').scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      })(clickSec);
+    }
     tbody.appendChild(tr);
   });
+}
+
+/* ── Ground Truth vs Recognized comparison ─────────────────────── */
+
+function parseGtReps(repsStr) {
+  if (!repsStr) return { sets: 0, detail: '-' };
+  var parts = String(repsStr).trim().split(/\s+/).filter(function(x) { return x.length > 0; });
+  var nums = parts.map(function(x) { return parseInt(x, 10); }).filter(function(n) { return !isNaN(n); });
+  if (nums.length === 0) return { sets: 0, detail: '-' };
+  return { sets: nums.length, detail: nums.join(', ') };
+}
+
+function renderGtComparison(gtExercises, recognizedGroups) {
+  var panel = document.getElementById('gt-comparison');
+  if (!gtExercises || !gtExercises.length) {
+    panel.style.display = 'none';
+    return;
+  }
+  panel.style.display = '';
+
+  // Compute total sets from ground truth reps strings
+  var gtTotalSets = 0;
+  var gtParsed = gtExercises.map(function(ex) {
+    var p = parseGtReps(ex.reps);
+    if (p.sets === 0) p.sets = 1; // no reps info = count as 1 set
+    gtTotalSets += p.sets;
+    return { label: ex.label || '运动', sets: p.sets, repsDetail: p.detail, equipment: ex.equipment || '' };
+  });
+
+  var recTotalSets = 0;
+  recognizedGroups.forEach(function(g) { recTotalSets += g.sets_count; });
+
+  var diffSets = recTotalSets - gtTotalSets;
+  var diffExercises = recognizedGroups.length - gtExercises.length;
+  var setsMatch = diffSets === 0;
+
+  var summary = document.getElementById('gt-summary');
+  summary.innerHTML =
+    '<div class="gt-summary-box"><div class="gt-summary-label">真实运动数</div>' +
+    '<div class="gt-summary-val gt-color">' + gtExercises.length + '</div></div>' +
+    '<div class="gt-summary-box"><div class="gt-summary-label">真实总组数</div>' +
+    '<div class="gt-summary-val gt-color">' + gtTotalSets + '</div></div>' +
+    '<div class="gt-summary-box"><div class="gt-summary-label">识别运动数</div>' +
+    '<div class="gt-summary-val rec-color">' + recognizedGroups.length + '</div></div>' +
+    '<div class="gt-summary-box"><div class="gt-summary-label">识别总组数</div>' +
+    '<div class="gt-summary-val rec-color">' + recTotalSets + '</div></div>' +
+    '<div class="gt-summary-box"><div class="gt-summary-label">组数差异</div>' +
+    '<div class="gt-summary-badge ' + (setsMatch ? 'match' : 'mismatch') + '">' +
+    (setsMatch ? '完全匹配 ✓' : (diffSets > 0 ? '+' : '') + diffSets + ' 组') +
+    '</div></div>';
+
+  // Time-overlap matching
+  var recUsed = {};
+  var gtToRec = {};
+  gtExercises.forEach(function(gt, gi) {
+    var bestIdx = -1, bestOverlap = 0;
+    recognizedGroups.forEach(function(rec, ri) {
+      if (recUsed[ri]) return;
+      var oStart = Math.max(gt.start || 0, rec.start_sec || 0);
+      var oEnd = Math.min(gt.end || 0, rec.end_sec || 0);
+      var overlap = Math.max(0, oEnd - oStart);
+      if (overlap > bestOverlap) { bestOverlap = overlap; bestIdx = ri; }
+    });
+    if (bestIdx >= 0 && bestOverlap > 0) {
+      gtToRec[gi] = bestIdx;
+      recUsed[bestIdx] = true;
+    }
+  });
+
+  var matchedRows = [];
+  gtParsed.forEach(function(gt, gi) {
+    var rec = gtToRec[gi] !== undefined ? recognizedGroups[gtToRec[gi]] : null;
+    matchedRows.push({ gt: gt, rec: rec, sortTime: gtExercises[gi].start || 0 });
+  });
+  recognizedGroups.forEach(function(rec, ri) {
+    if (!recUsed[ri]) {
+      matchedRows.push({ gt: null, rec: rec, sortTime: rec.start_sec || 0 });
+    }
+  });
+  matchedRows.sort(function(a, b) { return a.sortTime - b.sortTime; });
+
+  var tbody = document.getElementById('gt-detail-body');
+  var rows = '';
+  matchedRows.forEach(function(row, i) {
+    var gt = row.gt;
+    var rec = row.rec;
+    var gtName = gt ? gt.label : '-';
+    var gtSets = gt ? gt.sets : '-';
+    var gtReps = gt ? gt.repsDetail : '-';
+    var recName = rec ? rec.exercise_name : '-';
+    var recSets = rec ? rec.sets_count : '-';
+    var recReps = rec ? rec.repsDetail : '-';
+    var status, cls;
+    if (gt && rec) {
+      status = (gtSets === recSets) ? '✓' : '≈';
+      cls = (gtSets === recSets) ? 'ok' : 'extra';
+    } else if (gt && !rec) {
+      status = '缺'; cls = 'miss';
+    } else {
+      status = '多'; cls = 'extra';
+    }
+    rows += '<tr>' +
+      '<td>' + (i + 1) + '</td>' +
+      '<td>' + gtName + '</td>' +
+      '<td><b>' + gtSets + '</b> 组</td>' +
+      '<td>' + gtReps + '</td>' +
+      '<td>' + recName + '</td>' +
+      '<td><b>' + recSets + '</b> 组</td>' +
+      '<td>' + recReps + '</td>' +
+      '<td><span class="gt-match-icon ' + cls + '">' + status + '</span></td>' +
+      '</tr>';
+  });
+  tbody.innerHTML = rows;
+}
+
+function loadAndRenderGtComparison(videoFile, recognizedSegments) {
+  var panel = document.getElementById('gt-comparison');
+  // Build recognized groups (same aggregation as renderExerciseTable)
+  var exerciseSegs = (recognizedSegments || []).filter(function(s) { return s.type === 'exercise'; });
+  var grouped = [];
+  var last = null;
+  for (var i = 0; i < exerciseSegs.length; i++) {
+    var seg = exerciseSegs[i];
+    if (last && last.exercise_name === seg.exercise_name) {
+      last.sets_count += (seg.sets_count || 1);
+      last.reps.push(seg.reps_estimate || 0);
+    } else {
+      last = {
+        exercise_name: seg.exercise_name || '未知动作',
+        sets_count: seg.sets_count || 1,
+        reps: [seg.reps_estimate || 0]
+      };
+      grouped.push(last);
+    }
+  }
+  // Build repsDetail string for each recognized group
+  grouped.forEach(function(g) {
+    g.repsDetail = g.reps.filter(function(r) { return r > 0; }).join(', ') || '-';
+  });
+
+  if (!videoFile) {
+    panel.style.display = 'none';
+    return;
+  }
+
+  fetch(apiUrl('/ground-truth?video=' + encodeURIComponent(videoFile)))
+    .then(function(r) { return r.json(); })
+    .then(function(resp) {
+      if (resp.found && resp.exercises && resp.exercises.length) {
+        renderGtComparison(resp.exercises, grouped);
+      } else {
+        panel.style.display = 'none';
+      }
+    })
+    .catch(function(e) { console.warn('GT comparison error:', e); panel.style.display = 'none'; });
 }
 
 async function init() {
@@ -1163,6 +1725,7 @@ async function init() {
     // Timeline + Exercise Table (below cards)
     renderTimeline(daily.all_segments || daily.raw_segments || [], daily.total_sec || 0, daily.video_file || '');
     renderExerciseTable(daily.all_segments || daily.raw_segments || []);
+    loadAndRenderGtComparison(daily.video_file, daily.all_segments || daily.raw_segments || []);
 
     // Card 3: weekly KPIs + chart
     // 数据不足判定：本周没有任何训练（无热量且无组数）→ 整块灰显

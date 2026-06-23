@@ -1,0 +1,163 @@
+{
+  "version": "v3",
+  "phase1_prompt": "phase1_period_recognize_v3.yaml",
+  "total_1fps_frames": 1145,
+  "num_windows": 20,
+  "model": "gemini-3-flash-preview",
+  "created_at": "2026-06-17T16:48:37.828409",
+  "segments": [
+    {
+      "start_time": "00:00:00",
+      "end_time": "00:00:35",
+      "state": "TRANSITION",
+      "confidence": 0.9,
+      "reason": "用户进入健身房行走并寻找器械，光流显示持续位移。",
+      "start_sec": 0.0,
+      "end_sec": 35.0
+    },
+    {
+      "start_time": "00:00:36",
+      "end_time": "00:04:52",
+      "state": "EXERCISE",
+      "confidence": 0.95,
+      "reason": "用户在登山机上运动，双手扶柄，光流显示规律的往复运动。",
+      "start_sec": 36.0,
+      "end_sec": 292.0
+    },
+    {
+      "start_time": "00:04:53",
+      "end_time": "00:05:59",
+      "state": "TRANSITION",
+      "confidence": 0.9,
+      "reason": "用户离开登山机，在健身房内行走移动并查看手机。",
+      "start_sec": 293.0,
+      "end_sec": 359.0
+    },
+    {
+      "start_time": "00:06:00",
+      "end_time": "00:06:45",
+      "state": "EXERCISE",
+      "confidence": 0.9,
+      "reason": "用户进行高位下拉训练，双手握杠，光流显示明显的上下周期性运动。",
+      "start_sec": 360.0,
+      "end_sec": 405.0
+    },
+    {
+      "start_time": "00:06:46",
+      "end_time": "00:08:15",
+      "state": "REST",
+      "confidence": 0.85,
+      "reason": "用户坐在器械上休息，操作手机，光流强度降低。",
+      "start_sec": 406.0,
+      "end_sec": 495.0
+    },
+    {
+      "start_time": "00:08:16",
+      "end_time": "00:09:05",
+      "state": "EXERCISE",
+      "confidence": 0.9,
+      "reason": "用户进行第二组高位下拉训练，器械与视角存在规律交互。",
+      "start_sec": 496.0,
+      "end_sec": 545.0
+    },
+    {
+      "start_time": "00:09:06",
+      "end_time": "00:09:59",
+      "state": "REST",
+      "confidence": 0.85,
+      "reason": "用户在器械旁休息，观察环境并查看手机。",
+      "start_sec": 546.0,
+      "end_sec": 599.0
+    },
+    {
+      "start_time": "00:10:00",
+      "end_time": "00:10:25",
+      "state": "EXERCISE",
+      "confidence": 0.9,
+      "reason": "用户进行第三组高位下拉训练，光流显示周期性位移。",
+      "start_sec": 600.0,
+      "end_sec": 625.0
+    },
+    {
+      "start_time": "00:10:26",
+      "end_time": "00:11:34",
+      "state": "TRANSITION",
+      "confidence": 0.9,
+      "reason": "用户调整位置，移动至绳索器械处并进行准备。",
+      "start_sec": 626.0,
+      "end_sec": 694.0
+    },
+    {
+      "start_time": "00:11:35",
+      "end_time": "00:12:10",
+      "state": "EXERCISE",
+      "confidence": 0.95,
+      "reason": "用户进行绳索下压训练，双手紧握绳索，光流显示上下往复运动。",
+      "start_sec": 695.0,
+      "end_sec": 730.0
+    },
+    {
+      "start_time": "00:12:11",
+      "end_time": "00:13:45",
+      "state": "REST",
+      "confidence": 0.85,
+      "reason": "用户在器械前休息，长时间操作手机。",
+      "start_sec": 731.0,
+      "end_sec": 825.0
+    },
+    {
+      "start_time": "00:13:46",
+      "end_time": "00:14:25",
+      "state": "EXERCISE",
+      "confidence": 0.95,
+      "reason": "用户进行第二组绳索下压训练，动作节奏稳定。",
+      "start_sec": 826.0,
+      "end_sec": 865.0
+    },
+    {
+      "start_time": "00:14:26",
+      "end_time": "00:15:15",
+      "state": "TRANSITION",
+      "confidence": 0.9,
+      "reason": "用户离开绳索器械，移动至坐姿划船机并调整位置。",
+      "start_sec": 866.0,
+      "end_sec": 915.0
+    },
+    {
+      "start_time": "00:15:16",
+      "end_time": "00:16:10",
+      "state": "EXERCISE",
+      "confidence": 0.95,
+      "reason": "用户进行坐姿划船训练，双手拉动器械，光流显示前后周期性运动。",
+      "start_sec": 916.0,
+      "end_sec": 970.0
+    },
+    {
+      "start_time": "00:16:11",
+      "end_time": "00:17:25",
+      "state": "REST",
+      "confidence": 0.85,
+      "reason": "用户坐在划船机上休息，查看手机。",
+      "start_sec": 971.0,
+      "end_sec": 1045.0
+    },
+    {
+      "start_time": "00:17:26",
+      "end_time": "00:18:15",
+      "state": "EXERCISE",
+      "confidence": 0.95,
+      "reason": "用户进行第二组坐姿划船训练，身体与器械持续交互。",
+      "start_sec": 1046.0,
+      "end_sec": 1095.0
+    },
+    {
+      "start_time": "00:18:16",
+      "end_time": "00:19:04",
+      "state": "TRANSITION",
+      "confidence": 0.9,
+      "reason": "用户结束训练，行走离开健身房区域进入车库。",
+      "start_sec": 1096.0,
+      "end_sec": 1144.0
+    }
+  ]
+}

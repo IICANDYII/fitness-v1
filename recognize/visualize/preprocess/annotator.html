@@ -45,6 +45,13 @@ video { max-width: 100%; max-height: 100%; }
 .btn-export:hover { background: #00d2ff; color: #0a0a1a; }
 .btn-import { background: #0f3460; color: #ffa502; border: 1px solid #ffa502; }
 .btn-import:hover { background: #ffa502; color: #0a0a1a; }
+.btn-save { background: #0f3460; color: #2ed573; border: 1px solid #2ed573; }
+.btn-save:hover { background: #2ed573; color: #0a0a1a; }
+.gt-status { font-size: 12px; padding: 3px 10px; border-radius: 10px; margin-left: 8px; }
+.gt-status.loaded { background: rgba(46,213,115,0.2); color: #2ed573; }
+.gt-status.new { background: rgba(255,165,2,0.2); color: #ffa502; }
+.gt-status.saved { background: rgba(0,210,255,0.2); color: #00d2ff; }
+.gt-status.modified { background: rgba(233,69,96,0.2); color: #e94560; }
 .btn-undo { background: #333; color: #ccc; }
 .btn-undo:hover { background: #555; }
 .btn-clear { background: #333; color: #e94560; }
@@ -85,6 +92,27 @@ video { max-width: 100%; max-height: 100%; }
 
 .keyboard-hints { padding: 8px 16px; border-top: 1px solid #0f3460; font-size: 11px; color: #555; }
 .keyboard-hints kbd { background: #0a0a1a; padding: 1px 5px; border-radius: 3px; border: 1px solid #333; font-family: inherit; }
+
+.set-comparison { padding: 10px 12px; border-bottom: 1px solid #0f3460; background: #0d1b36; }
+.comparison-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; }
+.comparison-label { font-size: 12px; color: #aaa; }
+.comparison-value { font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.gt-value { color: #2ed573; }
+.current-value { color: #00d2ff; }
+.diff-value { padding: 1px 8px; border-radius: 10px; font-size: 12px; }
+.diff-value.match { background: rgba(46,213,115,0.2); color: #2ed573; }
+.diff-value.mismatch { background: rgba(233,69,96,0.2); color: #e94560; }
+.comparison-details { margin-top: 6px; max-height: 120px; overflow-y: auto; }
+.comparison-details table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.comparison-details th { text-align: left; color: #888; padding: 2px 4px; border-bottom: 1px solid #333; font-weight: normal; }
+.comparison-details td { padding: 2px 4px; color: #ccc; }
+.comparison-details td.match { color: #2ed573; }
+.comparison-details td.miss { color: #e94560; }
+.comparison-details td.extra { color: #ffa502; }
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); padding: 10px 24px; border-radius: 6px; font-size: 14px; color: #fff; z-index: 200; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.toast.show { opacity: 1; }
+.toast.success { background: rgba(46,213,115,0.9); }
+.toast.error { background: rgba(233,69,96,0.9); }
 </style>
 </head>
 <body>
@@ -97,6 +125,7 @@ video { max-width: 100%; max-height: 100%; }
       <option value="">-- 请选择视频 --</option>
     </select>
     <button class="refresh-btn" onclick="loadVideoList()">刷新</button>
+    <span class="gt-status" id="gtStatus" style="display:none;"></span>
   </div>
 </div>
 
@@ -115,11 +144,12 @@ video { max-width: 100%; max-height: 100%; }
         <span class="time-text" id="timeText">00:00.0 / 00:00.0</span>
         <div class="ctrl-buttons">
           <button class="ctrl-btn btn-play" id="playBtn" onclick="togglePlay()">播放</button>
-          <button class="ctrl-btn btn-mark" id="markBtn" onclick="addMarker()" title="Space">添加标记 <span class="marker-count" id="markerCount">0</span></button>
+          <button class="ctrl-btn btn-mark" id="markBtn" onclick="addMarker()" title="M">添加标记 <span class="marker-count" id="markerCount">0</span></button>
           <button class="ctrl-btn btn-undo" onclick="undoMarker()">撤销标记</button>
           <button class="ctrl-btn btn-clear" onclick="clearAll()">清空</button>
           <button class="ctrl-btn btn-export" onclick="exportIntervals()">导出区间</button>
           <button class="ctrl-btn btn-import" onclick="showImport()">导入区间</button>
+          <button class="ctrl-btn btn-save" onclick="saveToServer()">保存到服务器</button>
         </div>
         <div class="speed-control">
           <label>速度:</label>
@@ -141,12 +171,29 @@ video { max-width: 100%; max-height: 100%; }
       运动区间列表
       <span id="intervalCount">0 个区间</span>
     </div>
+    <div class="set-comparison" id="setComparison" style="display:none;">
+      <div class="comparison-row">
+        <span class="comparison-label">真实组数 (Ground Truth)</span>
+        <span class="comparison-value gt-value" id="gtSetCount">0</span>
+      </div>
+      <div class="comparison-row">
+        <span class="comparison-label">当前标注组数</span>
+        <span class="comparison-value current-value" id="currentSetCount">0</span>
+      </div>
+      <div class="comparison-row comparison-result" id="comparisonResult">
+        <span class="comparison-label">差异</span>
+        <span class="comparison-value diff-value" id="diffValue">-</span>
+      </div>
+      <div class="comparison-details" id="comparisonDetails"></div>
+    </div>
     <div class="intervals-list" id="intervalsList"></div>
     <div class="keyboard-hints">
-      <kbd>Space</kbd> 添加标记 &nbsp; <kbd>←</kbd><kbd>→</kbd> 前进/后退5s &nbsp; <kbd>K</kbd> 播放/暂停 &nbsp; <kbd>J</kbd><kbd>L</kbd> ±10s
+      <kbd>Space</kbd> 播放/暂停 &nbsp; <kbd>M</kbd> 添加标记 &nbsp; <kbd>←</kbd><kbd>→</kbd> ±5s &nbsp; <kbd>J</kbd><kbd>L</kbd> ±10s
     </div>
   </div>
 </div>
+
+<div class="toast" id="toast"></div>
 
 <div class="modal-overlay" id="exportModal">
   <div class="modal">
@@ -181,6 +228,10 @@ const intervalsList = document.getElementById('intervalsList');
 let markers = [];
 let intervals = [];
 let currentVideoName = '';
+let gtLoaded = false;
+let gtModified = false;
+let gtExerciseCount = 0;
+let gtExerciseDetails = [];
 
 function loadVideoList() {
   fetch('/api/videos')
@@ -207,7 +258,98 @@ function loadVideo(name) {
   video.style.display = 'block';
   markers = [];
   intervals = [];
+  gtLoaded = false;
+  gtModified = false;
+  gtExerciseCount = 0;
+  gtExerciseDetails = [];
+  updateGtStatus('loading');
   render();
+  loadGroundTruth(name);
+}
+
+function loadGroundTruth(videoName) {
+  fetch('/api/ground_truth?video=' + encodeURIComponent(videoName))
+    .then(r => r.json())
+    .then(resp => {
+      if (resp.found && Array.isArray(resp.data)) {
+        const hasType = resp.data.some(d => d.type);
+        intervals = resp.data
+          .filter(d => hasType ? (d.type === 'exercise') : (d.label && d.label !== '过渡'))
+          .map(d => ({
+            start: d.start, end: d.end, type: 'exercise',
+            label: d.label || '', equipment: d.equipment || '', reps: d.reps || ''
+          }));
+        intervals.sort((a, b) => a.start - b.start);
+        markers = [];
+        gtExerciseCount = intervals.length;
+        gtExerciseDetails = intervals.map(iv => ({ label: iv.label, reps: iv.reps }));
+        gtLoaded = true;
+        gtModified = false;
+        updateGtStatus('loaded');
+        render();
+      } else {
+        gtLoaded = false;
+        gtModified = false;
+        updateGtStatus('new');
+      }
+    })
+    .catch(() => {
+      updateGtStatus('new');
+    });
+}
+
+function updateGtStatus(state) {
+  const el = document.getElementById('gtStatus');
+  el.style.display = 'inline';
+  switch (state) {
+    case 'loading':
+      el.className = 'gt-status';
+      el.textContent = '加载中...';
+      break;
+    case 'loaded':
+      el.className = 'gt-status loaded';
+      el.textContent = '✓ 已加载 ground_truth';
+      break;
+    case 'new':
+      el.className = 'gt-status new';
+      el.textContent = '● 新视频（无 ground_truth）';
+      break;
+    case 'saved':
+      el.className = 'gt-status saved';
+      el.textContent = '✓ 已保存';
+      break;
+    case 'modified':
+      el.className = 'gt-status modified';
+      el.textContent = '● 已修改未保存';
+      break;
+  }
+}
+
+function markModified() {
+  gtModified = true;
+  updateGtStatus('modified');
+}
+
+function saveToServer() {
+  const full = buildFullIntervals();
+  if (full.length === 0) { alert('暂无标注区间'); return; }
+  fetch('/api/ground_truth?video=' + encodeURIComponent(currentVideoName), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(full)
+  })
+    .then(r => r.json())
+    .then(resp => {
+      if (resp.status === 'ok') {
+        gtLoaded = true;
+        gtModified = false;
+        updateGtStatus('saved');
+        showToast('已保存到服务器');
+      } else {
+        showToast('保存失败', true);
+      }
+    })
+    .catch(e => showToast('保存失败: ' + e.message, true));
 }
 
 loadVideoList();
@@ -251,10 +393,11 @@ function addMarker() {
     const start = Math.min(unpaired.time, t);
     const end = Math.max(unpaired.time, t);
     unpaired.paired = true;
-    const interval = { start, end, type: 'exercise', label: '', equipment: '' };
+    const interval = { start, end, type: 'exercise', label: '', equipment: '', reps: '' };
     intervals.push(interval);
     intervals.sort((a, b) => a.start - b.start);
     markers = [];
+    markModified();
   } else {
     markers.push({ time: t, paired: false });
   }
@@ -267,6 +410,7 @@ function undoMarker() {
     markers = markers.filter(m => m !== unpaired);
   } else if (intervals.length > 0) {
     intervals.pop();
+    markModified();
   }
   render();
 }
@@ -276,11 +420,13 @@ function clearAll() {
   if (!confirm('确定清空所有标注？')) return;
   markers = [];
   intervals = [];
+  markModified();
   render();
 }
 
 function deleteInterval(idx) {
   intervals.splice(idx, 1);
+  markModified();
   render();
 }
 
@@ -293,6 +439,7 @@ function togglePlay() {
   video.paused ? video.play() : video.pause();
 }
 
+video.addEventListener('click', togglePlay);
 video.addEventListener('play', () => { document.getElementById('playBtn').textContent = '暂停'; });
 video.addEventListener('pause', () => { document.getElementById('playBtn').textContent = '播放'; });
 
@@ -313,6 +460,7 @@ function buildFullIntervals() {
     }
     const entry = { start: round1(iv.start), end: round1(iv.end), type: 'exercise', label: iv.label || '' };
     if (iv.equipment) entry.equipment = iv.equipment;
+    if (iv.reps) entry.reps = iv.reps;
     result.push(entry);
     cursor = iv.end;
   }
@@ -332,6 +480,7 @@ function exportIntervals() {
     let s = `    {"start": ${String(iv.start).padStart(5)}, "end": ${String(iv.end).padStart(5)}, "type": "${iv.type}"`;
     s += `, "label": "${iv.label}"`;
     if (iv.equipment) s += `, "equipment": "${iv.equipment}"`;
+    if (iv.reps) s += `, "reps": "${iv.reps}"`;
     s += '}';
     return s;
   });
@@ -368,10 +517,11 @@ function doImport() {
     if (!Array.isArray(data)) throw new Error('需要JSON数组');
     intervals = data.filter(d => d.type === 'exercise').map(d => ({
       start: d.start, end: d.end, type: 'exercise',
-      label: d.label || '', equipment: d.equipment || ''
+      label: d.label || '', equipment: d.equipment || '', reps: d.reps || ''
     }));
     intervals.sort((a, b) => a.start - b.start);
     markers = [];
+    markModified();
     render();
     closeModal('importModal');
   } catch (e) {
@@ -415,10 +565,44 @@ function renderTimeline() {
   }
 }
 
+function renderComparison() {
+  const panel = document.getElementById('setComparison');
+  if (!gtLoaded || gtExerciseCount === 0) { panel.style.display = 'none'; return; }
+  panel.style.display = 'block';
+  document.getElementById('gtSetCount').textContent = gtExerciseCount;
+  document.getElementById('currentSetCount').textContent = intervals.length;
+  const diff = intervals.length - gtExerciseCount;
+  const diffEl = document.getElementById('diffValue');
+  if (diff === 0) {
+    diffEl.textContent = '完全匹配 ✓';
+    diffEl.className = 'comparison-value diff-value match';
+  } else {
+    diffEl.textContent = (diff > 0 ? '+' : '') + diff + ' 组';
+    diffEl.className = 'comparison-value diff-value mismatch';
+  }
+  const detailsEl = document.getElementById('comparisonDetails');
+  let html = '<table><tr><th>#</th><th>真实标注</th><th>当前标注</th><th>状态</th></tr>';
+  const maxLen = Math.max(gtExerciseDetails.length, intervals.length);
+  for (let i = 0; i < maxLen; i++) {
+    const gt = gtExerciseDetails[i];
+    const cur = intervals[i];
+    const gtText = gt ? (gt.label || '运动') + (gt.reps ? ' ×' + gt.reps : '') : '-';
+    const curText = cur ? (cur.label || '运动') + (cur.reps ? ' ×' + cur.reps : '') : '-';
+    let status, cls;
+    if (gt && cur) { status = '✓'; cls = 'match'; }
+    else if (gt && !cur) { status = '缺失'; cls = 'miss'; }
+    else { status = '多余'; cls = 'extra'; }
+    html += `<tr><td>${i+1}</td><td>${escHtml(gtText)}</td><td>${escHtml(curText)}</td><td class="${cls}">${status}</td></tr>`;
+  }
+  html += '</table>';
+  detailsEl.innerHTML = html;
+}
+
 function renderSidebar() {
   intervalsList.innerHTML = '';
   document.getElementById('intervalCount').textContent = intervals.length + ' 个区间';
   document.getElementById('markerCount').textContent = intervals.length;
+  renderComparison();
 
   for (const m of markers.filter(x => !x.paired)) {
     const card = document.createElement('div');
@@ -445,6 +629,10 @@ function renderSidebar() {
           <label>器械:</label>
           <input type="text" value="${escHtml(iv.equipment)}" placeholder="如: 杠铃" data-idx="${idx}" data-field="equipment" />
         </div>
+        <div class="field-row">
+          <label>次数:</label>
+          <input type="text" value="${escHtml(iv.reps)}" placeholder="多组用空格分隔，如: 12 10 8" data-idx="${idx}" data-field="reps" />
+        </div>
       </div>
       <div class="interval-actions">
         <button class="btn-goto" onclick="event.stopPropagation();seekTo(${iv.start})">跳转起始</button>
@@ -455,6 +643,7 @@ function renderSidebar() {
     card.querySelectorAll('input').forEach(inp => {
       inp.addEventListener('input', (e) => {
         intervals[e.target.dataset.idx][e.target.dataset.field] = e.target.value;
+        markModified();
         renderTimeline();
       });
       inp.addEventListener('click', (e) => e.stopPropagation());
@@ -462,6 +651,14 @@ function renderSidebar() {
     card.onclick = () => seekTo(iv.start);
     intervalsList.appendChild(card);
   });
+}
+
+function showToast(msg, isError) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast ' + (isError ? 'error' : 'success') + ' show';
+  clearTimeout(el._timer);
+  el._timer = setTimeout(() => { el.classList.remove('show'); }, 2000);
 }
 
 function escHtml(s) {
@@ -473,10 +670,10 @@ document.addEventListener('keydown', (e) => {
   switch (e.code) {
     case 'Space':
       e.preventDefault();
-      addMarker();
-      break;
-    case 'KeyK':
       video.paused ? video.play() : video.pause();
+      break;
+    case 'KeyM':
+      addMarker();
       break;
     case 'ArrowLeft':
       e.preventDefault();

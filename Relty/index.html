@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relty — Activity &amp; Fitness</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #060708;
+    height: 100%;
+    overflow: hidden;
+  }
+  body {
+    background: radial-gradient(120% 90% at 50% 0%, #0B0D10 0%, #060708 70%);
+  }
+  * { box-sizing: border-box; }
+  button { -webkit-tap-highlight-color: transparent; }
+
+  .press {
+    transition: transform 0.16s ease, filter 0.16s ease;
+  }
+  .press:active {
+    transform: scale(0.97);
+    filter: brightness(1.12);
+  }
+
+  .scroll-hidden {
+    scrollbar-width: none;
+  }
+  .scroll-hidden::-webkit-scrollbar { display: none; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .scene-push { animation: scenePush 0.38s cubic-bezier(0.32, 0.72, 0, 1); }
+    .scene-pop  { animation: scenePop  0.38s cubic-bezier(0.32, 0.72, 0, 1); }
+    .scene-tab  { animation: sceneTab  0.26s ease-out; }
+  }
+  @keyframes scenePush {
+    from { transform: translateX(100%); }
+    to   { transform: translateX(0); }
+  }
+  @keyframes scenePop {
+    from { transform: translateX(-28%); opacity: 0.4; }
+    to   { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes sceneTab {
+    from { opacity: 0; transform: scale(0.985); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="app/shared.jsx"></script>
+<script type="text/babel" src="app/activity.jsx"></script>
+<script type="text/babel" src="app/fitness-data.jsx"></script>
+<script type="text/babel" src="app/fitness.jsx"></script>
+<script type="text/babel" src="app/fitness-detail.jsx"></script>
+<script type="text/babel" src="app/trends.jsx"></script>
+<script type="text/babel" src="app/main.jsx"></script>
+</body>
+</html>

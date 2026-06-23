@@ -35,7 +35,7 @@ from .optical_flow import (
 )
 from .stitcher import stitch_phase1_grids, sec_to_hhmmss
 from .yaml_loader import load_prompts
-from .recognizer import run_phase1, run_phase2, MAX_EXERCISE_WORKERS
+from .recognizer import run_phase1, run_phase2, load_imu_data, MAX_EXERCISE_WORKERS
 
 
 # ──────────────────────────────────────────────
@@ -112,9 +112,25 @@ def run_pipeline(
     print(f"Phase 2 并发数：{exercise_workers}")
     print(f"{'=' * 60}\n")
 
-    # ── Step 2：光流（存 video_dir，各版本共享）──
+    # ── Step 1.5：加载 IMU 数据（如有）──
+    imu_path = video_dir / "IMU_data.txt"
+    imu_records = load_imu_data(imu_path)
+    if imu_records:
+        print(f"[IMU] 已加载 {len(imu_records)} 条记录，时长 {imu_records[-1][0]:.0f}s：{imu_path}")
+    else:
+        print(f"[IMU] 未找到 IMU_data.txt，跳过传感器辅助")
+
+    # ── Step 2：光流（各版本共享）──
+    # 优先从 shared 目录加载预计算的光流，其次从 video_dir 加载
+    _shared_base = Path(__file__).parent.parent / "recognize" / "visualize" / "result" / "shared"
+    _shared_flow = _shared_base / video_dir.name / "optical_flow.json"
     flow_path = video_dir / "optical_flow.json"
-    cached = None if overwrite else load_flow(flow_path)
+
+    cached = load_flow(_shared_flow) if _shared_flow.exists() else None
+    if cached:
+        print(f"[Step 2] 光流使用 shared 缓存：{_shared_flow}")
+    else:
+        cached = None if overwrite else load_flow(flow_path)
 
     if cached:
         flow_data, periodicity = cached
@@ -127,11 +143,14 @@ def run_pipeline(
     # ── Step 3：Phase 1 ──
     period_result_path = out_dir / "period_result.json"
 
+    equipment_timeline = []
+
     if not overwrite and period_result_path.exists():
         print(f"[Step 3] Phase 1 使用缓存：{period_result_path}")
         with open(period_result_path, "r", encoding="utf-8") as f:
             cached_result = json.load(f)
         segments = cached_result.get("segments", [])
+        equipment_timeline = cached_result.get("equipment_timeline", [])
     else:
         print("[Step 3] Phase 1：拼图 + 粗区间识别")
         grids = stitch_phase1_grids(
@@ -146,10 +165,44 @@ def run_pipeline(
             flow_data=flow_data,
             prompt=phase1_prompt,
             output_dir=out_dir,
+            imu_records=imu_records,
         )
+        # 从保存的结果中提取 equipment_timeline
+        if period_result_path.exists():
+            with open(period_result_path, "r", encoding="utf-8") as f:
+                equipment_timeline = json.load(f).get("equipment_timeline", [])
 
     ex_count = sum(1 for s in segments if s.get("state", "").upper() == "EXERCISE")
-    print(f"  → {len(segments)} 个区间，其中 {ex_count} 个 EXERCISE\n")
+    print(f"  → {len(segments)} 个区间，其中 {ex_count} 个 EXERCISE")
+    if equipment_timeline:
+        print(f"  → 器材切换时间线: {len(equipment_timeline)} 个事件")
+
+    # ── Phase 1 自检：未识别出任何动作则重试一次 ──
+    if ex_count == 0 and len(frame_metas) > 10:
+        print("  [WARN] Phase 1 未识别出任何 EXERCISE 区间，重新识别...")
+        grids = stitch_phase1_grids(
+            metas=frame_metas,
+            output_dir=video_dir,
+            frames_dir=frames_dir,
+            overwrite=True,
+        )
+        segments = run_phase1(
+            frame_metas=frame_metas,
+            grids=grids,
+            flow_data=flow_data,
+            prompt=phase1_prompt,
+            output_dir=out_dir,
+            imu_records=imu_records,
+        )
+        if period_result_path.exists():
+            with open(period_result_path, "r", encoding="utf-8") as f:
+                equipment_timeline = json.load(f).get("equipment_timeline", [])
+        ex_count = sum(1 for s in segments if s.get("state", "").upper() == "EXERCISE")
+        print(f"  → 重试结果：{len(segments)} 个区间，其中 {ex_count} 个 EXERCISE")
+        if ex_count == 0:
+            print("  [WARN] 重试后仍无 EXERCISE，跳过 Phase 2")
+
+    print()
 
     # ── Step 4：Phase 2 ──
     print("[Step 4] Phase 2：逐 EXERCISE 精细识别")
@@ -161,6 +214,8 @@ def run_pipeline(
         prompt=phase2_prompt,
         output_dir=out_dir,
         exercise_workers=exercise_workers,
+        imu_records=imu_records,
+        equipment_timeline=equipment_timeline,
     )
 
     # ── 汇总 ──

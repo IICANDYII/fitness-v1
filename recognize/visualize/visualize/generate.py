@@ -6,7 +6,7 @@ import re
 import os
 from pathlib import Path
 
-RESULT_DIR = Path(r"E:\fitness_new\visualize\result")
+RESULT_DIR = Path(r"D:\WorkPath\fitness_new\recognize\visualize\result")
 OUT_HTML = Path(__file__).parent / "index.html"
 
 def _load_version_labels() -> dict[str, str]:
@@ -121,6 +121,10 @@ def _build_model_bars(period: dict, exercise: dict) -> list[dict]:
         color = STATE_COLORS.get(state, TRANSITION_COLOR)
         seg_id = seg.get("segmentId", "")
 
+        total_sets = 0
+        total_reps = 0
+        equip = ""
+
         if state == "EXERCISE":
             if not seg_id:
                 ex_idx += 1
@@ -129,6 +133,9 @@ def _build_model_bars(period: dict, exercise: dict) -> list[dict]:
                 res = ex_map[seg_id].get("result", {})
                 equip = res.get("equipment", "")
                 action = res.get("exercise", "")
+                sets = res.get("sets", [])
+                total_sets = res.get("total_sets", len(sets))
+                total_reps = res.get("total_reps", sum(st.get("reps", 0) for st in sets if isinstance(st, dict)))
                 label = action or equip or "EXERCISE"
                 color = EQUIPMENT_COLORS.get(equip, "#EF4444")
 
@@ -136,6 +143,9 @@ def _build_model_bars(period: dict, exercise: dict) -> list[dict]:
             "start": s, "end": e, "label": label, "color": color,
             "state": state, "confidence": seg.get("confidence", 0),
             "reason": seg.get("reason", ""),
+            "equipment": equip,
+            "total_sets": total_sets,
+            "total_reps": total_reps,
         })
     return bars
 
@@ -190,6 +200,9 @@ def _process_sample(sample_dir: Path, version: str, sample_name: str) -> dict | 
     exercise_details = []
     for r in exercise.get("results", []):
         res = r.get("result", {})
+        sets = res.get("sets", [])
+        total_sets = res.get("total_sets", len(sets))
+        total_reps = res.get("total_reps", sum(s.get("reps", 0) for s in sets if isinstance(s, dict)))
         detail = {
             "segmentId": r.get("segmentId", ""),
             "start": r.get("startTime", 0),
@@ -197,7 +210,9 @@ def _process_sample(sample_dir: Path, version: str, sample_name: str) -> dict | 
             "equipment": res.get("equipment", ""),
             "exercise": res.get("exercise", ""),
             "confidence": res.get("confidence", 0),
-            "sets": res.get("sets", []),
+            "sets": sets,
+            "total_sets": total_sets,
+            "total_reps": total_reps,
         }
         exercise_details.append(detail)
 
@@ -730,19 +745,23 @@ function renderComparison() {
       const s = getSampleForVersion(currentSample, ver);
       html += `<div class="ex-content" id="exContent_${ver}" style="display:${i === 0 ? 'block' : 'none'}">`;
       html += '<table class="ex-table"><thead><tr>';
-      html += '<th>片段</th><th>时间范围</th><th>器械</th><th>动作</th><th>置信度</th><th>组数/次数</th>';
+      html += '<th>片段</th><th>时间范围</th><th>器械</th><th>动作</th><th>置信度</th><th>组数</th><th>总次数</th><th>组次详情</th>';
       html += '</tr></thead><tbody>';
       s.exercise_details.forEach(d => {
-        const sets = (d.sets || []).map(st =>
+        const setsDetail = (d.sets || []).map(st =>
           `${st.start_time || ''}-${st.end_time || ''} ×${st.reps || '?'}`
         ).join('; ');
+        const totalSets = d.total_sets || (d.sets || []).length || '-';
+        const totalReps = d.total_reps || '-';
         html += `<tr class="ex-row" data-start="${d.start}" data-end="${d.end}" style="cursor:pointer">
           <td>${d.segmentId}</td>
           <td>${fmtTime(d.start)} - ${fmtTime(d.end)}</td>
           <td>${d.equipment}</td>
           <td><strong>${d.exercise}</strong></td>
           <td>${(d.confidence * 100).toFixed(0)}%</td>
-          <td>${sets || '-'}</td>
+          <td style="text-align:center;font-weight:bold">${totalSets}</td>
+          <td style="text-align:center;font-weight:bold">${totalReps}</td>
+          <td style="font-size:0.85em">${setsDetail || '-'}</td>
         </tr>`;
       });
       html += '</tbody></table></div>';
@@ -862,7 +881,11 @@ function renderTimelineRow(label, bars, total, tipKey) {
       onmouseenter="showTip(event,'${tipKey}',${i})"
       onmousemove="moveTip(event)"
       onmouseleave="hideTip()">`;
-    if (parseFloat(width) > 4) html += `<span>${b.label}</span>`;
+    if (parseFloat(width) > 4) {
+      let lbl = b.label;
+      if (b.total_reps) lbl += ' ×' + b.total_reps;
+      html += `<span>${lbl}</span>`;
+    }
     html += '</div>';
   });
   html += '</div></div>';
@@ -908,6 +931,9 @@ function showTip(e, tipKey, idx) {
   if (b.state) html += `<br>状态: ${b.state}`;
   if (b.confidence) html += ` | 置信度: ${(b.confidence * 100).toFixed(0)}%`;
   if (b.reason) html += `<br>${b.reason}`;
+  if (b.equipment) html += `<br>器械: ${b.equipment}`;
+  if (b.total_sets) html += `<br>组数: ${b.total_sets}`;
+  if (b.total_reps) html += `<br>总次数: ${b.total_reps}`;
   if (b.type) html += `<br>类型: ${b.type}`;
   html += `<br><em style="opacity:0.6">点击时间线可跳转视频</em>`;
   tooltip.innerHTML = html;

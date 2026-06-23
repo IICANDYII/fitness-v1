@@ -1,0 +1,256 @@
+{
+  "version": "v4",
+  "phase2_prompt": "phase2_exercise_recognize_v4.yaml",
+  "model": "gemini-3-flash-preview",
+  "created_at": "2026-06-17T16:51:44.702520",
+  "results": [
+    {
+      "segmentId": "exercise_001",
+      "startTime": 36.0,
+      "endTime": 292.0,
+      "startTimeStr": "00:00:36",
+      "endTimeStr": "00:04:52",
+      "duration": 256.0,
+      "frames_analyzed": 287,
+      "grid": {
+        "cols": 7,
+        "rows": 41
+      },
+      "result": {
+        "equipment": "登阶机",
+        "exercise": "登阶机/爬楼机",
+        "exercise_id": "stepmill",
+        "confidence": 1.0,
+        "sets": [
+          {
+            "start_time": "00:00:36",
+            "end_time": "00:04:52",
+            "reps": 1
+          }
+        ],
+        "phase1_adjustment": {
+          "expand_before_sec": 2,
+          "expand_after_sec": 2,
+          "reason": "包含开始踏步前的准备和结束后的停稳动作"
+        }
+      }
+    },
+    {
+      "segmentId": "exercise_002",
+      "startTime": 360.0,
+      "endTime": 405.0,
+      "startTimeStr": "00:06:00",
+      "endTimeStr": "00:06:45",
+      "duration": 45.0,
+      "frames_analyzed": 76,
+      "grid": {
+        "cols": 7,
+        "rows": 11
+      },
+      "result": {
+        "equipment": "高位下拉机",
+        "exercise": "高位下拉",
+        "exercise_id": "cable_lat_pulldown",
+        "confidence": 1.0,
+        "sets": [
+          {
+            "start_time": "00:06:00",
+            "end_time": "00:06:45",
+            "reps": 10
+          }
+        ],
+        "phase1_adjustment": {
+          "expand_before_sec": 3,
+          "expand_after_sec": 3,
+          "reason": "高位下拉动作在开始前有抓杆和坐稳的准备过程，结束后有放回器械的缓冲，需适度扩展区间以覆盖完整动作周期。"
+        }
+      }
+    },
+    {
+      "segmentId": "exercise_003",
+      "startTime": 496.0,
+      "endTime": 545.0,
+      "startTimeStr": "00:08:16",
+      "endTimeStr": "00:09:05",
+      "duration": 49.0,
+      "frames_analyzed": 80,
+      "grid": {
+        "cols": 7,
+        "rows": 12
+      },
+      "result": {
+        "equipment": "高位下拉机",
+        "exercise": "高位下拉",
+        "exercise_id": "cable_lat_pulldown",
+        "confidence": 1.0,
+        "sets": [
+          {
+            "start_time": "00:08:16",
+            "end_time": "00:09:05",
+            "reps": 7
+          }
+        ],
+        "phase1_adjustment": {
+          "expand_before_sec": 3,
+          "expand_after_sec": 3,
+          "reason": "高位下拉起始需抓握宽杆并调整坐姿，结束需将横杆完全放回原位，建议前后适度扩展以覆盖完整动作周期。"
+        }
+      }
+    },
+    {
+      "segmentId": "exercise_004",
+      "startTime": 600.0,
+      "endTime": 625.0,
+      "startTimeStr": "00:10:00",
+      "endTimeStr": "00:10:25",
+      "duration": 25.0,
+      "frames_analyzed": 56,
+      "grid": {
+        "cols": 7,
+        "rows": 8
+      },
+      "result": {
+        "equipment": "高位下拉机",
+        "exercise": "高位下拉",
+        "exercise_id": "cable_lat_pulldown",
+        "confidence": 0.95,
+        "sets": [
+          {
+            "start_time": "00:10:13",
+            "end_time": "00:10:23",
+            "reps": 5
+          }
+        ],
+        "phase1_adjustment": {
+          "expand_before_sec": 0,
+          "expand_after_sec": 2,
+          "reason": "动作结束时放回器械过程较快，建议向后微调以确保覆盖完整动作轨迹"
+        }
+      }
+    },
+    {
+      "segmentId": "exercise_005",
+      "startTime": 695.0,
+      "endTime": 730.0,
+      "startTimeStr": "00:11:35",
+      "endTimeStr": "00:12:10",
+      "duration": 35.0,
+      "frames_analyzed": 66,
+      "grid": {
+        "cols": 7,
+        "rows": 10
+      },
+      "result": {
+        "equipment": "龙门架",
+        "exercise": "绳索下压",
+        "exercise_id": "cable_triceps_pushdown",
+        "confidence": 0.95,
+        "sets": [
+          {
+            "start_time": "00:11:35",
+            "end_time": "00:12:10",
+            "reps": 10
+          }
+        ],
+        "phase1_adjustment": {
+          "expand_before_sec": 3,
+          "expand_after_sec": 2,
+          "reason": "起始段需包含抓握绳索并调整重心的准备动作，结束段需包含绳索完全回弹复位的缓冲过程。"
+        }
+      }
+    },
+    {
+      "segmentId": "exercise_006",
+      "startTime": 826.0,
+      "endTime": 865.0,
+      "startTimeStr": "00:13:46",
+      "endTimeStr": "00:14:25",
+      "duration": 39.0,
+      "frames_analyzed": 70,
+      "grid": {
+        "cols": 7,
+        "rows": 10
+      },
+      "result": {
+        "equipment": "龙门架",
+        "exercise": "绳索下压",
+        "exercise_id": "cable_triceps_pushdown",
+        "confidence": 1.0,
+        "sets": [
+          {
+            "start_time": "00:13:57",
+            "end_time": "00:14:29",
+            "reps": 6
+          }
+        ],
+        "phase1_adjustment": {
+          "expand_before_sec": 0,
+          "expand_after_sec": 4,
+          "reason": "动作在14:25后仍有最后一次重复及放回器械的过程，需向后扩展以覆盖完整结束动作"
+        }
+      }
+    },
+    {
+      "segmentId": "exercise_007",
+      "startTime": 916.0,
+      "endTime": 970.0,
+      "startTimeStr": "00:15:16",
+      "endTimeStr": "00:16:10",
+      "duration": 54.0,
+      "frames_analyzed": 85,
+      "grid": {
+        "cols": 7,
+        "rows": 13
+      },
+      "result": {
+        "equipment": "龙门架",
+        "exercise": "坐姿绳索划船",
+        "exercise_id": "cable_seated_row",
+        "confidence": 0.95,
+        "sets": [
+          {
+            "start_time": "00:15:26",
+            "end_time": "00:15:58",
+            "reps": 8
+          }
+        ],
+        "phase1_adjustment": {
+          "expand_before_sec": 0,
+          "expand_after_sec": 0,
+          "reason": "当前区间 00:15:16 ~ 00:16:10 已完整覆盖了动作前的抓握准备及动作后的放回过程，无需额外扩展"
+        }
+      }
+    },
+    {
+      "segmentId": "exercise_008",
+      "startTime": 1046.0,
+      "endTime": 1095.0,
+      "startTimeStr": "00:17:26",
+      "endTimeStr": "00:18:15",
+      "duration": 49.0,
+      "frames_analyzed": 80,
+      "grid": {
+        "cols": 7,
+        "rows": 12
+      },
+      "result": {
+        "equipment": "龙门架",
+        "exercise": "坐姿绳索划船",
+        "exercise_id": "cable_seated_row",
+        "confidence": 0.95,
+        "sets": [
+          {
+            "start_time": "00:17:32",
+            "end_time": "00:17:55",
+            "reps": 8
+          }
+        ],
+        "phase1_adjustment": {
+          "expand_before_sec": 0,
+          "expand_after_sec": 0,
+          "reason": "当前区间已完整覆盖从坐下准备到动作结束放回器械的全过程，无需扩展"
+        }
+      }
+    }
+  ]
+}

@@ -122,6 +122,328 @@ def tprint(*args, **kwargs):
 
 
 # ──────────────────────────────────────────────
+# IMU 数据处理
+# ──────────────────────────────────────────────
+
+IMU_WINDOW_SEC = 30  # Phase 1 摘要分段窗口大小（秒）
+
+# IMU 记录类型别名：(t_rel, acc_mag, gyro_mag, ax, ay, az)
+ImuRecord = tuple[float, float, float, float, float, float]
+
+
+def load_imu_data(imu_path: Path) -> list[ImuRecord] | None:
+    """
+    解析 IMU_data.txt，返回 [(t_rel, acc_mag, gyro_mag, ax, ay, az), ...] 列表。
+    t_rel 为相对于第一条记录的秒数。
+    保留 ax/ay/az 轴向加速度用于姿态分类。
+    文件不存在或解析失败则返回 None。
+    """
+    if not imu_path.exists():
+        return None
+
+    records: list[ImuRecord] = []
+    t0 = None
+
+    try:
+        with open(imu_path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+    except Exception:
+        return None
+
+    if len(lines) < 2:
+        return None
+
+    from datetime import datetime as _dt
+
+    for line in lines[1:]:  # 跳过表头
+        parts = line.strip().split("\t")
+        if len(parts) < 9:
+            continue
+        try:
+            dt = _dt.fromisoformat(parts[0])
+            if t0 is None:
+                t0 = dt
+            t_rel = (dt - t0).total_seconds()
+
+            acc_x, acc_y, acc_z = float(parts[2]), float(parts[3]), float(parts[4])
+            gyro_x, gyro_y, gyro_z = float(parts[5]), float(parts[6]), float(parts[7])
+
+            acc_mag = (acc_x ** 2 + acc_y ** 2 + acc_z ** 2) ** 0.5
+            gyro_mag = (gyro_x ** 2 + gyro_y ** 2 + gyro_z ** 2) ** 0.5
+
+            records.append((t_rel, acc_mag, gyro_mag, acc_x, acc_y, acc_z))
+        except (ValueError, IndexError):
+            continue
+
+    return records if records else None
+
+
+def _gyro_label(gyro_mean: float) -> str:
+    if gyro_mean > 30:
+        return "高强度运动"
+    if gyro_mean > 10:
+        return "中等运动"
+    if gyro_mean > 3:
+        return "轻微运动"
+    return "静止/休息"
+
+
+def _acc_std_label(acc_std: float) -> str:
+    if acc_std > 0.35:
+        return "高"
+    if acc_std > 0.15:
+        return "中高"
+    if acc_std > 0.05:
+        return "低"
+    return "静止"
+
+
+def _posture_from_az(az_mean: float) -> str:
+    """基于胸部佩戴 IMU 的 Z 轴加速度均值推断用户姿态。"""
+    if az_mean > -0.35:
+        return "仰卧"
+    if az_mean > -0.78:
+        return "俯身"
+    if az_mean > -0.88:
+        return "坐姿"
+    return "站姿"
+
+
+def _count_acc_peaks(acc_vals: list[float], min_prominence: float = 0.15) -> int:
+    """简单峰值计数：检测加速度幅值中的局部极大值。"""
+    if len(acc_vals) < 5:
+        return 0
+    mean_acc = sum(acc_vals) / len(acc_vals)
+    threshold = mean_acc + min_prominence
+    peaks = 0
+    for i in range(2, len(acc_vals) - 2):
+        if (acc_vals[i] > threshold
+                and acc_vals[i] >= acc_vals[i - 1]
+                and acc_vals[i] >= acc_vals[i + 1]
+                and acc_vals[i] > acc_vals[i - 2]
+                and acc_vals[i] > acc_vals[i + 2]):
+            peaks += 1
+    return peaks
+
+
+def _detect_rest_periods(
+    imu_records: list[ImuRecord],
+    t_start: float,
+    t_end: float,
+    window_sec: float = 3.0,
+    stride_sec: float = 1.0,
+    rest_threshold: float = 0.05,
+    min_rest_sec: float = 10.0,
+) -> list[dict]:
+    """在 EXERCISE 区间内检测组间休息段（acc_std 低谷段）。"""
+    recs = [r for r in imu_records if t_start <= r[0] <= t_end]
+    if len(recs) < 10:
+        return []
+
+    rest_windows = []
+    t = t_start
+    while t + window_sec <= t_end:
+        w_recs = [r for r in recs if t <= r[0] < t + window_sec]
+        if len(w_recs) >= 3:
+            acc_vals = [r[1] for r in w_recs]
+            mean_a = sum(acc_vals) / len(acc_vals)
+            acc_std = (sum((a - mean_a) ** 2 for a in acc_vals) / len(acc_vals)) ** 0.5
+            rest_windows.append((t, t + window_sec, acc_std))
+        t += stride_sec
+
+    # 合并连续低 acc_std 窗口为休息段
+    periods = []
+    cur_start = None
+    for (ws, we, std) in rest_windows:
+        if std < rest_threshold:
+            if cur_start is None:
+                cur_start = ws
+            cur_end = we
+        else:
+            if cur_start is not None:
+                if cur_end - cur_start >= min_rest_sec:
+                    periods.append({
+                        "start_sec": cur_start,
+                        "end_sec": cur_end,
+                        "start_time": sec_to_hhmmss(cur_start),
+                        "end_time": sec_to_hhmmss(cur_end),
+                        "duration_sec": round(cur_end - cur_start, 1),
+                    })
+                cur_start = None
+    if cur_start is not None and cur_end - cur_start >= min_rest_sec:
+        periods.append({
+            "start_sec": cur_start,
+            "end_sec": cur_end,
+            "start_time": sec_to_hhmmss(cur_start),
+            "end_time": sec_to_hhmmss(cur_end),
+            "duration_sec": round(cur_end - cur_start, 1),
+        })
+    return periods
+
+
+def format_imu_for_phase1(
+    imu_records: list[ImuRecord],
+    total_dur: float,
+    window_sec: float = IMU_WINDOW_SEC,
+) -> str:
+    """生成整体 IMU 综合摘要（按时间窗口），供 Phase 1 辅助 EXERCISE/REST 区分。
+    v6 增强：加入 acc_std 运动强度、欧拉角姿态分类、加速度峰值计数。
+    """
+    if not imu_records:
+        return ""
+
+    imu_dur = imu_records[-1][0]
+    lines = [
+        "[IMU传感器综合摘要]",
+        f"IMU总时长: {imu_dur:.0f}s  视频时长: {total_dur:.0f}s  "
+        f"(两者按录制起始时间对齐)",
+        f"分段（每 {window_sec:.0f}s）— 含运动强度/姿态/峰值计数：",
+    ]
+
+    wi = 0
+    while True:
+        t_s = wi * window_sec
+        t_e = (wi + 1) * window_sec
+        if t_s >= total_dur:
+            break
+        wi += 1
+
+        window_recs = [r for r in imu_records if t_s <= r[0] < t_e]
+        if not window_recs:
+            lines.append(f"  {sec_to_hhmmss(t_s)}~{sec_to_hhmmss(min(t_e, total_dur))}  无IMU数据")
+            continue
+
+        gyro_vals = [r[2] for r in window_recs]
+        acc_vals = [r[1] for r in window_recs]
+        az_vals = [r[5] for r in window_recs]
+
+        gyro_mean = sum(gyro_vals) / len(gyro_vals)
+        gyro_max = max(gyro_vals)
+        acc_mean = sum(acc_vals) / len(acc_vals)
+        acc_std = (sum((a - acc_mean) ** 2 for a in acc_vals) / len(acc_vals)) ** 0.5
+        az_mean = sum(az_vals) / len(az_vals)
+
+        posture = _posture_from_az(az_mean)
+        intensity = _acc_std_label(acc_std)
+        peak_count = _count_acc_peaks(acc_vals)
+
+        # 综合判断提示
+        hint = ""
+        if acc_std > 0.15 and peak_count >= 3:
+            hint = f" → 可能在做{posture}力量训练"
+        elif acc_std > 0.05 and posture == "站姿":
+            hint = " → 可能在行走或调整位置"
+        elif acc_std <= 0.05:
+            hint = f" → 静止休息({posture})"
+
+        t_s_str = sec_to_hhmmss(t_s)
+        t_e_str = sec_to_hhmmss(min(t_e, total_dur))
+        lines.append(
+            f"  {t_s_str}~{t_e_str}  "
+            f"运动强度: {intensity}(acc_std={acc_std:.2f})  "
+            f"姿态: {posture}  "
+            f"峰值计数: {peak_count}  "
+            f"(角速度均值={gyro_mean:.1f}, 峰值={gyro_max:.1f})"
+            f"{hint}"
+        )
+
+    return "\n".join(lines)
+
+
+def format_imu_for_exercise(
+    imu_records: list[ImuRecord],
+    t_start: float,
+    t_end: float,
+) -> str:
+    """生成单个 EXERCISE 区间的 IMU 综合摘要，供 Phase 2 辅助动作识别。
+    v8 增强：按子窗口细分、峰值计数(rep hint)、组间休息检测。
+    """
+    if not imu_records:
+        return ""
+
+    pad = 5.0
+    window_recs = [r for r in imu_records if (t_start - pad) <= r[0] <= (t_end + pad)]
+
+    if not window_recs:
+        return (
+            f"[IMU传感器数据] "
+            f"该时间段 ({sec_to_hhmmss(t_start)}~{sec_to_hhmmss(t_end)}) 无IMU记录"
+        )
+
+    # 整体统计
+    gyro_vals = [r[2] for r in window_recs]
+    acc_vals = [r[1] for r in window_recs]
+    az_vals = [r[5] for r in window_recs]
+
+    gyro_mean = sum(gyro_vals) / len(gyro_vals)
+    gyro_max = max(gyro_vals)
+    acc_mean = sum(acc_vals) / len(acc_vals)
+    acc_max = max(acc_vals)
+    acc_std = (sum((a - acc_mean) ** 2 for a in acc_vals) / len(acc_vals)) ** 0.5
+    az_mean = sum(az_vals) / len(az_vals)
+
+    posture = _posture_from_az(az_mean)
+    intensity = _acc_std_label(acc_std)
+    total_peaks = _count_acc_peaks(acc_vals)
+
+    # 周期性估计
+    threshold = gyro_mean
+    transitions = sum(
+        1 for i in range(1, len(gyro_vals))
+        if (gyro_vals[i - 1] > threshold) != (gyro_vals[i] > threshold)
+    )
+    period_hint = ""
+    if transitions >= 4 and (t_end - t_start) > 0:
+        est_period = (t_end - t_start) / (transitions / 2)
+        period_hint = f"  估计运动周期≈{est_period:.1f}s"
+
+    label = _gyro_label(gyro_mean)
+
+    lines = [
+        f"[IMU传感器综合数据（运动段 {sec_to_hhmmss(t_start)}~{sec_to_hhmmss(t_end)}）]",
+        f"整体: 角速度均值={gyro_mean:.1f}°/s 峰值={gyro_max:.1f}°/s{period_hint}",
+        f"  加速度: 均值={acc_mean:.2f}g 峰值={acc_max:.2f}g std={acc_std:.3f}g",
+        f"  运动强度: {intensity}({label})  姿态: {posture}  加速度峰值计数(rep_count_hint): {total_peaks}",
+    ]
+
+    # 子窗口细分（10s 窗口）
+    sub_window = 10.0
+    seg_recs = [r for r in imu_records if t_start <= r[0] <= t_end]
+    if len(seg_recs) > 20 and (t_end - t_start) > sub_window * 1.5:
+        lines.append(f"子窗口细分（每{sub_window:.0f}s）：")
+        t = t_start
+        while t < t_end:
+            te = min(t + sub_window, t_end)
+            sw_recs = [r for r in seg_recs if t <= r[0] < te]
+            if len(sw_recs) >= 3:
+                sw_acc = [r[1] for r in sw_recs]
+                sw_az = [r[5] for r in sw_recs]
+                sw_mean = sum(sw_acc) / len(sw_acc)
+                sw_std = (sum((a - sw_mean) ** 2 for a in sw_acc) / len(sw_acc)) ** 0.5
+                sw_az_m = sum(sw_az) / len(sw_az)
+                sw_peaks = _count_acc_peaks(sw_acc)
+                sw_posture = _posture_from_az(sw_az_m)
+                sw_int = _acc_std_label(sw_std)
+                lines.append(
+                    f"  {sec_to_hhmmss(t)}~{sec_to_hhmmss(te)}  "
+                    f"强度:{sw_int}(acc_std={sw_std:.3f})  "
+                    f"姿态:{sw_posture}  峰值:{sw_peaks}"
+                )
+            t += sub_window
+
+    # 组间休息检测
+    rest_periods = _detect_rest_periods(imu_records, t_start, t_end)
+    if rest_periods:
+        lines.append("IMU检测到的组间休息段（acc_std < 0.05g 持续 > 10s）：")
+        for rp in rest_periods:
+            lines.append(
+                f"  休息: {rp['start_time']}~{rp['end_time']} ({rp['duration_sec']}s)"
+            )
+
+    return "\n".join(lines)
+
+
+# ──────────────────────────────────────────────
 # LLM 调用
 # ──────────────────────────────────────────────
 
@@ -154,7 +476,7 @@ def _gemini_generate(
             {"role": "user", "content": user_content},
         ],
         "temperature": 0.0,
-        "max_tokens": 8192,
+        "max_tokens": 16384,
     }
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -211,6 +533,25 @@ def _image_to_data_url(jpeg_bytes: bytes) -> str:
 _DIRTY_CHAR_RE = re.compile(r'[?\x00-\x1f]')
 
 
+_UNKNOWN_EXERCISE_PATTERNS = {
+    "unknown_action", "unknown", "unknown_equipment",
+    "未知动作", "未知", "不确定", "无法识别",
+}
+
+
+def _is_unknown_exercise(exercise: str) -> bool:
+    """判断动作名称是否属于'未知/无法识别'类别。"""
+    if not exercise:
+        return True
+    val = exercise.strip().lower()
+    if val in _UNKNOWN_EXERCISE_PATTERNS:
+        return True
+    # 覆盖以 unknown 开头的任意变体（如 unknown_xxx）
+    if val.startswith("unknown"):
+        return True
+    return False
+
+
 def _validate_exercise_result(data: dict) -> list[str]:
     """Validate Phase 2 Gemini response structure. Returns list of error messages."""
     errors = []
@@ -246,6 +587,11 @@ def _validate_exercise_result(data: dict) -> list[str]:
                     if reps is not None and not isinstance(reps, (int, float)):
                         errors.append(f"sets[{i}].reps is {type(reps).__name__}({reps!r})")
 
+    for field in ("total_sets", "total_reps"):
+        val = data.get(field)
+        if val is not None and not isinstance(val, (int, float)):
+            errors.append(f"{field} is {type(val).__name__}({val!r}), expected int")
+
     return errors
 
 
@@ -279,6 +625,19 @@ def _sanitize_exercise_result(data: dict) -> dict:
                     s["reps"] = 0
             clean_sets.append(s)
         data["sets"] = clean_sets
+
+    for field in ("total_sets", "total_reps"):
+        if field in data:
+            try:
+                data[field] = int(float(data[field]))
+            except (TypeError, ValueError):
+                data[field] = 0
+
+    if "sets" in data and isinstance(data["sets"], list):
+        if "total_sets" not in data:
+            data["total_sets"] = len(data["sets"])
+        if "total_reps" not in data:
+            data["total_reps"] = sum(s.get("reps", 0) for s in data["sets"] if isinstance(s, dict))
 
     return data
 
@@ -322,16 +681,18 @@ def run_phase1(
     flow_data: list[dict],
     prompt: PromptConfig,
     output_dir: Path,
+    imu_records: list[ImuRecord] | None = None,
 ) -> list[dict]:
     """
     Phase 1：将所有窗口拼图 + 光流摘要一次性传给 LLM。
 
     Args:
-        frame_metas: 全部帧元数据
-        grids:       stitch_phase1_grids 的输出
-        flow_data:   光流数据
-        prompt:      phase1 PromptConfig
-        output_dir:  结果输出目录
+        frame_metas:  全部帧元数据
+        grids:        stitch_phase1_grids 的输出
+        flow_data:    光流数据
+        prompt:       phase1 PromptConfig
+        output_dir:   结果输出目录
+        imu_records:  IMU 数据（可选），由 load_imu_data() 返回
 
     Returns:
         list[dict]（segments）
@@ -342,13 +703,61 @@ def run_phase1(
 
     total_dur = frame_metas[-1].timestamp if frame_metas else 0
 
+    # ── 大视频分块处理 ──
+    if len(grids) > PHASE1_CHUNK_THRESHOLD:
+        tprint(f"  视频较大 ({len(grids)} grids > {PHASE1_CHUNK_THRESHOLD})，启用分块处理")
+        chunks = []
+        i = 0
+        while i < len(grids):
+            end = min(i + PHASE1_CHUNK_SIZE, len(grids))
+            chunks.append(grids[i:end])
+            i = end - PHASE1_CHUNK_OVERLAP if end < len(grids) else end
+
+        tprint(f"  分为 {len(chunks)} 块")
+        all_segs = []
+        for ci, chunk in enumerate(chunks):
+            segs = _run_phase1_single_chunk(
+                frame_metas, chunk, flow_data, prompt,
+                ci, len(chunks), total_dur,
+                imu_records=imu_records,
+            )
+            all_segs.append(segs)
+
+        segments = _merge_chunked_segments(all_segs)
+
+        # 保存
+        output_dir.mkdir(parents=True, exist_ok=True)
+        version_tag = Path(prompt.source_file).stem.replace("phase1_period_recognize_", "")
+        meta = {
+            "version": version_tag,
+            "phase1_prompt": Path(prompt.source_file).name,
+            "total_1fps_frames": len(frame_metas),
+            "num_windows": len(grids),
+            "num_chunks": len(chunks),
+            "model": os.getenv("GEMINI_FLASH_MODEL", "gemini-3-flash-preview"),
+            "created_at": datetime.now().isoformat(),
+            "segments": segments,
+        }
+        _save_json(meta, output_dir / "period_result.json")
+
+        ex_count = sum(1 for s in segments if s.get("state", "").upper() == "EXERCISE")
+        tprint(f"  Phase 1 (分块) 完成: {len(segments)} 段, 其中 EXERCISE {ex_count} 段")
+        for seg in segments:
+            tprint(f"    {seg.get('start_time', '?')} → {seg.get('end_time', '?')}  "
+                   f"{seg.get('state', '?')}  conf={seg.get('confidence', '?')}  "
+                   f"{seg.get('reason', '')}")
+        return segments
+
     # ── 构造 user content ──
+    imu_phase1_text = format_imu_for_phase1(imu_records or [], total_dur) if imu_records else ""
+
     intro = (
         f"以下是一段健身视频的关键帧（第一人称胸前相机），"
         f"共 {len(frame_metas)} 帧 (1fps)，总时长 {total_dur:.0f}s ({sec_to_hhmmss(total_dur)})。\n\n"
         f"按时间顺序分成 {len(grids)} 个窗口，每个窗口一张网格图 + 对应光流摘要。\n"
         f"网格读取顺序：从左到右、从上到下。\n\n"
-        f"请综合所有窗口的关键帧画面与光流信息，将整段视频划分为 EXERCISE / REST / TRANSITION。\n\n"
+        f"请综合所有窗口的关键帧画面与光流信息，将整段视频划分为 EXERCISE / REST / TRANSITION，\n"
+        f"并在每个时间段上标注用户当前最可能交互的器材名称。\n\n"
         f"关键规则：\n"
         f"- 第一人称胸前相机，用户本人不完整出现在画面中\n"
         f"- 画面中其他人、镜子中其他人均非分析对象\n"
@@ -356,7 +765,12 @@ def run_phase1(
         f"- 用户双手与器械持续交互 + 光流显示周期性运动 → EXERCISE\n"
         f"- 不同器械上的运动必须拆分为不同 EXERCISE 段（如跑步机 → 深蹲架 = 两段独立 EXERCISE，中间有 TRANSITION）\n"
         f"- 器械切换、行走、调整位置 → TRANSITION\n"
+        f"- 每个 segment 都必须填写 equipment 字段（当前最可能交互的器材），REST 段也不例外\n"
+        f"- 相同器材的连续使用区间（含组间休息）视为一个器材交互周期\n"
     )
+    if imu_phase1_text:
+        intro += f"\n\n{imu_phase1_text}\n"
+
     user_content: list[dict] = [{"type": "text", "text": intro}]
 
     for g in grids:
@@ -378,7 +792,11 @@ def run_phase1(
         f"严格按 JSON 格式，不要包含 Markdown 代码块或注释：\n"
         f'{{"segments": [{{"start_time": "HH:MM:SS", "end_time": "HH:MM:SS", '
         f'"state": "EXERCISE|REST|TRANSITION", "confidence": 0.0~1.0, '
-        f'"reason": "判断依据"}}]}}'
+        f'"reason": "判断依据", '
+        f'"equipment": "器材英文名或UNKNOWN", '
+        f'"posture": "standing|seated|supine|prone|bending"'
+        f'}}], '
+        f'"equipment_timeline": [{{"time": "HH:MM:SS", "equipment": "器材名", "event": "开始使用|切换到新器材"}}]}}'
     )
     user_content.append({"type": "text", "text": output_fmt})
 
@@ -398,8 +816,10 @@ def run_phase1(
         result = {"raw_response": raw}
 
     segments = []
+    equipment_timeline = []
     if isinstance(result, dict):
         segments = result.get("segments", [])
+        equipment_timeline = result.get("equipment_timeline", [])
     elif isinstance(result, list):
         segments = result
 
@@ -420,17 +840,156 @@ def run_phase1(
         "model": os.getenv("GEMINI_FLASH_MODEL", "gemini-3-flash-preview"),
         "created_at": datetime.now().isoformat(),
         "segments": segments,
+        "equipment_timeline": equipment_timeline,
     }
     _save_json(meta, output_dir / "period_result.json")
 
     ex_count = sum(1 for s in segments if s.get("state", "").upper() == "EXERCISE")
     tprint(f"  Phase 1 完成: {len(segments)} 段, 其中 EXERCISE {ex_count} 段")
     for seg in segments:
+        equip = seg.get("equipment", "")
+        equip_str = f"  [{equip}]" if equip else ""
         tprint(f"    {seg.get('start_time', '?')} → {seg.get('end_time', '?')}  "
-               f"{seg.get('state', '?')}  conf={seg.get('confidence', '?')}  "
+               f"{seg.get('state', '?')}  conf={seg.get('confidence', '?')}{equip_str}  "
                f"{seg.get('reason', '')}")
+    if equipment_timeline:
+        tprint(f"  器材切换事件: {len(equipment_timeline)} 个")
+        for et in equipment_timeline:
+            tprint(f"    {et.get('time', '?')}  {et.get('equipment', '?')}  {et.get('event', '')}")
 
     return segments
+
+
+# ── Phase 1 分块处理（大视频）──
+
+PHASE1_CHUNK_SIZE = 20      # 每块最多 20 个窗口
+PHASE1_CHUNK_OVERLAP = 2    # 相邻块重叠 2 个窗口
+PHASE1_CHUNK_THRESHOLD = 25 # 超过此数量才分块
+
+
+def _run_phase1_single_chunk(
+    frame_metas: list[FrameMeta],
+    grids_chunk: list[dict],
+    flow_data: list[dict],
+    prompt: PromptConfig,
+    chunk_idx: int,
+    total_chunks: int,
+    total_dur: float,
+    imu_records: list[ImuRecord] | None = None,
+) -> list[dict]:
+    """对一个 grid 子集执行 Phase 1 识别，返回 segments。"""
+    chunk_start = grids_chunk[0]["time_start"]
+    chunk_end = grids_chunk[-1]["time_end"]
+
+    imu_chunk_text = (
+        format_imu_for_phase1(imu_records, chunk_end, window_sec=IMU_WINDOW_SEC)
+        if imu_records else ""
+    )
+
+    intro = (
+        f"以下是一段健身视频的关键帧（第一人称胸前相机），"
+        f"共 {len(frame_metas)} 帧 (1fps)，总时长 {total_dur:.0f}s ({sec_to_hhmmss(total_dur)})。\n\n"
+        f"当前为第 {chunk_idx + 1}/{total_chunks} 段，"
+        f"时间范围 {sec_to_hhmmss(chunk_start)} ~ {sec_to_hhmmss(chunk_end)}，"
+        f"包含 {len(grids_chunk)} 个窗口。\n"
+        f"网格读取顺序：从左到右、从上到下。\n\n"
+        f"请将本段时间范围内的视频划分为 EXERCISE / REST / TRANSITION。\n\n"
+        f"关键规则：\n"
+        f"- 第一人称胸前相机，用户本人不完整出现在画面中\n"
+        f"- 画面中其他人、镜子中其他人均非分析对象\n"
+        f"- 仅关注用户双手、正在接触的器械、视角运动变化\n"
+        f"- 用户双手与器械持续交互 + 光流显示周期性运动 → EXERCISE\n"
+        f"- 不同器械上的运动必须拆分为不同 EXERCISE 段\n"
+        f"- 器械切换、行走、调整位置 → TRANSITION\n"
+    )
+    if imu_chunk_text:
+        intro += f"\n\n{imu_chunk_text}\n"
+
+    user_content: list[dict] = [{"type": "text", "text": intro}]
+
+    for g in grids_chunk:
+        flow_text = summarize_window_flow(flow_data, g["time_start"], g["time_end"])
+        header = (
+            f"\n--- 窗口 {g['grid_index'] + 1} "
+            f"({sec_to_hhmmss(g['time_start'])} ~ {sec_to_hhmmss(g['time_end'])}, "
+            f"{g['frame_count']} 帧, {g['cols']}×{g['rows']}) ---\n"
+            f"光流:\n{flow_text}"
+        )
+        user_content.append({"type": "text", "text": header})
+        user_content.append({
+            "type": "image_url",
+            "image_url": {"url": _image_to_data_url(g["jpeg_bytes"])},
+        })
+
+    output_fmt = (
+        f"\n\n请输出覆盖 {sec_to_hhmmss(chunk_start)} ~ {sec_to_hhmmss(chunk_end)} 的时间线，"
+        f"严格按 JSON 格式，不要包含 Markdown 代码块或注释：\n"
+        f'{{"segments": [{{"start_time": "HH:MM:SS", "end_time": "HH:MM:SS", '
+        f'"state": "EXERCISE|REST|TRANSITION", "confidence": 0.0~1.0, '
+        f'"reason": "判断依据"}}]}}'
+    )
+    user_content.append({"type": "text", "text": output_fmt})
+
+    tprint(f"  [chunk {chunk_idx + 1}/{total_chunks}] "
+           f"{sec_to_hhmmss(chunk_start)}~{sec_to_hhmmss(chunk_end)}, "
+           f"{len(grids_chunk)} grids")
+
+    raw = _gemini_generate(prompt.system, user_content)
+
+    try:
+        result = _extract_json(raw)
+    except (json.JSONDecodeError, ValueError):
+        return []
+
+    segs = []
+    if isinstance(result, dict):
+        segs = result.get("segments", [])
+    elif isinstance(result, list):
+        segs = result
+
+    for seg in segs:
+        if "start_time" in seg and "start_sec" not in seg:
+            seg["start_sec"] = mmss_to_sec(str(seg["start_time"]))
+        if "end_time" in seg and "end_sec" not in seg:
+            seg["end_sec"] = mmss_to_sec(str(seg["end_time"]))
+
+    return segs
+
+
+def _merge_chunked_segments(all_chunk_segs: list[list[dict]]) -> list[dict]:
+    """合并分块结果，处理重叠区域的去重。"""
+    if not all_chunk_segs:
+        return []
+
+    merged = []
+    for segs in all_chunk_segs:
+        for seg in segs:
+            start = seg.get("start_sec", 0)
+            end = seg.get("end_sec", 0)
+            # 跳过与已有段完全重叠的
+            duplicate = False
+            for existing in merged:
+                es = existing.get("start_sec", 0)
+                ee = existing.get("end_sec", 0)
+                overlap = min(end, ee) - max(start, es)
+                duration = max(end - start, 1)
+                if overlap / duration > 0.5:
+                    duplicate = True
+                    break
+            if not duplicate:
+                merged.append(seg)
+
+    merged.sort(key=lambda s: s.get("start_sec", 0))
+
+    # 修正相邻段的时间间隙/重叠
+    for i in range(1, len(merged)):
+        prev_end = merged[i - 1].get("end_sec", 0)
+        curr_start = merged[i].get("start_sec", 0)
+        if abs(curr_start - prev_end) <= 5:
+            merged[i]["start_sec"] = prev_end
+            merged[i]["start_time"] = sec_to_hhmmss(prev_end)
+
+    return merged
 
 
 # ──────────────────────────────────────────────
@@ -444,6 +1003,8 @@ def _recognize_one_exercise(
     output_dir: Path,
     flow_data: list[dict],
     system_prompt: str,
+    imu_records: list[ImuRecord] | None = None,
+    equipment_timeline: list[dict] | None = None,
 ) -> dict | None:
     """识别单个 EXERCISE 区间。"""
     seg_id = seg.get("segmentId", "?")
@@ -500,13 +1061,32 @@ def _recognize_one_exercise(
     # 光流摘要
     flow_summary = format_flow_for_exercise(flow_data, t_start, t_end)
 
+    # IMU 摘要
+    imu_exercise_text = format_imu_for_exercise(imu_records or [], t_start, t_end) if imu_records else ""
+
     # 构造 user prompt
     phase1_reason = seg.get("reason", "")
+    phase1_equipment = seg.get("equipment", "UNKNOWN")
+    phase1_posture = seg.get("posture", "")
     phase1_context = ""
-    if phase1_reason:
+    if phase1_reason or phase1_equipment != "UNKNOWN":
+        phase1_lines = []
+        if phase1_reason:
+            phase1_lines.append(f"  描述: {phase1_reason}")
+        if phase1_equipment and phase1_equipment != "UNKNOWN":
+            phase1_lines.append(f"  器材预识别: {phase1_equipment}（请根据关键帧独立验证）")
+        if phase1_posture:
+            phase1_lines.append(f"  用户姿态: {phase1_posture}")
         phase1_context = (
-            f"- 第一阶段粗略描述（仅供参考，器械名称可能不准确，你必须独立判断）: {phase1_reason}\n"
+            f"- Phase 1 参考信息（器材名需独立验证）:\n" + "\n".join(phase1_lines) + "\n"
         )
+
+    # 注入器材切换时间线（帮助 Phase 2 理解全局器材使用顺序）
+    if equipment_timeline:
+        timeline_lines = [f"- 器材切换时间线（Phase 1 全局识别结果）:"]
+        for et in equipment_timeline:
+            timeline_lines.append(f"  {et.get('time', '?')}  {et.get('equipment', '?')}  ({et.get('event', '')})")
+        phase1_context += "\n".join(timeline_lines) + "\n"
 
     entrance_hint = ""
     if entrance_frames:
@@ -525,7 +1105,8 @@ def _recognize_one_exercise(
         f"{phase1_context}\n"
         f"---\n\n"
         f"{flow_summary}\n\n"
-        f"---\n\n"
+        + (f"{imu_exercise_text}\n\n" if imu_exercise_text else "")
+        + f"---\n\n"
         f"## 器械识别规则（按优先级依次使用）\n\n"
         f"### 规则一：进场帧优先\n"
         f"训练时相机贴近器械只能看到局部，必须回看网格图前 2~3 帧（进场帧），\n"
@@ -816,6 +1397,26 @@ def _recognize_one_exercise(
         if validation_errors:
             tprint(f"    [{seg_id}] 最终仍有 {len(validation_errors)} 项问题，执行清洗")
 
+        # UNKNOWN_ACTION 自检：添加额外提示后重试
+        exercise_val = seg_result.get("exercise") or ""
+        if _is_unknown_exercise(exercise_val) and v_attempt < MAX_VALIDATE_RETRIES - 1:
+            tprint(f"    [{seg_id}] 识别结果为未知动作({exercise_val!r})，添加补充提示后重试 ({v_attempt + 1}/{MAX_VALIDATE_RETRIES})...")
+            retry_hint = {
+                "type": "text",
+                "text": (
+                    "\n\n⚠️ 上一次你返回了未知动作，这是不可接受的。请重新仔细分析：\n"
+                    "1. 禁止输出 UNKNOWN_ACTION、UNKNOWN_EQUIPMENT、未知动作、未知 等。必须给出你最有可能的判断。\n"
+                    "2. 即使不确定具体动作名称，也请根据观察到的运动模式给出最接近的标准动作名。\n"
+                    "3. 重点关注：器械外观特征、手部运动方向、光流周期模式。\n"
+                    "4. 如果是热身/拉伸动作，请识别为具体的热身动作（如 动态拉伸、泡沫轴放松 等）。\n"
+                    "5. 如果是有氧运动，请识别为具体的有氧器械动作（如 跑步机慢跑、登山机、椭圆机 等）。\n"
+                    "6. confidence 可以设低（如 0.5），但必须给出具体的 exercise 名称。\n"
+                ),
+            }
+            if retry_hint not in user_content:
+                user_content.append(retry_hint)
+            continue
+
         seg_result = _sanitize_exercise_result(seg_result)
         break
 
@@ -919,6 +1520,8 @@ def run_phase2(
     prompt: PromptConfig,
     output_dir: Path,
     exercise_workers: int = MAX_EXERCISE_WORKERS,
+    imu_records: list[ImuRecord] | None = None,
+    equipment_timeline: list[dict] | None = None,
 ) -> list[dict]:
     """
     Phase 2：对每个 EXERCISE 区间并发识别。
@@ -954,7 +1557,8 @@ def run_phase2(
     if workers <= 1:
         for seg in exercise_segs:
             result = _recognize_one_exercise(
-                seg, frame_metas, frames_dir, output_dir, flow_data, system_prompt)
+                seg, frame_metas, frames_dir, output_dir, flow_data, system_prompt,
+                imu_records=imu_records, equipment_timeline=equipment_timeline)
             if result:
                 all_results.append(result)
     else:
@@ -964,6 +1568,7 @@ def run_phase2(
                 fut = executor.submit(
                     _recognize_one_exercise,
                     seg, frame_metas, frames_dir, output_dir, flow_data, system_prompt,
+                    imu_records, equipment_timeline,
                 )
                 futures[fut] = seg.get("segmentId", "?")
 
@@ -977,6 +1582,62 @@ def run_phase2(
                     tprint(f"    [{seg_id}] [错误] 处理失败: {e}")
 
         all_results.sort(key=lambda r: r["startTime"])
+
+    # ── 第二轮：对仍为未知动作的区间重新识别 ──
+    unknown_results = [
+        r for r in all_results
+        if _is_unknown_exercise((r.get("result") or {}).get("exercise", ""))
+    ]
+    if unknown_results:
+        tprint(f"\n  [Phase 2 第二轮] 仍有 {len(unknown_results)} 个 EXERCISE 识别为未知动作，重新识别...")
+        # 找回对应的原始 segment
+        seg_map = {s.get("segmentId"): s for s in exercise_segs}
+        retry_results: list[dict] = []
+        retry_workers = min(exercise_workers, len(unknown_results))
+        if retry_workers <= 1:
+            for r in unknown_results:
+                seg = seg_map.get(r["segmentId"])
+                if seg is None:
+                    continue
+                new_result = _recognize_one_exercise(
+                    seg, frame_metas, frames_dir, output_dir, flow_data, system_prompt,
+                    imu_records=imu_records, equipment_timeline=equipment_timeline)
+                if new_result:
+                    retry_results.append(new_result)
+        else:
+            retry_futures = {}
+            with ThreadPoolExecutor(max_workers=retry_workers) as executor:
+                for r in unknown_results:
+                    seg = seg_map.get(r["segmentId"])
+                    if seg is None:
+                        continue
+                    fut = executor.submit(
+                        _recognize_one_exercise,
+                        seg, frame_metas, frames_dir, output_dir, flow_data, system_prompt,
+                        imu_records, equipment_timeline,
+                    )
+                    retry_futures[fut] = r["segmentId"]
+                for fut in as_completed(retry_futures):
+                    sid = retry_futures[fut]
+                    try:
+                        new_result = fut.result()
+                        if new_result:
+                            retry_results.append(new_result)
+                    except Exception as e:
+                        tprint(f"    [{sid}] [第二轮错误] {e}")
+
+        # 用重试结果替换原来的 unknown 结果（以 segmentId 为键）
+        retry_map = {r["segmentId"]: r for r in retry_results}
+        all_results = [
+            retry_map.get(r["segmentId"], r) for r in all_results
+        ]
+        all_results.sort(key=lambda r: r["startTime"])
+
+        still_unknown = [
+            r for r in all_results
+            if _is_unknown_exercise((r.get("result") or {}).get("exercise", ""))
+        ]
+        tprint(f"  [Phase 2 第二轮] 完成，剩余未知: {len(still_unknown)} 个")
 
     # ── 保存 exercise_result.json ──
     version_tag = Path(prompt.source_file).stem.replace("phase2_exercise_recognize_", "")

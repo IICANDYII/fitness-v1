@@ -7,7 +7,7 @@ from pathlib import Path
 
 PORT = 8080
 HTML_PATH = Path(__file__).parent / "index.html"
-VIDEO_DIR = Path(r"E:\fitness_new\visualize\raw")
+VIDEO_DIR = Path(r"D:\WorkPath\fitness_new\recognize\visualize\raw")
 
 
 class Handler(http.server.BaseHTTPRequestHandler):

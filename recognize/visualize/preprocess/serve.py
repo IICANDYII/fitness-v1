@@ -1,9 +1,11 @@
 import http.server
 import json
 import os
+import socketserver
 import urllib.parse
 
 RAW_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'raw'))
+SHARED_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'result', 'shared'))
 PREPROCESS_DIR = os.path.dirname(__file__)
 
 VIDEO_EXTS = {'.mp4', '.avi', '.mov', '.mkv', '.webm', '.flv', '.wmv', '.qt'}
@@ -19,10 +21,83 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
         if path == '/api/videos':
             self._serve_video_list()
+        elif path == '/api/ground_truth':
+            self._serve_ground_truth(parsed.query)
         elif path.startswith('/raw/'):
             self._serve_raw_file(path[5:])
         else:
             super().do_GET()
+
+    def do_POST(self):
+        parsed = urllib.parse.urlparse(self.path)
+        if parsed.path == '/api/ground_truth':
+            self._save_ground_truth(parsed.query)
+        else:
+            self.send_error(404)
+
+    def _video_to_folder(self, video_name):
+        return os.path.splitext(video_name)[0]
+
+    def _serve_ground_truth(self, query_string):
+        params = urllib.parse.parse_qs(query_string)
+        video = params.get('video', [''])[0]
+        if not video:
+            self.send_error(400, 'Missing video parameter')
+            return
+        folder = self._video_to_folder(video)
+        gt_path = os.path.normpath(os.path.join(SHARED_DIR, folder, 'ground_truth.json'))
+        if not gt_path.startswith(SHARED_DIR):
+            self.send_error(403)
+            return
+        if not os.path.isfile(gt_path):
+            data = json.dumps({"found": False}).encode('utf-8')
+        else:
+            with open(gt_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            try:
+                parsed = json.loads(content)
+            except json.JSONDecodeError:
+                import re
+                cleaned = re.sub(r':\s*([A-Z_]+)', ': null', content)
+                cleaned = re.sub(r',\s*]', ']', cleaned)
+                try:
+                    parsed = json.loads(cleaned)
+                except json.JSONDecodeError:
+                    parsed = None
+            if parsed is not None:
+                data = json.dumps({"found": True, "data": parsed, "folder": folder}).encode('utf-8')
+            else:
+                data = json.dumps({"found": False, "error": "invalid JSON"}).encode('utf-8')
+        self.send_response(200)
+        self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.send_header('Content-Length', len(data))
+        self.end_headers()
+        self.wfile.write(data)
+
+    def _save_ground_truth(self, query_string):
+        params = urllib.parse.parse_qs(query_string)
+        video = params.get('video', [''])[0]
+        if not video:
+            self.send_error(400, 'Missing video parameter')
+            return
+        folder = self._video_to_folder(video)
+        folder_path = os.path.normpath(os.path.join(SHARED_DIR, folder))
+        if not folder_path.startswith(SHARED_DIR):
+            self.send_error(403)
+            return
+        os.makedirs(folder_path, exist_ok=True)
+        gt_path = os.path.join(folder_path, 'ground_truth.json')
+        content_length = int(self.headers.get('Content-Length', 0))
+        body = self.rfile.read(content_length)
+        payload = json.loads(body.decode('utf-8'))
+        with open(gt_path, 'w', encoding='utf-8') as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+        resp = json.dumps({"status": "ok", "folder": folder}).encode('utf-8')
+        self.send_response(200)
+        self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.send_header('Content-Length', len(resp))
+        self.end_headers()
+        self.wfile.write(resp)
 
     def _serve_video_list(self):
         files = []
@@ -72,7 +147,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             with open(filepath, 'rb') as f:
                 f.seek(start)
-                self.wfile.write(f.read(length))
+                remaining = length
+                while remaining > 0:
+                    chunk = f.read(min(65536, remaining))
+                    if not chunk:
+                        break
+                    self.wfile.write(chunk)
+                    remaining -= len(chunk)
         else:
             self.send_response(200)
             self.send_header('Content-Type', content_type)
@@ -87,9 +168,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                     self.wfile.write(chunk)
 
 
+class ThreadedHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
+    daemon_threads = True
+
+
 if __name__ == '__main__':
     PORT = 8765
     print(f'Serving on http://localhost:{PORT}')
     print(f'Raw video dir: {RAW_DIR}')
-    server = http.server.HTTPServer(('0.0.0.0', PORT), Handler)
+    server = ThreadedHTTPServer(('0.0.0.0', PORT), Handler)
     server.serve_forever()

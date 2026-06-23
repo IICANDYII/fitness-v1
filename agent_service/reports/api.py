@@ -1457,6 +1457,8 @@ def cache_status():
 # ── Video files serving ──────────────────────────────────────────────────────
 _INPUT_DIR = Path(__file__).parent.parent.parent / "gym_analyzer" / "input"
 _VIDEO_EXTS = {".mp4", ".avi", ".mov", ".mkv", ".webm"}
+_SHARED_DIR = Path(__file__).parent.parent.parent / "recognize" / "visualize" / "result" / "shared"
+_RESULT_DIR = Path(__file__).parent.parent.parent / "recognize" / "visualize" / "result"
 
 
 @app.get("/api/videos")
@@ -1468,6 +1470,84 @@ def list_videos():
         f.name for f in _INPUT_DIR.iterdir()
         if f.suffix.lower() in _VIDEO_EXTS
     )
+
+
+@app.get("/api/ground-truth")
+def ground_truth_api(video: str | None = None, date: str | None = None, user_id: str | None = None):
+    """Return ground_truth.json for a video (by name or date lookup)."""
+    if not video and date:
+        uid = user_id or USER_ID
+        video = _DATE_VIDEO_MAP.get(uid, {}).get(date)
+    if not video:
+        return {"found": False}
+    folder = Path(video).stem
+    gt_path = (_SHARED_DIR / folder / "ground_truth.json").resolve()
+    if not str(gt_path).startswith(str(_SHARED_DIR.resolve())):
+        raise HTTPException(status_code=403)
+    if not gt_path.is_file():
+        return {"found": False}
+    try:
+        data = json.loads(gt_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {"found": False, "error": "invalid JSON"}
+    exercises = [d for d in data if d.get("type") == "exercise"]
+    return {"found": True, "data": data, "exercises": exercises, "folder": folder}
+
+
+@app.get("/api/recognition-versions")
+def recognition_versions(video: str | None = None, date: str | None = None, user_id: str | None = None):
+    """List available recognition versions for a video."""
+    if not video and date:
+        uid = user_id or USER_ID
+        video = _DATE_VIDEO_MAP.get(uid, {}).get(date)
+    if not video:
+        return []
+    folder = Path(video).stem
+    versions = []
+    if _RESULT_DIR.is_dir():
+        for d in _RESULT_DIR.iterdir():
+            if d.name.startswith("v") and d.is_dir() and (d / folder).is_dir():
+                versions.append(d.name)
+    versions.sort(key=lambda v: int(v[1:]) if v[1:].isdigit() else 0)
+    return versions
+
+
+@app.get("/api/recognition-result")
+def recognition_result(version: str, video: str | None = None, date: str | None = None, user_id: str | None = None):
+    """Return recognition timeline + exercises for a video at a given version."""
+    if not video and date:
+        uid = user_id or USER_ID
+        video = _DATE_VIDEO_MAP.get(uid, {}).get(date)
+    if not video:
+        return {"found": False}
+    folder = Path(video).stem
+    base = _RESULT_DIR / version / folder
+    if not base.is_dir():
+        return {"found": False}
+
+    timeline = []
+    adj = base / "period_result_adjusted.json"
+    if adj.is_file():
+        try:
+            timeline = json.loads(adj.read_text(encoding="utf-8")).get("segments", [])
+        except json.JSONDecodeError:
+            pass
+
+    exercises = []
+    ex_file = base / "exercise_result.json"
+    if ex_file.is_file():
+        try:
+            exercises = json.loads(ex_file.read_text(encoding="utf-8")).get("results", [])
+        except json.JSONDecodeError:
+            pass
+
+    ex_name_map = {ex.get("segmentId"): ex.get("result", {}).get("exercise", "") for ex in exercises if ex.get("segmentId")}
+    for seg in timeline:
+        sid = seg.get("segmentId")
+        if sid and sid in ex_name_map:
+            seg["exercise_name"] = ex_name_map[sid]
+
+    return {"found": True, "timeline": timeline, "exercises": exercises, "folder": folder, "version": version}
 
 
 @app.get("/video/{filename}", include_in_schema=False)
@@ -1565,6 +1645,63 @@ def muscle_svg(
         content=svg,
         media_type="image/svg+xml",
         headers={"Cache-Control": "no-cache"},
+    )
+
+
+@app.get("/api/fitness/body-svg/{side}", include_in_schema=False)
+def fitness_body_svg(
+    side: str,
+    gender: str = "male",
+    primary: str = "",
+    secondary: str = "",
+    tertiary: str = "",
+):
+    """Gender-aware highlighted body SVG for the Relty fitness screen.
+    primary/secondary/tertiary: comma-separated SVG group IDs to color.
+    Colors: primary=#4D9FFF (high), secondary=dimmer blue (med), tertiary=#E0B45A (low).
+    """
+    if side not in ("front", "back"):
+        raise HTTPException(status_code=400)
+    if gender not in ("male", "female"):
+        gender = "male"
+
+    if gender == "female":
+        fname = "female_front_body.svg" if side == "front" else "female_back_body.svg"
+    else:
+        fname = "front_body.svg" if side == "front" else "back_body.svg"
+
+    raw = _load_svg_raw(fname)
+
+    prim_ids = [x.strip() for x in primary.split(",")  if x.strip()]
+    sec_ids  = [x.strip() for x in secondary.split(",") if x.strip() and x.strip() not in prim_ids]
+    tert_ids = [x.strip() for x in tertiary.split(",")  if x.strip() and x.strip() not in prim_ids and x.strip() not in sec_ids]
+
+    def _sel(ids):
+        return ", ".join(f"#{i}" for i in ids) if ids else ".__none__"
+
+    style = (
+        "<style>"
+        ".bodymap { fill: rgba(255,255,255,0.07) !important; }"
+        ".bodymap path, .bodymap ellipse, .bodymap circle { fill: rgba(255,255,255,0.07) !important; }"
+        "#body, #b-body, #shoulders, #b-shoulders, #elbow, #b-elbow,"
+        "#wrist, #b-wrist, #hips, #b-hips, #knees, #b-knees, #ankles, #b-ankles,"
+        "[id^='hover'] { display: none !important; }"
+        f"{_sel(prim_ids)} path, {_sel(prim_ids)} ellipse, {_sel(prim_ids)} circle"
+        " { fill: #4D9FFF !important; }"
+        f"{_sel(sec_ids)} path, {_sel(sec_ids)} ellipse, {_sel(sec_ids)} circle"
+        " { fill: rgba(77,159,255,0.52) !important; }"
+        f"{_sel(tert_ids)} path, {_sel(tert_ids)} ellipse, {_sel(tert_ids)} circle"
+        " { fill: #E0B45A !important; }"
+        "</style>"
+    )
+
+    # Inject <style> immediately after the opening <svg ...> tag
+    svg = re.sub(r'(<svg[^>]*>)', r'\1' + style, raw, count=1)
+
+    return _Response(
+        content=svg,
+        media_type="image/svg+xml",
+        headers={"Cache-Control": "public, max-age=60"},
     )
 
 
