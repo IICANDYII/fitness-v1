@@ -1,0 +1,89 @@
+ego_interaction_keyframe_sampler:
+
+  candidate_sampling:
+    default_fps: 5
+    fallback_fps_if_low_hand_ratio: 10
+    low_hand_visible_ratio_threshold: 0.2
+    max_candidate_frames_per_segment: 300
+
+  output:
+    max_frames: 36
+    min_frames: 12
+
+  window_selection:
+    window_sec: 2.0
+    top_k_per_window: 2
+
+  detection_thresholds:
+    hand_for_sampling: 0.25
+    hand_for_overlay: 0.45
+    equipment_for_sampling: 0.35
+    equipment_for_overlay: 0.50
+    person_for_suppression: 0.40
+
+  ego_hand_score_weights:
+    position_prior: 0.25
+    size_prior: 0.20
+    equipment_proximity: 0.20
+    temporal_persistence: 0.15
+    edge_origin_prior: 0.10
+    motion_consistency: 0.10
+    inside_person_penalty: -0.30
+
+  active_equipment_score_weights:
+    detection_confidence: 0.30
+    ego_hand_proximity: 0.25
+    motion_sync: 0.20
+    temporal_persistence: 0.15
+    center_relevance: 0.10
+    background_penalty: -0.20
+
+  frame_score_weights:
+    ego_hand: 0.30
+    active_equipment: 0.25
+    interaction: 0.20
+    motion_value: 0.10
+    sharpness: 0.10
+    scene_context: 0.05
+    person_noise: -0.25
+    background_equipment_noise: -0.15
+
+  filter_rules:
+    person_dominant_area_ratio: 0.25
+    hard_person_area_ratio: 0.45
+    min_ego_hand_score_for_person_frame: 0.30
+    min_active_equipment_score_for_person_frame: 0.30
+    min_frame_info_score: 0.25
+
+  endpoint_selection:
+    enable: true
+    include_hand_y_max: true
+    include_hand_y_min: true
+    include_equipment_y_max: true
+    include_equipment_y_min: true
+    include_hand_distance_max: true
+    include_hand_distance_min: true
+
+  anchor_frames:
+    enable: true
+    positions:
+      - 0.0
+      - 0.25
+      - 0.5
+      - 0.75
+      - 1.0
+
+  diversity:
+    enable: true
+    min_time_gap_sec: 0.3
+    phash_duplicate_threshold: 6
+
+  background_suppression:
+    enabled: true
+    mode: blur
+    blur_kernel: 31
+    suppress_person: true
+    person_mode: mosaic
+    keep_ego_hand: true
+    keep_active_equipment: true
+    keep_context_equipment: true

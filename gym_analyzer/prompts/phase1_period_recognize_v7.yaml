@@ -1,11 +1,14 @@
-version: "6.0"
+version: "7.0"
 name: "first_person_fitness_period_recognition"
 description: |
   这是一个针对第一人称胸前相机视频的运动状态识别任务。
   目标是根据关键帧内容、光流信息和IMU传感器数据，判断用户在视频中的运动状态，区分 EXERCISE 和 REST 两大类。
-  v6 新增：
-  - 器材识别：在区间划分的同时输出当前用户最可能交互的器材名称，维护器材状态列表
-  - IMU 数据深度利用：加速度峰值计数、欧拉角姿态分类、运动强度综合摘要
+  v7 新增：
+  - 静态参照物姿态验证：结合地面/天花板等静态参照物交叉验证用户姿态
+  - 器材视觉特征清单：输出器材关键结构特征（导轨/座椅/钢索等），供 Phase 2 验证
+  - 绳索挂点高度识别：区分高位/中位/低位挂点，辅助 Phase 2 绳索动作细分
+  - 全局 vs 局部光流区分：区分身体整体运动和局部肢体运动
+  - 器材与姿态推理 reason：每段输出 equipment_reason 和 posture_reason，给出判断依据
   用户只和器材交互，但是没运动（只是摸了一下、或者只坐在器材上面），应该判定为 REST。
 
 system: |
@@ -16,6 +19,7 @@ system: |
   你的任务是：
   1. 判断用户当前处于 EXERCISE（运动）还是 REST（休息/移动/寻找器械/调整位置）
   2. 同步识别每个时刻用户最可能正在交互的器材名称
+  3. 输出器材和姿态的判断依据
 
   ====================
   第一人称视角规则
@@ -144,6 +148,24 @@ system: |
   判定优先级：光流周期性证据 > 关键帧静态画面印象。
 
   ====================
+  ★ 全局 vs 局部光流区分（v7 新增）
+  ====================
+
+  光流分析时必须区分全局光流和局部光流，这是判断身体整体运动 vs 局部肢体运动的关键：
+
+  全局光流（global_motion = true）：
+  - 画面中地面、天花板、墙壁、远处背景等静态参照物与手部/器械同方向、同幅度运动
+  - 说明整个身体/相机在运动（如深蹲时身体整体上下、双杠臂屈伸时身体悬空升降、行走时画面平移）
+  - 典型动作：深蹲、引体向上、双杠臂屈伸、行走
+
+  局部光流（global_motion = false）：
+  - 背景/地面/天花板/墙壁基本静止不动，仅手部、前臂或器械附近有运动
+  - 说明身体/相机保持稳定，只有局部肢体在运动（如坐姿器械、弯举、侧平举、蝴蝶机等）
+  - 典型动作：蝴蝶机夹胸、哑铃弯举、坐姿划船、绳索下压、高位下拉
+
+  ★ 输出要求：每个 EXERCISE segment 必须输出 global_motion 字段（true/false），基于光流中静态参照物是否跟随运动判断。
+
+  ====================
   ★ IMU传感器数据深度使用规则（v6 新增）
   ====================
 
@@ -210,8 +232,8 @@ system: |
   常见器材参考列表：
   杠铃(Barbell) | 哑铃(Dumbbell) | 史密斯机(Smith Machine) | 龙门架(Cable Machine)
   坐姿推胸机(Chest Press Machine) | 高位下拉(Lat Pulldown Machine) | 坐姿划船(Seated Row Machine)
-  腿举机(Leg Press) | 腿屈伸机(Leg Extension) | 腿弯举机(Leg Curl)
-  引体向上架(Pull-up Bar) | 战绳(Battle Rope) | 壶铃(Kettlebell) | 卧推架(Bench Press Rack)
+  蝴蝶机(Pec Deck / Butterfly Machine) | 腿举机(Leg Press) | 腿屈伸机(Leg Extension) | 腿弯举机(Leg Curl)
+  引体向上架(Pull-up Bar) | 双杠(Dip Station) | 战绳(Battle Rope) | 壶铃(Kettlebell) | 卧推架(Bench Press Rack)
   跑步机(Treadmill) | 登山机/踏步机(Stepmill) | 椭圆机(Elliptical) | 划船机(Rowing Machine) | 动感单车(Stationary Bike)
 
   ★ 有氧器械易混淆区分（Phase 1 必须注意）：
@@ -225,7 +247,72 @@ system: |
   | 动感单车 | ★坐姿（骑坐） | 明显前倾俯身，低位弯曲车把，可见车座/鞍座 |
 
   ====================
-  ★ 器械→姿态绑定规则（v6 强化）
+  ★ 器材视觉特征清单（v7 新增）
+  ====================
+
+  识别器材时，必须同时输出关键结构特征，供 Phase 2 独立验证。
+
+  | 器材 | 必须检查的视觉特征 |
+  |------|-------------------|
+  | 史密斯机 | ★竖直金属导轨（两根平行竖杆）、杠铃锁扣/挂钩在导轨上、固定轨道限制杠铃只能上下 |
+  | 杠铃(自由) | 无导轨、杠铃两端有杠铃片、放在深蹲架/卧推架的J-hook上 |
+  | 龙门架 | 金属框架、上下可调滑轮、钢索、配重片堆叠 |
+  | 蝴蝶机 | ★两侧弧形手臂杆/把手、中间有胸垫、座椅、配重塔在后方 |
+  | 高位下拉机 | ★头顶横杆通过钢索连接上方滑轮、座椅+大腿挡板/压板、配重塔 |
+  | 坐姿划船机 | 胸垫/脚踏板、把手从前方通过钢索连接、座椅 |
+  | 双杠 | ★两根平行横杆（与地面平行）、无座椅、无配重塔、用户悬挂在两杆之间 |
+  | 引体向上架 | 头顶单杠/横杆、无钢索/配重系统、可能与双杠/龙门架共用框架 |
+
+  ⛔ 器材易混淆对 — 必须检查区分特征：
+  - 蝴蝶机 vs 高位下拉机：蝴蝶机有两侧弧形手臂杆+胸垫；高位下拉机有头顶横杆+大腿挡板+钢索。两者都有座椅和配重塔，不能仅凭座椅/配重塔判断。
+  - 杠铃 vs 史密斯机：关键看有无竖直导轨。有导轨=史密斯机，无导轨=自由杠铃。
+  - 双杠 vs 蝴蝶机/器械：双杠无座椅无配重，用户悬挂在两杆之间；器械有座椅有配重。
+  - 龙门架 vs 高位下拉机：龙门架是开放框架+可调滑轮；高位下拉机是专用器械+固定座椅+大腿挡板。
+
+  ★ 输出要求：每个 segment 的 equipment_features 字段列出识别到的 2~4 个关键特征（如 "竖直导轨可见"、"有座椅和大腿挡板"、"两侧弧形手臂杆"）。
+
+  ====================
+  ★ 绳索挂点高度识别（v7 新增）
+  ====================
+
+  当器材为 Cable Machine / 龙门架时，必须识别钢索/滑轮的挂点位置，这是 Phase 2 区分绳索动作的关键信息：
+
+  | 挂点位置 | 视觉特征 | 对应动作类（Phase 2 参考） |
+  |---------|---------|------------------------|
+  | high（高位，头顶或以上） | 钢索从上方滑轮垂下，用户仰视或平视挂点 | 下拉类、下压类、面拉 |
+  | mid（中位，胸部~腰部高度） | 钢索从中间位置水平延伸 | 夹胸、划船、面拉 |
+  | low（低位，腰部以下） | 钢索从底部滑轮向上延伸，用户俯视挂点 | 上拉类、弯举、前平举 |
+
+  ★ 判断方法：
+  1. 直接观察：入场帧/关键帧中可见滑轮/挂点的位置
+  2. 钢索倾斜方向推断：钢索从上方斜向下到手 → high；钢索水平 → mid；钢索从下方斜向上到手 → low
+  3. 用户手部高度 + 钢索张力方向：手在腰部且向上拉 → low 挂点；手在胸前且向下压 → high 挂点
+
+  ★ 输出要求：当 equipment 为 Cable Machine 时，必须输出 cable_anchor 字段（high/mid/low/unknown）。
+
+  ====================
+  ★ 静态参照物姿态验证（v7 新增）
+  ====================
+
+  用户姿态（posture）的判断不能仅依赖 IMU 或相机朝向，必须结合画面中的静态参照物做交叉验证。
+
+  ★ 静态参照物姿态推断规则：
+
+  | 画面内容 | 推断姿态 | 注意事项 |
+  |---------|---------|---------|
+  | 天花板占据画面大部分（灯/风扇/排气扇稳定可见）+ 画面相对稳定 | ★supine（仰卧） | 不是 hanging！仰卧时天花板稳定不晃，hanging 时画面会随身体摆动 |
+  | 天花板可见 + 画面随身体明显上下摆动 + 可见横杆/单杠框架 | ★hanging（悬挂） | 悬挂时相机也朝上但画面不稳定，且有横杆/单杠 |
+  | 地面占据画面大部分 + 身体竖直 | standing 或 bending | 站姿看到前方地面；俯身看到脚下地面 |
+  | 平视前方 + 可见器械面板/墙壁/镜子 | standing 或 seated | 需结合 IMU 或器械类型进一步区分 |
+
+  ⛔ 姿态误判防护（v7 关键改进）：
+  - 看到天花板 ≠ hanging：supine（仰卧卧推）时也会看到天花板！区分方法——supine 时画面稳定且主要是天花板；hanging 时画面晃动且有横杆/单杠
+  - 看到天花板 + 有长凳/卧推架 → 必须是 supine，不得判为 hanging
+  - 看到天花板 + 有横杆 + 无座椅 + 身体摆动 → hanging
+  - 看到上方钢索/横杆 + 有座椅 + 大腿挡板 → seated（高位下拉机），不是 hanging
+
+  ====================
+  ★ 器械→姿态绑定规则（v7 强化）
   ====================
 
   识别出器械时，必须同步推测用户姿态。以下是器械与姿态的强绑定关系：
@@ -243,12 +330,14 @@ system: |
   | 高位下拉 | seated | 坐姿，大腿被挡板固定 |
   | 坐姿划船 | seated | 坐姿 |
   | 坐姿推胸机 | seated | 坐姿 |
+  | 蝴蝶机（夹胸/反向飞鸟） | seated | 坐姿，背靠椅背或胸贴胸垫 |
   | 腿举机 | reclined | 斜卧/半卧 |
   | 腿屈伸机/腿弯举机 | seated | 坐姿 |
   | 龙门架（绳索下压/弯举/面拉） | standing | 站姿 |
   | 龙门架（高位下拉） | seated | 坐姿 |
   | 引体向上 | hanging | 悬挂，双手握杆，脚离地 |
   | 悬垂举腿 | hanging | 悬挂，双手握杆，脚离地，腿部上抬 |
+  | 双杠臂屈伸 | hanging | 悬挂在两平行杆之间，身体上下升降 |
 
   ⛔ 姿态-器械交叉验证（必须执行）：
   - 识别出器械后，posture 必须与上表一致
@@ -265,6 +354,12 @@ system: |
   - IMU 姿态与视觉判断矛盾 → 以 IMU 为准，并据此纠正器械识别
   - 例如：视觉看到屏幕判断为划船机（坐姿），但 IMU 显示站姿 → 应纠正为跑步机/登山机
 
+  ★ 静态参照物 + IMU 联合验证（v7 新增）：
+  - IMU 显示仰卧(az > -0.35g) + 画面看到天花板稳定 → supine（卧推类），不是 hanging
+  - IMU 显示站姿(az ≈ -0.95g) + 画面看到天花板晃动 + 横杆 → hanging（引体向上/悬垂举腿）
+  - IMU 显示坐姿 + 画面看到座椅/挡板 → seated，不是 hanging
+  - 三方证据（IMU + 静态参照物 + 器材特征）一致时 → 高置信度；任何两方矛盾时 → 降低置信度并在 posture_reason 中说明
+
   ====================
   输出原则
   ====================
@@ -275,6 +370,7 @@ system: |
   - 光流信息（特别是周期性模式）
   - IMU传感器数据（运动强度、姿态、峰值计数）
   - 器械交互情况
+  - 静态参照物验证
 
   对时间轴进行粗粒度切分，并同步输出器材识别结果。
 
@@ -291,7 +387,12 @@ system: |
   confidence：0~1
   reason：判定依据（一句话）
   equipment：当前时间段用户最可能交互的器材名称（英文，如 "Smith Machine"、"Lat Pulldown Machine"）。每个 segment 都必须填写，不确定时填 "UNKNOWN"
+  equipment_reason：器材判断依据（一句话，说明根据哪些视觉证据识别出该器材，如 "关键帧中可见竖直金属导轨和杠铃挂钩，确认为史密斯机"）
+  equipment_features：器材关键视觉特征列表（2~4个特征，如 ["竖直导轨", "杠铃挂钩", "固定轨道"]），供 Phase 2 验证
   posture：用户姿态（standing / seated / supine / prone / bending / reclined / hanging），不确定时可省略。hanging = 用户双手握横杆悬挂、脚离地（引体向上、悬垂举腿）
+  posture_reason：姿态判断依据（一句话，说明基于哪些证据推断姿态，如 "IMU显示az>-0.35g确认仰卧，画面可见天花板灯具稳定不动"）
+  global_motion：全局光流标记（true/false），仅 EXERCISE 段需要。true = 背景/地面/天花板与手部同步运动（身体整体运动）；false = 背景静止仅手部/器械有局部运动
+  cable_anchor：绳索挂点高度（high/mid/low/unknown），仅 equipment 为 Cable Machine 时需要
 
   相邻同 state + 同 equipment 的段落可合并。
   短于 3 秒的孤立段落并入相邻段落。
@@ -320,7 +421,10 @@ user: |
         "confidence":0.90,
         "reason":"用户行走中，画面可见史密斯机，IMU确认行走模式",
         "equipment":"Smith Machine",
-        "posture":"standing"
+        "equipment_reason":"关键帧中可见两根竖直金属导轨和杠铃挂钩，确认为史密斯机",
+        "equipment_features":["竖直导轨", "杠铃挂钩", "固定轨道"],
+        "posture":"standing",
+        "posture_reason":"IMU显示az≈-0.95g确认站姿，画面中可见前方地面"
       },
       {
         "start_time":"00:00:15",
@@ -329,7 +433,11 @@ user: |
         "confidence":0.92,
         "reason":"持续与史密斯机交互，光流显示规律往复运动（周期约2s），IMU确认高强度运动(acc_std=0.42)",
         "equipment":"Smith Machine",
-        "posture":"standing"
+        "equipment_reason":"与前段相同器材，导轨和杠铃持续可见",
+        "equipment_features":["竖直导轨", "杠铃挂钩", "固定轨道"],
+        "posture":"standing",
+        "posture_reason":"IMU显示az≈-0.93g站姿，画面中地面随身体同步上下运动（全局光流）",
+        "global_motion":true
       },
       {
         "start_time":"00:01:05",
@@ -338,7 +446,10 @@ user: |
         "confidence":0.88,
         "reason":"用户站在史密斯机旁休息，光流平稳，IMU显示静止(acc_std=0.02)",
         "equipment":"Smith Machine",
-        "posture":"standing"
+        "equipment_reason":"用户未离开器材，导轨仍在画面中",
+        "equipment_features":["竖直导轨", "杠铃挂钩"],
+        "posture":"standing",
+        "posture_reason":"IMU静止状态下az≈-0.95g确认站姿"
       },
       {
         "start_time":"00:01:35",
@@ -347,7 +458,11 @@ user: |
         "confidence":0.90,
         "reason":"第二组训练开始，光流恢复周期性往复",
         "equipment":"Smith Machine",
-        "posture":"standing"
+        "equipment_reason":"同一器材连续使用",
+        "equipment_features":["竖直导轨", "杠铃挂钩", "固定轨道"],
+        "posture":"standing",
+        "posture_reason":"姿态与前组一致，IMU确认站姿",
+        "global_motion":true
       },
       {
         "start_time":"00:01:50",
@@ -356,7 +471,10 @@ user: |
         "confidence":0.85,
         "reason":"用户离开史密斯机，行走中，画面开始出现高位下拉器械",
         "equipment":"Lat Pulldown Machine",
-        "posture":"standing"
+        "equipment_reason":"画面中出现头顶横杆、钢索和座椅+大腿挡板结构",
+        "equipment_features":["头顶横杆", "钢索配重塔", "座椅", "大腿挡板"],
+        "posture":"standing",
+        "posture_reason":"用户行走中，IMU确认站姿"
       },
       {
         "start_time":"00:02:10",
@@ -365,7 +483,25 @@ user: |
         "confidence":0.91,
         "reason":"坐在高位下拉机上训练，光流显示上下往复",
         "equipment":"Lat Pulldown Machine",
-        "posture":"seated"
+        "equipment_reason":"用户坐在座椅上，大腿被挡板固定，横杆通过钢索连接上方滑轮",
+        "equipment_features":["头顶横杆", "钢索", "座椅", "大腿挡板"],
+        "posture":"seated",
+        "posture_reason":"IMU显示az≈-0.85g坐姿，入场帧可见座椅和大腿挡板",
+        "global_motion":false
+      },
+      {
+        "start_time":"00:02:55",
+        "end_time":"00:03:30",
+        "state":"EXERCISE",
+        "confidence":0.88,
+        "reason":"龙门架绳索训练，光流显示上下往复，背景静止仅手部运动",
+        "equipment":"Cable Machine",
+        "equipment_reason":"画面中可见龙门架框架、钢索从上方滑轮垂下到手部",
+        "equipment_features":["龙门架框架", "上方滑轮", "钢索", "配重片"],
+        "posture":"standing",
+        "posture_reason":"IMU确认站姿，画面中可见地面在前方",
+        "global_motion":false,
+        "cable_anchor":"high"
       }
     ],
     "equipment_timeline":[
@@ -378,6 +514,11 @@ user: |
         "time":"00:01:50",
         "equipment":"Lat Pulldown Machine",
         "event":"切换到新器材"
+      },
+      {
+        "time":"00:02:55",
+        "equipment":"Cable Machine",
+        "event":"切换到龙门架"
       }
     ]
   }

@@ -38,7 +38,6 @@ from .stitcher import (
     sec_to_mmss,
     mmss_to_sec,
     stitch_exercise_grid,
-    stitch_exercise_grid_yolo,
 )
 from .yaml_loader import PromptConfig
 
@@ -134,11 +133,10 @@ ImuRecord = tuple[float, float, float, float, float, float]
 
 def load_imu_data(imu_path: Path) -> list[ImuRecord] | None:
     """
-    解析 IMU 数据文件，支持两种格式：
-      - IMU_data.txt（旧格式，9列）
-      - IMU.txt（新格式，22列，含角度/磁场/四元数）
-    返回 [(t_rel, acc_mag, gyro_mag, ax, ay, az), ...] 列表。
+    解析 IMU_data.txt，返回 [(t_rel, acc_mag, gyro_mag, ax, ay, az), ...] 列表。
     t_rel 为相对于第一条记录的秒数。
+    保留 ax/ay/az 轴向加速度用于姿态分类。
+    文件不存在或解析失败则返回 None。
     """
     if not imu_path.exists():
         return None
@@ -157,58 +155,27 @@ def load_imu_data(imu_path: Path) -> list[ImuRecord] | None:
 
     from datetime import datetime as _dt
 
-    header = lines[0].strip().split("\t")
-    is_new_format = len(header) >= 12 and "角度" in lines[0]
-
-    for line in lines[1:]:
+    for line in lines[1:]:  # 跳过表头
         parts = line.strip().split("\t")
-        if is_new_format:
-            if len(parts) < 9:
-                continue
-            try:
-                dt = _dt.fromisoformat(parts[0])
-                if t0 is None:
-                    t0 = dt
-                t_rel = (dt - t0).total_seconds()
-                acc_x, acc_y, acc_z = float(parts[2]), float(parts[3]), float(parts[4])
-                gyro_x, gyro_y, gyro_z = float(parts[5]), float(parts[6]), float(parts[7])
-                acc_mag = (acc_x ** 2 + acc_y ** 2 + acc_z ** 2) ** 0.5
-                gyro_mag = (gyro_x ** 2 + gyro_y ** 2 + gyro_z ** 2) ** 0.5
-                records.append((t_rel, acc_mag, gyro_mag, acc_x, acc_y, acc_z))
-            except (ValueError, IndexError):
-                continue
-        else:
-            if len(parts) < 9:
-                continue
-            try:
-                dt = _dt.fromisoformat(parts[0])
-                if t0 is None:
-                    t0 = dt
-                t_rel = (dt - t0).total_seconds()
-                acc_x, acc_y, acc_z = float(parts[2]), float(parts[3]), float(parts[4])
-                gyro_x, gyro_y, gyro_z = float(parts[5]), float(parts[6]), float(parts[7])
-                acc_mag = (acc_x ** 2 + acc_y ** 2 + acc_z ** 2) ** 0.5
-                gyro_mag = (gyro_x ** 2 + gyro_y ** 2 + gyro_z ** 2) ** 0.5
-                records.append((t_rel, acc_mag, gyro_mag, acc_x, acc_y, acc_z))
-            except (ValueError, IndexError):
-                continue
+        if len(parts) < 9:
+            continue
+        try:
+            dt = _dt.fromisoformat(parts[0])
+            if t0 is None:
+                t0 = dt
+            t_rel = (dt - t0).total_seconds()
+
+            acc_x, acc_y, acc_z = float(parts[2]), float(parts[3]), float(parts[4])
+            gyro_x, gyro_y, gyro_z = float(parts[5]), float(parts[6]), float(parts[7])
+
+            acc_mag = (acc_x ** 2 + acc_y ** 2 + acc_z ** 2) ** 0.5
+            gyro_mag = (gyro_x ** 2 + gyro_y ** 2 + gyro_z ** 2) ** 0.5
+
+            records.append((t_rel, acc_mag, gyro_mag, acc_x, acc_y, acc_z))
+        except (ValueError, IndexError):
+            continue
 
     return records if records else None
-
-
-def get_imu_first_timestamp(imu_path: Path) -> datetime | None:
-    """获取 IMU 文件的第一条记录时间戳，用于与视频时间对齐。"""
-    if not imu_path.exists():
-        return None
-    try:
-        with open(imu_path, "r", encoding="utf-8") as f:
-            lines = f.readlines()
-        if len(lines) < 2:
-            return None
-        parts = lines[1].strip().split("\t")
-        return datetime.fromisoformat(parts[0])
-    except Exception:
-        return None
 
 
 def _gyro_label(gyro_mean: float) -> str:
@@ -509,7 +476,7 @@ def _gemini_generate(
             {"role": "user", "content": user_content},
         ],
         "temperature": 0.0,
-        "max_tokens": 32768,
+        "max_tokens": 16384,
     }
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -673,15 +640,6 @@ def _sanitize_exercise_result(data: dict) -> dict:
             data["total_reps"] = sum(s.get("reps", 0) for s in data["sets"] if isinstance(s, dict))
 
     return data
-
-
-def _extract_output_format(user_template: str) -> str:
-    """从 YAML user 模板中提取"输出JSON格式"之后的部分，避免重复注入输入描述。"""
-    for marker in ("输出JSON格式：", "输出JSON格式:", "输出 JSON 格式"):
-        idx = user_template.find(marker)
-        if idx != -1:
-            return user_template[idx:]
-    return user_template
 
 
 def _extract_json(text: str):
@@ -1051,9 +1009,6 @@ def _recognize_one_exercise(
     system_prompt: str,
     imu_records: list[ImuRecord] | None = None,
     equipment_timeline: list[dict] | None = None,
-    user_prompt_template: str = "",
-    use_yolo: bool = False,
-    yolo_save_dir: Path | None = None,
 ) -> dict | None:
     """识别单个 EXERCISE 区间。"""
     seg_id = seg.get("segmentId", "?")
@@ -1070,34 +1025,19 @@ def _recognize_one_exercise(
     tprint(f"    [{seg_id}] 扩展取帧范围: {sec_to_hhmmss(pad_start)} ~ {sec_to_hhmmss(pad_end)}")
 
     # 拼图
-    yolo_elapsed = 0.0
-    if use_yolo:
-        yolo_result = stitch_exercise_grid_yolo(
-            metas=frame_metas,
-            frames_dir=frames_dir,
-            output_dir=output_dir,
-            start_sec=pad_start,
-            end_sec=pad_end,
-            seg_id=seg_id,
-            save_dir=yolo_save_dir,
-        )
-        if yolo_result is None:
-            tprint(f"    [{seg_id}] [警告] YOLO 拼图无匹配帧，跳过")
-            return None
-        jpeg_bytes, g_cols, g_rows, frame_count, yolo_elapsed = yolo_result
-    else:
-        result = stitch_exercise_grid(
-            metas=frame_metas,
-            frames_dir=frames_dir,
-            output_dir=output_dir,
-            start_sec=pad_start,
-            end_sec=pad_end,
-            seg_id=seg_id,
-        )
-        if result is None:
-            tprint(f"    [{seg_id}] [警告] 无匹配帧，跳过")
-            return None
-        jpeg_bytes, g_cols, g_rows, frame_count = result
+    result = stitch_exercise_grid(
+        metas=frame_metas,
+        frames_dir=frames_dir,
+        output_dir=output_dir,
+        start_sec=pad_start,
+        end_sec=pad_end,
+        seg_id=seg_id,
+    )
+    if result is None:
+        tprint(f"    [{seg_id}] [警告] 无匹配帧，跳过")
+        return None
+
+    jpeg_bytes, g_cols, g_rows, frame_count = result
 
     # 提取进场帧原图（运动开始前 5 秒内的帧，此时用户已在器械旁/上，能看清器械细节）
     entrance_frames: list[bytes] = []
@@ -1183,7 +1123,7 @@ def _recognize_one_exercise(
         f"| 地面/脚部 | 弯腰/俯身 | 硬拉、俯身划船、俯身飞鸟 |\n"
         f"| 平视器械（画面稳定） | 坐姿 | 坐姿器械（推胸机、肩推机、腿屈伸、腿弯举） |\n"
         f"| 平视器械（画面稳定） | 站姿 | 龙门架、哑铃弯举、侧平举 |\n"
-        f"| 从下往上看横杆（无钢索/配重塔） | 悬挂/hanging（脚离地，身体悬空） | 引体向上、悬垂举腿（★不是高位下拉！高位下拉必须有座椅+钢索配重） |\n"
+        f"| 从下往上看横杆 | 悬挂（脚离地） | 引体向上、悬垂举腿 |\n"
         f"| 低角度看地面（无器械） | 俯卧/跪撑 | 俯卧撑、平板支撑 |\n"
         f"| 45°斜下方看踏板 | 坐姿/半躺 | 腿举机 |\n\n"
         f"### 规则三：龙门架绳索方向判定\n"
@@ -1192,7 +1132,7 @@ def _recognize_one_exercise(
         f"**第一步：判断身体姿态——站姿还是坐姿？**\n"
         f"- 坐姿（屁股坐在凳子/座椅上，相机视角从下往上看配重塔/滑轮） → 第二步A\n"
         f"- 站姿（双脚站立，相机视角平视或微微俯视） → 第二步B\n\n"
-        f"**第二步A（坐姿）：判断绳索来向**（★注意：必须确认是坐姿而非悬挂！如果用户悬挂在杆上、脚离地 → 不走此流程，走规则 6D）\n"
+        f"**第二步A（坐姿）：判断绳索来向**\n"
         f"- 绳索从头顶上方垂下 → **高位下拉**（见规则 6A）\n"
         f"- 绳索从正前方低位水平拉来，可见踏脚板 → **坐姿绳索划船**\n\n"
         f"**第二步B（站姿）：判断绳索来向 + 动作方向**\n"
@@ -1261,8 +1201,7 @@ def _recognize_one_exercise(
         f"| 悍马机（推胸） | 坐姿平视，把手在胸前/正前方，双手正握水平把手向前推出；可见圆形杠铃片挂载在摆臂上 |\n"
         f"| 悍马机（夹胸） | 坐姿平视，把手在身体左右两侧，双臂从两侧向胸前合拢；可见圆形杠铃片，前臂贴泡棉垫或握垂直把手 |\n"
         f"| 固定器械推胸机 | 坐姿平视，双手握固定把手向前推；有配重片塔（插销选重），把手通过连杆连接 |\n"
-        f"| 引体向上 | 从下往上看横杆，身体整体上升时横杆靠近胸口，无座椅/无钢索配重 |\n"
-        f"| 悬垂举腿 | 从下往上看横杆，身体悬挂不动，腿部向上抬起；无座椅/无钢索配重；★区别于高位下拉（高位下拉有座椅+配重塔+钢索） |\n\n"
+        f"| 引体向上 | 从下往上看横杆，身体上升时横杆靠近胸口 |\n\n"
         f"### 规则五：镜子画面处理\n"
         f"- 如果画面中出现镜子，先判断镜中人是否为用户本人（位置居中、动作与光流一致）\n"
         f"- 镜中为用户本人 → 可参考镜中姿态辅助判断动作\n"
@@ -1381,25 +1320,6 @@ def _recognize_one_exercise(
         f"- 推胸 vs 夹胸最简单的判断：光流以前后为主=推胸，光流以左右为主=夹胸\n"
         f"- 悍马机 vs 固定器械推胸机：看配重方式！杠铃片（圆盘）= 悍马机，配重片塔（插销）= 固定器械推胸机\n"
         f"- 蝴蝶机 vs 龙门架夹胸：弧形轨道+座椅 = 蝴蝶机，双立柱+绳索+站姿 = 龙门架夹胸\n\n"
-        f"#### 6D. 悬垂举腿 vs 高位下拉 vs 引体向上（★关键易混动作）\n\n"
-        f"三者都涉及从下往上看横杆和 UP/DOWN 光流，但必须严格区分：\n\n"
-        f"| 区分维度 | 悬垂举腿 | 高位下拉 | 引体向上 |\n"
-        f"|---------|---------|---------|--------|\n"
-        f"| **姿态（第一判据）** | ★hanging/悬挂：双手握杆，脚离地，身体悬空 | ★seated/坐姿：臀部坐在座椅上 | ★hanging/悬挂：双手握杆，脚离地 |\n"
-        f"| **运动部位** | 腿部/下半身向上抬起，上半身不动 | 手臂拉动横杆向下至胸口 | 整个身体上升 |\n"
-        f"| **器械连接** | 固定单杠，无钢索/配重 | 钢索连接滑轮+配重塔 | 固定单杠，无钢索/配重 |\n"
-        f"| **进场帧** | 引体向上架/单杠架，无座椅 | 有座椅+腿部挡板+配重塔 | 引体向上架/单杠架 |\n\n"
-        f"**核心区分方法——横杆是否在画面中移动（最关键判据）：**\n"
-        f"- 高位下拉：横杆从头顶被拉向胸口再松回——横杆在画面中有明显上下位移\n"
-        f"- 悬垂举腿：横杆始终固定在画面上方不动，用户悬挂——光流很弱或仅来自身体摆动\n"
-        f"- 引体向上：画面整体上下移动（身体升降），横杆相对固定\n\n"
-        f"★★★ 悬垂举腿可以在龙门架上做！握住龙门架固定横梁（非绳索活动杆）。即使背景有配重塔和滑轮，只要横杆不动+身体悬挂=悬垂举腿。\n\n"
-        f"**判定流程：**\n"
-        f"1. 横杆在画面中被拉下再松回（有明显位移） → 高位下拉候选\n"
-        f"2. 横杆固定不动+身体悬挂 → 排除高位下拉，进入悬挂动作判定\n"
-        f"3. 悬挂 + 身体整体上升 → 引体向上\n"
-        f"4. 悬挂 + 画面稳定/轻微摆动 → 悬垂举腿（exercise_id=hanging_leg_raise）\n\n"
-        f"禁止仅因看到龙门架/配重塔就判为高位下拉！必须确认横杆有明显位移！\n\n"
         f"---\n\n"
         f"{_build_standard_names_prompt()}"
         f"请严格按以下步骤分析，必须先输出分析过程，再输出 JSON：\n\n"
@@ -1410,7 +1330,6 @@ def _recognize_one_exercise(
         f"  - 如果动作涉及从上方下拉，必须用规则 6A 逐项检查是【高位下拉机】还是【龙门架绳索动作】\n"
         f"  - 如果是有氧器械持续运动，必须用规则 6B 逐项检查是【动感单车】【登山机】还是【椭圆机】（重点看：有无车座、面板大小和位置、把手是否随身体摆动）\n"
         f"  - 如果是坐姿推胸/夹胸类动作，必须用规则 6C 逐项检查是【悍马机】【蝴蝶机】【固定器械推胸机】还是【龙门架夹胸】\n"
-        f"  - ★ 如果从下往上看横杆且有 UP/DOWN 光流，必须用规则 6D 判断是【悬垂举腿】【引体向上】还是【高位下拉】——先判断姿态是悬挂还是坐姿！\n"
         f"Step 3 — 光流验证: 结合光流方向验证或修正器械判断。特别注意：如果是胸部器械，光流主方向LEFT/RIGHT→夹胸，FORWARD/BACKWARD→推胸，必须用光流纠正初步判断！\n"
         f"Step 4 — 动作判定: 综合器械 + 光流 + 画面判定具体动作名称\n"
         f"Step 5 — 组次统计: 利用光流周期性统计组数和每组次数\n\n"
@@ -1420,12 +1339,11 @@ def _recognize_one_exercise(
         f"- 必须看到用户双手或器械的运动证据才能判定动作\n"
         f"- 如果器械无法确定，equipment 填 \"UNKNOWN_EQUIPMENT\"\n"
         f"- 如果动作无法确定，exercise 填 \"UNKNOWN_ACTION\"\n\n"
-        f"输出格式：先写分析过程（每个 Step 1~2 句话），最后输出完整 JSON（不要包含 Markdown 代码块）。\n\n"
-        + (_extract_output_format(user_prompt_template) if user_prompt_template else
-           f'{{"equipment": "器械名称", "exercise": "标准动作名称（从上表选择）", "exercise_id": "对应的exercise_id", "confidence": 0.0~1.0, '
-           f'"sets": [{{"start_time": "HH:MM:SS", "end_time": "HH:MM:SS", "reps": N}}], '
-           f'"phase1_adjustment": {{"expand_before_sec": N, "expand_after_sec": N, '
-           f'"reason": "扩展原因"}}}}')
+        f"输出格式：先写分析过程（每个 Step 1~2 句话），最后一行输出 JSON（不要包含 Markdown 代码块）：\n"
+        f'{{"equipment": "器械名称", "exercise": "标准动作名称（从上表选择）", "exercise_id": "对应的exercise_id", "confidence": 0.0~1.0, '
+        f'"sets": [{{"start_time": "HH:MM:SS", "end_time": "HH:MM:SS", "reps": N}}], '
+        f'"phase1_adjustment": {{"expand_before_sec": N, "expand_after_sec": N, '
+        f'"reason": "扩展原因"}}}}'
     )
 
     user_content = [{"type": "text", "text": user_text}]
@@ -1516,7 +1434,7 @@ def _recognize_one_exercise(
             if std_name != raw_exercise:
                 tprint(f"    [{seg_id}] 名称标准化: {raw_exercise} → {std_name} ({exercise_id})")
 
-    result_dict = {
+    return {
         "segmentId": seg_id,
         "startTime": t_start,
         "endTime": t_end,
@@ -1527,9 +1445,6 @@ def _recognize_one_exercise(
         "grid": {"cols": g_cols, "rows": g_rows},
         "result": seg_result,
     }
-    if use_yolo and yolo_elapsed > 0:
-        result_dict["yolo_elapsed_sec"] = round(yolo_elapsed, 2)
-    return result_dict
 
 
 # ──────────────────────────────────────────────
@@ -1601,9 +1516,6 @@ def apply_phase1_adjustments(
 # Phase 2：运动识别（并发）
 # ──────────────────────────────────────────────
 
-YOLO_SAVE_DIR = Path(__file__).parent.parent / "recognize" / "visualize" / "graph_yolo"
-
-
 def run_phase2(
     frame_metas: list[FrameMeta],
     frames_dir: Path,
@@ -1614,13 +1526,9 @@ def run_phase2(
     exercise_workers: int = MAX_EXERCISE_WORKERS,
     imu_records: list[ImuRecord] | None = None,
     equipment_timeline: list[dict] | None = None,
-    use_yolo: bool = False,
 ) -> list[dict]:
     """
     Phase 2：对每个 EXERCISE 区间并发识别。
-
-    Args:
-        use_yolo: 是否对帧进行 YOLO 手部+器材标注后再拼图
 
     Returns:
         list[dict]（exercise results）
@@ -1639,11 +1547,6 @@ def run_phase2(
         s.setdefault("segmentId", f"exercise_{i:03d}")
 
     tprint(f"  共 {len(exercise_segs)} 个 EXERCISE 段待识别（并发: {exercise_workers}）")
-    if use_yolo:
-        tprint(f"  [YOLO 对比实验] 启用手部+器材标注拼图")
-
-    yolo_save_dir = YOLO_SAVE_DIR / output_dir.name if use_yolo else None
-
     if not exercise_segs:
         version_tag = Path(prompt.source_file).stem.replace("phase2_exercise_recognize_", "")
         _save_json(
@@ -1659,9 +1562,7 @@ def run_phase2(
         for seg in exercise_segs:
             result = _recognize_one_exercise(
                 seg, frame_metas, frames_dir, output_dir, flow_data, system_prompt,
-                imu_records=imu_records, equipment_timeline=equipment_timeline,
-                user_prompt_template=prompt.user,
-                use_yolo=use_yolo, yolo_save_dir=yolo_save_dir)
+                imu_records=imu_records, equipment_timeline=equipment_timeline)
             if result:
                 all_results.append(result)
     else:
@@ -1671,8 +1572,7 @@ def run_phase2(
                 fut = executor.submit(
                     _recognize_one_exercise,
                     seg, frame_metas, frames_dir, output_dir, flow_data, system_prompt,
-                    imu_records, equipment_timeline, prompt.user,
-                    use_yolo, yolo_save_dir,
+                    imu_records, equipment_timeline,
                 )
                 futures[fut] = seg.get("segmentId", "?")
 
@@ -1705,9 +1605,7 @@ def run_phase2(
                     continue
                 new_result = _recognize_one_exercise(
                     seg, frame_metas, frames_dir, output_dir, flow_data, system_prompt,
-                    imu_records=imu_records, equipment_timeline=equipment_timeline,
-                    user_prompt_template=prompt.user,
-                    use_yolo=use_yolo, yolo_save_dir=yolo_save_dir)
+                    imu_records=imu_records, equipment_timeline=equipment_timeline)
                 if new_result:
                     retry_results.append(new_result)
         else:
@@ -1720,8 +1618,7 @@ def run_phase2(
                     fut = executor.submit(
                         _recognize_one_exercise,
                         seg, frame_metas, frames_dir, output_dir, flow_data, system_prompt,
-                        imu_records, equipment_timeline, prompt.user,
-                        use_yolo, yolo_save_dir,
+                        imu_records, equipment_timeline,
                     )
                     retry_futures[fut] = r["segmentId"]
                 for fut in as_completed(retry_futures):
@@ -1748,19 +1645,16 @@ def run_phase2(
 
     # ── 保存 exercise_result.json ──
     version_tag = Path(prompt.source_file).stem.replace("phase2_exercise_recognize_", "")
-    result_payload = {
-        "version": version_tag,
-        "phase2_prompt": Path(prompt.source_file).name,
-        "model": os.getenv("GEMINI_FLASH_MODEL", "gemini-3-flash-preview"),
-        "created_at": datetime.now().isoformat(),
-        "results": all_results,
-    }
-    if use_yolo:
-        total_yolo_sec = sum(r.get("yolo_elapsed_sec", 0) for r in all_results)
-        result_payload["use_yolo"] = True
-        result_payload["yolo_total_elapsed_sec"] = round(total_yolo_sec, 2)
-        tprint(f"  [YOLO] 总处理耗时: {total_yolo_sec:.1f}s")
-    _save_json(result_payload, output_dir / "exercise_result.json")
+    _save_json(
+        {
+            "version": version_tag,
+            "phase2_prompt": Path(prompt.source_file).name,
+            "model": os.getenv("GEMINI_FLASH_MODEL", "gemini-3-flash-preview"),
+            "created_at": datetime.now().isoformat(),
+            "results": all_results,
+        },
+        output_dir / "exercise_result.json",
+    )
 
     # ── 应用 Phase 1 区间修正 ──
     total_dur = frame_metas[-1].timestamp if frame_metas else 0

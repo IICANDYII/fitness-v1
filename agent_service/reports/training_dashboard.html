@@ -238,6 +238,7 @@ body {
 .cal-day:not(.empty):hover { background: #e9ecf5; }
 .cal-day.partial  { border: 2px solid #10b981; color: #10b981; font-weight: 700; }
 .cal-day.full     { background: #10b981; color: #fff; font-weight: 700; }
+.cal-day.video    { border: 2px solid #6366f1; color: #6366f1; font-weight: 700; }
 .cal-day.today    { background: #3b82f6; color: #fff; font-weight: 700; }
 .cal-day.selected { outline: 2px solid #f59e0b; outline-offset: 1px; font-weight: 700; }
 .cal-day.empty    { visibility: hidden; cursor: default; }
@@ -367,6 +368,46 @@ body {
 .tl-playhead { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #ef4444; z-index: 5; pointer-events: none; transition: left 0.1s linear; }
 .tl-time-labels { display: flex; justify-content: space-between; margin-top: 3px; font-size: 10px; color: #9ca3af; }
 
+/* IMU & Phase1 extra bars */
+.tl-bar.imu-bar { height: 26px; background: #f3f4f6; }
+.tl-bar.phase1-bar { height: 30px; background: #eef0f8; }
+.tl-bar.imu-ex-bar { height: 26px; background: #f3f4f6; }
+.imu-win { position: absolute; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 600; color: #fff; overflow: hidden; border-right: 1px solid rgba(255,255,255,.3); cursor: default; }
+.imu-win:last-child { border-right: none; }
+.imu-win.int-high { background: #ef4444; }
+.imu-win.int-mid-high { background: #f97316; }
+.imu-win.int-low { background: #60a5fa; }
+.imu-win.int-static { background: #d1d5db; color: #6b7280; }
+.imu-win.int-nodata { background: #f3f4f6; color: #9ca3af; }
+.phase1-seg { position: absolute; top: 0; bottom: 0; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding: 0 3px; cursor: pointer; }
+.phase1-seg.st-exercise { background: #8b5cf6; color: #fff; }
+.phase1-seg.st-rest { background: #fde68a; color: #92400e; }
+.imu-ex-seg { position: absolute; top: 0; bottom: 0; border-radius: 3px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 8px; font-weight: 600; color: #fff; overflow: hidden; cursor: default; }
+.imu-ex-seg.int-high { background: #dc2626; }
+.imu-ex-seg.int-mid-high { background: #ea580c; }
+.imu-ex-seg.int-low { background: #3b82f6; }
+.imu-ex-seg.int-static { background: #9ca3af; }
+.imu-rest-marker { position: absolute; top: 0; bottom: 0; background: rgba(251,191,36,.5); border-left: 2px solid #f59e0b; border-right: 2px solid #f59e0b; pointer-events: none; }
+.tl-bar-label.imu-label { color: #ef4444; }
+.tl-bar-label.phase1-label { color: #8b5cf6; }
+.tl-bar-label.imu-ex-label { color: #ea580c; }
+
+/* Posture annotation bar */
+.tl-bar.posture-bar { height: 28px; background: #f8f9fc; }
+.tl-bar-label.posture-label { color: #0891b2; }
+.posture-seg { position: absolute; top: 0; bottom: 0; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding: 0 4px; cursor: default; border-right: 1px solid rgba(255,255,255,.4); }
+.posture-seg:last-child { border-right: none; }
+.posture-seg.p-standing { background: #06b6d4; color: #fff; }
+.posture-seg.p-seated   { background: #8b5cf6; color: #fff; }
+.posture-seg.p-supine   { background: #f97316; color: #fff; }
+.posture-seg.p-prone    { background: #ef4444; color: #fff; }
+.posture-seg.p-bending  { background: #eab308; color: #fff; }
+.posture-seg.p-reclined { background: #ec4899; color: #fff; }
+.posture-seg.p-unknown  { background: #d1d5db; color: #6b7280; }
+.posture-src-badge { font-size: 7px; font-weight: 700; padding: 1px 3px; border-radius: 3px; margin-left: 2px; vertical-align: middle; line-height: 1; }
+.posture-src-badge.src-imu { background: rgba(255,255,255,.35); color: #fff; }
+.posture-src-badge.src-model { background: rgba(0,0,0,.15); color: rgba(255,255,255,.9); }
+
 /* Controls row under video */
 .tl-controls { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
 .tl-controls .tl-btn { padding: 5px 14px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all .15s; }
@@ -426,6 +467,68 @@ body {
 .ex-conf-bar { width: 50px; height: 6px; background: #e9ecf5; border-radius: 3px; overflow: hidden; }
 .ex-conf-fill { height: 100%; border-radius: 3px; background: #10b981; }
 .ex-table-empty { text-align: center; color: #9ca3af; padding: 32px 0; font-size: 14px; }
+
+/* ═══ Exercise Reason Tooltip ═══ */
+.ex-reason-tooltip {
+  display: none;
+  position: fixed;
+  max-width: 480px;
+  min-width: 280px;
+  background: #fff;
+  border: 1px solid #e2e5f1;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(30,40,80,.18);
+  padding: 14px 16px;
+  z-index: 9999;
+  font-size: 12.5px;
+  color: #3a3f5c;
+  line-height: 1.65;
+  pointer-events: none;
+}
+.ex-reason-tooltip .ert-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1d2340;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ex-reason-tooltip .ert-title .ert-icon { font-size: 14px; }
+.ex-reason-tooltip .ert-section {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed #e9ecf5;
+}
+.ex-reason-tooltip .ert-label {
+  font-weight: 600;
+  color: #6c7ae0;
+  font-size: 11.5px;
+  margin-bottom: 2px;
+}
+.ex-reason-tooltip .ert-text {
+  color: #4a4f6f;
+  word-break: break-word;
+}
+.ex-reason-tooltip .ert-rejected {
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: #fef3f2;
+  border-radius: 6px;
+  font-size: 11.5px;
+}
+.ex-reason-tooltip .ert-rejected-item {
+  display: flex;
+  gap: 6px;
+  padding: 2px 0;
+}
+.ex-reason-tooltip .ert-rejected-name {
+  font-weight: 600;
+  color: #b91c1c;
+  white-space: nowrap;
+}
+.ex-reason-tooltip .ert-rejected-reason { color: #7f1d1d; }
+.ex-name[data-reason] { cursor: help; border-bottom: 1px dashed #6c7ae0; }
 
 /* ═══ Ground Truth vs Recognized comparison ═══ */
 .gt-comparison {
@@ -532,9 +635,111 @@ body {
   .timeline-main { flex-direction: column; }
   .timeline-video-wrap { flex: none; width: 100%; }
 }
+
+/* ════════════════════════════
+   Prompt Viewer
+   ════════════════════════════ */
+.prompt-viewer-section {
+  max-width: 1440px;
+  margin: 20px auto 0;
+  background: #fff;
+  border-radius: 18px;
+  padding: 20px 24px 24px;
+  box-shadow: 0 2px 14px rgba(80,100,160,0.07);
+}
+.prompt-viewer-section .card-title { font-size: 16px; font-weight: 700; color: #1e2340; text-align: center; margin-bottom: 14px; }
+.prompt-tabs { display: flex; gap: 0; margin-bottom: 16px; border-bottom: 2px solid #e9ecf5; }
+.prompt-tab {
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #8b92b0;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all .15s;
+}
+.prompt-tab:hover { color: #6c7ae0; }
+.prompt-tab.active { color: #6c7ae0; border-bottom-color: #6c7ae0; }
+.prompt-version-selector { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.prompt-version-selector .pv-label { font-size: 13px; font-weight: 600; color: #6b7396; }
+.pv-pill {
+  padding: 4px 14px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid #d0d3e0;
+  background: #f7f8fc;
+  color: #6b7396;
+  transition: all .15s;
+}
+.pv-pill:hover { border-color: #6c7ae0; color: #6c7ae0; }
+.pv-pill.active { background: #6c7ae0; color: #fff; border-color: #6c7ae0; }
+.pv-pill.used { border-color: #10b981; color: #10b981; }
+.pv-pill.used.active { background: #10b981; color: #fff; border-color: #10b981; }
+.prompt-content-wrap {
+  background: #f7f8fc;
+  border: 1px solid #e2e5f1;
+  border-radius: 12px;
+  padding: 18px 20px;
+  max-height: 600px;
+  overflow-y: auto;
+  font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: #374151;
+  white-space: pre-wrap;
+  word-break: break-word;
+  tab-size: 2;
+}
+.prompt-content-wrap::-webkit-scrollbar { width: 6px; }
+.prompt-content-wrap::-webkit-scrollbar-thumb { background: #c8cad6; border-radius: 3px; }
+.prompt-meta { display: flex; gap: 16px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+.prompt-meta-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 600; padding: 3px 10px;
+  border-radius: 10px; background: #e8eafc; color: #6c7ae0;
+}
+.prompt-meta-tag.tag-green { background: rgba(16,185,129,.12); color: #10b981; }
+.prompt-empty { text-align: center; color: #9ca3af; padding: 40px 0; font-size: 14px; }
+
+/* ── Clips Viewer ── */
+.clips-viewer-section {
+  max-width: 1440px; margin: 16px auto; background: #fff;
+  border-radius: 12px; padding: 20px 24px; box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.clips-tab {
+  padding: 6px 16px; border: 1px solid #d0d3e0; border-radius: 8px;
+  background: #f8f9fc; color: #6b7396; font-size: 13px; cursor: pointer;
+  transition: all .15s;
+}
+.clips-tab:hover { background: #e8eafc; }
+.clips-tab.active { background: #6c7ae0; color: #fff; border-color: #6c7ae0; }
+.clips-content { display: flex; gap: 16px; }
+.clips-list {
+  flex: 0 0 260px; max-height: 460px; overflow-y: auto;
+  border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px;
+}
+.clips-player-wrap { flex: 1; min-width: 0; }
+.clip-item {
+  padding: 8px 10px; border-radius: 6px; cursor: pointer;
+  font-size: 12px; margin-bottom: 4px; transition: background .12s;
+  display: flex; align-items: center; gap: 8px;
+}
+.clip-item:hover { background: #f3f4f6; }
+.clip-item.active { background: #e8eafc; font-weight: 600; }
+.clip-item .clip-icon { font-size: 16px; flex-shrink: 0; }
+.clip-item .clip-label { flex: 1; }
+.clip-item .clip-time { color: #9ca3af; font-size: 11px; white-space: nowrap; }
+.clips-info {
+  margin-top: 8px; font-size: 12px; color: #6b7396;
+  padding: 8px 12px; background: #f8f9fc; border-radius: 6px;
+}
 </style>
 </head>
 <body>
+<div class="ex-reason-tooltip" id="ex-reason-tooltip"></div>
 <div class="user-bar" id="user-bar">
   <span class="user-bar-label">用户画像</span>
   <select id="user-select"><option value="">加载中...</option></select>
@@ -668,6 +873,34 @@ body {
           <span id="tl-time-start">00:00</span>
           <span id="tl-time-end">00:00</span>
         </div>
+        <!-- Posture annotation bar -->
+        <div id="tl-posture-row" style="display:none;">
+          <div class="tl-bar-label posture-label">用户姿势 Posture</div>
+          <div class="tl-bar-container">
+            <div class="tl-bar posture-bar" id="tl-posture-bar"></div>
+          </div>
+        </div>
+        <!-- IMU Phase 1 windows bar -->
+        <div id="tl-imu-phase1-row" style="display:none;">
+          <div class="tl-bar-label imu-label">IMU 统计 (Phase1)</div>
+          <div class="tl-bar-container">
+            <div class="tl-bar imu-bar" id="tl-imu-phase1-bar"></div>
+          </div>
+        </div>
+        <!-- Phase 1 segment divisions -->
+        <div id="tl-phase1-seg-row" style="display:none;">
+          <div class="tl-bar-label phase1-label">Phase1 区间划分</div>
+          <div class="tl-bar-container">
+            <div class="tl-bar phase1-bar" id="tl-phase1-seg-bar"></div>
+          </div>
+        </div>
+        <!-- Per-exercise IMU stats -->
+        <div id="tl-imu-exercise-row" style="display:none;">
+          <div class="tl-bar-label imu-ex-label">运动段 IMU 统计</div>
+          <div class="tl-bar-container">
+            <div class="tl-bar imu-ex-bar" id="tl-imu-exercise-bar"></div>
+          </div>
+        </div>
       </div>
       <div class="tl-version-row" id="tl-version-row" style="display:none;">
         <span class="tl-version-label">识别版本：</span>
@@ -677,6 +910,14 @@ body {
         <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#6c7ae0"></div>识别运动</div>
         <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#d0d3e0"></div>过渡</div>
         <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#fde68a"></div>休息</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#ef4444"></div>IMU高</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#f97316"></div>IMU中高</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#60a5fa"></div>IMU低</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#8b5cf6"></div>Phase1运动</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#06b6d4"></div>站姿</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#8b5cf6"></div>坐姿</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#f97316"></div>仰卧</div>
+        <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#eab308"></div>俯身</div>
       </div>
       <div id="tl-segment-info" style="font-size:13px;color:#6b7396;min-height:22px;"></div>
     </div>
@@ -704,6 +945,24 @@ body {
   <div class="ex-table-empty" id="ex-table-empty" style="display:none;">暂无识别数据</div>
 </div>
 
+<!-- ════════════════════════════════════════════════════════════════════
+     Clips Viewer — Phase1 & Phase2 video clips
+     ════════════════════════════════════════════════════════════════════ -->
+<div class="clips-viewer-section" id="clips-viewer-section" style="display:none;">
+  <div class="card-title">识别切片视频</div>
+  <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
+    <button class="clips-tab active" id="clips-tab-phase1" onclick="switchClipsTab('phase1')">Phase1 时间窗口片段</button>
+    <button class="clips-tab" id="clips-tab-phase2" onclick="switchClipsTab('phase2')">Phase2 运动区间片段</button>
+  </div>
+  <div class="clips-content">
+    <div class="clips-list" id="clips-list"></div>
+    <div class="clips-player-wrap">
+      <video id="clips-video" preload="auto" controls style="width:100%;max-height:400px;background:#000;border-radius:8px;"></video>
+      <div class="clips-info" id="clips-info"></div>
+    </div>
+  </div>
+</div>
+
 <div class="gt-comparison" id="gt-comparison">
   <div class="card-title">真实标注 vs 识别结果 对比</div>
   <div class="gt-summary" id="gt-summary"></div>
@@ -722,6 +981,21 @@ body {
     </thead>
     <tbody id="gt-detail-body"></tbody>
   </table>
+</div>
+
+<div class="prompt-viewer-section" id="prompt-viewer-section">
+  <div class="card-title">Prompt 版本查看器</div>
+  <div class="prompt-tabs" id="prompt-tabs">
+    <div class="prompt-tab active" data-phase="phase1">Phase 1 — 区间识别</div>
+    <div class="prompt-tab" data-phase="phase2">Phase 2 — 动作识别</div>
+  </div>
+  <div class="prompt-meta" id="prompt-meta"></div>
+  <div class="prompt-version-selector" id="prompt-version-selector">
+    <span class="pv-label">版本：</span>
+  </div>
+  <div class="prompt-content-wrap" id="prompt-content">
+    <div class="prompt-empty">选择版本以查看 Prompt 内容</div>
+  </div>
 </div>
 
 <script>
@@ -938,6 +1212,7 @@ function renderCalendar(year, month, workoutDays, selectedDate) {
     if (isToday)               cls = 'cal-day today';
     else if (status === 'full')    cls = 'cal-day full';
     else if (status === 'partial') cls = 'cal-day partial';
+    else if (status === 'video')   cls = 'cal-day video';
     if (selectedDate === ds)   cls += ' selected';
     cell.className = cls;
     cell.textContent = d;
@@ -1113,7 +1388,11 @@ function tlTogglePlay() {
 }
 tlVideo.addEventListener('play', function() { document.getElementById('tl-play-btn').textContent = '暂停'; });
 tlVideo.addEventListener('pause', function() { document.getElementById('tl-play-btn').textContent = '播放'; });
-tlVideo.addEventListener('loadedmetadata', function() { syncBothBars(); });
+tlVideo.addEventListener('loadedmetadata', function() {
+  syncBothBars();
+  if (tlPhase1Segments.length) renderPhase1SegBar(tlPhase1Segments, getUnifiedDur());
+  if (tlCurrentVideoFile && tlCurrentVersion) loadImuSummary(tlCurrentVideoFile, tlCurrentVersion);
+});
 
 function tlSetSpeed(v) { tlVideo.playbackRate = parseFloat(v); }
 
@@ -1135,9 +1414,13 @@ tlVideo.addEventListener('timeupdate', function() {
     }
   }
   if (cur && cur.type === 'exercise') {
-    info.innerHTML = '<b style="color:#6c7ae0">' + (cur.exercise_name || '运动') + '</b> &nbsp; ' +
+    var infoHtml = '<b style="color:#6c7ae0">' + (cur.exercise_name || '运动') + '</b> &nbsp; ' +
       tlFormatTime(cur.start_sec) + ' → ' + tlFormatTime(cur.end_sec) +
       (cur.equipment ? ' &nbsp; 器械: ' + cur.equipment : '');
+    if (cur.exercise_reason) {
+      infoHtml += '<br><span style="font-size:11.5px;color:#8b92b0;">推理: ' + _esc(cur.exercise_reason).substring(0, 120) + (cur.exercise_reason.length > 120 ? '…' : '') + '</span>';
+    }
+    info.innerHTML = infoHtml;
   } else if (cur) {
     info.textContent = (cur.type === 'rest' ? '休息' : '过渡') + ' ' + tlFormatTime(cur.start_sec) + ' → ' + tlFormatTime(cur.end_sec);
   } else {
@@ -1177,7 +1460,9 @@ function fillBar(barEl, segments, dur) {
     if (seg.type === 'exercise') {
       el.textContent = seg.exercise_name || seg.label || '运动';
     }
-    el.title = (seg.exercise_name || seg.label || seg.type || '') + ' ' + tlFormatTime(seg.start_sec) + '→' + tlFormatTime(seg.end_sec);
+    el.addEventListener('mouseenter', function(ev) { showBarSegTooltip(ev, seg); });
+    el.addEventListener('mousemove', function(ev) { positionExReasonTooltip(ev); });
+    el.addEventListener('mouseleave', function() { hideExReasonTooltip(); });
     el.addEventListener('click', function(ev) {
       ev.stopPropagation();
       if (tlVideo.readyState >= 1) {
@@ -1237,12 +1522,11 @@ function loadGtTimeline(videoFile, dur) {
     .then(function(r) { return r.json(); })
     .then(function(resp) {
       if (!resp.found) return;
-      var exercises = resp.exercises || [];
-      tlGtSegments = exercises;
-      var segs = exercises.map(function(ex) {
-        return { start_sec: ex.start, end_sec: ex.end, type: ex.type || 'exercise', exercise_name: ex.label, label: ex.label };
+      tlGtSegments = resp.exercises || [];
+      var allSegs = resp.data || resp.exercises || [];
+      tlGtBarSegs = allSegs.map(function(ex) {
+        return { start_sec: ex.start_offset, end_sec: ex.end_offset, type: ex.type || 'exercise', exercise_name: ex.label, label: ex.label };
       });
-      tlGtBarSegs = segs;
       syncBothBars();
     })
     .catch(function(e) { console.warn('GT timeline error:', e); });
@@ -1288,6 +1572,7 @@ function loadRecognitionResult(version, videoFile) {
         fillBar(document.getElementById('tl-bar'), [], 1);
         renderExerciseTable([], tlGtSegments);
         renderGtComparisonFromApi(tlGtSegments, []);
+        document.getElementById('tl-posture-row').style.display = 'none';
         return;
       }
       var timeline = resp.timeline || [];
@@ -1303,7 +1588,12 @@ function loadRecognitionResult(version, videoFile) {
           end_sec: seg.end_sec,
           type: type,
           exercise_name: seg.exercise_name || '',
-          segmentId: seg.segmentId || ''
+          segmentId: seg.segmentId || '',
+          reason: seg.reason || '',
+          equipment: seg.equipment || '',
+          equipment_reason: seg.equipment_reason || '',
+          posture: seg.posture || '',
+          posture_reason: seg.posture_reason || ''
         };
       });
       // Merge exercise details for sets/reps
@@ -1322,6 +1612,8 @@ function loadRecognitionResult(version, videoFile) {
           seg.reps_estimate = r.total_reps || sets.reduce(function(sum, s) { return sum + (s.reps || 0); }, 0);
           seg.reps_per_set = sets.map(function(s) { return s.reps || 0; });
           seg.confidence = r.confidence || detail.confidence || 0;
+          seg.exercise_reason = r.exercise_reason || '';
+          seg.action_disambiguation = r.action_disambiguation || null;
         }
       });
 
@@ -1330,8 +1622,367 @@ function loadRecognitionResult(version, videoFile) {
       syncBothBars();
       renderExerciseTable(recSegs, tlGtSegments);
       renderGtComparisonFromApi(tlGtSegments, recSegs);
+
+      // Store Phase 1 segments for posture bar
+      tlPhase1Segments = resp.phase1_segments || [];
+
+      // Render Phase 1 segments bar
+      renderPhase1SegBar(tlPhase1Segments, getUnifiedDur());
+
+      // Fetch and render IMU data + posture bar
+      loadImuSummary(videoFile, version);
+
+      // Update prompt viewer with used prompts
+      if (window.pvSetUsedPrompts) {
+        pvSetUsedPrompts(resp.phase1_prompt || '', resp.phase2_prompt || '');
+      }
+
+      // Load clips metadata
+      loadClipsMeta(version, videoFile, recSegs, exercises);
     })
     .catch(function(e) { console.warn('loadRecognitionResult error:', e); });
+}
+
+// ── Clips Viewer ──────────────────────────────────────────────────────────
+var clipsState = { version: '', videoFile: '', folder: '', phase1: [], phase2: [], recSegs: [], exercises: [], tab: 'phase1' };
+
+function loadClipsMeta(version, videoFile, recSegs, exercises) {
+  var section = document.getElementById('clips-viewer-section');
+  fetch(apiUrl('/clips-meta?version=' + encodeURIComponent(version) + '&video=' + encodeURIComponent(videoFile)))
+    .then(function(r) { return r.json(); })
+    .then(function(resp) {
+      var p1 = resp.phase1_clips || [];
+      var p2 = resp.phase2_clips || [];
+      if (!p1.length && !p2.length) { section.style.display = 'none'; return; }
+      section.style.display = '';
+      clipsState.version = version;
+      clipsState.videoFile = videoFile;
+      clipsState.folder = Path_stem(videoFile);
+      clipsState.phase1 = p1;
+      clipsState.phase2 = p2;
+      clipsState.recSegs = recSegs || [];
+      clipsState.exercises = exercises || [];
+      clipsState.tab = p1.length ? 'phase1' : 'phase2';
+      switchClipsTab(clipsState.tab);
+    })
+    .catch(function(e) { console.warn('loadClipsMeta error:', e); section.style.display = 'none'; });
+}
+
+function Path_stem(f) { var n = f.replace(/\\/g, '/').split('/').pop(); return n.replace(/\.[^.]+$/, ''); }
+
+function fmtSec(s) {
+  var m = Math.floor(s / 60), ss = Math.floor(s % 60);
+  return (m < 10 ? '0' : '') + m + ':' + (ss < 10 ? '0' : '') + ss;
+}
+
+function switchClipsTab(tab) {
+  clipsState.tab = tab;
+  document.getElementById('clips-tab-phase1').className = 'clips-tab' + (tab === 'phase1' ? ' active' : '');
+  document.getElementById('clips-tab-phase2').className = 'clips-tab' + (tab === 'phase2' ? ' active' : '');
+  renderClipsList();
+}
+
+function renderClipsList() {
+  var list = document.getElementById('clips-list');
+  var info = document.getElementById('clips-info');
+  list.innerHTML = '';
+  info.innerHTML = '';
+  var items = clipsState.tab === 'phase1' ? clipsState.phase1 : clipsState.phase2;
+  if (!items.length) {
+    list.innerHTML = '<div style="text-align:center;color:#9ca3af;padding:20px;font-size:13px;">无切片数据</div>';
+    return;
+  }
+
+  if (clipsState.tab === 'phase1') {
+    items.forEach(function(clip, i) {
+      var el = document.createElement('div');
+      el.className = 'clip-item';
+      el.innerHTML = '<span class="clip-icon">&#127909;</span>' +
+        '<span class="clip-label">片段 ' + i + '</span>' +
+        '<span class="clip-time">' + fmtSec(clip.start_sec) + ' - ' + fmtSec(clip.end_sec) + '</span>';
+      el.onclick = function() { playClip('phase1', 'clip_' + String(i).padStart(3, '0') + '.mp4', clip, el); };
+      list.appendChild(el);
+    });
+  } else {
+    var exMap = {};
+    (clipsState.exercises || []).forEach(function(ex) {
+      var idx = ex.seg_idx != null ? ex.seg_idx : -1;
+      exMap[idx] = ex;
+    });
+    items.forEach(function(clip) {
+      var ex = exMap[clip.seg_idx] || {};
+      var r = ex.result || ex;
+      var name = r.exercise || '未知动作';
+      var el = document.createElement('div');
+      el.className = 'clip-item';
+      var startSec = ex.startTimeSec || 0;
+      var endSec = ex.endTimeSec || 0;
+      el.innerHTML = '<span class="clip-icon">&#127939;</span>' +
+        '<span class="clip-label">seg_' + clip.seg_idx + ': ' + name + '</span>' +
+        '<span class="clip-time">' + fmtSec(startSec) + ' - ' + fmtSec(endSec) + '</span>';
+      el.onclick = function() { playClip('phase2', clip.filename, { seg_idx: clip.seg_idx, exercise: name, result: r, startTimeSec: startSec, endTimeSec: endSec }, el); };
+      list.appendChild(el);
+    });
+  }
+  // Auto-play first clip
+  var first = list.querySelector('.clip-item');
+  if (first) first.click();
+}
+
+function playClip(phase, filename, meta, el) {
+  var items = document.querySelectorAll('#clips-list .clip-item');
+  items.forEach(function(it) { it.classList.remove('active'); });
+  if (el) el.classList.add('active');
+
+  var video = document.getElementById('clips-video');
+  var url = '/clip/' + encodeURIComponent(clipsState.version) + '/' +
+    encodeURIComponent(clipsState.folder) + '/' + phase + '/' + encodeURIComponent(filename);
+  video.src = url;
+  video.load();
+
+  var info = document.getElementById('clips-info');
+  if (phase === 'phase1') {
+    info.innerHTML = '<b>Phase1 时间窗口</b> &nbsp; ' + fmtSec(meta.start_sec) + ' ~ ' + fmtSec(meta.end_sec) +
+      ' &nbsp; (' + Math.round(meta.end_sec - meta.start_sec) + 's, ' + (meta.frame_count || '?') + ' frames)';
+  } else {
+    var r = meta.result || {};
+    var conf = r.confidence ? ' &nbsp; 置信度: ' + (r.confidence * 100).toFixed(0) + '%' : '';
+    var sets = r.sets;
+    var setsStr = '';
+    if (Array.isArray(sets) && sets.length) {
+      setsStr = ' &nbsp; ' + sets.length + '组 ' + sets.map(function(s) { return s.reps || 0; }).join('/') + '次';
+    } else if (r.total_sets) {
+      setsStr = ' &nbsp; ' + r.total_sets + '组 ' + (r.total_reps || 0) + '次';
+    }
+    info.innerHTML = '<b>Phase2 运动区间 seg_' + meta.seg_idx + '</b> &nbsp; ' +
+      fmtSec(meta.startTimeSec || 0) + ' ~ ' + fmtSec(meta.endTimeSec || 0) +
+      ' &nbsp; <span style="color:#6c7ae0;font-weight:600">' + (meta.exercise || '?') + '</span>' +
+      ' &nbsp; 器械: ' + (r.equipment || '?') + conf + setsStr +
+      (r.exercise_reason ? '<br><span style="color:#888;font-size:11px;">' + r.exercise_reason + '</span>' : '');
+  }
+}
+
+function renderPhase1SegBar(segments, dur) {
+  var row = document.getElementById('tl-phase1-seg-row');
+  var bar = document.getElementById('tl-phase1-seg-bar');
+  bar.innerHTML = '';
+  if (!segments || !segments.length) { row.style.display = 'none'; return; }
+  row.style.display = '';
+  segments.forEach(function(seg) {
+    var ss = seg.start_sec || 0, se = seg.end_sec || 0;
+    var left = (ss / dur) * 100;
+    var width = ((se - ss) / dur) * 100;
+    if (width < 0.2) return;
+    var el = document.createElement('div');
+    var st = (seg.state || '').toUpperCase();
+    el.className = 'phase1-seg st-' + (st === 'EXERCISE' ? 'exercise' : 'rest');
+    el.style.left = left + '%';
+    el.style.width = width + '%';
+    var equip = seg.equipment || '';
+    var posture = seg.posture || '';
+    if (st === 'EXERCISE' && equip) {
+      el.textContent = equip;
+    } else if (st === 'REST' && equip && equip !== 'UNKNOWN') {
+      el.textContent = equip;
+    }
+    el.title = st + ' | ' + equip + ' | ' + posture + '\n' +
+      (seg.start_time || '') + '→' + (seg.end_time || '') + '\n' + (seg.reason || '');
+    el.addEventListener('click', function(ev) {
+      ev.stopPropagation();
+      if (tlVideo.readyState >= 1) { tlVideo.currentTime = ss; tlVideo.play(); }
+    });
+    bar.appendChild(el);
+  });
+}
+
+// Posture name mapping
+var POSTURE_CN = {standing:'站姿', seated:'坐姿', supine:'仰卧', prone:'俯卧', bending:'俯身', reclined:'斜靠'};
+var POSTURE_CN_REV = {'站姿':'standing','坐姿':'seated','仰卧':'supine','俯卧':'prone','俯身':'bending','斜靠':'reclined'};
+var tlPhase1Segments = [];
+
+function renderPostureBar(imuWindows, phase1Segs, dur) {
+  var row = document.getElementById('tl-posture-row');
+  var bar = document.getElementById('tl-posture-bar');
+  bar.innerHTML = '';
+  if (dur <= 0) { row.style.display = 'none'; return; }
+
+  // Build merged posture timeline: IMU is real data (preferred), Phase1 is model inference (fallback)
+  var entries = [];
+  var hasImu = imuWindows && imuWindows.length > 0;
+  var hasPhase1 = phase1Segs && phase1Segs.length > 0;
+
+  if (hasImu) {
+    // IMU windows provide real posture data
+    imuWindows.forEach(function(w) {
+      if (!w.posture) return;
+      var key = POSTURE_CN_REV[w.posture] || w.posture.toLowerCase();
+      entries.push({ start: w.start_sec || 0, end: w.end_sec || 0, posture: key, cn: w.posture, source: 'imu' });
+    });
+  }
+
+  if (hasPhase1) {
+    // Phase1 segments provide model-inferred posture (fill gaps or use as sole source)
+    phase1Segs.forEach(function(seg) {
+      if (!seg.posture) return;
+      var key = seg.posture.toLowerCase();
+      var cn = POSTURE_CN[key] || seg.posture;
+      var ss = seg.start_sec || 0, se = seg.end_sec || 0;
+      if (hasImu) {
+        // Only fill gaps not covered by IMU
+        var covered = entries.filter(function(e) { return e.source === 'imu' && e.end > ss && e.start < se; });
+        if (covered.length === 0) {
+          entries.push({ start: ss, end: se, posture: key, cn: cn, source: 'model' });
+        }
+      } else {
+        entries.push({ start: ss, end: se, posture: key, cn: cn, source: 'model' });
+      }
+    });
+  }
+
+  if (!entries.length) { row.style.display = 'none'; return; }
+
+  // Merge adjacent entries with same posture+source
+  entries.sort(function(a, b) { return a.start - b.start; });
+  var merged = [entries[0]];
+  for (var i = 1; i < entries.length; i++) {
+    var prev = merged[merged.length - 1];
+    var cur = entries[i];
+    if (cur.posture === prev.posture && cur.source === prev.source && cur.start <= prev.end + 1) {
+      prev.end = Math.max(prev.end, cur.end);
+    } else {
+      merged.push(cur);
+    }
+  }
+
+  row.style.display = '';
+  merged.forEach(function(seg) {
+    var left = (seg.start / dur) * 100;
+    var width = ((seg.end - seg.start) / dur) * 100;
+    if (width < 0.2) return;
+    var el = document.createElement('div');
+    var cls = 'p-' + (seg.posture || 'unknown');
+    el.className = 'posture-seg ' + cls;
+    el.style.left = left + '%';
+    el.style.width = width + '%';
+    var srcLabel = seg.source === 'imu' ? 'IMU' : '模型';
+    var srcCls = seg.source === 'imu' ? 'src-imu' : 'src-model';
+    el.innerHTML = '<span>' + seg.cn + '</span><span class="posture-src-badge ' + srcCls + '">' + srcLabel + '</span>';
+    el.title = '姿势: ' + seg.cn + '\n来源: ' + (seg.source === 'imu' ? 'IMU真实数据' : '模型推测') +
+      '\n' + tlFormatTime(seg.start) + ' → ' + tlFormatTime(seg.end);
+    bar.appendChild(el);
+  });
+}
+
+function loadImuSummary(videoFile, version) {
+  var url = '/imu-summary?video=' + encodeURIComponent(videoFile);
+  if (version) url += '&version=' + encodeURIComponent(version);
+  fetch(apiUrl(url))
+    .then(function(r) { return r.json(); })
+    .then(function(resp) {
+      if (!resp.found) {
+        document.getElementById('tl-imu-phase1-row').style.display = 'none';
+        document.getElementById('tl-imu-exercise-row').style.display = 'none';
+        renderPostureBar([], tlPhase1Segments, getUnifiedDur());
+        return;
+      }
+      var baseDur = getUnifiedDur();
+      var clampWin = function(arr) {
+        return (arr || []).map(function(w) {
+          var c = Object.assign({}, w);
+          c.start_sec = Math.max(0, c.start_sec || 0);
+          c.end_sec = Math.min(baseDur, c.end_sec || 0);
+          return c;
+        }).filter(function(w) { return w.end_sec > w.start_sec; });
+      };
+      renderPostureBar(clampWin(resp.phase1_windows), tlPhase1Segments, baseDur);
+      renderImuPhase1Bar(clampWin(resp.phase1_windows), baseDur);
+      renderImuExerciseBar(clampWin(resp.exercise_imu), baseDur);
+    })
+    .catch(function(e) {
+      console.warn('loadImuSummary error:', e);
+      document.getElementById('tl-imu-phase1-row').style.display = 'none';
+      document.getElementById('tl-imu-exercise-row').style.display = 'none';
+      renderPostureBar([], tlPhase1Segments, getUnifiedDur());
+    });
+}
+
+function renderImuPhase1Bar(windows, dur) {
+  var row = document.getElementById('tl-imu-phase1-row');
+  var bar = document.getElementById('tl-imu-phase1-bar');
+  bar.innerHTML = '';
+  if (!windows || !windows.length) { row.style.display = 'none'; return; }
+  row.style.display = '';
+  var intMap = {'高': 'high', '中高': 'mid-high', '低': 'low', '静止': 'static'};
+  windows.forEach(function(w) {
+    var ss = w.start_sec || 0, se = w.end_sec || 0;
+    var left = (ss / dur) * 100;
+    var width = ((se - ss) / dur) * 100;
+    if (width < 0.1) return;
+    var el = document.createElement('div');
+    var cls = intMap[w.intensity] || 'nodata';
+    el.className = 'imu-win int-' + cls;
+    el.style.left = left + '%';
+    el.style.width = width + '%';
+    var label = '';
+    if (w.peaks > 0) label = w.peaks + 'pk';
+    else if (w.posture) label = w.posture.charAt(0);
+    el.textContent = label;
+    el.title = '强度: ' + w.intensity + ' (acc_std=' + w.acc_std + ')\n' +
+      '姿态: ' + w.posture + '\n峰值: ' + w.peaks +
+      (w.hint ? '\n' + w.hint : '');
+    bar.appendChild(el);
+  });
+}
+
+function renderImuExerciseBar(exerciseImu, dur) {
+  var row = document.getElementById('tl-imu-exercise-row');
+  var bar = document.getElementById('tl-imu-exercise-bar');
+  bar.innerHTML = '';
+  if (!exerciseImu || !exerciseImu.length) { row.style.display = 'none'; return; }
+  row.style.display = '';
+  var intMap = {'高': 'high', '中高': 'mid-high', '低': 'low', '静止': 'static'};
+  exerciseImu.forEach(function(seg) {
+    var ss = seg.start_sec || 0, se = seg.end_sec || 0;
+    var left = (ss / dur) * 100;
+    var width = ((se - ss) / dur) * 100;
+    if (width < 0.2) return;
+    if (!seg.has_data) return;
+    var el = document.createElement('div');
+    var cls = intMap[seg.intensity] || 'static';
+    el.className = 'imu-ex-seg int-' + cls;
+    el.style.left = left + '%';
+    el.style.width = width + '%';
+    var line1 = seg.peaks > 0 ? seg.peaks + 'pk' : seg.intensity;
+    var line2 = seg.posture || '';
+    el.innerHTML = '<span>' + line1 + '</span><span style="font-size:7px;opacity:.8">' + line2 + '</span>';
+    var tipLines = ['强度: ' + seg.intensity + ' (acc_std=' + seg.acc_std + ')',
+      '姿态: ' + seg.posture, '峰值: ' + seg.peaks];
+    if (seg.rest_periods && seg.rest_periods.length) {
+      tipLines.push('组间休息: ' + seg.rest_periods.length + '段');
+      seg.rest_periods.forEach(function(rp) {
+        tipLines.push('  ' + rp.duration + 's');
+      });
+    }
+    if (seg.sub_windows && seg.sub_windows.length) {
+      tipLines.push('子窗口: ' + seg.sub_windows.length + '个');
+    }
+    el.title = tipLines.join('\n');
+    bar.appendChild(el);
+
+    // Render rest period markers within this segment
+    if (seg.rest_periods) {
+      seg.rest_periods.forEach(function(rp) {
+        var rl = (rp.start_sec / dur) * 100;
+        var rw = ((rp.end_sec - rp.start_sec) / dur) * 100;
+        var rm = document.createElement('div');
+        rm.className = 'imu-rest-marker';
+        rm.style.left = rl + '%';
+        rm.style.width = rw + '%';
+        rm.title = '组间休息 ' + rp.duration + 's';
+        bar.appendChild(rm);
+      });
+    }
+  });
 }
 
 function renderGtComparisonFromApi(gtExercises, recSegs) {
@@ -1411,6 +2062,7 @@ document.getElementById('tl-video-select').addEventListener('change', function()
     video.removeAttribute('src');
     video.style.display = 'none';
     hint.style.display = '';
+    document.getElementById('clips-viewer-section').style.display = 'none';
     return;
   }
   hint.style.display = 'none';
@@ -1432,7 +2084,7 @@ function renderExerciseTable(segments, gtExercises) {
   var gtParsed = (gtExercises || []).filter(function(ex) { return ex.type === 'exercise'; }).map(function(ex) {
     var p = parseGtReps(ex.reps);
     if (p.sets === 0) p.sets = 1;
-    return { label: ex.label || '运动', sets: p.sets, repsDetail: p.detail, start: ex.start, end: ex.end };
+    return { label: ex.label || '运动', sets: p.sets, repsDetail: p.detail, start: ex.start_offset != null ? ex.start_offset : ex.start, end: ex.end_offset != null ? ex.end_offset : ex.end };
   });
 
   // Group recognized segments
@@ -1456,6 +2108,8 @@ function renderExerciseTable(segments, gtExercises) {
         reps_total: seg.reps_estimate || 0,
         repsPerSet: seg.reps_per_set || [seg.reps_estimate || 0],
         confidences: [seg.confidence || 0],
+        exercise_reason: seg.exercise_reason || '',
+        action_disambiguation: seg.action_disambiguation || null,
       };
       grouped.push(lastGroup);
     }
@@ -1526,17 +2180,34 @@ function renderExerciseTable(segments, gtExercises) {
       status = '多'; cls = 'extra';
     }
 
+    var hasReason = rec && (rec.exercise_reason || rec.action_disambiguation);
+    var reasonAttr = hasReason ? ' data-reason="1"' : '';
     var tr = document.createElement('tr');
     tr.innerHTML =
       '<td>' + (i + 1) + '</td>' +
       '<td class="ex-name" style="color:#10b981">' + gtName + '</td>' +
       '<td>' + gtSets + '</td>' +
       '<td>' + gtReps + '</td>' +
-      '<td class="ex-name" style="color:#6c7ae0">' + recName + '</td>' +
+      '<td class="ex-name" style="color:#6c7ae0"' + reasonAttr + '>' + recName + '</td>' +
       '<td>' + recSets + '</td>' +
       '<td>' + recReps + '</td>' +
       '<td style="font-variant-numeric:tabular-nums;color:#6b7396;">' + timeRange + '</td>' +
       '<td><span class="gt-match-icon ' + cls + '">' + status + '</span></td>';
+    if (hasReason) {
+      (function(recData) {
+        var nameTd = tr.querySelectorAll('td.ex-name')[1];
+        if (!nameTd) return;
+        nameTd.addEventListener('mouseenter', function(e) {
+          showExReasonTooltip(e, recData);
+        });
+        nameTd.addEventListener('mousemove', function(e) {
+          positionExReasonTooltip(e);
+        });
+        nameTd.addEventListener('mouseleave', function() {
+          hideExReasonTooltip();
+        });
+      })(rec);
+    }
     var clickSec = rec ? rec.start_sec : (gt ? gt.start : null);
     if (clickSec !== null) {
       (function(sec) {
@@ -1551,6 +2222,165 @@ function renderExerciseTable(segments, gtExercises) {
     }
     tbody.appendChild(tr);
   });
+}
+
+/* ── Exercise Reason Tooltip ─────────────────────── */
+
+function showExReasonTooltip(e, recData) {
+  var tip = document.getElementById('ex-reason-tooltip');
+  var html = '<div class="ert-title"><span class="ert-icon">&#128270;</span>' +
+    _esc(recData.exercise_name) + ' — ' + _esc(recData.equipment || '') + '</div>';
+
+  if (recData.exercise_reason) {
+    html += '<div class="ert-text">' + _esc(recData.exercise_reason) + '</div>';
+  }
+
+  var ad = recData.action_disambiguation;
+  if (ad) {
+    if (ad.equipment_verification) {
+      html += '<div class="ert-section"><div class="ert-label">器材验证</div>' +
+        '<div class="ert-text">' + _esc(ad.equipment_verification) + '</div></div>';
+    }
+    if (ad.posture_flow_norm) {
+      html += '<div class="ert-section"><div class="ert-label">姿态-光流规范</div>' +
+        '<div class="ert-text">' + _esc(ad.posture_flow_norm) + '</div></div>';
+    }
+    if (ad.flow_alignment) {
+      html += '<div class="ert-section"><div class="ert-label">光流对齐</div>' +
+        '<div class="ert-text">' + _esc(ad.flow_alignment) + '</div></div>';
+    }
+    if (ad.imu_alignment) {
+      html += '<div class="ert-section"><div class="ert-label">IMU对齐</div>' +
+        '<div class="ert-text">' + _esc(ad.imu_alignment) + '</div></div>';
+    }
+    var rejected = ad.rejected_candidates || [];
+    if (rejected.length > 0) {
+      html += '<div class="ert-section"><div class="ert-label">排除的候选动作</div><div class="ert-rejected">';
+      for (var j = 0; j < rejected.length; j++) {
+        var r = rejected[j];
+        html += '<div class="ert-rejected-item"><span class="ert-rejected-name">' +
+          _esc(r.exercise || '') + '</span><span class="ert-rejected-reason">' +
+          _esc(r.reason || '') + '</span></div>';
+      }
+      html += '</div></div>';
+    }
+  }
+
+  var avgConf = 0;
+  if (recData.confidences && recData.confidences.length) {
+    var sum = 0;
+    for (var k = 0; k < recData.confidences.length; k++) sum += recData.confidences[k];
+    avgConf = sum / recData.confidences.length;
+  }
+  if (avgConf > 0) {
+    html += '<div class="ert-section" style="font-size:11px;color:#8b92b0;">置信度: ' +
+      (avgConf * 100).toFixed(0) + '%</div>';
+  }
+
+  tip.innerHTML = html;
+  tip.style.display = 'block';
+  positionExReasonTooltip(e);
+}
+
+function positionExReasonTooltip(e) {
+  var tip = document.getElementById('ex-reason-tooltip');
+  var x = e.clientX + 16;
+  var y = e.clientY + 12;
+  var tw = tip.offsetWidth;
+  var th = tip.offsetHeight;
+  if (x + tw > window.innerWidth - 12) x = e.clientX - tw - 12;
+  if (y + th > window.innerHeight - 12) y = e.clientY - th - 12;
+  if (x < 4) x = 4;
+  if (y < 4) y = 4;
+  tip.style.left = x + 'px';
+  tip.style.top = y + 'px';
+}
+
+function showBarSegTooltip(e, seg) {
+  var tip = document.getElementById('ex-reason-tooltip');
+  var timeRange = tlFormatTime(seg.start_sec) + ' → ' + tlFormatTime(seg.end_sec);
+  var state = (seg.type || seg.state || '').toUpperCase();
+  var title = '';
+  if (state === 'EXERCISE' && seg.exercise_name) {
+    title = seg.exercise_name + (seg.equipment ? ' — ' + seg.equipment : '');
+  } else {
+    title = (state === 'REST' ? '休息' : state) + (seg.equipment ? ' · ' + seg.equipment : '');
+  }
+  var html = '<div class="ert-title"><span class="ert-icon">&#128270;</span>' +
+    _esc(title) + '</div>' +
+    '<div class="ert-section" style="font-size:11px;color:#8b92b0;">' + _esc(timeRange) + '</div>';
+
+  if (seg.exercise_reason) {
+    html += '<div class="ert-section"><div class="ert-label">动作推理</div>' +
+      '<div class="ert-text">' + _esc(seg.exercise_reason) + '</div></div>';
+  }
+  if (seg.reason) {
+    html += '<div class="ert-section"><div class="ert-label">区间判断</div>' +
+      '<div class="ert-text">' + _esc(seg.reason) + '</div></div>';
+  }
+  if (seg.equipment_reason) {
+    html += '<div class="ert-section"><div class="ert-label">器材推理</div>' +
+      '<div class="ert-text">' + _esc(seg.equipment_reason) + '</div></div>';
+  }
+  if (seg.posture && seg.posture_reason) {
+    html += '<div class="ert-section"><div class="ert-label">姿态 (' + _esc(seg.posture) + ')</div>' +
+      '<div class="ert-text">' + _esc(seg.posture_reason) + '</div></div>';
+  }
+
+  var ad = seg.action_disambiguation;
+  if (ad) {
+    if (ad.equipment_verification) {
+      html += '<div class="ert-section"><div class="ert-label">器材验证</div>' +
+        '<div class="ert-text">' + _esc(ad.equipment_verification) + '</div></div>';
+    }
+    if (ad.posture_flow_norm) {
+      html += '<div class="ert-section"><div class="ert-label">姿态-光流规范</div>' +
+        '<div class="ert-text">' + _esc(ad.posture_flow_norm) + '</div></div>';
+    }
+    if (ad.flow_alignment) {
+      html += '<div class="ert-section"><div class="ert-label">光流对齐</div>' +
+        '<div class="ert-text">' + _esc(ad.flow_alignment) + '</div></div>';
+    }
+    if (ad.imu_alignment) {
+      html += '<div class="ert-section"><div class="ert-label">IMU对齐</div>' +
+        '<div class="ert-text">' + _esc(ad.imu_alignment) + '</div></div>';
+    }
+    var rejected = ad.rejected_candidates || [];
+    if (rejected.length > 0) {
+      html += '<div class="ert-section"><div class="ert-label">排除的候选动作</div><div class="ert-rejected">';
+      for (var j = 0; j < rejected.length; j++) {
+        var r = rejected[j];
+        html += '<div class="ert-rejected-item"><span class="ert-rejected-name">' +
+          _esc(r.exercise || '') + '</span><span class="ert-rejected-reason">' +
+          _esc(r.reason || '') + '</span></div>';
+      }
+      html += '</div></div>';
+    }
+  }
+
+  if (seg.confidence) {
+    html += '<div class="ert-section" style="font-size:11px;color:#8b92b0;">置信度: ' +
+      ((seg.confidence * 100).toFixed(0)) + '%</div>';
+  }
+  if (seg.sets_count) {
+    html += '<div class="ert-section" style="font-size:11px;color:#8b92b0;">' +
+      seg.sets_count + ' 组' + (seg.reps_estimate ? ' · ' + seg.reps_estimate + ' 次' : '') + '</div>';
+  }
+
+  tip.innerHTML = html;
+  tip.style.display = 'block';
+  positionExReasonTooltip(e);
+}
+
+function hideExReasonTooltip() {
+  document.getElementById('ex-reason-tooltip').style.display = 'none';
+}
+
+function _esc(s) {
+  if (!s) return '';
+  var d = document.createElement('div');
+  d.appendChild(document.createTextNode(s));
+  return d.innerHTML;
 }
 
 /* ── Ground Truth vs Recognized comparison ─────────────────────── */
@@ -1609,8 +2439,8 @@ function renderGtComparison(gtExercises, recognizedGroups) {
     var bestIdx = -1, bestOverlap = 0;
     recognizedGroups.forEach(function(rec, ri) {
       if (recUsed[ri]) return;
-      var oStart = Math.max(gt.start || 0, rec.start_sec || 0);
-      var oEnd = Math.min(gt.end || 0, rec.end_sec || 0);
+      var oStart = Math.max(gt.start_offset != null ? gt.start_offset : gt.start || 0, rec.start_sec || 0);
+      var oEnd = Math.min(gt.end_offset != null ? gt.end_offset : gt.end || 0, rec.end_sec || 0);
       var overlap = Math.max(0, oEnd - oStart);
       if (overlap > bestOverlap) { bestOverlap = overlap; bestIdx = ri; }
     });
@@ -1623,7 +2453,7 @@ function renderGtComparison(gtExercises, recognizedGroups) {
   var matchedRows = [];
   gtParsed.forEach(function(gt, gi) {
     var rec = gtToRec[gi] !== undefined ? recognizedGroups[gtToRec[gi]] : null;
-    matchedRows.push({ gt: gt, rec: rec, sortTime: gtExercises[gi].start || 0 });
+    matchedRows.push({ gt: gt, rec: rec, sortTime: gtExercises[gi].start_offset != null ? gtExercises[gi].start_offset : gtExercises[gi].start || 0 });
   });
   recognizedGroups.forEach(function(rec, ri) {
     if (!recUsed[ri]) {
@@ -1815,6 +2645,100 @@ document.getElementById('user-select').addEventListener('change', function() {
 
 initGradLegend();
 loadUsers().then(function() { init(); });
+
+// ══ Prompt Viewer ══════════════════════════════════════════════════════════
+(function() {
+  var pvData = { phase1: [], phase2: [] };
+  var pvPhase = 'phase1';
+  var pvActiveFile = '';
+  var pvUsedPrompts = { phase1: '', phase2: '' };
+
+  var tabs = document.getElementById('prompt-tabs');
+  var selector = document.getElementById('prompt-version-selector');
+  var contentEl = document.getElementById('prompt-content');
+  var metaEl = document.getElementById('prompt-meta');
+
+  tabs.addEventListener('click', function(e) {
+    var tab = e.target.closest('.prompt-tab');
+    if (!tab) return;
+    tabs.querySelectorAll('.prompt-tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    pvPhase = tab.dataset.phase;
+    renderPills();
+    contentEl.innerHTML = '<div class="prompt-empty">选择版本以查看 Prompt 内容</div>';
+    metaEl.innerHTML = '';
+    pvActiveFile = '';
+  });
+
+  function renderPills() {
+    var items = pvData[pvPhase] || [];
+    var usedFn = pvUsedPrompts[pvPhase];
+    selector.innerHTML = '<span class="pv-label">版本：</span>';
+    items.forEach(function(item) {
+      var pill = document.createElement('span');
+      pill.className = 'pv-pill';
+      if (item.filename === usedFn) pill.classList.add('used');
+      if (item.filename === pvActiveFile) pill.classList.add('active');
+      pill.textContent = item.version;
+      pill.title = item.filename + (item.filename === usedFn ? ' (当前识别使用)' : '');
+      pill.addEventListener('click', function() {
+        pvActiveFile = item.filename;
+        selector.querySelectorAll('.pv-pill').forEach(function(p) { p.classList.remove('active'); });
+        pill.classList.add('active');
+        loadPromptContent(item.filename);
+      });
+      selector.appendChild(pill);
+    });
+  }
+
+  function loadPromptContent(filename) {
+    contentEl.innerHTML = '<div class="prompt-empty">加载中...</div>';
+    fetch(apiUrl('/prompt-content?filename=' + encodeURIComponent(filename)))
+      .then(function(r) { return r.json(); })
+      .then(function(resp) {
+        if (!resp.content) {
+          contentEl.innerHTML = '<div class="prompt-empty">文件为空</div>';
+          return;
+        }
+        var usedFn = pvUsedPrompts[pvPhase];
+        metaEl.innerHTML = '';
+        var tag1 = document.createElement('span');
+        tag1.className = 'prompt-meta-tag';
+        tag1.textContent = pvPhase === 'phase1' ? 'Phase 1 区间识别' : 'Phase 2 动作识别';
+        metaEl.appendChild(tag1);
+        var tag2 = document.createElement('span');
+        tag2.className = 'prompt-meta-tag';
+        tag2.textContent = filename;
+        metaEl.appendChild(tag2);
+        if (filename === usedFn) {
+          var tag3 = document.createElement('span');
+          tag3.className = 'prompt-meta-tag tag-green';
+          tag3.textContent = '当前识别版本使用中';
+          metaEl.appendChild(tag3);
+        }
+        contentEl.textContent = resp.content;
+      })
+      .catch(function(e) {
+        contentEl.innerHTML = '<div class="prompt-empty">加载失败: ' + e.message + '</div>';
+      });
+  }
+
+  // Load prompt version list
+  fetch(apiUrl('/prompt-versions'))
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      pvData = data;
+      renderPills();
+    })
+    .catch(function(e) { console.warn('prompt-versions error:', e); });
+
+  // Expose function to update used prompts when recognition version changes
+  window.pvSetUsedPrompts = function(p1Filename, p2Filename) {
+    pvUsedPrompts.phase1 = p1Filename || '';
+    pvUsedPrompts.phase2 = p2Filename || '';
+    renderPills();
+  };
+})();
 </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 from __future__ import annotations
 import re
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, FileResponse
+from fastapi.responses import JSONResponse, FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Any
@@ -123,6 +123,9 @@ def _read_raw_segments(date_str: str) -> tuple[list[dict], float]:
                 "reps_estimate":   int(s.get("reps_estimate", 0) or 0),
                 "primary_muscles": s.get("primary_muscles") or [],
                 "secondary_muscles": s.get("secondary_muscles") or [],
+                "exercise_reason": s.get("exercise_reason", ""),
+                "action_disambiguation": s.get("action_disambiguation"),
+                "reps_per_set":    s.get("reps_per_set") or [],
             })
         total_sec = max((s["end_sec"] for s in all_segs if "end_sec" in s), default=0.0)
         return exercise_segs, float(total_sec)
@@ -151,6 +154,9 @@ def _read_all_segments(date_str: str) -> list[dict]:
                 seg["sets_count"]     = int(s.get("sets_count", 1) or 1)
                 seg["reps_estimate"]  = int(s.get("reps_estimate", 0) or 0)
                 seg["confidence"]     = float(s.get("confidence", 0) or 0)
+                seg["exercise_reason"] = s.get("exercise_reason", "")
+                seg["action_disambiguation"] = s.get("action_disambiguation")
+                seg["reps_per_set"]  = s.get("reps_per_set") or []
             result.append(seg)
         return result
     except Exception:
@@ -671,7 +677,13 @@ def daily(date: str | None = None, user_id: str | None = None):
         bal_date = target_date if date else __import__('datetime').date.today()
         fitness_balance = compute_fitness_balance(cur, uid, bal_date)
         conn.close()
-        return {"fitness_balance": fitness_balance}
+        date_str = bal_date.isoformat() if hasattr(bal_date, 'isoformat') else str(bal_date)
+        video_file = _DATE_VIDEO_MAP.get(uid, {}).get(date_str)
+        resp = {"fitness_balance": fitness_balance}
+        if video_file:
+            resp["video_file"] = video_file
+            resp["total_sec"] = 0
+        return resp
 
     sid = session["session_id"]
 
@@ -1126,6 +1138,15 @@ def calendar(year: int | None = None, month: int | None = None, user_id: str | N
         rate    = float(row["completion_rate"] or 0)
         result[day_str] = "full" if rate >= 0.95 else "partial"
 
+    video_map = _DATE_VIDEO_MAP.get(uid, {})
+    for d_str in video_map:
+        try:
+            d = datetime.strptime(d_str, "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        if d.year == year and d.month == month and d_str not in result:
+            result[d_str] = "video"
+
     return {
         "year":  year,
         "month": month,
@@ -1527,17 +1548,42 @@ def recognition_result(version: str, video: str | None = None, date: str | None 
 
     timeline = []
     adj = base / "period_result_adjusted.json"
+    if not adj.is_file():
+        adj = base / "period_result.json"
     if adj.is_file():
         try:
-            timeline = json.loads(adj.read_text(encoding="utf-8")).get("segments", [])
+            adj_data = json.loads(adj.read_text(encoding="utf-8"))
+            timeline = adj_data.get("segments", [])
+            for i, seg in enumerate(timeline):
+                if "segmentId" not in seg:
+                    seg["segmentId"] = f"seg_{i}"
         except json.JSONDecodeError:
             pass
 
     exercises = []
+    ex_data_full = {}
     ex_file = base / "exercise_result.json"
     if ex_file.is_file():
         try:
-            exercises = json.loads(ex_file.read_text(encoding="utf-8")).get("results", [])
+            raw_ex = json.loads(ex_file.read_text(encoding="utf-8"))
+            if isinstance(raw_ex, dict):
+                ex_data_full = raw_ex
+                exercises = raw_ex.get("results", [])
+            elif isinstance(raw_ex, list):
+                ex_data_full = {"results": raw_ex}
+                exercises = raw_ex
+            for ex in exercises:
+                if "segmentId" not in ex and "seg_idx" in ex:
+                    ex["segmentId"] = f"seg_{ex['seg_idx']}"
+                r = ex.get("result", ex)
+                raw_sets = r.get("sets")
+                if raw_sets is None or isinstance(raw_sets, (int, float)):
+                    total_sets = int(raw_sets or 0)
+                    total_reps = int(r.get("reps") or 0)
+                    r["total_sets"] = total_sets
+                    r["total_reps"] = total_reps
+                    r["sets"] = [{"set_number": i + 1, "reps": total_reps // total_sets if total_sets else total_reps}
+                                 for i in range(total_sets)] if total_sets else []
         except json.JSONDecodeError:
             pass
 
@@ -1547,12 +1593,326 @@ def recognition_result(version: str, video: str | None = None, date: str | None 
         if sid and sid in ex_name_map:
             seg["exercise_name"] = ex_name_map[sid]
 
-    return {"found": True, "timeline": timeline, "exercises": exercises, "folder": folder, "version": version}
+    # Load Phase 1 raw segments (with equipment/posture) and equipment_timeline
+    phase1_segments = []
+    equipment_timeline = []
+    phase1_prompt = ""
+    phase2_prompt = ""
+    period_raw = base / "period_result.json"
+    if period_raw.is_file():
+        try:
+            raw_data = json.loads(period_raw.read_text(encoding="utf-8"))
+            phase1_segments = raw_data.get("segments", [])
+            equipment_timeline = raw_data.get("equipment_timeline", [])
+            phase1_prompt = raw_data.get("phase1_prompt", "")
+        except json.JSONDecodeError:
+            pass
+    phase2_prompt = ex_data_full.get("phase2_prompt", "")
+
+    return {
+        "found": True, "timeline": timeline, "exercises": exercises,
+        "folder": folder, "version": version,
+        "phase1_segments": phase1_segments,
+        "equipment_timeline": equipment_timeline,
+        "phase1_prompt": phase1_prompt,
+        "phase2_prompt": phase2_prompt,
+    }
+
+
+@app.get("/api/imu-summary")
+def imu_summary(video: str | None = None, date: str | None = None, user_id: str | None = None,
+                version: str | None = None):
+    """Compute IMU statistical summary for dashboard visualization.
+
+    Returns per-window Phase 1 stats and per-exercise-segment stats.
+    """
+    import sys, math
+    if not video and date:
+        uid = user_id or USER_ID
+        video = _DATE_VIDEO_MAP.get(uid, {}).get(date)
+    if not video:
+        return {"found": False}
+    folder = Path(video).stem
+
+    # Load IMU data: check input dir first, then shared dir
+    imu_path = _INPUT_DIR / folder / "IMU_data.txt"
+    if not imu_path.is_file():
+        imu_path = _SHARED_DIR / folder / "IMU.txt"
+    if not imu_path.is_file():
+        return {"found": False, "reason": "no_imu"}
+
+    # Parse IMU_data.txt
+    from datetime import datetime as _dt
+    lines = imu_path.read_text(encoding="utf-8").splitlines()
+    records = []
+    t0 = None
+    for line in lines[1:]:
+        parts = line.strip().split("\t")
+        if len(parts) < 9:
+            continue
+        try:
+            dt = _dt.fromisoformat(parts[0])
+            if t0 is None:
+                t0 = dt
+            t_rel = (dt - t0).total_seconds()
+            acc_x, acc_y, acc_z = float(parts[2]), float(parts[3]), float(parts[4])
+            acc_mag = (acc_x**2 + acc_y**2 + acc_z**2)**0.5
+            gyro_x, gyro_y, gyro_z = float(parts[5]), float(parts[6]), float(parts[7])
+            gyro_mag = (gyro_x**2 + gyro_y**2 + gyro_z**2)**0.5
+            records.append({"t": t_rel, "acc_mag": acc_mag, "gyro_mag": gyro_mag,
+                            "ax": acc_x, "ay": acc_y, "az": acc_z})
+        except (ValueError, IndexError):
+            continue
+
+    if not records:
+        return {"found": False, "reason": "no_records"}
+
+    def acc_std_label(v):
+        if v > 0.35: return "高"
+        if v > 0.15: return "中高"
+        if v > 0.05: return "低"
+        return "静止"
+
+    def posture_from_az(az):
+        if az > -0.35: return "仰卧"
+        if az > -0.78: return "俯身"
+        if az > -0.88: return "坐姿"
+        return "站姿"
+
+    def count_peaks(vals, prom=0.15):
+        if len(vals) < 5: return 0
+        mean_v = sum(vals) / len(vals)
+        thr = mean_v + prom
+        p = 0
+        for i in range(2, len(vals) - 2):
+            if vals[i] > thr and vals[i] >= vals[i-1] and vals[i] >= vals[i+1] and vals[i] > vals[i-2] and vals[i] > vals[i+2]:
+                p += 1
+        return p
+
+    total_dur = records[-1]["t"]
+    window_sec = 30.0
+
+    # Phase 1 windows
+    phase1_windows = []
+    wi = 0
+    while True:
+        t_s = wi * window_sec
+        t_e = (wi + 1) * window_sec
+        if t_s >= total_dur:
+            break
+        wi += 1
+        w_recs = [r for r in records if t_s <= r["t"] < t_e]
+        if not w_recs:
+            phase1_windows.append({"start_sec": t_s, "end_sec": min(t_e, total_dur),
+                                   "intensity": "无数据", "acc_std": 0, "posture": "",
+                                   "peaks": 0, "hint": ""})
+            continue
+        acc_vals = [r["acc_mag"] for r in w_recs]
+        az_vals = [r["az"] for r in w_recs]
+        acc_mean = sum(acc_vals) / len(acc_vals)
+        acc_std = (sum((a - acc_mean)**2 for a in acc_vals) / len(acc_vals))**0.5
+        az_mean = sum(az_vals) / len(az_vals)
+        posture = posture_from_az(az_mean)
+        intensity = acc_std_label(acc_std)
+        peaks = count_peaks(acc_vals)
+        hint = ""
+        if acc_std > 0.15 and peaks >= 3:
+            hint = f"{posture}力量训练"
+        elif acc_std > 0.05 and posture == "站姿":
+            hint = "行走/调整"
+        elif acc_std <= 0.05:
+            hint = f"静止({posture})"
+        phase1_windows.append({
+            "start_sec": t_s, "end_sec": min(t_e, total_dur),
+            "intensity": intensity, "acc_std": round(acc_std, 3),
+            "posture": posture, "peaks": peaks, "hint": hint,
+        })
+
+    # Per-exercise segment stats
+    exercise_imu = []
+    if version:
+        base = _RESULT_DIR / version / folder
+        adj = base / "period_result_adjusted.json"
+        if not adj.is_file():
+            adj = base / "period_result.json"
+        if adj.is_file():
+            try:
+                seg_data = json.loads(adj.read_text(encoding="utf-8"))
+                segs = seg_data.get("segments", [])
+            except json.JSONDecodeError:
+                segs = []
+            for seg in segs:
+                if seg.get("state", "").upper() != "EXERCISE":
+                    continue
+                ts = seg.get("start_sec", 0)
+                te = seg.get("end_sec", 0)
+                pad = 5.0
+                e_recs = [r for r in records if (ts - pad) <= r["t"] <= (te + pad)]
+                if not e_recs:
+                    exercise_imu.append({
+                        "start_sec": ts, "end_sec": te,
+                        "has_data": False,
+                    })
+                    continue
+                acc_vals = [r["acc_mag"] for r in e_recs]
+                az_vals = [r["az"] for r in e_recs]
+                acc_mean = sum(acc_vals) / len(acc_vals)
+                acc_std = (sum((a - acc_mean)**2 for a in acc_vals) / len(acc_vals))**0.5
+                az_mean = sum(az_vals) / len(az_vals)
+                posture = posture_from_az(az_mean)
+                intensity = acc_std_label(acc_std)
+                peaks = count_peaks(acc_vals)
+
+                # Sub-windows (10s)
+                sub_windows = []
+                sub_sec = 10.0
+                seg_recs = [r for r in records if ts <= r["t"] <= te]
+                if len(seg_recs) > 20 and (te - ts) > sub_sec * 1.5:
+                    t = ts
+                    while t < te:
+                        t2 = min(t + sub_sec, te)
+                        sw = [r for r in seg_recs if t <= r["t"] < t2]
+                        if len(sw) >= 3:
+                            sa = [r["acc_mag"] for r in sw]
+                            sa_m = sum(sa) / len(sa)
+                            sa_std = (sum((a - sa_m)**2 for a in sa) / len(sa))**0.5
+                            sa_az = sum(r["az"] for r in sw) / len(sw)
+                            sub_windows.append({
+                                "start_sec": t, "end_sec": t2,
+                                "intensity": acc_std_label(sa_std),
+                                "acc_std": round(sa_std, 3),
+                                "posture": posture_from_az(sa_az),
+                                "peaks": count_peaks(sa),
+                            })
+                        t += sub_sec
+
+                # Rest period detection
+                rest_periods = []
+                rest_thr = 0.05
+                min_rest = 10.0
+                w_size = 3.0
+                stride = 1.0
+                rw = []
+                t = ts
+                while t + w_size <= te:
+                    wr = [r for r in seg_recs if t <= r["t"] < t + w_size]
+                    if len(wr) >= 3:
+                        wa = [r["acc_mag"] for r in wr]
+                        wm = sum(wa) / len(wa)
+                        ws = (sum((a - wm)**2 for a in wa) / len(wa))**0.5
+                        rw.append((t, t + w_size, ws))
+                    t += stride
+                cur_start = None
+                cur_end = None
+                for (ws, we, std) in rw:
+                    if std < rest_thr:
+                        if cur_start is None:
+                            cur_start = ws
+                        cur_end = we
+                    else:
+                        if cur_start is not None and cur_end - cur_start >= min_rest:
+                            rest_periods.append({"start_sec": cur_start, "end_sec": cur_end,
+                                                 "duration": round(cur_end - cur_start, 1)})
+                        cur_start = None
+                if cur_start is not None and cur_end and cur_end - cur_start >= min_rest:
+                    rest_periods.append({"start_sec": cur_start, "end_sec": cur_end,
+                                         "duration": round(cur_end - cur_start, 1)})
+
+                exercise_imu.append({
+                    "start_sec": ts, "end_sec": te,
+                    "has_data": True,
+                    "intensity": intensity, "acc_std": round(acc_std, 3),
+                    "posture": posture, "peaks": peaks,
+                    "sub_windows": sub_windows,
+                    "rest_periods": rest_periods,
+                })
+
+    return {
+        "found": True,
+        "imu_duration": round(total_dur, 1),
+        "record_count": len(records),
+        "phase1_windows": phase1_windows,
+        "exercise_imu": exercise_imu,
+    }
+
+
+@app.get("/api/clips-meta")
+def clips_meta(version: str, video: str):
+    """Return Phase1 clips and Phase2 exercise clips metadata."""
+    folder = Path(video).stem
+    base = _RESULT_DIR / version / folder
+
+    phase1_clips = []
+    p1_meta = base / "clips" / "clips_meta.json"
+    if p1_meta.is_file():
+        try:
+            phase1_clips = json.loads(p1_meta.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            pass
+
+    phase2_clips = []
+    p2_dir = base / "phase2_clips"
+    if p2_dir.is_dir():
+        for f in sorted(p2_dir.glob("exercise_*.mp4")):
+            seg_idx = int(f.stem.split("_")[1])
+            phase2_clips.append({"seg_idx": seg_idx, "filename": f.name})
+
+    return {"phase1_clips": phase1_clips, "phase2_clips": phase2_clips}
+
+
+@app.get("/clip/{version}/{folder}/{phase}/{filename}", include_in_schema=False)
+def serve_clip(version: str, folder: str, phase: str, filename: str, request: Request):
+    """Serve a clip video file from result directories with Range support."""
+    import urllib.parse
+    folder = urllib.parse.unquote(folder)
+    filename = urllib.parse.unquote(filename)
+    if phase == "phase1":
+        filepath = (_RESULT_DIR / version / folder / "clips" / filename).resolve()
+    elif phase == "phase2":
+        filepath = (_RESULT_DIR / version / folder / "phase2_clips" / filename).resolve()
+    else:
+        raise HTTPException(status_code=400, detail="phase must be phase1 or phase2")
+    if not str(filepath).startswith(str(_RESULT_DIR.resolve())):
+        raise HTTPException(status_code=403)
+    if not filepath.is_file():
+        raise HTTPException(status_code=404, detail=f"Clip not found: {filename}")
+
+    file_size = filepath.stat().st_size
+    range_header = request.headers.get("range")
+    if not range_header:
+        return FileResponse(filepath, media_type="video/mp4")
+    range_match = re.match(r"bytes=(\d+)-(\d*)", range_header)
+    if not range_match:
+        return FileResponse(filepath, media_type="video/mp4")
+    start = int(range_match.group(1))
+    end = int(range_match.group(2)) if range_match.group(2) else file_size - 1
+    end = min(end, file_size - 1)
+    chunk_size = end - start + 1
+
+    def iter_file():
+        with open(filepath, "rb") as f:
+            f.seek(start)
+            remaining = chunk_size
+            while remaining > 0:
+                data = f.read(min(remaining, 1024 * 1024))
+                if not data:
+                    break
+                remaining -= len(data)
+                yield data
+
+    return StreamingResponse(
+        iter_file(), status_code=206, media_type="video/mp4",
+        headers={
+            "Content-Range": f"bytes {start}-{end}/{file_size}",
+            "Accept-Ranges": "bytes",
+            "Content-Length": str(chunk_size),
+        },
+    )
 
 
 @app.get("/video/{filename}", include_in_schema=False)
-def serve_video(filename: str):
-    """Serve a video file from gym_analyzer/input/ with Range support."""
+def serve_video(filename: str, request: Request):
+    """Serve a video file from gym_analyzer/input/ with HTTP Range support."""
     import urllib.parse
     filename = urllib.parse.unquote(filename)
     filepath = (_INPUT_DIR / filename).resolve()
@@ -1564,11 +1924,156 @@ def serve_video(filename: str):
     ext_map = {".mp4": "video/mp4", ".webm": "video/webm", ".mov": "video/quicktime",
                ".avi": "video/x-msvideo", ".mkv": "video/x-matroska"}
     media = ext_map.get(filepath.suffix.lower(), "video/mp4")
-    return FileResponse(filepath, media_type=media)
+    file_size = filepath.stat().st_size
+
+    range_header = request.headers.get("range")
+    if not range_header:
+        return FileResponse(filepath, media_type=media)
+
+    # Parse Range: bytes=start-end
+    range_match = re.match(r"bytes=(\d+)-(\d*)", range_header)
+    if not range_match:
+        return FileResponse(filepath, media_type=media)
+
+    start = int(range_match.group(1))
+    end = int(range_match.group(2)) if range_match.group(2) else file_size - 1
+    end = min(end, file_size - 1)
+    chunk_size = end - start + 1
+
+    def iter_file():
+        with open(filepath, "rb") as f:
+            f.seek(start)
+            remaining = chunk_size
+            while remaining > 0:
+                read_size = min(remaining, 1024 * 1024)
+                data = f.read(read_size)
+                if not data:
+                    break
+                remaining -= len(data)
+                yield data
+
+    return StreamingResponse(
+        iter_file(),
+        status_code=206,
+        media_type=media,
+        headers={
+            "Content-Range": f"bytes {start}-{end}/{file_size}",
+            "Accept-Ranges": "bytes",
+            "Content-Length": str(chunk_size),
+        },
+    )
+
+
+# ── Prompt files viewer ─────────────────────────────────────────────────────
+_PROMPTS_DIR = Path(__file__).parent.parent.parent / "gym_analyzer" / "prompts"
+
+@app.get("/api/prompt-versions")
+def prompt_versions():
+    """List available prompt files grouped by phase."""
+    if not _PROMPTS_DIR.is_dir():
+        return {"phase1": [], "phase2": []}
+    phase1 = []
+    phase2 = []
+    for f in sorted(_PROMPTS_DIR.glob("phase1_period_recognize_v*.yaml")):
+        v = f.stem.split("_v")[-1]
+        phase1.append({"version": f"v{v}", "filename": f.name})
+    for f in sorted(_PROMPTS_DIR.glob("phase2_exercise_recognize_v*.yaml")):
+        v = f.stem.split("_v")[-1]
+        phase2.append({"version": f"v{v}", "filename": f.name})
+    phase1.sort(key=lambda x: int(x["version"][1:]) if x["version"][1:].isdigit() else 0)
+    phase2.sort(key=lambda x: int(x["version"][1:]) if x["version"][1:].isdigit() else 0)
+    return {"phase1": phase1, "phase2": phase2}
+
+
+@app.get("/api/prompt-content")
+def prompt_content(filename: str):
+    """Return the content of a prompt YAML file."""
+    filepath = (_PROMPTS_DIR / filename).resolve()
+    if not str(filepath).startswith(str(_PROMPTS_DIR.resolve())):
+        raise HTTPException(status_code=403)
+    if not filepath.is_file():
+        raise HTTPException(status_code=404, detail=f"Prompt not found: {filename}")
+    content = filepath.read_text(encoding="utf-8")
+    return {"filename": filename, "content": content}
 
 
 # ── Serve plan_viewer.html at /plan-viewer ────────────────────────────────────
 _REPORTS_DIR = Path(__file__).parent
+
+@app.get("/api/evaluation-metrics")
+def evaluation_metrics():
+    """Compute v9-v15 recognition metrics across all ground-truth videos."""
+    import sys
+    eval_dir = str(Path(__file__).parent.parent.parent / "recognize" / "visualize")
+    if eval_dir not in sys.path:
+        sys.path.insert(0, eval_dir)
+    from evaluate_versions import (
+        get_all_video_ids, evaluate_version, f1,
+    )
+    video_ids = get_all_video_ids()
+    versions = []
+    for v in range(9, 16):
+        vname = f"v{v}"
+        vdir = _RESULT_DIR / vname
+        if vdir.is_dir():
+            versions.append(vname)
+
+    rows = []
+    per_video_all = {}
+    details_all = {}
+    for ver in versions:
+        r = evaluate_version(ver, video_ids)
+        m = r["micro"]
+        t = r["totals"]
+        gt_reps = t.get("gt_total_reps", 0)
+        pred_reps = t.get("pred_total_reps", 0)
+        gt_actions = t.get("gt_action_count", 0)
+        pred_actions = t.get("pred_action_count", 0)
+        rep_dev = round((pred_reps - gt_reps) / gt_reps * 100, 1) if gt_reps > 0 else 0
+        action_dev = round((pred_actions - gt_actions) / gt_actions * 100, 1) if gt_actions > 0 else 0
+        rows.append({
+            "version": ver,
+            "action_precision": round(m["action_precision"] * 100, 1),
+            "action_recall": round(m["action_recall"] * 100, 1),
+            "action_f1": round(m["action_f1"] * 100, 1),
+            "set_acc": round(m["set_acc"] * 100, 1),
+            "setrep_acc": round(m["setrep_acc"] * 100, 1),
+            "joint_f1": round(m["joint_f1"] * 100, 1),
+            "tp": t["action_tp"],
+            "fp": t["action_fp"],
+            "fn": t["action_fn"],
+            "gt_count": t["gt_count"],
+            "gt_total_reps": gt_reps,
+            "pred_total_reps": pred_reps,
+            "rep_deviation": rep_dev,
+            "gt_action_count": gt_actions,
+            "pred_action_count": pred_actions,
+            "action_count_deviation": action_dev,
+        })
+        pv = {}
+        for vid, vdata in r["per_video"].items():
+            pv[vid] = {
+                "action_f1": round(vdata["action_f1"] * 100, 1),
+                "set_acc": round(vdata["set_acc"] * 100, 1),
+                "setrep_acc": round(vdata["setrep_acc"] * 100, 1),
+                "joint_f1": round(vdata["joint_f1"] * 100, 1),
+            }
+        per_video_all[ver] = pv
+        details_all[ver] = r["details"]
+
+    return {
+        "versions": versions,
+        "videos": video_ids,
+        "rows": rows,
+        "per_video": per_video_all,
+        "details": details_all,
+    }
+
+
+@app.get("/evaluation", include_in_schema=False)
+def evaluation_page():
+    return FileResponse(_REPORTS_DIR / "evaluation.html")
+
 
 @app.get("/", include_in_schema=False)
 def dashboard_page():

@@ -284,3 +284,81 @@ def stitch_exercise_grid(
           f"{cols}×{rows}, {len(jpeg_bytes) / 1024:.0f} KB")
 
     return jpeg_bytes, cols, rows, len(window_metas)
+
+
+# ──────────────────────────────────────────────
+# Phase 2 YOLO 对比实验：YOLO 标注后拼图
+# ──────────────────────────────────────────────
+
+def stitch_exercise_grid_yolo(
+    metas: list[FrameMeta],
+    frames_dir: Path,
+    output_dir: Path,
+    start_sec: float,
+    end_sec: float,
+    seg_id: str = "",
+    save_dir: Path | None = None,
+) -> tuple[bytes, int, int, int, float] | None:
+    """
+    截取 [start_sec, end_sec] 范围帧，经 YOLO 手部+器材标注后拼图。
+
+    Args:
+        save_dir: 保存标注拼图的目录（graph_yolo）
+
+    Returns:
+        (jpeg_bytes, cols, rows, frame_count, yolo_elapsed_sec) 或 None
+    """
+    import time as _time
+    from .yolo_annotator import annotate_frame
+
+    window_metas = [fm for fm in metas if start_sec - 0.5 <= fm.timestamp <= end_sec + 0.5]
+    if not window_metas:
+        print(f"[stitcher-yolo] 警告：窗口 {sec_to_mmss(start_sec)}→{sec_to_mmss(end_sec)} 内无帧")
+        return None
+
+    n = len(window_metas)
+    cols, rows = _compute_layout(n, GRID_COLS)
+    canvas_w = cols * CELL_W
+    canvas_h = rows * CELL_H
+    canvas = np.zeros((canvas_h, canvas_w, 3), dtype=np.uint8)
+
+    yolo_start = _time.time()
+
+    for i, fm in enumerate(window_metas):
+        row, col = divmod(i, cols)
+        x0, y0 = col * CELL_W, row * CELL_H
+
+        img_path = _resolve_frame_path(fm, frames_dir, output_dir)
+        cell = _imread_unicode(str(img_path))
+
+        if cell is None:
+            cell = np.full((CELL_H, CELL_W, 3), 80, dtype=np.uint8)
+        else:
+            cell = annotate_frame(cell, img_path=str(img_path))
+            cell = cv2.resize(cell, (CELL_W, CELL_H), interpolation=cv2.INTER_AREA)
+
+        label = sec_to_mmss(fm.timestamp)
+        _draw_timestamp(cell, label)
+        canvas[y0:y0 + CELL_H, x0:x0 + CELL_W] = cell
+
+    yolo_elapsed = _time.time() - yolo_start
+
+    encode_param = [cv2.IMWRITE_JPEG_QUALITY, JPEG_QUALITY]
+    ok, buf = cv2.imencode(".jpg", canvas, encode_param)
+    if not ok:
+        raise RuntimeError("JPEG 编码失败")
+    jpeg_bytes = bytes(buf)
+
+    if save_dir is not None:
+        save_dir = Path(save_dir)
+        save_dir.mkdir(parents=True, exist_ok=True)
+        fname = f"yolo_{seg_id}.jpg" if seg_id else "yolo_grid.jpg"
+        save_path = save_dir / fname
+        save_path.write_bytes(jpeg_bytes)
+        print(f"    [{seg_id}] YOLO 拼图已保存: {save_path}")
+
+    print(f"    [{seg_id}] YOLO 拼图: {n} 帧, "
+          f"{cols}×{rows}, {len(jpeg_bytes) / 1024:.0f} KB, "
+          f"YOLO 耗时 {yolo_elapsed:.1f}s")
+
+    return jpeg_bytes, cols, rows, n, yolo_elapsed

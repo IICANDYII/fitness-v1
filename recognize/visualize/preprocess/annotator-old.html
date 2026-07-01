@@ -232,9 +232,6 @@ let gtLoaded = false;
 let gtModified = false;
 let gtExerciseCount = 0;
 let gtExerciseDetails = [];
-let videoCreatedAtMs = null;
-let videoCreatedAtText = '';
-let videoCreationTimeSource = '';
 
 function loadVideoList() {
   fetch('/api/videos')
@@ -265,30 +262,9 @@ function loadVideo(name) {
   gtModified = false;
   gtExerciseCount = 0;
   gtExerciseDetails = [];
-  videoCreatedAtMs = null;
-  videoCreatedAtText = '';
-  videoCreationTimeSource = '';
   updateGtStatus('loading');
   render();
-  loadVideoMeta(name).then(() => loadGroundTruth(name));
-}
-
-function loadVideoMeta(videoName) {
-  return fetch('/api/video_meta?video=' + encodeURIComponent(videoName))
-    .then(r => r.json())
-    .then(resp => {
-      if (resp.found && resp.created_at_epoch_ms) {
-        videoCreatedAtMs = resp.created_at_epoch_ms;
-        videoCreatedAtText = resp.created_at || '';
-        videoCreationTimeSource = resp.creation_time_source || '';
-      }
-    })
-    .catch(() => {
-      videoCreatedAtMs = null;
-      videoCreatedAtText = '';
-      videoCreationTimeSource = '';
-      showToast('无法读取视频创建时间，导出将保留相对秒数', true);
-    });
+  loadGroundTruth(name);
 }
 
 function loadGroundTruth(videoName) {
@@ -300,10 +276,9 @@ function loadGroundTruth(videoName) {
         intervals = resp.data
           .filter(d => hasType ? (d.type === 'exercise') : (d.label && d.label !== '过渡'))
           .map(d => ({
-            start: getRelativeStart(d), end: getRelativeEnd(d), type: 'exercise',
+            start: d.start, end: d.end, type: 'exercise',
             label: d.label || '', equipment: d.equipment || '', reps: d.reps || ''
-          }))
-          .filter(d => Number.isFinite(d.start) && Number.isFinite(d.end) && d.end > d.start);
+          }));
         intervals.sort((a, b) => a.start - b.start);
         markers = [];
         gtExerciseCount = intervals.length;
@@ -312,10 +287,6 @@ function loadGroundTruth(videoName) {
         gtModified = false;
         updateGtStatus('loaded');
         render();
-
-        if (shouldMigrateGroundTruthToAbsolute(resp.data)) {
-          migrateGroundTruthToAbsolute(resp.data);
-        }
       } else {
         gtLoaded = false;
         gtModified = false;
@@ -330,27 +301,26 @@ function loadGroundTruth(videoName) {
 function updateGtStatus(state) {
   const el = document.getElementById('gtStatus');
   el.style.display = 'inline';
-  const timeSuffix = videoCreatedAtText ? (' | 视频创建时间: ' + videoCreatedAtText) : '';
   switch (state) {
     case 'loading':
       el.className = 'gt-status';
-      el.textContent = '加载中...' + timeSuffix;
+      el.textContent = '加载中...';
       break;
     case 'loaded':
       el.className = 'gt-status loaded';
-      el.textContent = '✓ 已加载 ground_truth' + timeSuffix;
+      el.textContent = '✓ 已加载 ground_truth';
       break;
     case 'new':
       el.className = 'gt-status new';
-      el.textContent = '● 新视频（无 ground_truth）' + timeSuffix;
+      el.textContent = '● 新视频（无 ground_truth）';
       break;
     case 'saved':
       el.className = 'gt-status saved';
-      el.textContent = '✓ 已保存' + timeSuffix;
+      el.textContent = '✓ 已保存';
       break;
     case 'modified':
       el.className = 'gt-status modified';
-      el.textContent = '● 已修改未保存' + timeSuffix;
+      el.textContent = '● 已修改未保存';
       break;
   }
 }
@@ -477,122 +447,6 @@ function setSpeed(v) {
   video.playbackRate = parseFloat(v);
 }
 
-
-function isDateLikeValue(v) {
-  return typeof v === 'string' && !/^\s*-?\d+(\.\d+)?\s*$/.test(v) && !Number.isNaN(Date.parse(v));
-}
-
-function toRelativeSeconds(v) {
-  if (isDateLikeValue(v)) {
-    if (videoCreatedAtMs == null) return NaN;
-    return round1((Date.parse(v) - videoCreatedAtMs) / 1000);
-  }
-  const n = Number(v);
-  if (!Number.isFinite(n)) return NaN;
-  // 兼容旧 ground_truth：小数值仍按视频相对秒数处理。
-  // 如果后续有人保存 epoch 秒/毫秒，这里也可自动转回相对秒。
-  if (videoCreatedAtMs != null) {
-    if (n > 100000000000) return round1((n - videoCreatedAtMs) / 1000);      // epoch ms
-    if (n > 1000000000) return round1((n * 1000 - videoCreatedAtMs) / 1000); // epoch s
-  }
-  return n;
-}
-
-function offsetValue(v) {
-  const n = Number(v);
-  return Number.isFinite(n) ? round1(n) : NaN;
-}
-
-function getRelativeStart(d) {
-  if (d && d.start_offset !== undefined && d.start_offset !== null) return offsetValue(d.start_offset);
-  return toRelativeSeconds(d ? d.start : undefined);
-}
-
-function getRelativeEnd(d) {
-  if (d && d.end_offset !== undefined && d.end_offset !== null) return offsetValue(d.end_offset);
-  return toRelativeSeconds(d ? d.end : undefined);
-}
-
-function isLegacyRelativeEntry(d) {
-  if (!d) return false;
-  const hasAbsoluteStart = isDateLikeValue(d.start);
-  const hasAbsoluteEnd = isDateLikeValue(d.end);
-  return !hasAbsoluteStart && !hasAbsoluteEnd &&
-    Number.isFinite(Number(d.start)) && Number.isFinite(Number(d.end));
-}
-
-function shouldMigrateGroundTruthToAbsolute(data) {
-  return videoCreatedAtMs != null && Array.isArray(data) && data.some(isLegacyRelativeEntry);
-}
-
-function normalizeGroundTruthEntryToAbsolute(d) {
-  const startOffset = getRelativeStart(d);
-  const endOffset = getRelativeEnd(d);
-  if (!Number.isFinite(startOffset) || !Number.isFinite(endOffset)) return null;
-
-  const entry = { ...d };
-  entry.start = formatAbsoluteTimeFromOffset(startOffset);
-  entry.end = formatAbsoluteTimeFromOffset(endOffset);
-  entry.start_offset = startOffset;
-  entry.end_offset = endOffset;
-  if (videoCreatedAtText) entry.video_created_at = videoCreatedAtText;
-  return entry;
-}
-
-function normalizeGroundTruthArrayToAbsolute(data) {
-  return data.map(normalizeGroundTruthEntryToAbsolute).filter(Boolean);
-}
-
-function migrateGroundTruthToAbsolute(data) {
-  const converted = normalizeGroundTruthArrayToAbsolute(data);
-  if (converted.length === 0) return;
-  fetch('/api/ground_truth?video=' + encodeURIComponent(currentVideoName), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(converted)
-  })
-    .then(r => r.json())
-    .then(resp => {
-      if (resp.status === 'ok') {
-        showToast('已将旧 ground_truth 自动转换为绝对时间戳');
-        gtLoaded = true;
-        gtModified = false;
-        updateGtStatus('saved');
-      } else {
-        showToast('旧 ground_truth 转换失败，请手动保存', true);
-      }
-    })
-    .catch(e => showToast('旧 ground_truth 转换失败: ' + e.message, true));
-}
-
-function pad2(n) { return String(n).padStart(2, '0'); }
-function pad3(n) { return String(n).padStart(3, '0'); }
-
-function formatAbsoluteTimeFromOffset(seconds) {
-  if (videoCreatedAtMs == null) return round1(seconds);
-  const d = new Date(videoCreatedAtMs + round1(seconds) * 1000);
-  const offsetMin = -d.getTimezoneOffset();
-  const sign = offsetMin >= 0 ? '+' : '-';
-  const absMin = Math.abs(offsetMin);
-  const tz = sign + pad2(Math.floor(absMin / 60)) + ':' + pad2(absMin % 60);
-  return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()) +
-    'T' + pad2(d.getHours()) + ':' + pad2(d.getMinutes()) + ':' + pad2(d.getSeconds()) +
-    '.' + pad3(d.getMilliseconds()) + tz;
-}
-
-function withAbsoluteTimes(iv) {
-  const entry = {
-    start: formatAbsoluteTimeFromOffset(iv.start),
-    end: formatAbsoluteTimeFromOffset(iv.end),
-    start_offset: round1(iv.start),
-    end_offset: round1(iv.end),
-    type: iv.type,
-    label: iv.label
-  };
-  if (videoCreatedAtText) entry.video_created_at = videoCreatedAtText;
-  return entry;
-}
-
 function buildFullIntervals() {
   if (intervals.length === 0) return [];
   const dur = video.duration || 0;
@@ -602,16 +456,16 @@ function buildFullIntervals() {
   let cursor = 0;
   for (const iv of sorted) {
     if (iv.start > cursor + 0.05) {
-      result.push(withAbsoluteTimes({ start: cursor, end: iv.start, type: 'transition', label: '过渡' }));
+      result.push({ start: round1(cursor), end: round1(iv.start), type: 'transition', label: '过渡' });
     }
-    const entry = withAbsoluteTimes({ start: iv.start, end: iv.end, type: 'exercise', label: iv.label || '' });
+    const entry = { start: round1(iv.start), end: round1(iv.end), type: 'exercise', label: iv.label || '' };
     if (iv.equipment) entry.equipment = iv.equipment;
     if (iv.reps) entry.reps = iv.reps;
     result.push(entry);
     cursor = iv.end;
   }
   if (dur > 0 && cursor < dur - 0.05) {
-    result.push(withAbsoluteTimes({ start: cursor, end: dur, type: 'transition', label: '过渡' }));
+    result.push({ start: round1(cursor), end: round1(dur), type: 'transition', label: '过渡' });
   }
   return result;
 }
@@ -622,7 +476,14 @@ function exportIntervals() {
   const full = buildFullIntervals();
   if (full.length === 0) { alert('暂无标注区间'); return; }
 
-  const lines = full.map(iv => '    ' + JSON.stringify(iv));
+  const lines = full.map(iv => {
+    let s = `    {"start": ${String(iv.start).padStart(5)}, "end": ${String(iv.end).padStart(5)}, "type": "${iv.type}"`;
+    s += `, "label": "${iv.label}"`;
+    if (iv.equipment) s += `, "equipment": "${iv.equipment}"`;
+    if (iv.reps) s += `, "reps": "${iv.reps}"`;
+    s += '}';
+    return s;
+  });
   const text = '[\n' + lines.join(',\n') + '\n]';
   document.getElementById('exportText').value = text;
   document.getElementById('exportModal').classList.add('active');
@@ -655,9 +516,9 @@ function doImport() {
     const data = JSON.parse(text);
     if (!Array.isArray(data)) throw new Error('需要JSON数组');
     intervals = data.filter(d => d.type === 'exercise').map(d => ({
-      start: getRelativeStart(d), end: getRelativeEnd(d), type: 'exercise',
+      start: d.start, end: d.end, type: 'exercise',
       label: d.label || '', equipment: d.equipment || '', reps: d.reps || ''
-    })).filter(d => Number.isFinite(d.start) && Number.isFinite(d.end) && d.end > d.start);
+    }));
     intervals.sort((a, b) => a.start - b.start);
     markers = [];
     markModified();

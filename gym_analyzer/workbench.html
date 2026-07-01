@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness Pipeline Workbench</title>
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #242835;
+  --border: #2e3345;
+  --text: #e1e4ed;
+  --text2: #8b90a5;
+  --accent: #6c7cff;
+  --accent2: #4a56c8;
+  --green: #4caf50;
+  --orange: #ff9800;
+  --red: #f44336;
+  --radius: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.header h1 { font-size: 20px; font-weight: 600; }
+.header .subtitle { color: var(--text2); font-size: 13px; }
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 24px 32px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.panel-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface2);
+}
+.panel-header h2 { font-size: 14px; font-weight: 600; }
+.panel-body { padding: 12px 16px; }
+
+.prompt-section { margin-bottom: 16px; }
+.prompt-section:last-child { margin-bottom: 0; }
+.section-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.prompt-item, .sample-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.prompt-item:hover, .sample-item:hover { background: var(--surface2); }
+
+.prompt-item input[type="radio"],
+.sample-item input[type="checkbox"] {
+  margin-top: 3px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.prompt-info { flex: 1; min-width: 0; }
+.prompt-name { font-size: 13px; font-weight: 500; }
+.prompt-version {
+  display: inline-block;
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: var(--accent2);
+  color: #fff;
+  margin-left: 6px;
+}
+.prompt-desc {
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sample-info { flex: 1; min-width: 0; }
+.sample-name { font-size: 13px; font-weight: 500; }
+.sample-meta {
+  display: flex;
+  gap: 8px;
+  margin-top: 3px;
+  flex-wrap: wrap;
+}
+.badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+.badge-green { background: rgba(76,175,80,0.2); color: var(--green); }
+.badge-orange { background: rgba(255,152,0,0.2); color: var(--orange); }
+.badge-gray { background: rgba(139,144,165,0.15); color: var(--text2); }
+
+.full-width { grid-column: 1 / -1; }
+
+.actions-bar {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--accent2); }
+.btn-orange { background: var(--orange); color: #fff; }
+.btn-orange:hover:not(:disabled) { background: #e68900; }
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.btn-outline:hover:not(:disabled) { background: var(--surface2); }
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.input-group label {
+  font-size: 12px;
+  color: var(--text2);
+  white-space: nowrap;
+}
+.input-group input[type="text"],
+.input-group input[type="number"] {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+}
+.input-group input[type="text"]:focus,
+.input-group input[type="number"]:focus {
+  border-color: var(--accent);
+}
+.input-group input[type="text"] { width: 260px; }
+.input-group input[type="number"] { width: 60px; }
+
+.check-option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text2);
+  cursor: pointer;
+}
+.check-option input { accent-color: var(--accent); cursor: pointer; }
+
+.log-panel {
+  grid-column: 1 / -1;
+  display: none;
+}
+.log-panel.visible { display: block; }
+.log-content {
+  background: #0a0c12;
+  border-radius: 6px;
+  padding: 12px;
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #c8ccd8;
+  max-height: 400px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+.status-pending { background: rgba(139,144,165,0.15); color: var(--text2); }
+.status-running { background: rgba(108,124,255,0.2); color: var(--accent); }
+.status-success { background: rgba(76,175,80,0.2); color: var(--green); }
+.status-failed { background: rgba(244,67,54,0.2); color: var(--red); }
+
+.spinner {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border: 2px solid rgba(108,124,255,0.3);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.select-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.select-bar .btn { padding: 4px 10px; font-size: 11px; }
+.sample-count { font-size: 12px; color: var(--text2); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Fitness Pipeline Workbench</h1>
+  <span class="subtitle">Prompt 版本选择 · 视频样本管理 · SigLIP 抽帧 · 一键运行</span>
+</div>
+
+<div class="main">
+  <!-- Prompt Selection -->
+  <div class="panel">
+    <div class="panel-header">
+      <h2>Phase 1 Prompt（粗区间识别）</h2>
+    </div>
+    <div class="panel-body" id="phase1-list"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <h2>Phase 2 Prompt（精细动作识别）</h2>
+    </div>
+    <div class="panel-body" id="phase2-list"></div>
+  </div>
+
+  <!-- Sample Selection -->
+  <div class="panel full-width">
+    <div class="panel-header">
+      <h2>视频样本</h2>
+      <div class="select-bar">
+        <span class="sample-count" id="sample-count">0 / 0 已选</span>
+        <button class="btn btn-outline" onclick="selectAllSamples()">全选</button>
+        <button class="btn btn-outline" onclick="deselectAllSamples()">取消全选</button>
+      </div>
+    </div>
+    <div class="panel-body" id="sample-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:6px;"></div>
+  </div>
+
+  <!-- Action Bar -->
+  <div class="actions-bar">
+    <div class="input-group">
+      <label>输出目录：</label>
+      <input type="text" id="output-dir" placeholder="留空则输出到样本目录">
+    </div>
+
+    <div class="input-group">
+      <label>并发数：</label>
+      <input type="number" id="workers" value="4" min="1" max="8">
+    </div>
+
+    <label class="check-option">
+      <input type="checkbox" id="overwrite"> 覆盖缓存
+    </label>
+    <label class="check-option">
+      <input type="checkbox" id="use-yolo"> YOLO 标注
+    </label>
+
+    <div style="flex:1"></div>
+
+    <button class="btn btn-orange" id="btn-siglip" onclick="runSiglip()" disabled>
+      SigLIP 抽帧
+    </button>
+    <button class="btn btn-primary" id="btn-run" onclick="runPipeline()" disabled>
+      一键运行 Pipeline
+    </button>
+  </div>
+
+  <!-- Log Output -->
+  <div class="panel log-panel" id="log-panel">
+    <div class="panel-header">
+      <h2>任务输出</h2>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span id="task-status"></span>
+        <button class="btn btn-outline" onclick="clearLog()" style="padding:4px 10px;font-size:11px;">清空</button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="log-content" id="log-content">等待任务...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = '';
+let prompts = { phase1: [], phase2: [] };
+let samples = [];
+let currentTaskId = null;
+let pollTimer = null;
+
+async function loadData() {
+  const [pRes, sRes] = await Promise.all([
+    fetch(`${API}/api/prompts`).then(r => r.json()),
+    fetch(`${API}/api/samples`).then(r => r.json()),
+  ]);
+  prompts = pRes;
+  samples = sRes;
+  renderPrompts();
+  renderSamples();
+}
+
+function renderPrompts() {
+  renderPromptList('phase1-list', prompts.phase1, 'p1');
+  renderPromptList('phase2-list', prompts.phase2, 'p2');
+}
+
+function renderPromptList(containerId, items, groupName) {
+  const el = document.getElementById(containerId);
+  if (!items.length) {
+    el.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:8px;">未找到 prompt 文件</div>';
+    return;
+  }
+  el.innerHTML = items.map((p, i) => `
+    <label class="prompt-item">
+      <input type="radio" name="${groupName}" value="${p.filename}" ${i === 0 ? 'checked' : ''}>
+      <div class="prompt-info">
+        <div>
+          <span class="prompt-name">${p.filename}</span>
+          <span class="prompt-version">v${p.version}</span>
+        </div>
+        ${p.description ? `<div class="prompt-desc" title="${escHtml(p.description)}">${escHtml(p.description)}</div>` : ''}
+      </div>
+    </label>
+  `).join('');
+  updateButtons();
+}
+
+function renderSamples() {
+  const el = document.getElementById('sample-list');
+  if (!samples.length) {
+    el.innerHTML = '<div style="color:var(--text2);font-size:13px;padding:8px;">未找到样本目录</div>';
+    return;
+  }
+  el.innerHTML = samples.map(s => `
+    <label class="sample-item" data-name="${escHtml(s.name)}">
+      <input type="checkbox" class="sample-cb" value="${escHtml(s.name)}" onchange="updateButtons()">
+      <div class="sample-info">
+        <div class="sample-name">${escHtml(s.name)}</div>
+        <div class="sample-meta">
+          ${s.videos.length ? `<span class="badge badge-gray">${s.videos[0]}</span>` : ''}
+          ${s.has_frames ? `<span class="badge badge-green">${s.frame_count} 帧</span>` : '<span class="badge badge-orange">未抽帧</span>'}
+          ${s.has_siglip ? '<span class="badge badge-green">SigLIP</span>' : ''}
+          ${s.has_period_result ? '<span class="badge badge-green">P1</span>' : ''}
+          ${s.has_exercise_result ? '<span class="badge badge-green">P2</span>' : ''}
+        </div>
+      </div>
+    </label>
+  `).join('');
+  updateButtons();
+}
+
+function getSelectedSamples() {
+  return [...document.querySelectorAll('.sample-cb:checked')].map(cb => cb.value);
+}
+
+function getSelectedPhase1() {
+  const el = document.querySelector('input[name="p1"]:checked');
+  return el ? el.value : '';
+}
+
+function getSelectedPhase2() {
+  const el = document.querySelector('input[name="p2"]:checked');
+  return el ? el.value : '';
+}
+
+function updateButtons() {
+  const selected = getSelectedSamples();
+  const total = document.querySelectorAll('.sample-cb').length;
+  document.getElementById('sample-count').textContent = `${selected.length} / ${total} 已选`;
+  document.getElementById('btn-siglip').disabled = selected.length === 0;
+  document.getElementById('btn-run').disabled = selected.length === 0 || !getSelectedPhase1() || !getSelectedPhase2();
+}
+
+function selectAllSamples() {
+  document.querySelectorAll('.sample-cb').forEach(cb => cb.checked = true);
+  updateButtons();
+}
+
+function deselectAllSamples() {
+  document.querySelectorAll('.sample-cb').forEach(cb => cb.checked = false);
+  updateButtons();
+}
+
+async function runSiglip() {
+  const selected = getSelectedSamples();
+  if (!selected.length) return;
+
+  const outputDir = document.getElementById('output-dir').value.trim();
+
+  showLog('提交 SigLIP 抽帧任务...');
+  setTaskStatus('pending');
+
+  try {
+    const res = await fetch(`${API}/api/siglip`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ samples: selected, output_dir: outputDir }),
+    });
+    const data = await res.json();
+    if (data.error) {
+      appendLog(`错误: ${data.error}`);
+      setTaskStatus('failed');
+      return;
+    }
+    currentTaskId = data.task_id;
+    appendLog(`任务已提交 (${data.cmd_count} 个抽帧命令), task_id=${data.task_id}`);
+    startPolling();
+  } catch (e) {
+    appendLog(`请求失败: ${e.message}`);
+    setTaskStatus('failed');
+  }
+}
+
+async function runPipeline() {
+  const selected = getSelectedSamples();
+  const p1 = getSelectedPhase1();
+  const p2 = getSelectedPhase2();
+  if (!selected.length || !p1 || !p2) return;
+
+  const outputDir = document.getElementById('output-dir').value.trim();
+  const workers = parseInt(document.getElementById('workers').value) || 4;
+  const overwrite = document.getElementById('overwrite').checked;
+  const useYolo = document.getElementById('use-yolo').checked;
+
+  showLog(`提交 Pipeline 任务...
+  Phase1: ${p1}
+  Phase2: ${p2}
+  样本: ${selected.join(', ')}
+  覆盖: ${overwrite}  YOLO: ${useYolo}  并发: ${workers}`);
+  setTaskStatus('pending');
+
+  try {
+    const res = await fetch(`${API}/api/run`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        samples: selected,
+        phase1_prompt: p1,
+        phase2_prompt: p2,
+        output_dir: outputDir,
+        workers,
+        overwrite,
+        use_yolo: useYolo,
+      }),
+    });
+    const data = await res.json();
+    if (data.error) {
+      appendLog(`错误: ${data.error}`);
+      setTaskStatus('failed');
+      return;
+    }
+    currentTaskId = data.task_id;
+    appendLog(`任务已提交 (${data.cmd_count} 个样本), task_id=${data.task_id}`);
+    startPolling();
+  } catch (e) {
+    appendLog(`请求失败: ${e.message}`);
+    setTaskStatus('failed');
+  }
+}
+
+function startPolling() {
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(pollTask, 2000);
+}
+
+async function pollTask() {
+  if (!currentTaskId) return;
+  try {
+    const res = await fetch(`${API}/api/task/${currentTaskId}`);
+    const task = await res.json();
+    if (task.error) return;
+
+    setTaskStatus(task.status);
+
+    if (task.progress) {
+      appendLog(`进度: ${task.progress} - 当前样本: ${task.current_sample || ''}`);
+    }
+
+    if (task.status === 'success' || task.status === 'failed') {
+      clearInterval(pollTimer);
+      pollTimer = null;
+      if (task.output) {
+        appendLog('\n' + task.output);
+      }
+      if (task.finished_at && task.started_at) {
+        const dur = (task.finished_at - task.started_at).toFixed(1);
+        appendLog(`\n耗时: ${dur}s`);
+      }
+      loadData();
+    }
+  } catch (e) {}
+}
+
+function showLog(text) {
+  const panel = document.getElementById('log-panel');
+  panel.classList.add('visible');
+  document.getElementById('log-content').textContent = text;
+}
+
+function appendLog(text) {
+  const el = document.getElementById('log-content');
+  el.textContent += '\n' + text;
+  el.scrollTop = el.scrollHeight;
+}
+
+function clearLog() {
+  document.getElementById('log-content').textContent = '';
+  document.getElementById('log-panel').classList.remove('visible');
+  setTaskStatus('');
+}
+
+function setTaskStatus(status) {
+  const el = document.getElementById('task-status');
+  const map = {
+    pending: ['status-pending', '等待中'],
+    running: ['status-running', '<span class="spinner"></span> 运行中'],
+    success: ['status-success', '完成'],
+    failed: ['status-failed', '失败'],
+  };
+  const info = map[status];
+  if (info) {
+    el.innerHTML = `<span class="status-badge ${info[0]}">${info[1]}</span>`;
+  } else {
+    el.innerHTML = '';
+  }
+}
+
+function escHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+loadData();
+</script>
+</body>
+</html>

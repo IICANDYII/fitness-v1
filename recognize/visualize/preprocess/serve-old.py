@@ -3,8 +3,6 @@ import json
 import os
 import socketserver
 import urllib.parse
-import subprocess
-from datetime import datetime, timezone
 
 RAW_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', '..', '..', 'gym_analyzer', 'input'))
 SHARED_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'result', 'shared'))
@@ -25,8 +23,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self._serve_video_list()
         elif path == '/api/ground_truth':
             self._serve_ground_truth(parsed.query)
-        elif path == '/api/video_meta':
-            self._serve_video_meta(parsed.query)
         elif path == '/api/imu':
             self._serve_imu(parsed.query)
         elif path == '/api/imu_sessions':
@@ -45,95 +41,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def _video_to_folder(self, video_name):
         return os.path.splitext(video_name)[0]
-
-    def _video_path(self, video_name):
-        filepath = os.path.normpath(os.path.join(RAW_DIR, video_name))
-        if not filepath.startswith(RAW_DIR):
-            return None
-        return filepath
-
-    def _parse_ffprobe_time(self, value):
-        if not value:
-            return None
-        value = value.strip()
-        try:
-            if value.endswith('Z'):
-                return datetime.fromisoformat(value.replace('Z', '+00:00')).timestamp()
-            return datetime.fromisoformat(value).timestamp()
-        except ValueError:
-            return None
-
-    def _get_video_creation_time(self, filepath):
-        """Return best-effort video creation timestamp in seconds.
-
-        Priority:
-        1. embedded container/stream creation_time from ffprobe, when available;
-        2. filesystem creation time on platforms that expose it;
-        3. filesystem mtime as a portable fallback.
-        """
-        # Prefer metadata written by cameras/phones when ffprobe exists.
-        try:
-            out = subprocess.check_output(
-                [
-                    'ffprobe', '-v', 'error',
-                    '-show_entries', 'format_tags=creation_time:stream_tags=creation_time',
-                    '-of', 'json', filepath,
-                ],
-                stderr=subprocess.DEVNULL,
-                timeout=5,
-            )
-            meta = json.loads(out.decode('utf-8', errors='ignore'))
-            candidates = []
-            fmt_tags = meta.get('format', {}).get('tags', {}) if isinstance(meta, dict) else {}
-            if isinstance(fmt_tags, dict):
-                candidates.append(fmt_tags.get('creation_time'))
-            for stream in meta.get('streams', []) if isinstance(meta, dict) else []:
-                tags = stream.get('tags', {})
-                if isinstance(tags, dict):
-                    candidates.append(tags.get('creation_time'))
-            for value in candidates:
-                ts = self._parse_ffprobe_time(value)
-                if ts is not None:
-                    return ts, 'metadata.creation_time'
-        except Exception:
-            pass
-
-        stat = os.stat(filepath)
-        birthtime = getattr(stat, 'st_birthtime', None)
-        if birthtime:
-            return birthtime, 'filesystem.birthtime'
-        if os.name == 'nt':
-            return os.path.getctime(filepath), 'filesystem.ctime'
-        return os.path.getmtime(filepath), 'filesystem.mtime_fallback'
-
-    def _serve_video_meta(self, query_string):
-        params = urllib.parse.parse_qs(query_string)
-        video = params.get('video', [''])[0]
-        if not video:
-            self.send_error(400, 'Missing video parameter')
-            return
-        filepath = self._video_path(video)
-        if not filepath:
-            self.send_error(403)
-            return
-        if not os.path.isfile(filepath):
-            self.send_error(404)
-            return
-        ts, source = self._get_video_creation_time(filepath)
-        dt = datetime.fromtimestamp(ts).astimezone()
-        data = json.dumps({
-            "found": True,
-            "video": video,
-            "created_at_epoch_ms": int(round(ts * 1000)),
-            "created_at": dt.isoformat(timespec='milliseconds'),
-            "creation_time_source": source,
-        }, ensure_ascii=False).encode('utf-8')
-        self.send_response(200)
-        self.send_header('Content-Type', 'application/json; charset=utf-8')
-        self.send_header('Content-Length', len(data))
-        self.end_headers()
-        self.wfile.write(data)
-
 
     def _serve_ground_truth(self, query_string):
         params = urllib.parse.parse_qs(query_string)
@@ -270,8 +177,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def _serve_raw_file(self, filename):
         filename = urllib.parse.unquote(filename)
-        filepath = self._video_path(filename)
-        if not filepath:
+        filepath = os.path.normpath(os.path.join(RAW_DIR, filename))
+        if not filepath.startswith(RAW_DIR):
             self.send_error(403)
             return
         if not os.path.isfile(filepath):

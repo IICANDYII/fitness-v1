@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>IMU + GT 可视化对齐</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "Microsoft YaHei", sans-serif; background: #0f1117; color: #e0e0e0; }
+.header { padding: 12px 24px; background: #1a1d28; border-bottom: 1px solid #2a2d38; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.header h1 { font-size: 18px; font-weight: 600; }
+.header select { background: #2a2d38; color: #e0e0e0; border: 1px solid #3a3d48; padding: 6px 12px; border-radius: 6px; font-size: 14px; }
+.controls { padding: 8px 24px; background: #14161f; border-bottom: 1px solid #2a2d38; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.controls label { font-size: 13px; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+.controls input[type="checkbox"] { accent-color: #4a9eff; }
+.btn { background: #2a2d38; color: #e0e0e0; border: 1px solid #3a3d48; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 13px; }
+.btn:hover { background: #3a3d48; }
+.btn.active { background: #4a9eff; color: #fff; border-color: #4a9eff; }
+.offset-ctrl { display: flex; align-items: center; gap: 4px; }
+.offset-ctrl input[type="number"] { width: 80px; background: #2a2d38; color: #e0e0e0; border: 1px solid #3a3d48; padding: 4px 8px; border-radius: 4px; font-size: 13px; text-align: center; }
+.main { display: flex; height: calc(100vh - 95px); overflow: hidden; }
+.video-side { flex: 0 0 340px; display: flex; flex-direction: column; background: #14161f; border-right: 1px solid #2a2d38; overflow: hidden; }
+.video-wrap { flex: 1 1 0; display: flex; align-items: center; justify-content: center; background: #000; min-height: 0; padding: 4px; }
+.video-wrap video { max-width: 100%; max-height: 100%; border-radius: 4px; }
+.video-info { flex: 0 0 auto; padding: 8px 12px; font-size: 12px; color: #aaa; border-top: 1px solid #2a2d38; }
+.video-info .vid-time { color: #4a9eff; font-weight: 600; font-size: 14px; font-family: monospace; }
+.video-info .vid-gt { color: #ffd43b; margin-top: 4px; }
+.video-no { display: flex; align-items: center; justify-content: center; height: 100%; color: #555; font-size: 14px; }
+.charts-side { flex: 1 1 0; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+.panel { position: relative; overflow: hidden; border-bottom: 1px solid #2a2d38; }
+.panel-label { position: absolute; top: 4px; left: 8px; font-size: 11px; color: #666; z-index: 5; pointer-events: none; }
+.energy-panel { flex: 0 0 160px; min-height: 100px; }
+.raw-panel { flex: 1 1 0; min-height: 120px; }
+canvas { position: absolute; top: 0; left: 0; }
+.gt-timeline { flex: 0 0 50px; background: #1a1d28; border-top: 1px solid #2a2d38; position: relative; overflow: hidden; }
+.gt-bar { position: absolute; top: 6px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.6); overflow: hidden; white-space: nowrap; cursor: pointer; }
+.gt-bar.exercise { background: rgba(74,158,255,.45); border: 1px solid rgba(74,158,255,.7); }
+.gt-bar.transition { background: rgba(120,120,120,.25); border: 1px solid rgba(120,120,120,.4); }
+.minimap { flex: 0 0 36px; background: #14161f; border-top: 1px solid #2a2d38; position: relative; cursor: crosshair; }
+.minimap canvas { position: absolute; top: 0; left: 0; }
+.minimap .viewport { position: absolute; top: 0; height: 100%; background: rgba(74,158,255,.15); border-left: 2px solid #4a9eff; border-right: 2px solid #4a9eff; pointer-events: none; }
+.tooltip { position: fixed; background: #2a2d38; border: 1px solid #4a4d58; border-radius: 6px; padding: 8px 12px; font-size: 12px; pointer-events: none; z-index: 100; display: none; max-width: 320px; }
+.tooltip .tt-time { color: #4a9eff; font-weight: 600; }
+.tooltip .tt-row { margin-top: 2px; }
+.tooltip .tt-label { color: #aaa; }
+.legend { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 3px; font-size: 11px; }
+.legend-swatch { width: 10px; height: 3px; border-radius: 1px; }
+.status { font-size: 12px; color: #888; margin-left: auto; }
+.cursor-line { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,.3); pointer-events: none; z-index: 10; }
+.window-ctrl { display: flex; align-items: center; gap: 4px; }
+.window-ctrl input[type="range"] { width: 80px; accent-color: #4a9eff; }
+.window-ctrl span { font-size: 12px; color: #aaa; min-width: 24px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>IMU + GT 对齐</h1>
+  <select id="sessionSelect"><option value="">加载中...</option></select>
+  <span style="font-size:13px;color:#888">GT偏移(秒):</span>
+  <div class="offset-ctrl">
+    <button class="btn" onclick="adjustOffset(-10)">-10</button>
+    <button class="btn" onclick="adjustOffset(-1)">-1</button>
+    <button class="btn" onclick="adjustOffset(-0.1)">-0.1</button>
+    <input type="number" id="gtOffset" value="0" step="0.1">
+    <button class="btn" onclick="adjustOffset(0.1)">+0.1</button>
+    <button class="btn" onclick="adjustOffset(1)">+1</button>
+    <button class="btn" onclick="adjustOffset(10)">+10</button>
+  </div>
+  <button class="btn" onclick="resetZoom()">重置缩放</button>
+  <button class="btn" onclick="autoAlign()">自动对齐</button>
+  <div class="status" id="status"></div>
+</div>
+
+<div class="controls">
+  <span style="font-size:13px;color:#888">能量图:</span>
+  <div class="window-ctrl">
+    <span>窗口:</span>
+    <input type="range" id="windowSize" min="5" max="100" value="20">
+    <span id="windowLabel">20</span>
+  </div>
+  <label><input type="checkbox" id="showMag" checked> 合加速度</label>
+  <label><input type="checkbox" id="showEnergy" checked> 能量(方差)</label>
+  <label><input type="checkbox" id="showGyroMag"> 角速度幅值</label>
+  <span style="margin-left:12px;font-size:13px;color:#888;border-left:1px solid #2a2d38;padding-left:12px">原始曲线:</span>
+  <label><input type="checkbox" id="showAcc" checked> 加速度</label>
+  <label><input type="checkbox" id="showGyro"> 角速度</label>
+  <label><input type="checkbox" id="showAngle"> 角度</label>
+  <div class="legend" style="margin-left:auto">
+    <div class="legend-item"><div class="legend-swatch" style="background:#ffd43b"></div>合加速度</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#ff6b6b;height:6px;opacity:.5"></div>能量</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#20c997"></div>角速度幅值</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="video-side" id="videoSide">
+    <div class="video-wrap" id="videoWrap">
+      <div class="video-no" id="videoPlaceholder">选择会话后加载视频</div>
+      <video id="videoPlayer" style="display:none" controls></video>
+    </div>
+    <div class="video-info" id="videoInfo">
+      <div>视频时间: <span class="vid-time" id="vidTime">--</span> / <span id="vidDuration">--</span></div>
+      <div class="vid-gt" id="vidGT">--</div>
+      <div style="margin-top:4px;color:#666">IMU时间: <span style="color:#4a9eff" id="vidIMUTime">--</span></div>
+    </div>
+  </div>
+  <div class="charts-side">
+    <div class="panel energy-panel" id="energyPanel">
+      <div class="panel-label">运动强度 (用于对齐)</div>
+      <canvas id="energyCanvas"></canvas>
+      <div class="cursor-line cursor-sync" style="display:none"></div>
+    </div>
+    <div class="panel raw-panel" id="rawPanel">
+      <div class="panel-label">原始IMU数据</div>
+      <canvas id="rawCanvas"></canvas>
+      <div class="cursor-line cursor-sync" style="display:none"></div>
+    </div>
+    <div class="gt-timeline" id="gtTimeline"></div>
+    <div class="minimap" id="minimap">
+      <canvas id="minimapCanvas"></canvas>
+      <div class="viewport" id="minimapViewport"></div>
+    </div>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const COLORS = {
+  ax: '#ff6b6b', ay: '#51cf66', az: '#4a9eff',
+  gx: '#ffa94d', gy: '#cc5de8', gz: '#20c997',
+  rx: '#e8590c', ry: '#1098ad', rz: '#ae3ec9',
+};
+
+let imuData = [], gtData = [], imuTimes = [];
+let accMag = [], energy = [], gyroMag = [];
+let viewStart = 0, viewEnd = 100;
+let totalDuration = 0;
+let gtOffset = 0;
+let windowSize = 20;
+let isDragging = false, dragStartX = 0, dragViewStart = 0;
+let minimapDragging = false;
+let currentFolder = '';
+
+const videoPlayer = document.getElementById('videoPlayer');
+const energyCanvas = document.getElementById('energyCanvas');
+const energyCtx = energyCanvas.getContext('2d');
+const rawCanvas = document.getElementById('rawCanvas');
+const rawCtx = rawCanvas.getContext('2d');
+const minimapCanvas = document.getElementById('minimapCanvas');
+const minimapCtx = minimapCanvas.getContext('2d');
+const energyPanel = document.getElementById('energyPanel');
+const rawPanel = document.getElementById('rawPanel');
+const tooltip = document.getElementById('tooltip');
+
+function init() {
+  fetch('/api/imu_sessions')
+    .then(r => r.json())
+    .then(sessions => {
+      const sel = document.getElementById('sessionSelect');
+      sel.innerHTML = '<option value="">-- 选择会话 --</option>';
+      sessions.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.folder;
+        opt.textContent = s.folder + (s.has_gt ? ' (有GT)' : '');
+        sel.appendChild(opt);
+      });
+      sel.onchange = () => { if (sel.value) loadSession(sel.value); };
+      if (sessions.length > 0) {
+        sel.value = sessions[0].folder;
+        loadSession(sessions[0].folder);
+      }
+    });
+}
+
+function loadSession(folder) {
+  currentFolder = folder;
+  document.getElementById('status').textContent = '加载中...';
+  fetch('/api/imu?folder=' + encodeURIComponent(folder))
+    .then(r => r.json())
+    .then(resp => {
+      if (!resp.found) { document.getElementById('status').textContent = '未找到IMU数据'; return; }
+      imuData = resp.data;
+      gtData = resp.gt || [];
+      parseIMUTimes();
+      computeDerived();
+      gtOffset = 0;
+      document.getElementById('gtOffset').value = '0';
+      viewStart = 0;
+      viewEnd = totalDuration;
+      document.getElementById('status').textContent =
+        `${imuData.length} 条, ${gtData.length} 段GT, ${totalDuration.toFixed(1)}s`;
+      loadVideo(folder);
+      resize();
+      drawAll();
+    });
+}
+
+function loadVideo(folder) {
+  const vp = videoPlayer;
+  const ph = document.getElementById('videoPlaceholder');
+  const src = '/raw/' + encodeURIComponent(folder) + '.mp4';
+  vp.pause();
+  vp.src = src;
+  vp.style.display = 'none';
+  ph.style.display = 'flex';
+  ph.textContent = '加载视频...';
+  vp.onloadeddata = () => {
+    vp.style.display = 'block';
+    ph.style.display = 'none';
+    document.getElementById('vidDuration').textContent = formatTime(vp.duration);
+  };
+  vp.onerror = () => {
+    ph.style.display = 'flex';
+    ph.textContent = '未找到视频: ' + folder + '.mp4';
+    vp.style.display = 'none';
+  };
+  vp.load();
+}
+
+function formatTime(s) {
+  if (!isFinite(s)) return '--';
+  const m = Math.floor(s / 60);
+  const sec = (s % 60).toFixed(1);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+// video time update -> sync cursor on charts
+videoPlayer.addEventListener('timeupdate', () => {
+  const vt = videoPlayer.currentTime;
+  document.getElementById('vidTime').textContent = formatTime(vt);
+  // video time = GT time, IMU time = GT time + offset
+  const imuT = vt + gtOffset;
+  document.getElementById('vidIMUTime').textContent = formatTime(imuT);
+  const gt = gtData.find(s => vt >= s.start && vt < s.end);
+  document.getElementById('vidGT').textContent = gt ? gt.label + (gt.reps ? ' x' + gt.reps : '') : '过渡';
+  drawAll();
+  drawVideoPositionLine();
+});
+
+function drawVideoPositionLine() {
+  if (videoPlayer.style.display === 'none' || videoPlayer.paused && !videoPlayer.currentTime) return;
+  const vt = videoPlayer.currentTime;
+  const imuT = vt + gtOffset;
+  // draw a bright vertical line on both chart panels
+  [energyCtx, rawCtx].forEach((ctx, idx) => {
+    const panel = idx === 0 ? energyPanel : rawPanel;
+    const w = panel.clientWidth, h = panel.clientHeight;
+    const pad = { left: 50, right: 16 };
+    const plotW = w - pad.left - pad.right;
+    const timeRange = viewEnd - viewStart;
+    if (imuT < viewStart || imuT > viewEnd) return;
+    const x = pad.left + ((imuT - viewStart) / timeRange) * plotW;
+    ctx.strokeStyle = '#ffd43b';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 3]);
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, h);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    // label
+    ctx.fillStyle = '#ffd43b';
+    ctx.font = 'bold 10px monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('▶ ' + formatTime(vt), x + 4, 14);
+  });
+}
+
+function parseIMUTimes() {
+  if (imuData.length === 0) return;
+  const t0 = new Date(imuData[0].time).getTime();
+  imuTimes = imuData.map(d => (new Date(d.time).getTime() - t0) / 1000);
+  totalDuration = imuTimes[imuTimes.length - 1];
+}
+
+function computeDerived() {
+  const n = imuData.length;
+  accMag = new Float64Array(n);
+  gyroMag = new Float64Array(n);
+  for (let i = 0; i < n; i++) {
+    const d = imuData[i];
+    accMag[i] = Math.sqrt((d.ax||0)**2 + (d.ay||0)**2 + (d.az||0)**2);
+    gyroMag[i] = Math.sqrt((d.gx||0)**2 + (d.gy||0)**2 + (d.gz||0)**2);
+  }
+  computeEnergy();
+}
+
+function computeEnergy() {
+  const n = imuData.length;
+  energy = new Float64Array(n);
+  const halfW = Math.max(1, Math.floor(windowSize / 2));
+  for (let i = 0; i < n; i++) {
+    const lo = Math.max(0, i - halfW);
+    const hi = Math.min(n - 1, i + halfW);
+    const cnt = hi - lo + 1;
+    let sum = 0, sum2 = 0;
+    for (let j = lo; j <= hi; j++) {
+      sum += accMag[j];
+      sum2 += accMag[j] * accMag[j];
+    }
+    const mean = sum / cnt;
+    energy[i] = sum2 / cnt - mean * mean;
+  }
+}
+
+function resize() {
+  const dpr = window.devicePixelRatio || 1;
+  function setupCanvas(canvas, container) {
+    const w = container.clientWidth, h = container.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    canvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  setupCanvas(energyCanvas, energyPanel);
+  setupCanvas(rawCanvas, rawPanel);
+  const mm = document.getElementById('minimap');
+  setupCanvas(minimapCanvas, mm);
+}
+
+function drawAll() {
+  drawEnergyChart();
+  drawRawChart();
+  drawMinimap();
+  drawGTTimeline();
+  updateMinimapViewport();
+}
+
+function getVisibleRange() {
+  let si = 0, ei = imuTimes.length - 1;
+  for (let i = 0; i < imuTimes.length; i++) {
+    if (imuTimes[i] >= viewStart) { si = Math.max(0, i - 1); break; }
+  }
+  for (let i = imuTimes.length - 1; i >= 0; i--) {
+    if (imuTimes[i] <= viewEnd) { ei = Math.min(imuTimes.length - 1, i + 1); break; }
+  }
+  return [si, ei];
+}
+
+function drawGTBands(ctx, w, h, pad) {
+  const off = gtOffset;
+  const plotW = w - pad.left - pad.right;
+  const timeRange = viewEnd - viewStart;
+  gtData.forEach(seg => {
+    const s = seg.start + off, e = seg.end + off;
+    if (e < viewStart || s > viewEnd) return;
+    const x0 = pad.left + ((s - viewStart) / timeRange) * plotW;
+    const x1 = pad.left + ((e - viewStart) / timeRange) * plotW;
+    const clampX0 = Math.max(pad.left, x0), clampX1 = Math.min(pad.left + plotW, x1);
+    if (seg.type === 'exercise') {
+      ctx.fillStyle = 'rgba(74,158,255,.1)';
+      ctx.fillRect(clampX0, pad.top, clampX1 - clampX0, h - pad.top - pad.bottom);
+      // exercise label at top
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(clampX0, pad.top, clampX1 - clampX0, h - pad.top - pad.bottom);
+      ctx.clip();
+      ctx.fillStyle = 'rgba(74,158,255,.5)';
+      ctx.font = '11px "Microsoft YaHei", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(seg.label, (clampX0 + clampX1) / 2, pad.top + 14);
+      ctx.restore();
+      // left edge dashed line
+      ctx.strokeStyle = 'rgba(74,158,255,.4)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(clampX0, pad.top); ctx.lineTo(clampX0, h - pad.bottom); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(clampX1, pad.top); ctx.lineTo(clampX1, h - pad.bottom); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  });
+}
+
+function drawTimeAxis(ctx, w, h, pad) {
+  const plotW = w - pad.left - pad.right;
+  const timeRange = viewEnd - viewStart;
+  let tickStep = 1;
+  if (timeRange > 600) tickStep = 60;
+  else if (timeRange > 300) tickStep = 30;
+  else if (timeRange > 120) tickStep = 15;
+  else if (timeRange > 60) tickStep = 10;
+  else if (timeRange > 20) tickStep = 5;
+  else if (timeRange > 5) tickStep = 1;
+  else tickStep = 0.5;
+
+  ctx.fillStyle = '#555'; ctx.font = '10px monospace'; ctx.textAlign = 'center';
+  ctx.strokeStyle = '#1e2030'; ctx.lineWidth = 1;
+  for (let t = Math.ceil(viewStart / tickStep) * tickStep; t <= viewEnd; t += tickStep) {
+    const x = pad.left + ((t - viewStart) / timeRange) * plotW;
+    ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, h - pad.bottom); ctx.stroke();
+  }
+}
+
+function drawEnergyChart() {
+  const w = energyPanel.clientWidth, h = energyPanel.clientHeight;
+  energyCtx.clearRect(0, 0, w, h);
+  if (imuData.length === 0) return;
+
+  const pad = { left: 50, right: 16, top: 22, bottom: 4 };
+  const plotW = w - pad.left - pad.right;
+  const plotH = h - pad.top - pad.bottom;
+  const [si, ei] = getVisibleRange();
+  const step = Math.max(1, Math.floor((ei - si) / (plotW * 2)));
+  const timeRange = viewEnd - viewStart;
+
+  drawTimeAxis(energyCtx, w, h, pad);
+  drawGTBands(energyCtx, w, h, pad);
+
+  const showMag = document.getElementById('showMag').checked;
+  const showEnergy = document.getElementById('showEnergy').checked;
+  const showGyroMag = document.getElementById('showGyroMag').checked;
+
+  // compute visible Y ranges for each series
+  let magMax = 0, enMax = 0, gmMax = 0;
+  for (let i = si; i <= ei; i += step) {
+    if (showMag && accMag[i] > magMax) magMax = accMag[i];
+    if (showEnergy && energy[i] > enMax) enMax = energy[i];
+    if (showGyroMag && gyroMag[i] > gmMax) gmMax = gyroMag[i];
+  }
+  magMax = magMax || 3;
+  enMax = enMax || 1;
+  gmMax = gmMax || 100;
+
+  // draw energy as filled area (most important for alignment)
+  if (showEnergy) {
+    energyCtx.beginPath();
+    energyCtx.moveTo(pad.left, pad.top + plotH);
+    for (let i = si; i <= ei; i += step) {
+      const x = pad.left + ((imuTimes[i] - viewStart) / timeRange) * plotW;
+      const y = pad.top + plotH - (energy[i] / enMax) * plotH;
+      energyCtx.lineTo(x, y);
+    }
+    energyCtx.lineTo(pad.left + ((imuTimes[Math.min(ei, imuTimes.length-1)] - viewStart) / timeRange) * plotW, pad.top + plotH);
+    energyCtx.closePath();
+    const grad = energyCtx.createLinearGradient(0, pad.top, 0, pad.top + plotH);
+    grad.addColorStop(0, 'rgba(255,107,107,.5)');
+    grad.addColorStop(0.5, 'rgba(255,107,107,.2)');
+    grad.addColorStop(1, 'rgba(255,107,107,.02)');
+    energyCtx.fillStyle = grad;
+    energyCtx.fill();
+    // outline
+    energyCtx.beginPath();
+    let first = true;
+    for (let i = si; i <= ei; i += step) {
+      const x = pad.left + ((imuTimes[i] - viewStart) / timeRange) * plotW;
+      const y = pad.top + plotH - (energy[i] / enMax) * plotH;
+      if (first) { energyCtx.moveTo(x, y); first = false; }
+      else energyCtx.lineTo(x, y);
+    }
+    energyCtx.strokeStyle = '#ff6b6b';
+    energyCtx.lineWidth = 1.5;
+    energyCtx.stroke();
+  }
+
+  // draw acc magnitude line
+  if (showMag) {
+    energyCtx.beginPath();
+    let first = true;
+    for (let i = si; i <= ei; i += step) {
+      const x = pad.left + ((imuTimes[i] - viewStart) / timeRange) * plotW;
+      const y = pad.top + plotH - (accMag[i] / magMax) * plotH;
+      if (first) { energyCtx.moveTo(x, y); first = false; }
+      else energyCtx.lineTo(x, y);
+    }
+    energyCtx.strokeStyle = '#ffd43b';
+    energyCtx.lineWidth = 1.2;
+    energyCtx.stroke();
+  }
+
+  // draw gyro magnitude
+  if (showGyroMag) {
+    energyCtx.beginPath();
+    let first = true;
+    for (let i = si; i <= ei; i += step) {
+      const x = pad.left + ((imuTimes[i] - viewStart) / timeRange) * plotW;
+      const y = pad.top + plotH - (gyroMag[i] / gmMax) * plotH;
+      if (first) { energyCtx.moveTo(x, y); first = false; }
+      else energyCtx.lineTo(x, y);
+    }
+    energyCtx.strokeStyle = '#20c997';
+    energyCtx.lineWidth = 1.2;
+    energyCtx.stroke();
+  }
+
+  // Y axis labels
+  energyCtx.fillStyle = '#555'; energyCtx.font = '10px monospace'; energyCtx.textAlign = 'right';
+  if (showEnergy) {
+    energyCtx.fillText(enMax.toFixed(2), pad.left - 4, pad.top + 10);
+    energyCtx.fillText('0', pad.left - 4, pad.top + plotH);
+  }
+
+  // border
+  energyCtx.strokeStyle = '#2a2d38'; energyCtx.lineWidth = 1;
+  energyCtx.strokeRect(pad.left, pad.top, plotW, plotH);
+}
+
+function drawRawChart() {
+  const w = rawPanel.clientWidth, h = rawPanel.clientHeight;
+  rawCtx.clearRect(0, 0, w, h);
+  if (imuData.length === 0) return;
+
+  const showAcc = document.getElementById('showAcc').checked;
+  const showGyro = document.getElementById('showGyro').checked;
+  const showAngle = document.getElementById('showAngle').checked;
+
+  const pad = { left: 50, right: 16, top: 22, bottom: 20 };
+  const plotW = w - pad.left - pad.right;
+  const plotH = h - pad.top - pad.bottom;
+  const [si, ei] = getVisibleRange();
+  const step = Math.max(1, Math.floor((ei - si) / (plotW * 2)));
+  const timeRange = viewEnd - viewStart;
+
+  drawTimeAxis(rawCtx, w, h, pad);
+  drawGTBands(rawCtx, w, h, pad);
+
+  let channels = [];
+  if (showAcc) channels.push('ax', 'ay', 'az');
+  if (showGyro) channels.push('gx', 'gy', 'gz');
+  if (showAngle) channels.push('rx', 'ry', 'rz');
+
+  let yMin = Infinity, yMax = -Infinity;
+  for (let i = si; i <= ei; i += step) {
+    channels.forEach(ch => {
+      const v = imuData[i][ch];
+      if (v != null) { yMin = Math.min(yMin, v); yMax = Math.max(yMax, v); }
+    });
+  }
+  if (!isFinite(yMin)) { yMin = -1; yMax = 1; }
+  const yPad = (yMax - yMin) * 0.05 || 1;
+  yMin -= yPad; yMax += yPad;
+
+  // Y grid
+  rawCtx.strokeStyle = '#1e2030'; rawCtx.lineWidth = 1;
+  const nGridY = 4;
+  for (let i = 0; i <= nGridY; i++) {
+    const y = pad.top + (i / nGridY) * plotH;
+    rawCtx.beginPath(); rawCtx.moveTo(pad.left, y); rawCtx.lineTo(pad.left + plotW, y); rawCtx.stroke();
+    const val = yMax - (i / nGridY) * (yMax - yMin);
+    rawCtx.fillStyle = '#555'; rawCtx.font = '10px monospace'; rawCtx.textAlign = 'right';
+    rawCtx.fillText(val.toFixed(1), pad.left - 4, y + 3);
+  }
+
+  // time labels at bottom
+  let tickStep = 1;
+  if (timeRange > 600) tickStep = 60;
+  else if (timeRange > 300) tickStep = 30;
+  else if (timeRange > 120) tickStep = 15;
+  else if (timeRange > 60) tickStep = 10;
+  else if (timeRange > 20) tickStep = 5;
+  else if (timeRange > 5) tickStep = 1;
+  else tickStep = 0.5;
+  rawCtx.fillStyle = '#555'; rawCtx.font = '10px monospace'; rawCtx.textAlign = 'center';
+  for (let t = Math.ceil(viewStart / tickStep) * tickStep; t <= viewEnd; t += tickStep) {
+    const x = pad.left + ((t - viewStart) / timeRange) * plotW;
+    const label = t >= 60 ? Math.floor(t/60) + ':' + ('0' + Math.floor(t%60)).slice(-2) : t.toFixed(tickStep < 1 ? 1 : 0) + 's';
+    rawCtx.fillText(label, x, h - 4);
+  }
+
+  // draw series
+  function drawSeries(keys, dashed) {
+    keys.forEach(key => {
+      rawCtx.strokeStyle = COLORS[key];
+      rawCtx.lineWidth = dashed ? 1 : 1.2;
+      rawCtx.setLineDash(dashed ? [4,3] : []);
+      rawCtx.beginPath();
+      let first = true;
+      for (let i = si; i <= ei; i += step) {
+        const v = imuData[i][key];
+        if (v == null) continue;
+        const x = pad.left + ((imuTimes[i] - viewStart) / timeRange) * plotW;
+        const y = pad.top + (1 - (v - yMin) / (yMax - yMin)) * plotH;
+        if (first) { rawCtx.moveTo(x, y); first = false; }
+        else rawCtx.lineTo(x, y);
+      }
+      rawCtx.stroke();
+      rawCtx.setLineDash([]);
+    });
+  }
+
+  if (showAcc) drawSeries(['ax','ay','az'], false);
+  if (showGyro) drawSeries(['gx','gy','gz'], false);
+  if (showAngle) drawSeries(['rx','ry','rz'], true);
+
+  // legend in bottom-right
+  const legendItems = [];
+  if (showAcc) legendItems.push(['AccX','#ff6b6b'],['AccY','#51cf66'],['AccZ','#4a9eff']);
+  if (showGyro) legendItems.push(['GyroX','#ffa94d'],['GyroY','#cc5de8'],['GyroZ','#20c997']);
+  if (showAngle) legendItems.push(['AngleX','#e8590c'],['AngleY','#1098ad'],['AngleZ','#ae3ec9']);
+  if (legendItems.length > 0) {
+    rawCtx.font = '10px monospace';
+    let lx = pad.left + plotW - 8;
+    rawCtx.textAlign = 'right';
+    legendItems.reverse().forEach(([label, color], idx) => {
+      const tw = rawCtx.measureText(label).width;
+      rawCtx.fillStyle = color;
+      rawCtx.globalAlpha = 0.7;
+      rawCtx.fillRect(lx - tw - 14, pad.top + 6, 10, 3);
+      rawCtx.globalAlpha = 1;
+      rawCtx.fillText(label, lx, pad.top + 12);
+      lx -= tw + 24;
+    });
+  }
+
+  rawCtx.strokeStyle = '#2a2d38'; rawCtx.lineWidth = 1;
+  rawCtx.strokeRect(pad.left, pad.top, plotW, plotH);
+}
+
+function drawGTTimeline() {
+  const container = document.getElementById('gtTimeline');
+  container.innerHTML = '';
+  if (gtData.length === 0) return;
+  const w = container.clientWidth;
+  const off = gtOffset;
+  const timeRange = viewEnd - viewStart;
+
+  gtData.forEach(seg => {
+    const s = seg.start + off, e = seg.end + off;
+    if (e < viewStart || s > viewEnd) return;
+    const x0 = ((s - viewStart) / timeRange) * w;
+    const x1 = ((e - viewStart) / timeRange) * w;
+    const bar = document.createElement('div');
+    bar.className = 'gt-bar ' + seg.type;
+    bar.style.left = Math.max(0, x0) + 'px';
+    bar.style.width = Math.max(2, Math.min(w, x1) - Math.max(0, x0)) + 'px';
+    bar.textContent = seg.label + (seg.reps ? ' x' + seg.reps : '');
+    bar.title = `${seg.label} [${seg.start.toFixed(1)}s - ${seg.end.toFixed(1)}s]`;
+    container.appendChild(bar);
+  });
+  // time labels
+  gtData.forEach(seg => {
+    if (seg.type !== 'exercise') return;
+    const s = seg.start + off, e = seg.end + off;
+    if (e < viewStart || s > viewEnd) return;
+    const x0 = ((s - viewStart) / timeRange) * w;
+    const x1 = ((e - viewStart) / timeRange) * w;
+    const lbl = document.createElement('div');
+    lbl.style.cssText = 'position:absolute;top:32px;font-size:9px;color:#666;text-align:center;overflow:hidden;white-space:nowrap;';
+    lbl.style.left = Math.max(0, x0) + 'px';
+    lbl.style.width = Math.max(2, Math.min(w, x1) - Math.max(0, x0)) + 'px';
+    lbl.textContent = `${seg.start.toFixed(1)}s-${seg.end.toFixed(1)}s`;
+    container.appendChild(lbl);
+  });
+}
+
+function drawMinimap() {
+  const mm = document.getElementById('minimap');
+  const w = mm.clientWidth, h = mm.clientHeight;
+  minimapCtx.clearRect(0, 0, w, h);
+  if (imuData.length === 0) return;
+
+  // GT bands
+  const off = gtOffset;
+  gtData.forEach(seg => {
+    const s = seg.start + off, e = seg.end + off;
+    const x0 = (s / totalDuration) * w, x1 = (e / totalDuration) * w;
+    minimapCtx.fillStyle = seg.type === 'exercise' ? 'rgba(74,158,255,.25)' : 'rgba(120,120,120,.08)';
+    minimapCtx.fillRect(x0, 0, x1 - x0, h);
+  });
+
+  // energy waveform on minimap
+  const step = Math.max(1, Math.floor(imuData.length / w));
+  let eMax = 0;
+  for (let i = 0; i < energy.length; i += step) { if (energy[i] > eMax) eMax = energy[i]; }
+  eMax = eMax || 1;
+
+  minimapCtx.beginPath();
+  minimapCtx.moveTo(0, h);
+  for (let i = 0; i < imuData.length; i += step) {
+    const x = (imuTimes[i] / totalDuration) * w;
+    const y = h - (energy[i] / eMax) * h * 0.9;
+    minimapCtx.lineTo(x, y);
+  }
+  minimapCtx.lineTo(w, h);
+  minimapCtx.closePath();
+  const grad = minimapCtx.createLinearGradient(0, 0, 0, h);
+  grad.addColorStop(0, 'rgba(255,107,107,.4)');
+  grad.addColorStop(1, 'rgba(255,107,107,.05)');
+  minimapCtx.fillStyle = grad;
+  minimapCtx.fill();
+}
+
+function updateMinimapViewport() {
+  const w = document.getElementById('minimap').clientWidth;
+  const vp = document.getElementById('minimapViewport');
+  const x0 = (viewStart / totalDuration) * w;
+  const x1 = (viewEnd / totalDuration) * w;
+  vp.style.left = x0 + 'px';
+  vp.style.width = (x1 - x0) + 'px';
+}
+
+function adjustOffset(delta) {
+  gtOffset += delta;
+  document.getElementById('gtOffset').value = gtOffset.toFixed(1);
+  drawAll();
+}
+
+function resetZoom() {
+  viewStart = 0;
+  viewEnd = totalDuration;
+  drawAll();
+}
+
+function autoAlign() {
+  if (imuData.length === 0 || gtData.length === 0) return;
+  const firstEx = gtData.find(s => s.type === 'exercise');
+  if (!firstEx) return;
+
+  // find first sustained high-energy region
+  let eMax = 0;
+  for (let i = 0; i < energy.length; i++) { if (energy[i] > eMax) eMax = energy[i]; }
+  const threshold = eMax * 0.15;
+
+  let runStart = -1, runLen = 0, bestStart = -1, bestLen = 0;
+  for (let i = 0; i < energy.length; i++) {
+    if (energy[i] > threshold) {
+      if (runStart < 0) runStart = i;
+      runLen++;
+    } else {
+      if (runLen > bestLen) { bestLen = runLen; bestStart = runStart; }
+      runStart = -1; runLen = 0;
+    }
+  }
+  if (runLen > bestLen) { bestLen = runLen; bestStart = runStart; }
+
+  if (bestStart >= 0) {
+    const spikeTime = imuTimes[bestStart];
+    gtOffset = spikeTime - firstEx.start;
+    document.getElementById('gtOffset').value = gtOffset.toFixed(1);
+    document.getElementById('status').textContent += ` | 自动对齐: offset=${gtOffset.toFixed(1)}s`;
+    drawAll();
+  }
+}
+
+// --- Interactions ---
+function handleWheel(e) {
+  e.preventDefault();
+  const rect = e.currentTarget.getBoundingClientRect();
+  const mouseX = (e.clientX - rect.left) / rect.width;
+  const timeRange = viewEnd - viewStart;
+  const zoomFactor = e.deltaY > 0 ? 1.2 : 0.8;
+  const newRange = Math.min(totalDuration, Math.max(0.5, timeRange * zoomFactor));
+  const center = viewStart + mouseX * timeRange;
+  viewStart = Math.max(0, center - mouseX * newRange);
+  viewEnd = Math.min(totalDuration, viewStart + newRange);
+  drawAll();
+}
+
+function handleDragStart(e) {
+  if (e.button === 0) {
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragViewStart = viewStart;
+    document.body.style.cursor = 'grabbing';
+  }
+}
+
+function handleDragMove(e) {
+  if (!isDragging) return;
+  const rect = energyPanel.getBoundingClientRect();
+  const dx = e.clientX - dragStartX;
+  const timePerPx = (viewEnd - viewStart) / rect.width;
+  const dt = -dx * timePerPx;
+  const range = viewEnd - viewStart;
+  viewStart = Math.max(0, Math.min(totalDuration - range, dragViewStart + dt));
+  viewEnd = viewStart + range;
+  drawAll();
+}
+
+function handleDragEnd() {
+  isDragging = false;
+  document.body.style.cursor = '';
+}
+
+// cursor sync across panels
+function updateCursor(e) {
+  if (isDragging || imuData.length === 0) {
+    tooltip.style.display = 'none';
+    return;
+  }
+  const panels = [energyPanel, rawPanel];
+  let inPanel = false;
+  let mx = 0;
+  for (const p of panels) {
+    const r = p.getBoundingClientRect();
+    if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
+      mx = e.clientX - r.left;
+      inPanel = true;
+      break;
+    }
+  }
+
+  const cursors = document.querySelectorAll('.cursor-sync');
+  if (!inPanel) {
+    cursors.forEach(c => c.style.display = 'none');
+    tooltip.style.display = 'none';
+    return;
+  }
+
+  cursors.forEach(c => { c.style.display = 'block'; c.style.left = mx + 'px'; });
+
+  const t = viewStart + (mx / energyPanel.clientWidth) * (viewEnd - viewStart);
+  let closestIdx = 0, closestDist = Infinity;
+  for (let i = 0; i < imuTimes.length; i++) {
+    const d = Math.abs(imuTimes[i] - t);
+    if (d < closestDist) { closestDist = d; closestIdx = i; }
+    if (imuTimes[i] > t + 1) break;
+  }
+  const d = imuData[closestIdx];
+  const gt = gtData.find(s => t >= s.start + gtOffset && t < s.end + gtOffset);
+
+  tooltip.style.display = 'block';
+  tooltip.style.left = Math.min(window.innerWidth - 330, e.clientX + 16) + 'px';
+  tooltip.style.top = (e.clientY - 10) + 'px';
+  tooltip.innerHTML = `
+    <div class="tt-time">${imuTimes[closestIdx].toFixed(2)}s &nbsp; ${d.time.split('T')[1]}</div>
+    <div class="tt-row"><span class="tt-label">Acc:</span> ${(d.ax||0).toFixed(3)}, ${(d.ay||0).toFixed(3)}, ${(d.az||0).toFixed(3)} g</div>
+    <div class="tt-row"><span class="tt-label">|Acc|:</span> ${accMag[closestIdx].toFixed(3)} g &nbsp; <span class="tt-label">能量:</span> ${energy[closestIdx].toFixed(4)}</div>
+    <div class="tt-row"><span class="tt-label">Gyro:</span> ${(d.gx||0).toFixed(1)}, ${(d.gy||0).toFixed(1)}, ${(d.gz||0).toFixed(1)} °/s</div>
+    <div class="tt-row"><span class="tt-label">Angle:</span> ${(d.rx||0).toFixed(1)}, ${(d.ry||0).toFixed(1)}, ${(d.rz||0).toFixed(1)} °</div>
+    ${gt ? `<div class="tt-row" style="color:#4a9eff;margin-top:4px">GT: ${gt.label}${gt.reps?' x'+gt.reps:''}</div>` : ''}
+  `;
+}
+
+// double-click on chart -> seek video to that IMU time
+function handleDblClick(e) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const imuT = viewStart + (mx / rect.width) * (viewEnd - viewStart);
+  const videoT = imuT - gtOffset;
+  if (videoPlayer.style.display !== 'none' && videoT >= 0 && videoT <= videoPlayer.duration) {
+    videoPlayer.currentTime = videoT;
+  }
+}
+
+[energyPanel, rawPanel].forEach(panel => {
+  panel.addEventListener('wheel', handleWheel);
+  panel.addEventListener('mousedown', handleDragStart);
+  panel.addEventListener('dblclick', handleDblClick);
+  panel.style.cursor = 'crosshair';
+});
+window.addEventListener('mousemove', e => { handleDragMove(e); updateCursor(e); });
+window.addEventListener('mouseup', handleDragEnd);
+[energyPanel, rawPanel].forEach(p => p.addEventListener('mouseleave', () => {
+  document.querySelectorAll('.cursor-sync').forEach(c => c.style.display = 'none');
+  tooltip.style.display = 'none';
+}));
+
+// minimap drag
+const minimap = document.getElementById('minimap');
+minimap.addEventListener('mousedown', e => {
+  minimapDragging = true;
+  const rect = minimap.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) / rect.width;
+  const range = viewEnd - viewStart;
+  viewStart = Math.max(0, Math.min(totalDuration - range, mx * totalDuration - range / 2));
+  viewEnd = viewStart + range;
+  drawAll();
+});
+window.addEventListener('mousemove', e => {
+  if (minimapDragging) {
+    const rect = minimap.getBoundingClientRect();
+    const mx = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    const range = viewEnd - viewStart;
+    viewStart = Math.max(0, Math.min(totalDuration - range, mx * totalDuration - range / 2));
+    viewEnd = viewStart + range;
+    drawAll();
+  }
+});
+window.addEventListener('mouseup', () => { minimapDragging = false; });
+
+// controls
+document.getElementById('gtOffset').addEventListener('change', e => {
+  gtOffset = parseFloat(e.target.value) || 0;
+  drawAll();
+});
+
+document.getElementById('windowSize').addEventListener('input', e => {
+  windowSize = parseInt(e.target.value);
+  document.getElementById('windowLabel').textContent = windowSize;
+  computeEnergy();
+  drawAll();
+});
+
+['showAcc', 'showGyro', 'showAngle', 'showMag', 'showEnergy', 'showGyroMag'].forEach(id => {
+  document.getElementById(id).addEventListener('change', drawAll);
+});
+
+window.addEventListener('resize', () => { resize(); drawAll(); });
+
+init();
+</script>
+</body>
+</html>

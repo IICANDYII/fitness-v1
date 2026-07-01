@@ -747,6 +747,22 @@
       "advanced variant merged"
     ]
   },
+  "hanging_leg_raise": {
+    "product_action_cn": "悬垂举腿",
+    "standard_equipment": "no_equipment",
+    "training_part_cn": "腹",
+    "action_pattern": "raise",
+    "first_person_level_min": "A",
+    "source_ids": [
+      "0253"
+    ],
+    "source_names": [
+      "hanging leg raise"
+    ],
+    "mapping_notes": [
+      "user hangs from pull-up bar, legs raise upward"
+    ]
+  },
   "pushup": {
     "product_action_cn": "俯卧撑",
     "standard_equipment": "no_equipment",

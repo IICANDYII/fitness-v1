@@ -60,6 +60,81 @@ def load_prompt(yaml_path: str | Path) -> PromptConfig:
     )
 
 
+def parse_version_info(version_info_path: str | Path) -> dict[str, dict[str, str]]:
+    """
+    解析 VERSION_INFO.md，返回 {版本号: {phase1_prompt: ..., phase2_prompt: ...}}。
+    """
+    version_info_path = Path(version_info_path)
+    if not version_info_path.exists():
+        return {}
+
+    result: dict[str, dict[str, str]] = {}
+    with open(version_info_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+
+    for line in lines:
+        line = line.strip()
+        if not line.startswith("|"):
+            continue
+        cells = [c.strip() for c in line.split("|")]
+        cells = [c for c in cells if c]
+        if len(cells) < 4:
+            continue
+        version = cells[0].strip()
+        if version in ("版本", "------", "---"):
+            continue
+        if not version.startswith("v"):
+            continue
+        result[version] = {
+            "phase1_prompt": cells[2].strip(),
+            "phase2_prompt": cells[3].strip(),
+        }
+
+    return result
+
+
+def load_prompts_for_version(
+    prompts_dir: str | Path,
+    version: str,
+    version_info_path: str | Path,
+) -> tuple[PromptConfig, PromptConfig]:
+    """
+    根据版本号从 VERSION_INFO.md 查询对应的 prompt 文件并加载。
+
+    Args:
+        prompts_dir: prompt yaml 文件目录
+        version: 版本号，如 "v15"
+        version_info_path: VERSION_INFO.md 路径
+
+    Raises:
+        KeyError: 版本号不在 VERSION_INFO.md 中
+        FileNotFoundError: 对应的 prompt 文件不存在
+    """
+    prompts_dir = Path(prompts_dir)
+    info = parse_version_info(version_info_path)
+
+    if version not in info:
+        raise KeyError(f"版本 {version} 不在 VERSION_INFO.md 中")
+
+    p1_name = info[version]["phase1_prompt"]
+    p2_name = info[version]["phase2_prompt"]
+
+    p1_path = prompts_dir / p1_name
+    p2_path = prompts_dir / p2_name
+
+    if not p1_path.exists():
+        raise FileNotFoundError(f"Phase1 prompt 文件不存在：{p1_path}")
+    if not p2_path.exists():
+        raise FileNotFoundError(f"Phase2 prompt 文件不存在：{p2_path}")
+
+    phase1 = load_prompt(p1_path)
+    phase2 = load_prompt(p2_path)
+
+    print(f"[yaml_loader] 版本 {version} -> Phase1: {p1_name}  Phase2: {p2_name}")
+
+    return phase1, phase2
+
+
 def load_prompts(prompts_dir: str | Path) -> tuple[PromptConfig, PromptConfig]:
     """
     扫描目录，返回 (phase1_prompt, phase2_prompt)。

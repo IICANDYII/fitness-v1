@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>识别版本评估对比 v9-v15</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #eef0f8;
+  font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  padding: 24px 20px;
+  min-height: 100vh;
+}
+h1 { text-align: center; font-size: 22px; color: #1a1a2e; margin-bottom: 6px; }
+.subtitle { text-align: center; color: #888; font-size: 13px; margin-bottom: 24px; }
+.card {
+  background: #fff; border-radius: 12px; padding: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07); margin-bottom: 20px;
+  max-width: 1400px; margin-left: auto; margin-right: auto;
+}
+.card h2 { font-size: 15px; color: #555; margin-bottom: 14px; border-bottom: 2px solid #eee; padding-bottom: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { padding: 10px 14px; text-align: center; border-bottom: 1px solid #f0f0f0; }
+th { background: #f8f9fc; font-weight: 600; color: #555; position: sticky; top: 0; z-index: 1; }
+th.metric-header { font-size: 12px; }
+th .metric-sub { font-size: 11px; color: #999; font-weight: 400; display: block; }
+tr:hover { background: #f5f8ff; }
+.good { color: #1D9E75; font-weight: 600; }
+.mid  { color: #BA7517; font-weight: 600; }
+.bad  { color: #A32D2D; font-weight: 600; }
+.best-cell { color: #085041; font-weight: 600; background: #E1F5EE; padding: 3px 8px; border-radius: 4px; }
+.version-col { font-weight: 700; color: #333; text-align: left; white-space: nowrap; }
+.loading { text-align: center; padding: 60px; color: #999; font-size: 15px; }
+.metric-cards { display: flex; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; max-width: 1400px; margin-left: auto; margin-right: auto; }
+.metric-card {
+  flex: 1; min-width: 200px;
+  border-radius: 12px; padding: 18px; text-align: center; color: #fff;
+}
+.metric-card.purple { background: linear-gradient(135deg, #667eea, #764ba2); }
+.metric-card.green  { background: linear-gradient(135deg, #11998e, #38ef7d); }
+.metric-card.orange { background: linear-gradient(135deg, #f093fb, #f5576c); }
+.metric-card .val { font-size: 30px; font-weight: 700; }
+.metric-card .lbl { font-size: 12px; opacity: .85; margin-top: 2px; }
+.metric-card .sub { font-size: 11px; opacity: .65; margin-top: 2px; }
+
+.tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.tab {
+  padding: 5px 14px; border-radius: 18px; cursor: pointer;
+  font-size: 12px; border: 1px solid #ddd; background: #fff; transition: .2s;
+}
+.tab.active { background: #667eea; color: #fff; border-color: #667eea; }
+.tab:hover { background: #eef0fa; }
+.tab.active:hover { background: #5a6fd6; }
+
+.detail-table-wrap { max-height: 450px; overflow-y: auto; }
+select { padding: 5px 10px; border-radius: 8px; border: 1px solid #ddd; font-size: 13px; }
+.nav-link { display: block; text-align: center; margin-bottom: 16px; }
+.nav-link a { color: #667eea; text-decoration: none; font-size: 13px; }
+.nav-link a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="nav-link"><a href="/">&larr; 返回训练仪表板</a></div>
+<h1>识别版本评估对比</h1>
+<p class="subtitle">v9 - v15 全量视频样本指标对比</p>
+
+<div class="metric-cards" id="topCards"></div>
+
+<div class="card">
+  <h2>版本指标汇总</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>版本</th>
+        <th class="metric-header">
+          动作识别准确率
+          <span class="metric-sub">TP / (TP+FP)</span>
+        </th>
+        <th class="metric-header">
+          动作识别召回率
+          <span class="metric-sub">TP / (TP+FN)</span>
+        </th>
+        <th class="metric-header">
+          动作识别F1
+          <span class="metric-sub">2PR/(P+R)</span>
+        </th>
+        <th class="metric-header">
+          组数准确率
+          <span class="metric-sub">组数正确/GT总数</span>
+        </th>
+        <th class="metric-header">
+          总次数准确率
+          <span class="metric-sub">总次数正确/GT总数</span>
+        </th>
+        <th class="metric-header">
+          综合F1
+          <span class="metric-sub">动作+组+次全对</span>
+        </th>
+        <th class="metric-header">
+          动作数偏差
+          <span class="metric-sub">预测/GT 偏离%</span>
+        </th>
+        <th class="metric-header">
+          总次数偏差
+          <span class="metric-sub">预测/GT 偏离%</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody id="summaryBody"></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h2>各视频指标明细</h2>
+  <div class="tabs" id="metricTabs"></div>
+  <div class="detail-table-wrap">
+    <table>
+      <thead id="videoHead"></thead>
+      <tbody id="videoBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <h2>动作级对照（选择版本和视频）</h2>
+  <div style="display:flex;gap:10px;margin-bottom:12px;">
+    <select id="selVer"></select>
+    <select id="selVid"></select>
+  </div>
+  <div class="detail-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>GT动作</th><th>预测动作</th><th>IoU</th>
+          <th>动作</th><th>GT组</th><th>预测组</th><th>GT次</th><th>预测次</th>
+          <th>组</th><th>次</th><th>综合</th><th>错误类型</th>
+        </tr>
+      </thead>
+      <tbody id="detailBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div id="loadingMsg" class="loading">加载中...</div>
+
+<script>
+let DATA = null;
+let currentMetric = 'action_f1';
+const METRIC_LABELS = {
+  action_f1:  '动作识别F1',
+  set_acc:    '组数准确率',
+  setrep_acc: '总次数准确率',
+  joint_f1:   '综合F1',
+};
+const ERROR_TYPE_CN = {
+  fully_correct:   '完全正确',
+  wrong_action:    '动作错误',
+  rep_error:       '次数偏差',
+  missed_action:   '漏识别',
+  extra_action:    '多识别',
+};
+
+function colorVal(v, isBest) {
+  if (v === null || v === undefined) return '<span class="mid">-</span>';
+  if (isBest) return `<span class="best-cell">${v}%</span>`;
+  if (v >= 40) return `<span class="good">${v}%</span>`;
+  if (v >= 25) return `<span class="mid">${v}%</span>`;
+  return `<span class="bad">${v}%</span>`;
+}
+
+function devCell(dev, pred, gt, isBest) {
+  const sign = dev > 0 ? '+' : '';
+  const abs = Math.abs(dev);
+  const c = isBest ? 'best-cell' : (abs <= 10 ? 'good' : abs <= 30 ? 'mid' : 'bad');
+  return `<span class="${c}">${sign}${dev}%</span> <span style="font-size:11px;color:var(--color-text-tertiary);">(${pred}/${gt})</span>`;
+}
+
+function render() {
+  if (!DATA) return;
+  document.getElementById('loadingMsg').style.display = 'none';
+
+  const { versions, rows, per_video, details, videos } = DATA;
+
+  // Find best row per metric for top cards
+  let bestF1 = rows[0], bestSR = rows[0], bestJF = rows[0];
+  rows.forEach(r => {
+    if (r.action_f1 > bestF1.action_f1) bestF1 = r;
+    if (r.setrep_acc > bestSR.setrep_acc) bestSR = r;
+    if (r.joint_f1 > bestJF.joint_f1) bestJF = r;
+  });
+
+  // Top cards - show best version per metric
+  document.getElementById('topCards').innerHTML = `
+    <div class="metric-card purple">
+      <div class="val">${bestF1.action_f1}%</div>
+      <div class="lbl">最佳动作识别F1</div>
+      <div class="sub">${bestF1.version} | TP=${bestF1.tp} FP=${bestF1.fp} FN=${bestF1.fn}</div>
+    </div>
+    <div class="metric-card green">
+      <div class="val">${bestSR.setrep_acc}%</div>
+      <div class="lbl">最佳总次数准确率</div>
+      <div class="sub">${bestSR.version} | GT总数=${bestSR.gt_count}</div>
+    </div>
+    <div class="metric-card orange">
+      <div class="val">${bestJF.joint_f1}%</div>
+      <div class="lbl">最佳综合F1</div>
+      <div class="sub">${bestJF.version} | 动作+组+次全对</div>
+    </div>
+  `;
+
+  // Find best per column (higher is better for metrics, closest to 0 for deviations)
+  const bestIdx = {};
+  ['action_precision','action_recall','action_f1','set_acc','setrep_acc','joint_f1'].forEach(k => {
+    let bi = 0;
+    rows.forEach((r, i) => { if (r[k] > rows[bi][k]) bi = i; });
+    bestIdx[k] = bi;
+  });
+  ['action_count_deviation','rep_deviation'].forEach(k => {
+    let bi = 0;
+    rows.forEach((r, i) => { if (Math.abs(r[k]) < Math.abs(rows[bi][k])) bi = i; });
+    bestIdx[k] = bi;
+  });
+
+  // Summary table
+  let html = '';
+  rows.forEach((r, i) => {
+    html += `<tr>
+      <td class="version-col">${r.version}</td>
+      <td>${colorVal(r.action_precision, bestIdx.action_precision===i)}</td>
+      <td>${colorVal(r.action_recall, bestIdx.action_recall===i)}</td>
+      <td>${colorVal(r.action_f1, bestIdx.action_f1===i)}</td>
+      <td>${colorVal(r.set_acc, bestIdx.set_acc===i)}</td>
+      <td>${colorVal(r.setrep_acc, bestIdx.setrep_acc===i)}</td>
+      <td>${colorVal(r.joint_f1, bestIdx.joint_f1===i)}</td>
+      <td>${devCell(r.action_count_deviation, r.pred_action_count, r.gt_action_count, bestIdx.action_count_deviation===i)}</td>
+      <td>${devCell(r.rep_deviation, r.pred_total_reps, r.gt_total_reps, bestIdx.rep_deviation===i)}</td>
+    </tr>`;
+  });
+  document.getElementById('summaryBody').innerHTML = html;
+
+  // Metric tabs
+  renderTabs();
+  renderVideoTable();
+
+  // Detail selectors
+  const selVer = document.getElementById('selVer');
+  const selVid = document.getElementById('selVid');
+  selVer.innerHTML = versions.map(v => `<option value="${v}">${v}</option>`).join('');
+  selVer.value = versions[versions.length - 1];
+  selVer.onchange = () => { updateVideoSelect(); };
+  selVid.onchange = () => { renderDetail(); };
+  updateVideoSelect();
+}
+
+function renderTabs() {
+  let html = '';
+  for (const [k, label] of Object.entries(METRIC_LABELS)) {
+    html += `<div class="tab ${k===currentMetric?'active':''}" onclick="currentMetric='${k}';renderTabs();renderVideoTable();">${label}</div>`;
+  }
+  document.getElementById('metricTabs').innerHTML = html;
+}
+
+function renderVideoTable() {
+  const { versions, per_video, videos } = DATA;
+  let th = '<tr><th style="text-align:left">视频</th>';
+  versions.forEach(v => th += `<th>${v}</th>`);
+  th += '</tr>';
+  document.getElementById('videoHead').innerHTML = th;
+
+  let html = '';
+  videos.forEach(vid => {
+    html += `<tr><td style="text-align:left;font-size:12px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${vid}">${vid}</td>`;
+    versions.forEach(ver => {
+      const pv = (per_video[ver] || {})[vid];
+      const val = pv ? pv[currentMetric] : null;
+      html += `<td>${colorVal(val)}</td>`;
+    });
+    html += '</tr>';
+  });
+  document.getElementById('videoBody').innerHTML = html;
+}
+
+function updateVideoSelect() {
+  const ver = document.getElementById('selVer').value;
+  const selVid = document.getElementById('selVid');
+  const dets = DATA.details[ver] || {};
+  const vids = Object.keys(dets).sort();
+  selVid.innerHTML = vids.map(v => `<option value="${v}">${v}</option>`).join('');
+  renderDetail();
+}
+
+function renderDetail() {
+  const ver = document.getElementById('selVer').value;
+  const vid = document.getElementById('selVid').value;
+  const dets = ((DATA.details[ver] || {})[vid]) || [];
+  let html = '';
+  dets.forEach(d => {
+    const bg = d.joint_ok ? '#f0fff0' : (d.error_type==='missed_action' ? '#fff0f0' : (d.error_type==='extra_action' ? '#fff8e0' : '#fff5f5'));
+    const errCn = ERROR_TYPE_CN[d.error_type] || d.error_type;
+    html += `<tr style="background:${bg}">
+      <td>${d.gt_action}</td><td>${d.pred_action}</td><td>${d.iou}</td>
+      <td>${d.action_ok?'<span class="good">&#10003;</span>':'<span class="bad">&#10007;</span>'}</td>
+      <td>${d.gt_sets ?? '-'}</td><td>${d.pred_sets ?? '-'}</td>
+      <td>${d.gt_reps ?? '-'}</td><td>${d.pred_reps ?? '-'}</td>
+      <td>${d.set_ok?'<span class="good">&#10003;</span>':'<span class="bad">&#10007;</span>'}</td>
+      <td>${d['rep_ok@1']?'<span class="good">&#10003;</span>':'<span class="bad">&#10007;</span>'}</td>
+      <td>${d.joint_ok?'<span class="good">&#10003;</span>':'<span class="bad">&#10007;</span>'}</td>
+      <td>${errCn}</td>
+    </tr>`;
+  });
+  document.getElementById('detailBody').innerHTML = html || '<tr><td colspan="12" style="color:#999">无数据</td></tr>';
+}
+
+fetch('/api/evaluation-metrics')
+  .then(r => r.json())
+  .then(d => { DATA = d; render(); })
+  .catch(e => {
+    document.getElementById('loadingMsg').textContent = '加载失败: ' + e.message;
+  });
+</script>
+</body>
+</html>

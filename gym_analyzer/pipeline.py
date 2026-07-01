@@ -34,7 +34,7 @@ from .optical_flow import (
     load_flow,
 )
 from .stitcher import stitch_phase1_grids, sec_to_hhmmss
-from .yaml_loader import load_prompts
+from .yaml_loader import load_prompts, load_prompts_for_version
 from .recognizer import run_phase1, run_phase2, load_imu_data, MAX_EXERCISE_WORKERS
 
 
@@ -48,6 +48,9 @@ def run_pipeline(
     overwrite: bool = False,
     exercise_workers: int = MAX_EXERCISE_WORKERS,
     output_dir: str | Path | None = None,
+    version: str | None = None,
+    version_info_path: str | Path | None = None,
+    use_yolo: bool = False,
 ) -> None:
     """
     从已抽帧的文件夹执行完整分析。
@@ -62,6 +65,8 @@ def run_pipeline(
         overwrite:    是否忽略缓存重新执行
         exercise_workers: Phase 2 并发数
         output_dir:   结果输出目录（默认与 work_dir 相同）
+        version:      运行版本号（如 "v15"），指定后从 VERSION_INFO.md 查询对应 prompt
+        version_info_path: VERSION_INFO.md 路径（默认 recognize/visualize/result/VERSION_INFO.md）
     """
     t0 = time.time()
     work_dir = Path(work_dir)
@@ -87,7 +92,12 @@ def run_pipeline(
     # ── 加载 prompts ──
     if prompts_dir is None:
         prompts_dir = Path(__file__).parent / "prompts"
-    phase1_prompt, phase2_prompt = load_prompts(prompts_dir)
+    if version is not None:
+        if version_info_path is None:
+            version_info_path = Path(__file__).parent.parent / "recognize" / "visualize" / "result" / "VERSION_INFO.md"
+        phase1_prompt, phase2_prompt = load_prompts_for_version(prompts_dir, version, version_info_path)
+    else:
+        phase1_prompt, phase2_prompt = load_prompts(prompts_dir)
 
     # ── Step 1：加载帧元数据 ──
     meta_path = video_dir / "frames_meta.json"
@@ -112,17 +122,27 @@ def run_pipeline(
     print(f"Phase 2 并发数：{exercise_workers}")
     print(f"{'=' * 60}\n")
 
+    # ── shared 目录（光流 + IMU 缓存）──
+    _shared_base = Path(__file__).parent.parent / "recognize" / "visualize" / "result" / "shared"
+
     # ── Step 1.5：加载 IMU 数据（如有）──
+    # 优先从 shared 目录加载 IMU.txt，其次从 video_dir 加载 IMU_data.txt
+    _shared_imu = _shared_base / video_dir.name / "IMU.txt"
     imu_path = video_dir / "IMU_data.txt"
-    imu_records = load_imu_data(imu_path)
-    if imu_records:
-        print(f"[IMU] 已加载 {len(imu_records)} 条记录，时长 {imu_records[-1][0]:.0f}s：{imu_path}")
-    else:
-        print(f"[IMU] 未找到 IMU_data.txt，跳过传感器辅助")
+    imu_records = None
+    if _shared_imu.exists():
+        imu_records = load_imu_data(_shared_imu)
+        if imu_records:
+            print(f"[IMU] 已从 shared 加载 {len(imu_records)} 条记录，时长 {imu_records[-1][0]:.0f}s：{_shared_imu}")
+    if not imu_records:
+        imu_records = load_imu_data(imu_path)
+        if imu_records:
+            print(f"[IMU] 已加载 {len(imu_records)} 条记录，时长 {imu_records[-1][0]:.0f}s：{imu_path}")
+    if not imu_records:
+        print(f"[IMU] 未找到 IMU 数据，跳过传感器辅助")
 
     # ── Step 2：光流（各版本共享）──
     # 优先从 shared 目录加载预计算的光流，其次从 video_dir 加载
-    _shared_base = Path(__file__).parent.parent / "recognize" / "visualize" / "result" / "shared"
     _shared_flow = _shared_base / video_dir.name / "optical_flow.json"
     flow_path = video_dir / "optical_flow.json"
 
@@ -216,6 +236,7 @@ def run_pipeline(
         exercise_workers=exercise_workers,
         imu_records=imu_records,
         equipment_timeline=equipment_timeline,
+        use_yolo=use_yolo,
     )
 
     # ── 汇总 ──
@@ -266,6 +287,12 @@ def main():
     parser.add_argument(
         "--output", "-o", default=None,
         help="结果输出目录（默认与 work_dir 相同）")
+    parser.add_argument(
+        "--version", "-v", default=None,
+        help="运行版本号（如 v15），从 VERSION_INFO.md 查询对应 prompt")
+    parser.add_argument(
+        "--use-yolo", action="store_true",
+        help="对比实验：对 Exercise 帧进行 YOLO 手部+器材标注后拼图")
     args = parser.parse_args()
 
     run_pipeline(
@@ -274,6 +301,8 @@ def main():
         overwrite=args.overwrite,
         exercise_workers=args.workers,
         output_dir=args.output,
+        version=args.version,
+        use_yolo=args.use_yolo,
     )
 
 
