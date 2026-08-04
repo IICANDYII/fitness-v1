@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <defs>
+    <style>
+      .bg { fill: #f7f8fb; }
+      .title { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 52px; font-weight: 800; fill: #121826; }
+      .subtitle { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 24px; fill: #526070; }
+      .sectionTitle { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 27px; font-weight: 800; fill: #111827; }
+      .label { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 23px; font-weight: 700; fill: #111827; }
+      .text { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 20px; fill: #334155; }
+      .small { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 18px; fill: #64748b; }
+      .tag { font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif; font-size: 17px; font-weight: 700; fill: #ffffff; }
+      .card { fill: #ffffff; stroke: #dbe3ef; stroke-width: 2; rx: 18; }
+      .card2 { fill: #fbfdff; stroke: #dbe3ef; stroke-width: 2; rx: 16; }
+      .blue { fill: #2563eb; }
+      .green { fill: #059669; }
+      .orange { fill: #ea580c; }
+      .purple { fill: #7c3aed; }
+      .dark { fill: #111827; }
+      .line { stroke: #94a3b8; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .softLine { stroke: #cbd5e1; stroke-width: 2; fill: none; stroke-dasharray: 7 7; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1600" height="1000"/>
+
+  <text class="title" x="70" y="90">Relty Diet Balance 今日工作汇报</text>
+  <text class="subtitle" x="72" y="130">2026-06-16 · 明确 baseline 算法与 Balance 关系，并把下一阶段重点收敛到 Goal 定义</text>
+
+  <rect class="card" x="70" y="170" width="1460" height="160"/>
+  <text class="sectionTitle" x="105" y="218">今天的核心结论</text>
+  <text class="text" x="105" y="260">Relty 的优势不是单个分数，而是低摩擦记录带来的长上下文。</text>
+  <text class="text" x="105" y="292">软件端的关键任务，是把凌乱上下文做分级与编排：主界面清晰、子 agent 聚焦、下钻逐步加密。</text>
+  <rect class="dark" x="1125" y="205" width="345" height="82" rx="14"/>
+  <text class="tag" x="1155" y="238">新的产品主线</text>
+  <text class="tag" x="1155" y="266">Long Context → Orchestration</text>
+
+  <rect class="card" x="70" y="370" width="430" height="290"/>
+  <rect class="blue" x="105" y="405" width="120" height="34" rx="17"/>
+  <text class="tag" x="128" y="429">01 机制</text>
+  <text class="label" x="105" y="475">Codex × Claude 协作机制</text>
+  <text class="text" x="105" y="515">建立文件交接工作流：</text>
+  <text class="small" x="125" y="548">STATUS / CODEX_OUT / CLAUDE_OUT</text>
+  <text class="text" x="105" y="588">讨论 watcher 自动化方向：</text>
+  <text class="small" x="125" y="621">从手动提醒 → 事件驱动交接</text>
+
+  <rect class="card" x="545" y="350" width="510" height="330"/>
+  <rect class="green" x="620" y="405" width="120" height="34" rx="17"/>
+  <text class="tag" x="643" y="429">02 公式</text>
+  <text class="label" x="620" y="475">Baseline 计算器修正</text>
+  <text class="text" x="585" y="515">关键定义：</text>
+  <text class="small" x="605" y="546">Balance = Reference Balance + Baseline Bonus</text>
+  <text class="small" x="605" y="576">Baseline Bonus 沿用 Reference Balance 的评分标准</text>
+  <text class="small" x="605" y="606">短期 baseline = 7 天记录的组件分数中位数</text>
+  <text class="small" x="605" y="636">今日 vs baseline：高于基准奖励，低于基准惩罚</text>
+  <text class="small" x="605" y="666">Bonus raw 可溢出到 30；纳入 Balance 时 cap at 10</text>
+
+  <rect class="card" x="1100" y="370" width="430" height="290"/>
+  <rect class="orange" x="1135" y="405" width="120" height="34" rx="17"/>
+  <text class="tag" x="1158" y="429">03 风险</text>
+  <text class="label" x="1135" y="475">疾病 / 异常上下文</text>
+  <text class="text" x="1135" y="515">生病日不进入正常 baseline 学习。</text>
+  <text class="text" x="1135" y="555">异常上下文改变解释和置信度，</text>
+  <text class="small" x="1135" y="588">但不凭空提高 Balance。</text>
+  <text class="small" x="1135" y="621">避免“病床上 recovery 99”式体验。</text>
+
+  <path class="line" d="M500 515 C520 515, 525 515, 545 515"/>
+  <path class="line" d="M1055 515 C1070 515, 1085 515, 1100 515"/>
+
+  <rect class="card" x="70" y="710" width="1460" height="210"/>
+  <text class="sectionTitle" x="105" y="760">新版 PRD 方向：当前重点转向 Goal 定义</text>
+
+  <rect class="card2" x="105" y="795" width="310" height="86"/>
+  <text class="label" x="130" y="830">主界面</text>
+  <text class="small" x="130" y="860">今日总体概括 + 子 agent 入口</text>
+
+  <rect class="card2" x="455" y="795" width="310" height="86"/>
+  <text class="label" x="480" y="830">Balance</text>
+  <text class="small" x="480" y="860">就是分数，不改写成状态标签</text>
+
+  <rect class="card2" x="805" y="795" width="310" height="86"/>
+  <text class="label" x="830" y="830">Goal</text>
+  <text class="small" x="830" y="860">下一步重点：定义颗粒度与展示层级</text>
+
+  <rect class="card2" x="1155" y="795" width="310" height="86"/>
+  <text class="label" x="1180" y="830">Tension</text>
+  <text class="small" x="1180" y="860">依赖 Goal 定义后再判断是否产品化</text>
+
+  <path class="softLine" d="M415 838 L455 838"/>
+  <path class="softLine" d="M765 838 L805 838"/>
+  <path class="softLine" d="M1115 838 L1155 838"/>
+
+  <text class="small" x="105" y="955">当前限制：缺乏真实用户多日进食数据，baseline bonus 权重暂时还不能做有效测试和调整。</text>
+</svg>

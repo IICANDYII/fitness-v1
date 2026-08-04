@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.log
+*.partial
+*.uploading.*
+benchmark.json
+upload_benchmark.json
+frames_low.zip
+_card_check_logs/
+_backup_*/
+tmp_baseline_check/
+.claude/settings.local.json
+collection_pipeline/desktop_launcher/_roster_path.txt
