@@ -1,0 +1,44 @@
+{
+  "user_folder": "4",
+  "action_id": "动作10",
+  "image_path": "graph/4/动作10.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃推肩",
+  "selected_confidence": 0.5,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃推肩",
+      "confidence": 0.5,
+      "support": "第一人称视角可见双手握持哑铃从肩部高度下放到大腿处，镜中可见用户坐在有靠背的训练凳上，符合推肩动作的收尾。"
+    },
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃卧推",
+      "confidence": 0.3,
+      "support": "同为推举类动作，但镜中坐姿证据排除了平卧卧推的可能性。"
+    },
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃弯举",
+      "confidence": 0.2,
+      "support": "虽然握持哑铃，但下放轨迹和肘部外展姿态更接近推举类动作而非弯举。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃", "训练凳"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "前6帧显示哑铃从高位（约肩部或以上）下放到大腿，随后用户保持坐姿进入长时间静止状态。",
+    "first_person_subject_evidence": "第一人称视角下可见用户双手握持哑铃，且动作与镜中人物同步。",
+    "uncertainty_notes": "视频主要记录了组间休息过程（第8帧至52帧），仅在开头捕捉到动作的收尾阶段，缺乏完整的重复次数证据。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "第一人称视角下哑铃从高位下放至膝盖的轨迹，结合镜中可见的带靠背坐姿，是判定为哑铃推肩收尾的关键证据。",
+    "rejected_or_close_candidates": [
+      {"exercise": "哑铃卧推", "reason": "镜中反射显示用户处于垂直坐姿，而非仰卧位。"},
+      {"exercise": "哑铃弯举", "reason": "哑铃在下放前处于高位且呈水平横向握持，不符合弯举的典型起始或结束姿态。"}
+    ]
+  },
+  "needs_manual_review": true
+}

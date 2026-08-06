@@ -1,0 +1,55 @@
+{
+  "user_folder": "9",
+  "action_id": "动作2",
+  "image_path": "graph/9/动作2.jpg",
+  "selected_equipment": "高位下拉机",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "高位下拉机",
+      "exercise": "高位下拉",
+      "confidence": 0.92,
+      "support": "坐姿，上方宽横杆大幅度下拉至胸前，可见配重塔和钢索结构。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "高位下拉机框架",
+      "宽横杆把手",
+      "钢索",
+      "配重塔"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "横杆从画面上方出现并向下拉动，随后有节奏地回弹，符合典型的垂直下拉轨迹。",
+    "first_person_subject_evidence": "双手握持横杆，横杆运动与相机视角同步，且用户处于器械正中央的训练位。",
+    "uncertainty_notes": "无光流和IMU数据，但视觉特征（宽杆、坐姿、垂直下拉）极其典型，不确定性极低。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "进场帧显示用户坐于高位下拉机上，训练帧中宽横杆从头顶上方拉至锁骨位置，符合规则6A判定流程。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "绳索来自正前方而非头顶上方，且本视频中未见脚踏板。"
+      },
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压为站姿且动作幅度较小，本视频为坐姿大幅度下拉。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:07:05",
+      "end_time": "00:08:42",
+      "reps": 5
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 3,
+    "expand_after_sec": 2,
+    "reason": "高位下拉起始需抓杆调整坐姿，结束需控制横杆回位，建议前后扩展以包含完整动作周期。"
+  },
+  "needs_manual_review": false
+}

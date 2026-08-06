@@ -1,0 +1,44 @@
+{
+  "user_folder": "肩-背-秦紫渝",
+  "action_id": "动作5",
+  "image_path": "graph/肩-背-秦紫渝/动作5.jpg",
+  "selected_equipment": "跑步机",
+  "selected_exercise": "跑步机",
+  "exercise_id": "treadmill_walk_run",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.95,
+      "support": "画面中清晰可见跑步机特有的控制面板、红色紧急停止按钮、扶手以及用户上机的动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "跑步机控制面板",
+      "红色安全停止键",
+      "跑步机扶手",
+      "显示屏"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "前几帧显示用户左腿（浅蓝色裤子、米色鞋）踏上跑步机跑带，随后画面稳定在控制面板前，手部出现并操作屏幕，符合开始跑步/走路前的准备动作。",
+    "first_person_subject_evidence": "第一人称视角下，用户的手臂和腿部动作与相机视角同步，且直接操作器械控制面板。",
+    "uncertainty_notes": "仅从静态图看处于准备和启动阶段，尚未进入正式跑动周期，但器械识别极度明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "控制面板的布局、紧急停止按钮的形状以及跑带区域的视觉特征完全符合跑步机。用户正在进行上机和启动操作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "登阶机/爬楼机",
+        "reason": "虽然也有控制面板，但未见台阶结构，且面板布局是典型的跑步机样式。"
+      },
+      {
+        "exercise": "椭圆机",
+        "reason": "未见椭圆机特有的长摆臂，且用户站立位置和面板距离符合跑步机。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

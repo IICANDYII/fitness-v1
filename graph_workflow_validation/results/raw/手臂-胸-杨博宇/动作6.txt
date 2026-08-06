@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 网格图前几帧显示用户正处于器械准备状态，可见明显的橙色/红色器械扶手结构，背景为健身房环境。
+Step 2 — 器械识别: 根据规则四和规则六B，画面后半段（第25-34帧）清晰显示了带有红色线条标记的移动跑带，这是跑步机的典型特征。用户双手握住的橙色扶手是某些品牌（如Matrix）跑步机的常见设计。
+Step 3 — 光流验证: 尽管没有直接光流数据，但从静态帧序列可见地面（跑带）相对于扶手有明显的向后位移，且用户视角有随行走的节奏性轻微晃动。
+Step 4 — 动作判定: 综合器械特征（跑带、橙色扶手）、身体姿态（站立行走）以及长达5分钟的时间跨度，判定为跑步机有氧运动。
+Step 5 — 组次统计: 有氧运动通常计为1组，持续整个时间段。
+
+{"user_folder": "手臂-胸-杨博宇", "action_id": "动作6", "image_path": "graph/手臂-胸-杨博宇/动作6.jpg", "selected_equipment": "跑步机", "selected_exercise": "跑步机", "selected_exercise_id": "treadmill_walk_run", "selected_confidence": 0.92, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "跑步机", "exercise": "跑步机", "confidence": 0.92, "support": "画面后半段清晰可见带有红线标识的移动跑带，双手始终握住跑步机特有的橙色侧边扶手，且时间跨度达5分钟，符合有氧运动特征。"}], "context": {"visible_equipment": ["跑步机橙色扶手", "带有红线标记的跑带", "跑步机框架"], "body_posture": "standing", "motion_cues_from_grid": "从第25帧开始，地面（跑带）有明显的向后位移感，且用户双手位置相对固定，身体有轻微的上下起伏。", "first_person_subject_evidence": "第一人称视角下双手握住扶手，视角随行走动作产生节奏性晃动，符合佩戴者本人在操作器械。", "uncertainty_notes": "由于采样间隔较大（约9秒一帧），无法观察到连续的跑步动作，但静态特征足以判定。"}, "action_disambiguation": {"selected_evidence": "关键证据为第25-34帧中出现的移动跑带（带红线）以及第一人称视角下握住的橙色安全扶手，结合5分钟的持续时间，判定为跑步机运动。", "rejected_or_close_candidates": [{"exercise": "固定器械推胸", "reason": "前半段橙色扶手虽像推胸机，但后半段出现的跑带和长达5分钟的持续时间完全排除了力量训练的可能性。"}, {"exercise": "登阶机/爬楼机", "reason": "画面中未见台阶结构，地面为平整的跑带。"}]}, "needs_manual_review": false}

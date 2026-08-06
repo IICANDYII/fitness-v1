@@ -1,0 +1,51 @@
+{
+  "user_folder": "肩-背-秦紫渝",
+  "action_id": "动作3",
+  "image_path": "graph/肩-背-秦紫渝/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "exercise_id": "cable_triceps_pushdown",
+      "confidence": 0.85,
+      "support": "第一人称视角下可见双手握持龙门架手柄，上臂相对固定，前臂向下做伸展运动，符合绳索下压特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "exercise_id": "cable_lat_pulldown",
+      "confidence": 0.35,
+      "support": "同为龙门架下拉类动作，但画面中用户为站姿且肘部有明显的屈伸而非单纯的肩内收。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "钢索",
+      "滑轮系统",
+      "D型把手"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户双手握住上方垂下的把手，将其向下推至大腿两侧，随后受控回放，呈现明显的上下往复周期。",
+    "first_person_subject_evidence": "画面下方出现的双手及手臂与相机运动同步，且直接操作龙门架把手。",
+    "uncertainty_notes": "由于是胸前相机，无法完全看清肘部是否完全锁死，但从手部轨迹判断，肱三头肌伸展的可能性最高。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户站立于龙门架前，双手握持把手进行向下的推压动作，运动轨迹集中在肘关节的屈伸，符合绳索下压（Cable Triceps Pushdown）的标准形态。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索夹胸",
+        "reason": "运动轨迹为垂直向下而非水平向中线合拢。"
+      },
+      {
+        "exercise": "高位下拉",
+        "reason": "用户处于站姿，且动作幅度更倾向于手臂末端的下压而非背部的垂直下拉。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 画面显示用户站在一个存放药球的金属架前，右手准备抓握挂在架子上的红色弹力带把手。
+Step 2 — 器械识别: 用户使用的是非标准弹力带，虽锚定在架子上，但无配重塔或固定轨迹，不符合标准器械定义。
+Step 3 — 光流验证: 仅在帧14-18观察到一次下拉动作，随后动作停止并伴随大量相机位移，无周期性运动特征。
+Step 4 — 动作判定: 动作不属于标准训练动作列表，更像是在进行非正式的拉伸或器材准备，判定为 UNKNOWN_ACTION。
+Step 5 — 组次统计: 无连续重复动作，判定为 0 组 0 次。
+
+{"user_folder": "张靖义-2026.06.11", "action_id": "动作3", "image_path": "graph/张靖义-2026.06.11/动作3.jpg", "selected_equipment": "UNKNOWN_EQUIPMENT", "selected_exercise": "UNKNOWN_ACTION", "selected_confidence": 0.3, "confidence_policy": "insufficient_evidence", "top_candidates": [{"equipment": "龙门架", "exercise": "绳索下压", "exercise_id": "cable_triceps_pushdown", "confidence": 0.2, "support": "站姿从高位下拉弹力带，轨迹与绳索下压相似"}], "context": {"visible_equipment": ["药球架", "红色弹力带", "D型把手"], "body_posture": "standing", "motion_cues_from_grid": "用户右手握住弹力带进行了一次非周期性的下拉动作（帧14-18），随后停止运动。", "first_person_subject_evidence": "画面近端出现用户右手，且动作与相机位移同步。", "uncertainty_notes": "动作非标准且无重复，器材为非标准弹力带，缺乏光流和IMU数据支持。"}, "action_disambiguation": {"selected_evidence": "用户仅进行了一次非标准的弹力带下拉，无持续训练特征。", "rejected_or_close_candidates": [{"exercise": "绳索下压", "reason": "虽方向一致，但无连续重复且器材非标准配重器械。"}]}, "needs_manual_review": true}

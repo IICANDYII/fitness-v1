@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析：网格图前几帧（如第1-3帧）显示相机视角迅速转向天花板，表明用户正在向后躺下进入仰卧姿态。在第4-5帧边缘可见用户双手握持的哑铃。
+Step 2 — 器械识别：根据规则二，相机朝向正上方且处于仰卧姿态，典型器械为卧推凳。在第4、5、12、13等帧中，画面两侧清晰可见哑铃的圆形配重片，确定器械为“哑铃”。
+Step 3 — 光流验证：虽然没有直接光流数据，但从连续帧观察，哑铃从画面两侧向中心汇聚并伴随上下起伏，符合胸部推举或飞鸟的运动轨迹。
+Step 4 — 动作判定：综合仰卧姿态、哑铃器械以及在胸部上方的推举动作，判定为“哑铃卧推”。
+Step 5 — 组次统计：通过哑铃在画面中出现、消失、再出现的周期性规律，可观察到约4次明显的重复动作（如第4-8帧、12-16帧、20-24帧、28-32帧），随后用户在第33帧起坐，动作结束。
+
+{"user_folder": "3", "action_id": "动作6", "image_path": "graph/3/动作6.jpg", "selected_equipment": "哑铃", "selected_exercise": "哑铃卧推", "selected_confidence": 0.85, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "哑铃", "exercise": "哑铃卧推", "confidence": 0.85, "support": "仰卧姿态，画面两侧可见哑铃，在胸部上方做推举动作"}], "context": {"visible_equipment": ["哑铃", "仰卧长凳（推断）", "健身房天花板"], "body_posture": "supine", "motion_cues_from_grid": "哑铃从画面两侧向中心移动并伴随上下往复，第33帧后用户起坐", "first_person_subject_evidence": "双手握持哑铃出现在第一人称视角两侧，且随相机（身体）同步躺下和起坐", "uncertainty_notes": "缺少光流和IMU，仅凭视觉判断次数可能存在微小误差"}, "action_disambiguation": {"selected_evidence": "仰卧姿态（视角朝天）结合手持哑铃的推举轨迹", "rejected_or_close_candidates": [{"exercise": "哑铃推肩", "reason": "推肩通常为坐姿或站姿，相机应平视，而非仰卧朝天"}, {"exercise": "哑铃侧平举", "reason": "侧平举为站姿且手臂向两侧外展，与仰卧姿态不符"}]}, "needs_manual_review": false}

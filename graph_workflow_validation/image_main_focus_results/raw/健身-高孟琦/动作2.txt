@@ -1,0 +1,54 @@
+{
+  "user_folder": "健身-高孟琦",
+  "action_id": "动作2",
+  "image_path": "graph/健身-高孟琦/动作2.jpg",
+  "selected_equipment": "史密斯机",
+  "selected_exercise": "smith_bench_press",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "史密斯机",
+      "exercise": "smith_bench_press",
+      "confidence": 0.85,
+      "support": "镜子中清晰可见用户仰卧在长凳上，双手握杠进行推举；画面两侧可见史密斯机固定的垂直导轨。"
+    },
+    {
+      "equipment": "杠铃",
+      "exercise": "barbell_bench_press",
+      "confidence": 0.1,
+      "support": "动作模式一致，但画面中导轨结构更符合史密斯机。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["史密斯机导轨", "杠铃杆", "卧推凳"],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "杠铃杆在胸前做垂直往复运动，镜中可见手臂屈伸。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "第一人称视角下双手握杠，且镜中人物动作与相机抖动及手臂运动完全同步。",
+    "uncertainty_notes": "仅凭拼图难以完全排除微小倾角的上斜卧推，但从镜中视角看更接近平板卧推。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 2,
+      "evidence": "拼图显示了从推起到下放再推起的约1.5-2个完整周期。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 2,
+  "action_disambiguation": {
+    "selected_evidence": "镜中反射确认了仰卧姿态（supine），画面边缘出现的固定金属滑轨确认了史密斯机而非自由杠铃。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "smith_shoulder_press",
+        "reason": "镜中显示用户为仰卧位，而非坐姿垂直推举。"
+      },
+      {
+        "exercise": "barbell_bench_press",
+        "reason": "画面中可见明显的史密斯机垂直导轨结构。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

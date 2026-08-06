@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness Balance v4 — 贡献瀑布图</title>
+<style>
+  :root{
+    --bg:#faf9f5;--surface:#fff;--surface2:#f1efe8;--line:rgba(0,0,0,.14);--line2:rgba(0,0,0,.28);
+    --grid:rgba(0,0,0,.08);--txt:#1f1e1b;--txt2:#5f5e5a;--txt3:#888780;--blue:#185FA5;
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#1f1e1b;--surface:#2c2c2a;--surface2:#262522;--line:rgba(255,255,255,.16);--line2:rgba(255,255,255,.3);
+    --grid:rgba(255,255,255,.1);--txt:#f1efe8;--txt2:#b4b2a9;--txt3:#888780;--blue:#85B7EB;}}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--txt);padding:24px;line-height:1.5;}
+  .wrap{max-width:1100px;margin:0 auto;}
+  h1{font-size:22px;font-weight:500;margin:0 0 4px;}
+  .sub{color:var(--txt2);font-size:13px;margin:0 0 16px;}
+  .panel{background:var(--surface);border:.5px solid var(--line);border-radius:12px;padding:10px;}
+  svg{width:100%;height:auto;display:block;}
+  .axt{font-size:11px;fill:var(--txt3);}
+  .blab{font-size:12px;font-weight:500;}
+  .bval{font-size:13px;font-weight:500;}
+  .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:18px;}
+  .cg{background:var(--surface);border:.5px solid var(--line);border-radius:10px;padding:10px 14px;}
+  .row{display:flex;align-items:center;gap:8px;margin:7px 0;}
+  .row label{font-size:12px;color:var(--txt2);flex:0 0 92px;}
+  .row input[type=range]{flex:1;}
+  .row .v{font-size:12px;font-weight:500;min-width:38px;text-align:right;}
+  input[type=range]{-webkit-appearance:none;height:4px;border-radius:4px;background:var(--line2);}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--blue);cursor:pointer;}
+  .chk{font-size:12px;color:var(--txt2);display:inline-flex;align-items:center;gap:6px;cursor:pointer;}
+  .row label{display:flex;align-items:center;}
+  .tip{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;border:.5px solid var(--line2);color:var(--txt3);font-size:9px;cursor:help;position:relative;margin-left:5px;flex:none;}
+  .tip .tipbox{visibility:hidden;opacity:0;position:absolute;z-index:30;bottom:160%;left:-6px;width:235px;background:var(--surface);color:var(--txt);border:.5px solid var(--line2);border-radius:8px;padding:9px 11px;font-size:11px;line-height:1.5;font-weight:400;box-shadow:0 6px 20px rgba(0,0,0,.18);transition:opacity .12s;}
+  .tip .tipbox b{font-weight:500;}
+  .tip:hover .tipbox{visibility:visible;opacity:1;}
+  .bkhd{font-size:15px;font-weight:500;margin:22px 2px 10px;}
+  .breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;}
+  .fcard{border:.5px solid var(--line);border-left:3px solid var(--c);border-radius:10px;padding:11px 14px;background:var(--surface);}
+  .fhd{font-size:13px;font-weight:500;margin-bottom:5px;color:var(--c);}
+  .fchips{font-size:11px;color:var(--txt3);margin-bottom:9px;}
+  .fchips span{display:inline-block;background:var(--surface2);border-radius:5px;padding:1px 7px;margin:0 3px 3px 0;color:var(--txt2);}
+  .fcalc{font-size:12px;color:var(--txt3);line-height:1.75;font-variant-numeric:tabular-nums;}
+  .fcalc .bind{color:var(--txt);font-weight:500;}
+  .fres{font-size:15px;font-weight:500;margin-top:7px;color:var(--c);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Fitness Balance v4 — 贡献瀑布图</h1>
+  <p class="sub">从 0 开始,依次累加 G/S/E/C 的加权贡献,再叠加 ±Recovery,落到最终 Balance。每根柱子的高度 = 该项实际贡献的点数;虚线显示累计走势。</p>
+
+  <div class="panel">
+    <svg id="chart" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="贡献瀑布图">
+      <g id="grid"></g>
+      <line x1="46" y1="24" x2="46" y2="318" stroke="var(--line2)" stroke-width="1"/>
+      <line x1="46" y1="318" x2="700" y2="318" stroke="var(--line2)" stroke-width="1"/>
+      <g id="bars"></g>
+    </svg>
+  </div>
+
+  <div class="bkhd">各分项怎么算出来的(随滑块实时更新)</div>
+  <div class="breakdown">
+    <div class="fcard" style="--c:#185FA5">
+      <div class="fhd">G · 指南参考 15%</div>
+      <div class="fchips">受 <span>有效天数</span><span>覆盖肌群</span> 影响</div>
+      <div class="fcalc" id="calc_G"></div>
+      <div class="fres">G = <span id="res_G">—</span></div>
+    </div>
+    <div class="fcard" style="--c:#534AB7">
+      <div class="fhd">S · 结构 40%</div>
+      <div class="fchips">受 <span>S 分布偏差</span> 影响</div>
+      <div class="fcalc" id="calc_S"></div>
+      <div class="fres">S = <span id="res_S">—</span></div>
+    </div>
+    <div class="fcard" style="--c:#0F6E56">
+      <div class="fhd">E · 证据 20%</div>
+      <div class="fchips">受 <span>识别置信</span><span>重复模式</span><span>E 充足unit</span><span>计划支持</span> 影响</div>
+      <div class="fcalc" id="calc_E"></div>
+      <div class="fres">E = <span id="res_E">—</span></div>
+    </div>
+    <div class="fcard" style="--c:#BA7517">
+      <div class="fhd">C · 剂量 25%</div>
+      <div class="fchips">受 <span>有效天数</span><span>总单位</span> 影响</div>
+      <div class="fcalc" id="calc_C"></div>
+      <div class="fres">C = <span id="res_C">—</span></div>
+    </div>
+    <div class="fcard" style="--c:#5F5E5A">
+      <div class="fhd">Recovery · 直接加减</div>
+      <div class="fchips">受 <span>恢复分 R</span><span>无重复开关</span> 影响</div>
+      <div class="fcalc" id="calc_R"></div>
+      <div class="fres">调整 = <span id="res_R">—</span></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="cg">
+      <div class="row"><label data-k="days">有效天数<span class="tip">?<span class="tipbox"><b>7 天内有效力量训练的天数</b>(同一天练多个动作只算 1 天)。同时喂 G 的频率项(<b>2 天封顶</b>)和 C 的一致性项(<b>4 天封顶</b>)。</span></span></label><input type="range" id="days" min="0" max="7" step="1" value="3"><span class="v" id="days_v">3</span></div>
+      <div class="row"><label data-k="cov">覆盖肌群<span class="tip">?<span class="tipbox"><b>7 天内被有效训练覆盖的主要肌群数</b>(满分 7:腿/臀/背/核心/胸/肩/臂)。只进 G,与频率取<b>短板</b>(min)。</span></span></label><input type="range" id="cov" min="0" max="7" step="1" value="3"><span class="v" id="cov_v">3</span></div>
+      <div class="row"><label data-k="units">总单位<span class="tip">?<span class="tipbox"><b>7 天所有动作 exercise_unit 之和</b>(1 单位 ≈ 1 组 ≈ 45 秒有效重复)。进 C 的剂量项,<b>8 单位封顶</b>,再多不加分。</span></span></label><input type="range" id="units" min="0" max="16" step="0.5" value="6"><span class="v" id="units_v">6.0</span></div>
+    </div>
+    <div class="cg">
+      <div class="row"><label data-k="dev">S 分布偏差<span class="tip">?<span class="tipbox"><b>实际肌群分布与目标分布的总差异 Σ|实际−目标|。</b><br>目标分布是默认全身均衡模板(腿16/背16/臀14/核心14/胸14/肩14/臂12 %)。0=完美匹配,2=完全偏离。S = 100×(1 − 0.5×偏差)。</span></span></label><input type="range" id="dev" min="0" max="2" step="0.05" value="0.6"><span class="v" id="dev_v">0.60</span></div>
+      <div class="row"><label data-k="conf">识别置信<span class="tip">?<span class="tipbox"><b>模型对"这是什么动作"的把握(0–1)。</b><br>&lt;0.70 视为无效不计入;同时是肌群曝光(G/S)的乘数,以及 E 的 action_confidence 项。</span></span></label><input type="range" id="conf" min="0" max="1" step="0.05" value="0.85"><span class="v" id="conf_v">0.85</span></div>
+      <div class="row"><label data-k="rep">重复模式<span class="tip">?<span class="tipbox"><b>是否检测到清晰的重复节奏。</b><br><b>1.0</b>=明确重复 / <b>0.5</b>=疑似 / <b>0</b>=无证据。进 E(权重 0.25)。</span></span></label><input type="range" id="rep" min="0" max="1" step="0.05" value="1"><span class="v" id="rep_v">1.00</span></div>
+    </div>
+    <div class="cg">
+      <div class="row"><label data-k="unit">E 充足unit<span class="tip">?<span class="tipbox"><b>代表动作的训练量,用于充足度 min(unit/2,1)。</b><br>2 单位即满分。只影响 E 的充足度项,不影响 C 的总单位。</span></span></label><input type="range" id="unit" min="0" max="4" step="0.25" value="2"><span class="v" id="unit_v">2.00</span></div>
+      <div class="row"><label data-k="plan">计划支持<span class="tip">?<span class="tipbox"><b>外部佐证(E 的 user_or_plan_support 项)。</b><br><b>1.0</b>=用户确认了该动作 / <b>0.7</b>=该动作在训练计划中 / <b>0</b>=都不在。权重 0.15。</span></span></label><input type="range" id="plan" min="0" max="1" step="0.05" value="0.7"><span class="v" id="plan_v">0.70</span></div>
+      <div class="row"><label class="chk" style="flex:auto;"><input type="checkbox" id="rnull"> 无同肌群重复 (R=null)<span class="tip">?<span class="tipbox">勾选 = 7 天内<b>没有</b>同一肌群跨天重复训练。此时无法评估恢复,R=null,<b>Recovery 调整 = 0</b>(不加不减),下方 R 滑块失效。</span></span></label></div>
+      <div class="row"><label data-k="R">恢复分 R<span class="tip">?<span class="tipbox"><b>同肌群相邻训练的恢复间隔质量分(正向)。</b><br>间隔 ≥48h→1.0、24–48h→0.7、&lt;24h→0.3,加权×100。<br>R≥85→<b>+3</b> · 70–85→0 · 50–70→<b>−2</b> · &lt;50→<b>−5</b>。越高=恢复越充分=加分。</span></span></label><input type="range" id="R" min="0" max="100" step="1" value="65"><span class="v" id="R_v">65</span></div>
+    </div>
+    <div class="cg">
+      <div class="row"><label data-k="wG">权重 wG<span class="tip">?<span class="tipbox"><b>G(指南)的权重,默认 0.15。</b><br>base = wG·G + wS·S + wE·E + wC·C。权重不强制相加为 1,可自由做敏感度测试。</span></span></label><input type="range" id="wG" min="0" max="1" step="0.05" value="0.15"><span class="v" id="wG_v">0.15</span></div>
+      <div class="row"><label data-k="wS">权重 wS<span class="tip">?<span class="tipbox"><b>S(结构)的权重,默认 0.40(最大)。</b><br>调高它,紫色 S 柱对最终分的推动会更明显。</span></span></label><input type="range" id="wS" min="0" max="1" step="0.05" value="0.40"><span class="v" id="wS_v">0.40</span></div>
+      <div class="row"><label data-k="wE">权重 wE<span class="tip">?<span class="tipbox"><b>E(证据)的权重,默认 0.20。</b></span></span></label><input type="range" id="wE" min="0" max="1" step="0.05" value="0.20"><span class="v" id="wE_v">0.20</span></div>
+      <div class="row"><label data-k="wC">权重 wC<span class="tip">?<span class="tipbox"><b>C(剂量)的权重,默认 0.25。</b></span></span></label><input type="range" id="wC" min="0" max="1" step="0.05" value="0.25"><span class="v" id="wC_v">0.25</span></div>
+      <p class="axt" id="wsum" style="margin:2px 0 0;">权重和 = 1.00</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const T=24,B=318,YMAX=105;
+const yPix=v=>B-(clamp(v,0,YMAX)/YMAX)*(B-T);
+function readP(){
+  return {days:+$('days').value,cov:+$('cov').value,units:+$('units').value,dev:+$('dev').value,
+    conf:+$('conf').value,rep:+$('rep').value,unit:+$('unit').value,plan:+$('plan').value,
+    R:+$('R').value,rnull:$('rnull').checked};
+}
+function comps(p){
+  const G=clamp(100*Math.min(Math.min(p.days/2,1),p.cov/7),0,100);
+  const S=clamp(100*(1-0.5*p.dev),0,100);
+  const E=clamp(100*(0.35*p.conf+0.25*p.rep+0.25*Math.min(p.unit/2,1)+0.15*p.plan),0,100);
+  const C=clamp(100*(0.6*Math.min(p.days/4,1)+0.4*Math.min(p.units/8,1)),0,100);
+  const radj=p.rnull?0:(p.R>=85?3:(p.R>=70?0:(p.R>=50?-2:-5)));
+  return {G,S,E,C,radj};
+}
+function el(t,a,txt){const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e;}
+
+function draw(){
+  const p=readP();const c=comps(p);
+  const wG=+$('wG').value,wS=+$('wS').value,wE=+$('wE').value,wC=+$('wC').value;
+  $('wsum').textContent='权重和 = '+(wG+wS+wE+wC).toFixed(2);
+  const cG=wG*c.G,cS=wS*c.S,cE=wE*c.E,cC=wC*c.C;
+  const base=cG+cS+cE+cC;const fin=clamp(base+c.radj,0,100);
+  const grid=$('grid');grid.innerHTML='';
+  [0,25,50,75,100].forEach(t=>{const y=yPix(t);grid.appendChild(el('line',{x1:46,y1:y,x2:700,y2:y,stroke:'var(--grid)','stroke-width':1}));grid.appendChild(el('text',{x:40,y:y+4,'text-anchor':'end',class:'axt'},t));});
+  const bars=$('bars');bars.innerHTML='';
+  const HW=30;
+  // columns: G,S,E,C (floating), Recovery (floating), Final (full)
+  const steps=[
+    {lab:'G',col:'#185FA5',from:0,to:cG,val:cG},
+    {lab:'S',col:'#534AB7',from:cG,to:cG+cS,val:cS},
+    {lab:'E',col:'#0F6E56',from:cG+cS,to:cG+cS+cE,val:cE},
+    {lab:'C',col:'#BA7517',from:cG+cS+cE,to:base,val:cC},
+    {lab:'Recovery',col:c.radj<0?'#A32D2D':'#5F5E5A',from:base,to:base+c.radj,val:c.radj},
+    {lab:'最终',col:'#3B6D11',from:0,to:fin,val:fin,total:true}
+  ];
+  const cx=[112,208,304,400,500,620];
+  let prevTop=null;
+  steps.forEach((s,i)=>{
+    const lo=Math.min(s.from,s.to),hi=Math.max(s.from,s.to);
+    const yTop=yPix(hi),yBot=yPix(lo),h=Math.max(Math.abs(yBot-yTop),1.5);
+    bars.appendChild(el('rect',{x:cx[i]-HW,y:yTop,width:HW*2,height:h,rx:3,fill:s.col,opacity:s.total?1:.92}));
+    // connector dotted from previous top to this bar start level
+    if(prevTop!==null && !s.total){bars.appendChild(el('line',{x1:cx[i-1]+HW,y1:prevTop,x2:cx[i]-HW,y2:yPix(s.from),stroke:'var(--line2)','stroke-width':1,'stroke-dasharray':'3 3',opacity:.7}));}
+    prevTop=yPix(s.to);
+    // value label
+    const vtxt=s.total?Math.round(s.val):(s.val>=0?'+':'')+ (Math.abs(s.val)<10?s.val.toFixed(1):Math.round(s.val));
+    bars.appendChild(el('text',{x:cx[i],y:Math.min(yTop,yBot)-6,'text-anchor':'middle',class:'bval',fill:s.col},vtxt));
+    // category label
+    bars.appendChild(el('text',{x:cx[i],y:334,'text-anchor':'middle',class:'blab',fill:'var(--txt2)'},s.lab));
+  });
+  // base marker line
+  bars.appendChild(el('line',{x1:46,y1:yPix(base),x2:cx[3]+HW+8,y2:yPix(base),stroke:'var(--txt3)','stroke-width':1,'stroke-dasharray':'2 4',opacity:.6}));
+  bars.appendChild(el('text',{x:cx[3]+HW+12,y:yPix(base)+4,class:'axt'},'base '+Math.round(base)));
+
+  // ---- 分项推导(实时代入) ----
+  const f1=Math.min(p.days/2,1),f2=p.cov/7;
+  $('calc_G').innerHTML=
+    `<div class="${f1<=f2?'bind':''}">频率 min(${p.days}/2,1) = ${f1.toFixed(2)}</div>`+
+    `<div class="${f2<f1?'bind':''}">覆盖 ${p.cov}/7 = ${f2.toFixed(2)}</div>`+
+    `<div>取短板 min = ${Math.min(f1,f2).toFixed(2)} → ×100</div>`;
+  $('res_G').textContent=Math.round(c.G);
+
+  $('calc_S').innerHTML=`<div>100 × (1 − 0.5 × 偏差 <span class="bind">${p.dev.toFixed(2)}</span>)</div><div>偏差越大,S 越低(线性)</div>`;
+  $('res_S').textContent=Math.round(c.S);
+
+  const suf=Math.min(p.unit/2,1);
+  const e1=0.35*p.conf,e2=0.25*p.rep,e3=0.25*suf,e4=0.15*p.plan;
+  $('calc_E').innerHTML=
+    `<div>0.35 × 置信 ${p.conf.toFixed(2)} = ${e1.toFixed(2)}</div>`+
+    `<div>0.25 × 重复 ${p.rep.toFixed(2)} = ${e2.toFixed(2)}</div>`+
+    `<div>0.25 × 充足(min(${p.unit.toFixed(1)}/2,1)=${suf.toFixed(2)}) = ${e3.toFixed(2)}</div>`+
+    `<div>0.15 × 计划 ${p.plan.toFixed(2)} = ${e4.toFixed(2)}</div>`+
+    `<div class="bind">证据和 = ${(e1+e2+e3+e4).toFixed(2)} → ×100</div>`;
+  $('res_E').textContent=Math.round(c.E);
+
+  const dc=Math.min(p.days/4,1),dose=Math.min(p.units/8,1);
+  $('calc_C').innerHTML=
+    `<div>0.6 × 一致性(min(${p.days}/4,1)=${dc.toFixed(2)}) = ${(0.6*dc).toFixed(2)}</div>`+
+    `<div>0.4 × 剂量(min(${p.units}/8,1)=${dose.toFixed(2)}) = ${(0.4*dose).toFixed(2)}</div>`+
+    `<div class="bind">合计 = ${(0.6*dc+0.4*dose).toFixed(2)} → ×100</div>`;
+  $('res_C').textContent=Math.round(c.C);
+
+  if(p.rnull){
+    $('calc_R').innerHTML='<div>勾选"无重复肌群" → R = null</div><div class="bind">无法评估恢复 → 调整 = 0</div>';
+  }else{
+    const tier=p.R>=85?'R ≥ 85':(p.R>=70?'70 ≤ R < 85':(p.R>=50?'50 ≤ R < 70':'R < 50'));
+    $('calc_R').innerHTML=`<div>R = ${p.R}</div><div class="bind">落在 ${tier} → 调整 ${c.radj>=0?'+':''}${c.radj}</div>`;
+  }
+  $('res_R').textContent=(c.radj>=0?'+':'')+c.radj;
+}
+document.querySelectorAll('input').forEach(elm=>elm.addEventListener('input',()=>{
+  const vo=$(elm.id+'_v');
+  if(vo){const x=parseFloat(elm.value);vo.textContent=(['dev','conf','plan','rep','unit','wG','wS','wE','wC'].includes(elm.id))?x.toFixed(2):(elm.id==='units')?x.toFixed(1):elm.value;}
+  draw();
+}));
+draw();
+</script>
+</body>
+</html>

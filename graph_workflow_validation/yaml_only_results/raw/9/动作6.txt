@@ -1,0 +1,48 @@
+{
+  "user_folder": "9",
+  "action_id": "动作6",
+  "image_path": "graph/9/动作6.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.92,
+      "support": "第一人称视角下，双手握住高位滑轮连接的绳索附件，向下进行肘部伸展动作。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.3,
+      "support": "同为高位拉下的动作，但通常使用横杆且为坐姿。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "绳索附件",
+      "高位滑轮"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "从第6帧开始，用户双手出现在画面中握住绳索，随后向下按压至腹部高度，呈现明显的肘关节屈伸轨迹。",
+    "first_person_subject_evidence": "用户双手从相机两侧近端伸出，直接握持并操作器械，动作与相机视角同步。",
+    "uncertainty_notes": "无光流和IMU数据，但视觉特征（绳索、高位、下压动作）非常典型。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "画面清晰显示用户使用龙门架的高位绳索附件，动作轨迹为从上向下的直线按压，符合肱三头肌绳索下压的典型特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常使用长横杆并采取坐姿，且主要动作为肩内收/后伸，而此处为站姿且明显是肘部伸展。"
+      },
+      {
+        "exercise": "绳索面拉",
+        "reason": "面拉的轨迹是向后拉向面部，而此处轨迹是垂直向下。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

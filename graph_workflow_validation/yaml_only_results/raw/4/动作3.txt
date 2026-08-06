@@ -1,0 +1,49 @@
+{
+  "user_folder": "4",
+  "action_id": "动作3",
+  "image_path": "graph/4/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索夹胸",
+  "exercise_id": "cable_chest_fly",
+  "selected_confidence": 0.75,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索夹胸",
+      "confidence": 0.75,
+      "support": "用户站在龙门架中心，双手握住高位D型把手向下向内做弧线运动，符合高位绳索夹胸特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.55,
+      "support": "同为高位向下的推/拉动作，但双手起始位置较宽，更倾向于夹胸。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "钢索",
+      "D型把手"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "前15帧显示双手握住把手从高位向胸前下方拉动，伴随明显的周期性往复；16帧后用户松开把手，进入休息状态。",
+    "first_person_subject_evidence": "画面两侧出现用户手臂和双手，动作与相机视角（胸前）的上下晃动完全同步。",
+    "uncertainty_notes": "由于第一人称视角无法看到肘部完整开合角度，区分高位夹胸与双把手下压存在一定难度。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户处于龙门架中间，双手起始位置宽于肩部且从高位向下做汇聚运动，这是绳索夹胸（High-to-Low Cable Fly）的典型轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压通常双手间距较窄且固定，且上臂通常贴近躯干，而画面中双手起始位置极宽。"
+      },
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常为坐姿且使用长杆，画面中为站姿且使用独立双把手。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

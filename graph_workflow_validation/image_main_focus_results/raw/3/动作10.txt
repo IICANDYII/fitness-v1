@@ -1,0 +1,54 @@
+{
+  "user_folder": "3",
+  "action_id": "动作10",
+  "image_path": "graph/3/动作10.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "第一人称视角下，用户双手握持龙门架高位滑轮连接的绳索附件，进行由上至下的下压动作，符合绳索下压特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.3,
+      "support": "同样是高位向下的拉动，但绳索附件和手部轨迹更偏向于肱三头肌的下压延伸。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "绳索附件", "配重片堆"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握住绳索从胸口高度向下延伸至腹部/大腿高度，随后受控回放。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面下方出现用户双手及前臂，且动作与相机视角同步移动。",
+    "uncertainty_notes": "中间部分帧（第5-7行）出现大面积遮挡（可能是手臂靠近镜头），导致中间次数判断不准。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": null,
+      "evidence": "拼图中可见明显的起始、下压和回放过程，但由于中间帧遮挡，无法精确统计完整次数。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": null,
+  "action_disambiguation": {
+    "selected_evidence": "用户使用绳索附件（Rope Attachment）在龙门架前站立，双手执行明显的肘关节伸展动作（下压），这是绳索下压的典型特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常使用长杆且侧重背部收缩，当前动作手部轨迹更窄且更接近身体中线，符合下压动作。"
+      },
+      {
+        "exercise": "绳索面拉",
+        "reason": "面拉轨迹是向面部拉动，而此动作轨迹是垂直向下的。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

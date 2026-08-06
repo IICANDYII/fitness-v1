@@ -1,0 +1,54 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作8",
+  "image_path": "graph/肩背-叶翔/动作8.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.6,
+  "confidence_policy": "multiple_close",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_triceps_pushdown",
+      "confidence": 0.4,
+      "support": "使用绳索附件，双手向下/向后拉拽，属于常见的绳索动作。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_lat_pulldown",
+      "confidence": 0.2,
+      "support": "从高位向下拉，但通常高位下拉使用横杆且为坐姿。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架 (Cable Machine)", "绳索附件 (Rope Attachment)"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "第一排显示用户双手握住绳索从高位向面部/胸前拉近；第二排显示用户站立在器械前，动作幅度减小或处于间歇。",
+    "movement_direction": "forward_backward",
+    "first_person_subject_evidence": "画面中心出现用户双手握持绳索，且随相机视角同步运动；背景镜子中可见用户站立拉动绳索的侧影。",
+    "uncertainty_notes": "该动作视觉上非常接近‘面拉 (Face Pull)’，但该动作不在标准动作列表中。若强行归类，最接近的绳索动作是绳索下压，但轨迹不符。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": null,
+      "evidence": "拼图时间跨度约29秒，第一排可见明显的拉伸动作，第二排动作不明显，可能为一组的末尾或调整。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": null,
+  "action_disambiguation": {
+    "selected_evidence": "用户站立面对龙门架，使用绳索附件，双手从高位向面部方向拉动，肘部向两侧张开。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_triceps_pushdown",
+        "reason": "绳索下压通常要求肘部固定在身体两侧并向下伸展手臂，而图中肘部明显外展且向后拉，更符合面拉轨迹。"
+      },
+      {
+        "exercise": "cable_lat_pulldown",
+        "reason": "高位下拉通常为坐姿且使用长杆拉向胸锁骨，图中为站立绳索动作。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

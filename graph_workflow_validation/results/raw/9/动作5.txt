@@ -1,0 +1,52 @@
+Step 1 — 进场帧分析: 网格图前几帧显示用户走向一台龙门架（综合训练架），可以看到双立柱结构和上方的滑轮组。用户双手抓握住从高位垂下的绳索（Rope）配件。
+Step 2 — 器械识别: 根据规则三和规则六，用户处于站姿，视角平视，绳索从头顶上方高位滑轮引出，判定为龙门架。由于是站姿且手部向下运动，排除高位下拉机。
+Step 3 — 光流验证: 画面中用户双手握住绳索两端，肘部固定在身体两侧，前臂做明显的上下往复运动（UP/DOWN），发力方向为向下推压，符合绳索下压的特征。
+Step 4 — 动作判定: 综合站姿、高位绳索来向、肘部固定、向下推压的动作模式，判定为绳索下压（cable_triceps_pushdown）。
+Step 5 — 组次统计: 从网格图第2行开始进入正式动作，通过观察绳索拉伸和手部到达底部的周期，大约每 8-10 帧完成一次动作，总计观察到约 8 次重复。
+
+{
+  "user_folder": "9",
+  "action_id": "动作5",
+  "image_path": "graph/9/动作5.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "站姿，高位滑轮绳索配件，肘部固定，向下推压发力。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架立柱", "高位滑轮", "绳索配件"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握绳索从胸前向下推至大腿前侧，肘部保持不动，典型的三头肌训练轨迹。",
+    "first_person_subject_evidence": "画面中心可见用户双手握持绳索，且动作与相机视野同步移动。",
+    "uncertainty_notes": "缺少IMU数据，次数仅凭视觉周期估算。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "站姿且绳索从上方引出，手部向下推压。",
+    "rejected_or_close_candidates": [
+      {"exercise": "高位下拉", "reason": "高位下拉通常为坐姿且为大幅度下拉至胸口，此处为站姿小幅度下压。"},
+      {"exercise": "绳索弯举", "reason": "绳索弯举需从下方滑轮引出且向上发力，方向完全相反。"},
+      {"exercise": "面拉", "reason": "面拉需将绳索拉向面部且肘部外展，此处肘部贴身向下。"}
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:13:25",
+      "end_time": "00:14:35",
+      "reps": 8
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 2,
+    "reason": "动作起始有抓握准备过程，结尾有放回绳索过程。"
+  },
+  "needs_manual_review": false
+}

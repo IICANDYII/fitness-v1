@@ -1,0 +1,51 @@
+Step 1 — 进场帧分析：网格图前几帧显示用户正对龙门架（Cable Machine），上方高位滑轮连接着一根短直杆把手，钢索处于紧绷预备状态。
+Step 2 — 器械识别：根据规则三和规则六A，用户处于站姿，视角平视并略微仰视上方滑轮，绳索从头顶上方垂下。排除高位下拉机（无座椅和腿部挡板证据，且把手为短杆而非宽杆）。判定器械为龙门架。
+Step 3 — 光流验证：画面中短杆把手从高位垂直向下推至画面底部，随后受控回升，呈现明显的 UP/DOWN 周期性轨迹，且发力方向向下。
+Step 4 — 动作判定：站姿 + 绳索从上方来 + 肘部固定于体侧（推压动作） + 短杆配件，符合“绳索下压”的标准特征。
+Step 5 — 组次统计：通过把手在画面中的上下起伏周期观察，约在第1-15帧、16-30帧、31-45帧各完成一次重复，共计约3次动作。
+
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作4",
+  "image_path": "graph/肩背-叶翔/动作4.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "站姿，高位滑轮，短杆配件，向下推压动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架立柱", "高位滑轮", "钢索", "短直杆把手"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "把手从画面上方滑轮处垂直向下推至腹部高度，再受控回升，循环往复。",
+    "first_person_subject_evidence": "用户双手正握短杆，动作与第一人称视角完全同步。",
+    "uncertainty_notes": "缺少IMU数据，仅凭视觉判断次数可能存在微小偏差。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "绳索从上方引出且用户向下发力，使用短杆而非宽杆，排除下拉类动作。",
+    "rejected_or_close_candidates": [
+      {"exercise": "高位下拉", "reason": "高位下拉通常使用宽杆且为坐姿，此处为短杆且视角更接近站姿下压。"},
+      {"exercise": "绳索弯举", "reason": "绳索弯举要求绳索从下方滑轮引出，方向相反。"}
+    ]
+  },
+  "needs_manual_review": false,
+  "sets": [
+    {
+      "start_time": "00:08:26",
+      "end_time": "00:09:10",
+      "reps": 3
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 2,
+    "reason": "增加起手准备和放回器械的完整性。"
+  }
+}

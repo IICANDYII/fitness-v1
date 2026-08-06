@@ -1,0 +1,43 @@
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作7",
+  "image_path": "graph/腿-张开/动作7.jpg",
+  "selected_equipment": "腿举机",
+  "selected_exercise": "腿举",
+  "exercise_id": "machine_leg_press",
+  "selected_confidence": 0.98,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "腿举机",
+      "exercise": "腿举",
+      "exercise_id": "machine_leg_press",
+      "confidence": 0.98,
+      "support": "第一人称视角清晰可见双脚踩在大型器械踏板上，踏板随双腿屈伸做远离和靠近躯干的线性往复运动。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "腿举机踏板",
+      "器械导轨结构"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "踏板在画面中呈现明显的周期性推起（远离相机）和下放（靠近相机）过程，双腿伴随屈伸。",
+    "first_person_subject_evidence": "画面下方可见佩戴相机的用户双腿，且相机随躯干固定，仅观察到器械踏板的相对运动。",
+    "uncertainty_notes": "无明显不确定性，动作特征极度符合腿举。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "可见典型的腿举机踏板，用户处于坐姿/仰卧位推蹬负重，运动轨迹受器械导轨限制，为标准腿举动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "杠铃深蹲",
+        "reason": "深蹲为站姿且身体整体升降，此处为身体固定而踏板移动。"
+      },
+      {
+        "exercise": "坐姿腿屈伸",
+        "reason": "腿屈伸是小腿绕膝关节的旋转运动，不涉及整个踏板的线性位移。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

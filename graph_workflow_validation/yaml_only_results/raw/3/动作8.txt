@@ -1,0 +1,48 @@
+{
+  "user_folder": "3",
+  "action_id": "动作8",
+  "image_path": "graph/3/动作8.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "cable_chest_fly",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_chest_fly",
+      "confidence": 0.85,
+      "support": "第一人称视角下，用户双手各持一个电缆手柄，动作轨迹从身体两侧向胸前中线合拢，符合绳索夹胸特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_triceps_pushdown",
+      "confidence": 0.25,
+      "support": "双手向下运动，但双手间距较宽且呈弧线，不如夹胸匹配。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架 (Cable Machine)",
+      "滑轮组",
+      "D型手柄"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户双手从画面两侧（外展位）向画面中心下方（内收位）移动，呈现明显的周期性开合动作。",
+    "first_person_subject_evidence": "画面下方可见用户双手直接握持手柄，且相机随身体发力有轻微晃动，符合第一人称胸前相机特征。",
+    "uncertainty_notes": "环境光线较暗，但器械轮廓和手部动作轨迹依然可辨。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到用户站立于龙门架中心，双手握持两侧高位/中位滑轮引出的手柄，进行向心收缩（双手向胸前合拢），这是典型的绳索夹胸动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_triceps_pushdown",
+        "reason": "绳索下压通常使用单杆或绳索，双手靠拢且主要进行肘关节伸展；此处双手独立且有明显的肩关节水平内收动作。"
+      },
+      {
+        "exercise": "cable_lat_pulldown",
+        "reason": "高位下拉通常为坐姿且使用长杆拉向胸部，此处为站姿且双手独立运动。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

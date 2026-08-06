@@ -1,0 +1,42 @@
+{
+  "user_folder": "3",
+  "action_id": "动作4",
+  "image_path": "graph/3/动作4.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃卧推",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃卧推",
+      "confidence": 0.85,
+      "support": "镜中可见用户仰卧在长凳上，双手持哑铃在胸前做周期性运动，符合哑铃胸部训练特征。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "哑铃",
+      "卧推凳",
+      "哑铃架（背景）"
+    ],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "从第13帧开始，哑铃从画面两侧向中心合拢并伴随推起动作，呈现明显的胸部训练周期。",
+    "first_person_subject_evidence": "画面近端可见用户持哑铃的手臂，且其运动轨迹与镜中反射的仰卧人物动作完全同步。",
+    "uncertainty_notes": "虽然动作轨迹更接近哑铃飞鸟，但由于标准动作列表中仅包含哑铃卧推作为胸部哑铃动作，故归类于此。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜中反射确认了仰卧（supine）姿态，双手持哑铃在胸部上方进行水平内收/推举运动，这是典型的哑铃卧推或飞鸟动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "哑铃侧平举",
+        "reason": "侧平举通常为站姿或坐姿，且手臂向身体两侧外展，而镜中显示用户为仰卧姿态。"
+      },
+      {
+        "exercise": "哑铃推肩",
+        "reason": "推肩动作轨迹应在头部上方，且通常为坐姿或站姿，与镜中仰卧在凳上的姿态不符。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

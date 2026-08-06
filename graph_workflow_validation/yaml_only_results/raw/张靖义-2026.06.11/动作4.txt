@@ -1,0 +1,48 @@
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作4",
+  "image_path": "graph/张靖义-2026.06.11/动作4.jpg",
+  "selected_equipment": "杠铃",
+  "selected_exercise": "杠铃硬拉",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "杠铃",
+      "exercise": "杠铃硬拉",
+      "confidence": 0.85,
+      "support": "地面放置自由杠铃，用户俯身握杠并拉起至站立，相机视角随之抬升。"
+    },
+    {
+      "equipment": "杠铃",
+      "exercise": "杠铃俯身划船",
+      "confidence": 0.35,
+      "support": "同为杠铃拉类动作，但划船通常不伴随大幅度的躯干直立过程。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "杠铃",
+      "杠铃片",
+      "哑铃架"
+    ],
+    "body_posture": "bending",
+    "motion_cues_from_grid": "用户从俯身状态握住地上的杠铃，随后将其拉起，相机视角从斜向下转为平视，显示躯干由弯曲变为直立。",
+    "first_person_subject_evidence": "画面下方出现用户双手握杠动作，且相机（胸前佩戴）的俯仰运动与硬拉起杠的身体节奏完全同步。",
+    "uncertainty_notes": "仅凭视觉难以完全排除大重量划船初期的身体晃动，但动作轨迹更符合硬拉。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "杠铃起始位置在地面，用户完成了一个从俯身到完全站立的拉起动作，符合硬拉的典型动力学特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "杠铃俯身划船",
+        "reason": "划船动作中躯干应保持相对固定，而视频中相机视角随身体站起有明显改变。"
+      },
+      {
+        "exercise": "杠铃深蹲",
+        "reason": "杠铃位于地面而非深蹲架，且动作是‘拉’而非‘蹲起’。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

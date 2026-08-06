@@ -1,0 +1,48 @@
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作2",
+  "image_path": "graph/肩-秦紫渝/动作2.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.9,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.9,
+      "support": "高位滑轮连接绳索把手，用户双手握持向下按压，肘关节屈伸明显"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.2,
+      "support": "同为高位下拉类动作，但通常使用长杆且为坐姿，此处为绳索且用户站立"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架 (Cable Machine)",
+      "绳索把手 (Triceps Rope)",
+      "高位滑轮"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户双手握住绳索，从胸口高度向下伸展手臂至大腿前侧，随后受控回放，呈现典型的肱三头肌下压轨迹",
+    "first_person_subject_evidence": "画面两侧可见用户手臂，且动作与相机视角同步移动，确认为佩戴者本人操作",
+    "uncertainty_notes": "虽然文件夹名为‘肩’，但视觉证据指向肱三头肌训练动作；若为面拉（Face Pull），其轨迹应更偏向面部而非向下，且面拉不在标准动作列表中"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "清晰可见的绳索附件、高位滑轮起始点以及明显的肘部伸展（向下推）动作",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常使用横杠并采取坐姿，目标是背部；此处为绳索附件且用户站立，动作幅度更符合手臂训练"
+      },
+      {
+        "exercise": "绳索弯举",
+        "reason": "弯举需要滑轮在低位向上拉，此处滑轮在高位"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

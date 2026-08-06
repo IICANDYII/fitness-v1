@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 进场帧（第1排前3帧）显示用户走向一台史密斯机，镜子中清晰可见仰卧长凳，用户随后躺下，视角转为仰视天花板，双手握住带有固定导轨的银色横杆。
+Step 2 — 器械识别: 视角朝向天花板且身体呈仰卧姿态，符合卧推类动作特征；横杆两端连接在垂直导轨上，且在动作结束时（第2排第8帧）有明显的旋转挂钩动作，确认为史密斯机。
+Step 3 — 光流验证: 画面中横杆在胸部上方进行垂直的上下往复运动（UP/DOWN），与卧推的运动轨迹完全一致。
+Step 4 — 动作判定: 综合仰卧姿态、史密斯机器械以及垂直推举动作，判定为史密斯卧推。
+Step 5 — 组次统计: 从第1排第7帧开始第一次推起，至第2排第8帧挂回横杆，共观察到约 5 次完整的推举动作。
+
+{"user_folder": "健身-高孟琦", "action_id": "动作2", "image_path": "graph/健身-高孟琦/动作2.jpg", "selected_equipment": "史密斯机", "selected_exercise": "史密斯卧推", "selected_confidence": 0.9, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "史密斯机", "exercise": "史密斯卧推", "confidence": 0.9, "support": "仰卧姿态，视角朝天花板，横杆沿固定导轨上下移动，镜子中可见用户在长凳上推举。"}], "context": {"visible_equipment": ["史密斯机导轨", "横杆", "仰卧长凳"], "body_posture": "supine", "motion_cues_from_grid": "横杆在胸部上方做垂直往复运动，末帧有旋转挂钩动作", "first_person_subject_evidence": "镜中人动作与第一人称视角横杆移动完全同步，且双手从画面两侧伸出握杆", "uncertainty_notes": "缺少光流和IMU数据，但视觉证据（尤其是镜子倒影）非常充分"}, "action_disambiguation": {"selected_evidence": "史密斯机固定导轨可见，镜子中确认仰卧推举姿态，动作结束有挂钩动作", "rejected_or_close_candidates": [{"exercise": "杠铃卧推", "reason": "画面中横杆轨迹受限于固定导轨，非自由杠铃"}]}, "sets": [{"start_time": "00:03:47", "end_time": "00:04:18", "reps": 5}], "phase1_adjustment": {"expand_before_sec": 5, "expand_after_sec": 3, "reason": "卧推起始需要躺下就位时间，结束需要旋转挂钩时间"}, "needs_manual_review": false}

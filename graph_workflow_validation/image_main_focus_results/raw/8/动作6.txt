@@ -1,0 +1,44 @@
+{
+  "user_folder": "8",
+  "action_id": "动作6",
+  "image_path": "graph/8/动作6.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.65,
+  "confidence_policy": "multiple_close",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.65,
+      "support": "第一人称视角下，用户右手握住一个圆柱形把手（可能是绳索或单手把手），手臂在身体前方进行上下往复运动，背景可见龙门架钢索结构。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索弯举",
+      "confidence": 0.25,
+      "support": "同样表现为手部在胸腹前方的上下运动，由于视角限制，无法完全排除是下往上拉的弯举动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "钢索", "滑轨柱"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "从连续帧中可以看到用户右手握持把手，在画面左侧近端有小幅度的上下往复移动，但整体姿态相对固定。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面左侧近端始终出现一只握住把手的手臂，与相机运动同步，属于当前用户本人。",
+    "uncertainty_notes": "缺少光流和IMU数据，无法通过精确的力学方向和周期信号来百分之百确认是下压还是弯举，且手部运动幅度在第一人称视角下较局限。"
+  },
+  "sets": [
+    {"set_number": 1, "reps": null, "evidence": "画面中动作连续，但由于视角固定且缺乏光流，难以精确目测出完整的重复次数。"}
+  ],
+  "total_sets": 1,
+  "total_reps": null,
+  "action_disambiguation": {
+    "selected_evidence": "用户右手在胸前握住龙门架把手，且手部位置偏高，向下延伸的趋势更符合下压动作的起始和发力轨迹。",
+    "rejected_or_close_candidates": [
+      {"exercise": "绳索弯举", "reason": "绳索弯举通常从低位往上拉，而图中手部常态化停留在中高位，更符合下压的准备与控制阶段。"},
+      {"exercise": "高位下拉", "reason": "并非双手大横杆下拉，且身体没有坐在下拉器械上的迹象，故排除。"}
+    ]
+  },
+  "needs_manual_review": true
+}

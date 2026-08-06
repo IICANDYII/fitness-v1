@@ -1,0 +1,48 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作4",
+  "image_path": "graph/肩背-叶翔/动作4.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.92,
+      "support": "第一人称视角下可见典型的高位下拉横杠，且动作呈现明显的上下垂直拉伸轨迹。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "高位下拉横杠", "钢索"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "横杠从画面上方拉至胸前高度，随后有控制地回弹至上方，循环往复。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "横杠位于相机正前方近端，且其运动与相机（用户身体）的轻微晃动同步。",
+    "uncertainty_notes": "无光流和IMU，但视觉特征极其典型，不确定性极低。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 6,
+      "evidence": "通过拼图观察到约6次完整的拉下与回弹周期。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 6,
+  "action_disambiguation": {
+    "selected_evidence": "画面中出现了典型的高位下拉宽柄横杠，且运动轨迹为垂直向下的拉动作，符合高位下拉的标准特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "划船动作通常为水平方向拉动，而本视频中钢索连接点在上方，轨迹为垂直方向。"
+      },
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压通常使用较短的直杆或绳索，且动作幅度较小，主要集中在肘关节屈伸，而此处为大臂带动的全身段下拉。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,54 @@
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作1",
+  "image_path": "graph/腿-张开/动作1.jpg",
+  "selected_equipment": "登阶机/爬楼机",
+  "selected_exercise": "stepmill",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "登阶机/爬楼机",
+      "exercise": "stepmill",
+      "confidence": 0.85,
+      "support": "第一人称视角正对电子控制面板，双手握持两侧扶手，身体有明显的上下节奏性晃动，符合爬楼机运动特征。"
+    },
+    {
+      "equipment": "跑步机",
+      "exercise": "treadmill_walk_run",
+      "confidence": 0.1,
+      "support": "同样具有电子面板，但相机晃动频率和手部扶握姿态更接近登阶动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["登阶机控制面板", "侧边扶手", "显示屏"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "相机随身体重心上下起伏，手部在部分帧中调整面板参数，随后固定在扶手位置。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面中心为操作面板，用户双手从画面两侧伸出操作按键并扶住把手，动作与相机位移同步。",
+    "uncertainty_notes": "仅凭拼图较难区分极慢速跑步与登阶，但面板高度和扶手位置更符合登阶机。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": null,
+      "evidence": "有氧运动，表现为持续性的周期运动，非计次力量训练。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": null,
+  "action_disambiguation": {
+    "selected_evidence": "观察到典型的登阶机（Stepmill）控制台，用户双手扶在较高的侧轨上，且躯干有明显的垂直位移分量。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "treadmill_walk_run",
+        "reason": "跑步机通常步频更快，且扶手位置相对较低，垂直起伏感不如登阶机强烈。"
+      },
+      {
+        "exercise": "elliptical",
+        "reason": "椭圆机通常伴随手柄的前后大幅度摆动，图中手部相对固定在静态扶手上。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

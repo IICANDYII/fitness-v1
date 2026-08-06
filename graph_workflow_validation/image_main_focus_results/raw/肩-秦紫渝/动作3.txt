@@ -1,0 +1,57 @@
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作3",
+  "image_path": "graph/肩-秦紫渝/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "exercise_id": "cable_triceps_pushdown",
+      "confidence": 0.85,
+      "support": "第一人称视角下可见双手握持绳索附件，从高位向腰部位置做下压动作，且在底部绳索有明显向两侧分开的动作，符合绳索下压标准轨迹。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "exercise_id": "cable_lat_pulldown",
+      "confidence": 0.1,
+      "support": "同为高位向下的拉伸动作，但通常使用横杆且为坐姿。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架 (Cable Machine)", "绳索附件 (Rope Attachment)"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握住绳索，从画面上方（高位）向下方（腹部/腰部）移动，随后返回高位，循环两次。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面近端可见用户佩戴手套的双手的完整操作过程，且动作与相机视角同步。",
+    "uncertainty_notes": "虽然文件夹名为‘肩’，但视觉证据（手部下压至腰部高度）更符合肱三头肌的绳索下压动作，而非典型的肩部动作（如面拉或侧平举）。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 2,
+      "evidence": "从第9帧到第33帧完成第一次下压与回弹，从第33帧到第48帧完成第二次下压与回弹。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 2,
+  "action_disambiguation": {
+    "selected_evidence": "用户站姿使用龙门架绳索，双手从胸前高度下压至大腿前侧，肘关节做屈伸运动，这是典型的绳索下压特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索面拉 (Face Pull)",
+        "reason": "面拉通常将绳索拉向面部/额头高度，而本视频中手部轨迹明显下压至腰部。"
+      },
+      {
+        "exercise": "高位下拉",
+        "reason": "用户为站姿且使用绳索，而非坐姿使用长横杆。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

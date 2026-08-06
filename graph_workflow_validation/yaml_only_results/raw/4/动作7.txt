@@ -1,0 +1,72 @@
+{
+  "user_folder": "4",
+  "action_id": "动作7",
+  "image_path": "graph/4/动作7.jpg",
+  "selected_equipment": "杠铃",
+  "selected_exercise": "barbell_biceps_curl",
+  "exercise_id": "barbell_biceps_curl",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "杠铃",
+      "exercise": "barbell_biceps_curl",
+      "confidence": 0.85,
+      "support": "第一人称视角可见双手握持曲杆杠铃（EZ-bar），在胸腹前进行典型的上下弯举动作。"
+    },
+    {
+      "equipment": "杠铃",
+      "exercise": "barbell_overhead_press",
+      "confidence": 0.2,
+      "support": "同为杠铃动作，但画面中杠铃未超过肩部或头顶。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "曲杆杠铃 (EZ-bar)",
+      "固定器械（背景）"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "第11-25帧显示杠铃从低位抬起至胸前并下放，呈现周期性上下运动；第54-60帧再次出现相同趋势。",
+    "first_person_subject_evidence": "画面下方出现用户双手握持杠铃，且杠铃运动与相机视角同步，确认为佩戴者本人动作。",
+    "uncertainty_notes": "虽然是曲杆杠铃，但在标准动作库中归类为杠铃弯举。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户站立位，双手握持曲杆杠铃，肘部疑似固定在身体两侧，杠铃在垂直方向做圆弧形轨迹运动，符合弯举特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "barbell_bent_over_row",
+        "reason": "用户姿态为直立（standing），而非俯身（bending）。"
+      },
+      {
+        "exercise": "dumbbell_biceps_curl",
+        "reason": "画面明确显示为双手共持一根长杆，而非左右手各持独立哑铃。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "start_time": "00:00:11",
+      "end_time": "00:00:25",
+      "reps": 5,
+      "rep_source": "visual_count"
+    },
+    {
+      "set_number": 2,
+      "start_time": "00:00:54",
+      "end_time": "00:00:59",
+      "reps": 2,
+      "rep_source": "visual_count"
+    }
+  ],
+  "rest_periods": [
+    {
+      "start_time": "00:00:26",
+      "end_time": "00:00:53",
+      "duration_sec": 27,
+      "evidence": "用户放下杠铃或垂手站立，画面无周期性器械运动。"
+    }
+  ],
+  "needs_manual_review": false
+}

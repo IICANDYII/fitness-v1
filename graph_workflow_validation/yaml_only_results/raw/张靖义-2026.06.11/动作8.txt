@@ -1,0 +1,48 @@
+```json
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作8",
+  "image_path": "graph/张靖义-2026.06.11/动作8.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.1,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.15,
+      "support": "背景中存在龙门架，且有其他人在使用，但当前用户本人无操作证据"
+    },
+    {
+      "equipment": "无器械",
+      "exercise": "UNKNOWN_ACTION",
+      "confidence": 0.1,
+      "support": "用户双手在画面近端频繁出现，但未握持任何器械，疑似在与教练交流"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架 (Cable Machine)"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户双手在胸前频繁做手势、击掌或与对面人员（教练）互动，身体无明显的周期性负重运动轨迹。",
+    "first_person_subject_evidence": "画面下方可见佩戴黑色的左手腕带/手表，双手在近端活动，与相机抖动同步，确认为当前用户。",
+    "uncertainty_notes": "画面中虽然有龙门架和正在训练的人员（绿衣者），但根据第一人称视角约束，该人员并非用户本人。用户本人仅在进行社交互动或接受指导，无有效训练动作。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "第一人称视角下，用户双手未接触任何健身器械，且在整个区间内（44帧）主要与对面身穿灰色T恤的人员进行手势交流和互动，不符合任何标准训练动作的特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_triceps_pushdown",
+        "reason": "背景中有人在做类似动作，但用户本人双手空置，未操作钢索把手。"
+      },
+      {
+        "exercise": "cable_lat_pulldown",
+        "reason": "环境虽有龙门架，但用户处于站立姿态且无下拉动作。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}
+```

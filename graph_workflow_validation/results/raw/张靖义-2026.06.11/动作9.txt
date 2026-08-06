@@ -1,0 +1,30 @@
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作9",
+  "image_path": "graph/张靖义-2026.06.11/动作9.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.1,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [],
+  "context": {
+    "visible_equipment": [
+      "座椅",
+      "前方固定器械 (由他人操作)"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "用户本人在大部分时间内保持静止坐姿，仅在序列末尾（第48-50帧）有起身和行走的全局相机移动。",
+    "first_person_subject_evidence": "画面下方（如第7、46帧）可见用户本人的大腿和膝盖（穿着白色短裤），用户双手未出现在画面中操作器械。",
+    "uncertainty_notes": "视频主要记录了镜头前方另一名身穿黑色T恤的人员在进行训练，佩戴相机的用户本人并未进行任何识别列表中的训练动作。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户本人（白色短裤）始终处于静止观察状态，无肢体发力或器械操作证据。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "固定器械推胸",
+        "reason": "画面中确实存在此动作，但操作者为镜头前方的他人，而非佩戴相机的用户本人。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

@@ -6,10 +6,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ── Agent / LLM ──────────────────────────────────────────────────────────────
-AGENT_MODEL   = "gemini-3-flash-preview"
-VISION_MODEL  = "gemini-3-flash-preview"
+AGENT_MODEL   = "gemini-3.1-flash-preview"
+VISION_MODEL  = "gemini-3.1-flash-preview"
 
-_base = (os.getenv("NEXTROUTER_BASE_URL") or os.getenv("BASE_URL", "")).rstrip("/")
+_base = (os.getenv("NEXTROUTER_BASE_URL") or os.getenv("BASE_URL") or "https://nextrouter.cc").rstrip("/")
 GATEWAY_URL   = _base if _base.endswith("/v1") else _base + "/v1"
 GATEWAY_KEY   = os.getenv("NEXTROUTER_API_KEY") or os.getenv("API_KEY", "")
 

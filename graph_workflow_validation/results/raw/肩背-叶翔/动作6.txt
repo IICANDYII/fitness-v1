@@ -1,0 +1,56 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作6",
+  "image_path": "graph/肩背-叶翔/动作6.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "站姿，双手握住从高位滑轮垂下的绳索配件，向下推压至大腿前方，肘部固定。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架立柱",
+      "高位滑轮",
+      "绳索配件",
+      "配重塔"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面后半段（如帧16-18）显示双手握住绳索从胸前高度向下推至画面下方，呈现明显的下压轨迹。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手从身体两侧伸出并操作正前方的绳索配件，动作与相机位移同步。",
+    "uncertainty_notes": "缺少光流和IMU数据，仅凭视觉判断次数可能不准，但动作特征非常典型。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到用户处于站姿，使用龙门架的高位滑轮和绳索配件，发力方向为向下推压，符合绳索下压的判定标准。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "排除。高位下拉通常为坐姿且有大腿固定，而画面中用户为站姿，且动作幅度更接近三头肌下压。"
+      },
+      {
+        "exercise": "绳索弯举",
+        "reason": "排除。绳索弯举要求绳索从下方滑轮拉起，而本动作绳索来自上方。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:11:15",
+      "end_time": "00:11:34",
+      "reps": 3
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 5,
+    "reason": "扩展以包含完整的准备抓握动作和整组训练的结束过程。"
+  },
+  "needs_manual_review": false
+}

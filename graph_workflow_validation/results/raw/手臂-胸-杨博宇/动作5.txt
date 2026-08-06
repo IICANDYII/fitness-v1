@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 画面前几帧显示用户右手正握持一个黑色哑铃（2.5KG标识可见），背景为健身房的自由力量区，可见镜子和存放哑铃的架子。
+Step 2 — 器械识别: 明确为哑铃（Dumbbell），用户单手握持，属于自由重量训练。
+Step 3 — 光流验证: 视觉观察显示哑铃在画面右侧进行明显的上下弧线运动，从大腿高度升至胸肩高度，符合肘关节屈伸的轨迹。
+Step 4 — 动作判定: 结合器械（哑铃）和运动轨迹（肘部固定，前臂向上弯曲），判定为哑铃弯举。
+Step 5 — 组次统计: 整个片段持续约129秒，网格图中动作节奏稳定，根据动作周期估算约为1组，完成约15次重复。
+
+{"user_folder": "手臂-胸-杨博宇", "action_id": "动作5", "image_path": "graph/手臂-胸-杨博宇/动作5.jpg", "selected_equipment": "哑铃", "selected_exercise": "哑铃弯举", "selected_confidence": 0.85, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "哑铃", "exercise": "哑铃弯举", "confidence": 0.85, "support": "第一人称视角下清晰可见右手握持哑铃进行肘屈伸动作，轨迹呈弧线升降。"}], "context": {"visible_equipment": ["哑铃", "镜子", "哑铃架"], "body_posture": "standing", "motion_cues_from_grid": "哑铃从画面下方移动到胸前高度，伴随前臂的明显旋转和屈伸。", "first_person_subject_evidence": "画面右侧出现的右手及手臂动作与相机位移同步，且哑铃近端遮挡明显。", "uncertainty_notes": "缺少IMU数据，次数为基于视频时长和节奏的估算。"}, "action_disambiguation": {"selected_evidence": "手持哑铃的肘关节屈伸运动，且运动范围未超过肩部高度。", "rejected_or_close_candidates": [{"exercise": "哑铃侧平举", "reason": "侧平举通常为手臂伸直外展，而画面中明显是肘部弯曲的卷动动作。"}, {"exercise": "哑铃推肩", "reason": "推肩需要哑铃超过头部高度，画面中哑铃最高点仅在胸肩位置。"}]}, "sets": [{"start_time": "00:12:06", "end_time": "00:14:15", "reps": 15}], "phase1_adjustment": {"expand_before_sec": 2, "expand_after_sec": 3, "reason": "增加起始准备和放下哑铃的完整性。"}, "needs_manual_review": false}

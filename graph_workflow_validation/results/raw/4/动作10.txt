@@ -1,0 +1,52 @@
+Step 1 — 进场帧分析: 网格图前两帧显示用户双手从地面拿起一对黑色哑铃并站稳，随后调整呼吸准备开始动作。
+Step 2 — 器械识别: 画面中清晰可见用户双手持握的哑铃，且通过镜面反射确认用户在自由力量区使用哑铃进行训练。
+Step 3 — 光流验证: 虽无数值光流，但从连续帧可见镜中人物躯干呈明显的周期性髋铰链（Hip Hinge）运动，哑铃沿大腿前侧垂直上下移动。
+Step 4 — 动作判定: 结合第一人称视角下的哑铃、蓝色牛仔裤特征以及镜中反射的全身动作轨迹，判定为哑铃罗马尼亚硬拉。
+Step 5 — 组次统计: 镜中反射显示了 6 次完整的下放至膝盖下方并拉起至直立的动作周期。
+
+{
+  "user_folder": "4",
+  "action_id": "动作10",
+  "image_path": "graph/4/动作10.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃罗马尼亚硬拉",
+  "exercise_id": "dumbbell_romanian_deadlift",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃罗马尼亚硬拉",
+      "exercise_id": "dumbbell_romanian_deadlift",
+      "confidence": 0.85,
+      "support": "第一人称可见持哑铃，镜中反射显示清晰的髋铰链动作，衣物特征（蓝色裤子）与用户一致。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃", "镜子"],
+    "body_posture": "bending",
+    "motion_cues_from_grid": "镜中显示用户持哑铃进行下放至膝盖下方并拉起的循环动作，躯干做髋铰链运动而非深蹲。",
+    "first_person_subject_evidence": "第一排可见用户双手持哑铃，第二排第二帧可见蓝色牛仔裤，与镜中正在训练的人物完全吻合。",
+    "uncertainty_notes": "主要动作细节通过镜面反射获得，第一人称视角主要提供器械和下肢衣物验证。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜中反射提供了完整的侧面视角，确认了髋铰链（Hip Hinge）的运动轨迹，符合罗马尼亚硬拉特征。",
+    "rejected_or_close_candidates": [
+      {"exercise": "哑铃硬拉", "reason": "硬拉通常伴随更多的膝关节屈曲，而镜中动作膝角相对固定，以髋部驱动为主。"},
+      {"exercise": "哑铃俯身划船", "reason": "划船动作躯干应保持稳定，镜中可见躯干随动作大幅度起伏。"}
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:19:40",
+      "end_time": "00:20:20",
+      "reps": 6
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 5,
+    "expand_after_sec": 2,
+    "reason": "包含从地面拿起哑铃准备及动作结束后的放下过程。"
+  },
+  "needs_manual_review": false
+}

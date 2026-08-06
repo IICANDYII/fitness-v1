@@ -1,0 +1,43 @@
+{
+  "user_folder": "4",
+  "action_id": "动作9",
+  "image_path": "graph/4/动作9.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃弯举",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃弯举",
+      "confidence": 0.92,
+      "support": "第一人称视角下双手握持哑铃，上臂贴近躯干，进行明显的肘关节屈伸运动，哑铃从大腿高度抬升至胸前。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃", "哑铃架", "健身房背景器械"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户从地面/架子上拿起哑铃，随后双手交替或同步进行向上弯举动作，最后将哑铃放回。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面下方出现佩戴者的双手和前臂，动作与相机抖动同步，且哑铃始终处于第一人称视野中心。",
+    "uncertainty_notes": "无光流和IMU，但视觉特征极其典型，置信度高。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 5,
+      "evidence": "从第3行第4帧开始出现明显的向上弯举动作，至第6行第3帧左右完成约5次重复。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 5,
+  "action_disambiguation": {
+    "selected_evidence": "典型的肘关节屈伸轨迹，哑铃在胸腹前上下移动，未过肩，未向两侧平开。",
+    "rejected_or_close_candidates": [
+      {"exercise": "哑铃侧平举", "reason": "侧平举手臂应向身体两侧外展，而图中哑铃在身体正前方移动。"},
+      {"exercise": "哑铃推肩", "reason": "推肩需要将哑铃推过头顶，图中动作高度仅到胸肩部。"},
+      {"exercise": "哑铃前平举", "reason": "前平举通常保持手臂伸直，图中肘部有明显大幅度折叠。"}
+    ]
+  },
+  "needs_manual_review": false
+}

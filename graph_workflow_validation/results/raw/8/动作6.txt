@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 画面前几帧显示用户走向龙门架区域，并伸手抓握位于头顶上方高位滑轮处的D型把手，背景可见典型的健身房器械布局。
+Step 2 — 器械识别: 用户保持站姿，面对龙门架立柱，绳索从上方滑轮引出，符合龙门架高位附件的典型特征。
+Step 3 — 光流验证: 画面中手部持握把手向下推压至大腿高度，随后受控向上回弹，呈现明显的上下（UP/DOWN）周期性运动，且发力方向向下。
+Step 4 — 动作判定: 结合站姿、高位绳索来向以及肘部相对固定、手部向下推压的轨迹，判定为绳索下压（肱三头肌训练）。
+Step 5 — 组次统计: 动作从约第8帧开始第一次下压，至第50帧共观察到4次完整的往复周期。
+
+{"user_folder": "8", "action_id": "动作6", "image_path": "graph/8/动作6.jpg", "equipment": "龙门架", "exercise": "绳索下压", "exercise_id": "cable_triceps_pushdown", "confidence": 0.85, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "龙门架", "exercise": "绳索下压", "confidence": 0.85, "support": "站姿，高位滑轮绳索下压动作，镜中姿态确认"}], "context": {"visible_equipment": ["龙门架", "高位滑轮", "D型把手", "钢索"], "body_posture": "standing", "motion_cues_from_grid": "手部向下推压至大腿高度后回弹，呈现明显的上下往复周期", "first_person_subject_evidence": "近端手部操作器械与相机晃动同步，镜中人影动作与第一人称视角完全一致", "uncertainty_notes": "无IMU辅助，次数通过视觉周期判定，可能存在±1误差"}, "action_disambiguation": {"selected_evidence": "站姿、高位绳索来向、向下推压的运动轨迹及镜中姿态验证", "rejected_or_close_candidates": [{"exercise": "高位下拉", "reason": "高位下拉通常为坐姿且动作幅度更大，此动作为站姿且手部下压幅度较小"}, {"exercise": "绳索弯举", "reason": "绳索弯举需低位滑轮且向上发力，此为高位滑轮向下发力"}]}, "needs_manual_review": false, "sets": [{"start_time": "00:20:32", "end_time": "00:21:15", "reps": 4}], "phase1_adjustment": {"expand_before_sec": 3, "expand_after_sec": 2, "reason": "包含起始抓握准备和结束放回把手的完整过程"}}

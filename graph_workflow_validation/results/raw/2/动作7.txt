@@ -1,0 +1,41 @@
+分析过程：
+Step 1 — 进场帧分析: 网格图前几帧显示用户正坐在一个大型黑色金属框架的器械上，可见独立的左右摆臂（杠杆臂）和挂载的圆形杠铃片，符合悍马机（Hammer Strength）的典型特征。
+Step 2 — 器械识别: 用户处于坐姿，双手握住身体前方的水平把手。通过镜子（画面中央）可以清晰看到用户本人（黑衣）正在将把手从肩部高度向上推起，而非向前推或向下拉，判定为固定器械推肩。
+Step 3 — 光流验证: 画面中把手和手臂呈现明显的上下（UP/DOWN）运动轨迹，且在镜中观察到完整的过头推举动作，排除了推胸（前后轨迹）和下拉（发力方向相反）的可能性。
+Step 4 — 动作判定: 综合器械特征（悍马机、独立摆臂）与动作轨迹（坐姿向上推举），判定为固定器械推肩。
+Step 5 — 组次统计: 观察到约3次完整的推举周期（分别在第4-7帧，8-11帧，12-14帧左右），判定为1组3次。
+
+{"equipment": "悍马机", "exercise": "固定器械推肩", "exercise_id": "machine_shoulder_press", "confidence": 0.85, "sets": [{"start_time": "00:08:56", "end_time": "00:09:22", "reps": 3}], "phase1_adjustment": {"expand_before_sec": 3, "expand_after_sec": 2, "reason": "增加起始就位和结束放下的缓冲时间"}}
+
+{
+  "user_folder": "2",
+  "action_id": "动作7",
+  "image_path": "graph/2/动作7.jpg",
+  "selected_equipment": "悍马机",
+  "selected_exercise": "固定器械推肩",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "悍马机",
+      "exercise": "固定器械推肩",
+      "confidence": 0.85,
+      "support": "坐姿，可见独立杠杆臂和挂载杠铃片，镜中显示明显的向上推举动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["独立摆臂", "圆形杠铃片", "座椅", "水平把手"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手握把从肩部高度推至头顶上方，呈周期性上下往复运动。",
+    "first_person_subject_evidence": "镜中黑衣人动作与第一人称视角下的手臂运动、相机晃动完全同步。",
+    "uncertainty_notes": "缺少光流数据，仅凭视觉判断次数可能存在微小误差。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜中反射提供了清晰的侧面/正面视角，确认动作是垂直向上的推举；器械结构符合悍马机推肩器。",
+    "rejected_or_close_candidates": [
+      {"exercise": "固定器械推胸", "reason": "推胸动作轨迹应为水平向前，而画面显示为向上推举。"},
+      {"exercise": "高位下拉", "reason": "发力方向为向上推而非向下拉。"}
+    ]
+  },
+  "needs_manual_review": false
+}

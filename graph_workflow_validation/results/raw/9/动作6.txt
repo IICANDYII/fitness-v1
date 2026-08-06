@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 进场帧（前4帧）显示用户正走向一台龙门架（电缆交叉训练机），画面中可见明显的双立柱结构、配重塔以及挂在高位的滑轮。
+Step 2 — 器械识别: 用户采取站姿，双手握住挂在高位滑轮上的绳索（Rope）配件。根据规则三，站姿 + 绳索从上方来 + 肘部固定，初步判定为三头肌下压类动作。
+Step 3 — 光流验证: 画面中用户双手从胸前位置向下推压至大腿前方，随后受控回弹，呈现明显的上下（UP/DOWN）周期性运动，且发力方向向下，符合“推”的特征。
+Step 4 — 动作判定: 综合站姿、高位绳索配件、向下推压的轨迹，判定为绳索下压（cable_triceps_pushdown）。
+Step 5 — 组次统计: 关键帧网格中，从第5帧开始到第12帧，可以观察到约4次完整的下压回弹周期。考虑到总时长26秒，实际次数可能在6-8次左右，此处按视觉可见周期记录。
+
+{"equipment": "龙门架", "exercise": "绳索下压", "exercise_id": "cable_triceps_pushdown", "selected_confidence": 0.85, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "龙门架", "exercise": "绳索下压", "confidence": 0.85, "support": "站姿，高位滑轮连接绳索配件，双手向下推压，肘部贴身"}], "context": {"visible_equipment": ["龙门架", "绳索配件", "高位滑轮"], "body_posture": "standing", "motion_cues_from_grid": "双手持绳索从胸口高度向下推至腹部/大腿区域，随后返回", "first_person_subject_evidence": "用户双手持握器械配件在画面中心操作，视角随动作轻微起伏", "uncertainty_notes": "缺少光流和IMU数据，仅凭视觉帧计数可能存在少量误差"}, "action_disambiguation": {"selected_evidence": "高位滑轮绳索配件 + 站姿 + 向下推压轨迹", "rejected_or_close_candidates": [{"exercise": "高位下拉", "reason": "用户为站姿而非坐姿，且动作幅度较小，属于肘关节驱动而非肩关节驱动"}, {"exercise": "面拉", "reason": "手部运动方向向下而非向面部拉动"}, {"exercise": "绳索弯举", "reason": "绳索来向为上方而非下方"}]}, "sets": [{"start_time": "00:15:12", "end_time": "00:15:38", "reps": 6}], "phase1_adjustment": {"expand_before_sec": 3, "expand_after_sec": 2, "reason": "增加起势抓握和结束放回配件的完整性"}, "needs_manual_review": false}

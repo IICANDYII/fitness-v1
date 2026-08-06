@@ -1,0 +1,51 @@
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作5",
+  "image_path": "graph/张靖义-2026.06.11/动作5.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃侧平举",
+  "selected_exercise_id": "dumbbell_lateral_raise",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃侧平举",
+      "exercise_id": "dumbbell_lateral_raise",
+      "confidence": 0.85,
+      "support": "镜中反射清晰显示用户站姿持哑铃，双臂向身体两侧外展平举至肩高，符合该动作典型轨迹。"
+    },
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃弯举",
+      "exercise_id": "dumbbell_biceps_curl",
+      "confidence": 0.2,
+      "support": "同为站姿哑铃动作，但镜中轨迹为肩外展而非肘屈伸。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "哑铃",
+      "哑铃架",
+      "镜子"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "前两行显示用户在哑铃架前拿取哑铃；第三行出现查看手表及准备动作；第四行至第六行镜中反射显示明显的手臂侧向平举周期性运动。",
+    "first_person_subject_evidence": "画面近端可见用户双手持握哑铃，且镜中人物的衣着、动作节奏与第一人称视角下的手部动作及相机晃动高度同步。",
+    "uncertainty_notes": "主要动作证据来自镜面反射，第一人称直接视角主要捕捉到手部持握，未见完整手臂轨迹。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜中反射提供了完整的动作轨迹：用户双臂向两侧张开并抬起至水平位置，这是哑铃侧平举的明确特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "哑铃推肩",
+        "reason": "镜中未观察到哑铃从肩部向上推举过头的线性轨迹。"
+      },
+      {
+        "exercise": "哑铃前平举",
+        "reason": "镜中手臂运动方向为身体两侧（外展），而非身体正前方（屈曲）。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

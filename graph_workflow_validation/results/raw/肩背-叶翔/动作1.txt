@@ -1,0 +1,45 @@
+Step 1 — 进场帧分析: 进场帧显示用户正前方为一个巨大的、垂直的电子控制面板，带有“RELAX”标识、红色急停按钮和多个物理按键。两侧有固定的黑色扶手，未见车座，属于典型的站姿有氧器械。
+Step 2 — 器械识别: 根据规则 6B，该器械具有大型独立控制面板、正对面部（平视）、红色急停按钮、固定扶手且无车座，符合登阶机（爬楼机）的特征。虽然面板与跑步机相似，但其高度和垂直角度更倾向于登阶机。
+Step 3 — 光流验证: 画面中可见用户双手交替握住扶手或操作手机，伴随身体有节奏的轻微上下起伏，符合登阶机的运动模式。
+Step 4 — 动作判定: 综合器械外观和站姿持续运动状态，判定为登阶机/爬楼机训练。
+Step 5 — 组次统计: 有氧运动表现为单组持续运动，时间从 00:00:36 持续至 00:04:50。
+
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作1",
+  "image_path": "graph/肩背-叶翔/动作1.jpg",
+  "selected_equipment": "登阶机",
+  "selected_exercise": "登阶机/爬楼机",
+  "exercise_id": "stepmill",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "登阶机",
+      "exercise": "登阶机/爬楼机",
+      "confidence": 0.85,
+      "support": "大型垂直控制面板正对镜头，固定侧扶手，无车座，站姿训练"
+    },
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.15,
+      "support": "控制面板布局与部分高端跑步机相似"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["大型垂直控制面板", "固定扶手", "红色急停按钮", "电子显示屏"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面呈现持续的、小幅度的上下节奏性晃动，用户双手间歇性握住扶手或持手机",
+    "first_person_subject_evidence": "第一人称视角，用户双手从画面下方/两侧伸出操作手机和扶手，动作与相机晃动同步",
+    "uncertainty_notes": "未直接拍到下方的旋转台阶，仅凭控制面板高度和扶手结构推断"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "符合规则6B中登阶机的核心特征：大型垂直面板正对面部、固定扶手、无车座、明显的上下起伏感",
+    "rejected_or_close_candidates": [
+      {"exercise": "跑步机", "reason": "跑步机面板通常角度较斜，且此器械的整体框架高度更符合登阶机"},
+      {"exercise": "健身车/动感单车", "reason": "画面显示为站姿且无车座，排除"}
+    ]
+  },
+  "needs_manual_review": false
+}

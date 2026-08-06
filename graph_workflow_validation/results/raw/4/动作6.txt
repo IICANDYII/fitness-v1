@@ -1,0 +1,52 @@
+Step 1 — 进场帧分析: 进场帧（前3帧）清晰显示用户站在龙门架（电缆交叉机）前，双手握住从上方高位滑轮引出的绳索（Rope）配件，背景可见配重塔和立柱。
+Step 2 — 器械识别: 根据规则三和规则六A，用户为站姿，绳索从头顶上方垂下，且双手握住绳索配件，判定器械为龙门架。
+Step 3 — 光流验证: 画面显示用户双手从胸前高度向下推压至大腿前方，呈现明显的上下（UP/DOWN）往复运动，符合推压类动作特征。
+Step 4 — 动作判定: 结合站姿、高位绳索来向、肘部贴身以及向下推压的动作轨迹，判定为绳索下压（肱三头肌训练）。
+Step 5 — 组次统计: 观察网格图，第1-4帧为第一次下压，第5-7帧回弹，第8-10帧开始第二次下压，判定为1组，约2次动作。
+
+{
+  "user_folder": "4",
+  "action_id": "动作6",
+  "image_path": "graph/4/动作6.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.9,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.9,
+      "support": "站姿，高位滑轮绳索配件，向下推压动作"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架立柱", "高位滑轮", "绳索配件"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握绳索从胸口高度向下延伸至腹部下方，肘部保持在身体两侧",
+    "first_person_subject_evidence": "第一人称视角下双手操作绳索，动作与相机位移同步",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "站姿且绳索从上方引出，动作方向为向下推压，符合绳索下压标准定义",
+    "rejected_or_close_candidates": [
+      {"exercise": "高位下拉", "reason": "高位下拉必须是坐姿，且通常使用长杆配件"},
+      {"exercise": "绳索弯举", "reason": "绳索弯举要求绳索从下方引出且向上发力"},
+      {"exercise": "绳索夹胸", "reason": "夹胸动作轨迹为水平弧线合拢，此处为垂直向下推压"}
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:15:00",
+      "end_time": "00:15:18",
+      "reps": 2
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 2,
+    "reason": "包含起始准备抓握和结束放回绳索的过程"
+  },
+  "needs_manual_review": false
+}

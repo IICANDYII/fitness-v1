@@ -1,0 +1,32 @@
+{
+  "user_folder": "8",
+  "action_id": "动作3",
+  "image_path": "graph/8/动作3.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.1,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "UNKNOWN_EQUIPMENT",
+      "exercise": "UNKNOWN_EXERCISE",
+      "confidence": 0.1,
+      "support": "无可见的当前用户本人的完整动作周期，前段静止，后段在健身房内走动"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["固定器械", "卧推架", "杠铃"],
+    "body_posture": "unknown",
+    "motion_cues_from_grid": "前4行画面高度静止，第5行开始出现大幅度视角晃动与走动，后几行经过橙色墙壁与卧推架区域。",
+    "first_person_subject_evidence": "前4行右侧边缘可见用户右手握持把手，镜中可见身穿紫色上衣的用户本人持机；后段为第一人称步行视角。",
+    "uncertainty_notes": "缺乏有效的动作向心与离心周期，无法识别为任何标准训练动作。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "全段未见当前用户本人的规律性抗阻训练动作，表现为器械前静止与随后的走动观望。",
+    "rejected_or_close_candidates": [
+      {"exercise": "barbell_bench_press", "reason": "后段虽可见卧推架与杠铃，但为视角经过或他人训练，非用户本人操作。"},
+      {"exercise": "machine_chest_press", "reason": "前段用户虽坐在固定器械前，但无动作屈伸轨迹，属于休息或准备状态。"}
+    ]
+  },
+  "needs_manual_review": true
+}

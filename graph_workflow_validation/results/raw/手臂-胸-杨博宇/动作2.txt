@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 网格图前几帧显示用户处于站姿，双手握持一根杠铃杆（带有固定配重或小杠铃片），前方有一名身穿白衣的人员（疑似教练或搭档）在观察或辅助。
+Step 2 — 器械识别: 画面中出现明显的横向金属杆，由用户双手握持，属于自由重量器械。根据规则二，站姿平视且手持横杆，初步判定为杠铃类动作。
+Step 3 — 光流验证: 观察连续帧，杠铃从腰部高度向上弯举至胸前，随后下放。运动轨迹呈明显的弧线，且上臂保持相对固定，符合肘关节屈伸的特征。
+Step 4 — 动作判定: 综合站姿、杠铃器械以及肘部屈伸的运动模式，判定为杠铃弯举。
+Step 5 — 组次统计: 画面中可观察到约2次完整的弯举动作（第一周期约在第4-12帧，第二周期约在第13-21帧），随后在第25帧左右动作停止，杠铃被放下或由他人接走。
+
+{"equipment": "杠铃", "exercise": "杠铃弯举", "exercise_id": "barbell_biceps_curl", "confidence": 0.85, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "杠铃", "exercise": "杠铃弯举", "confidence": 0.85, "support": "站姿，双手握持杠铃在胸前做周期性屈肘上抬动作，轨迹符合弯举。"}], "context": {"visible_equipment": ["杠铃杆", "固定配重片"], "body_posture": "standing", "motion_cues_from_grid": "杠铃从画面下方升至胸前高度，随后回落，伴随明显的肘部屈伸。", "first_person_subject_evidence": "第一人称视角下双手握持杠铃，杠铃的升降与用户身体重心及相机视角同步。", "uncertainty_notes": "缺少IMU和光流数据，仅凭视觉判断次数可能存在微小偏差。"}, "action_disambiguation": {"selected_evidence": "站姿，杠铃在胸腹至胸前区间运动，未过头，肘部位置相对固定。", "rejected_or_close_candidates": [{"exercise": "杠铃推举", "reason": "杠铃未推过头顶，运动范围仅限胸部以下"}, {"exercise": "杠铃俯身划船", "reason": "用户处于直立站姿，而非俯身姿态"}]}, "sets": [{"start_time": "00:06:36", "end_time": "00:07:10", "reps": 2}], "phase1_adjustment": {"expand_before_sec": 2, "expand_after_sec": 3, "reason": "起始有准备握杠动作，结束有放回或移交杠铃的过程"}}

@@ -1,0 +1,54 @@
+{
+  "user_folder": "8",
+  "action_id": "动作4",
+  "image_path": "graph/8/动作4.jpg",
+  "selected_equipment": "高位下拉机",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.9,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "高位下拉机",
+      "exercise": "高位下拉",
+      "confidence": 0.9,
+      "support": "第一人称视角从下往上看，双手握住宽横杆从头顶上方拉向胸口，符合高位下拉典型特征。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "宽横杆",
+      "钢索（隐约可见）",
+      "橙色装饰天花板"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "横杆在画面中上下往复运动，从画面上方（头顶）向画面中心（胸口）拉动。",
+    "first_person_subject_evidence": "双手从画面两侧伸出握住横杆，且相机随躯干有轻微的后仰/起伏同步感。",
+    "uncertainty_notes": "缺少光流和IMU，但视觉特征（宽杆、向上视角、下拉动作）非常典型，不确定性较低。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "视角始终朝向斜上方，双手握持典型的宽下拉杆，动作轨迹为从高位向胸前下拉。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "引体向上",
+        "reason": "引体向上通常是身体向固定横杆靠近，且环境多为龙门架或单杠，此处横杆运动轨迹更符合配重式下拉机。"
+      },
+      {
+        "exercise": "杠铃卧推",
+        "reason": "虽然也是仰视，但卧推是向上推起动作，此处为向下拉动，且握持的是下拉专用宽杆而非杠铃杆。"
+      }
+    ]
+  },
+  "needs_manual_review": false,
+  "sets": [
+    {
+      "start_time": "00:18:07",
+      "end_time": "00:18:48",
+      "reps": 4
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 3,
+    "expand_after_sec": 2,
+    "reason": "高位下拉起始需要抓杆就位，结束需要控制配重片回放，适当扩展以包含完整动作周期。"
+  }
+}

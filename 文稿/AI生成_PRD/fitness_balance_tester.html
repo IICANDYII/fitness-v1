@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness Balance v4 指标测试器</title>
+<style>
+  :root{
+    --bg:#faf9f5; --surface:#ffffff; --surface2:#f1efe8; --line:rgba(0,0,0,.12);
+    --line2:rgba(0,0,0,.22); --txt:#1f1e1b; --txt2:#5f5e5a; --txt3:#888780;
+    --blue:#185FA5; --bluebg:#E6F1FB; --teal:#0F6E56; --tealbg:#E1F5EE;
+    --amber:#854F0B; --amberbg:#FAEEDA; --purple:#534AB7; --purplebg:#EEEDFE;
+    --red:#A32D2D; --redbg:#FCEBEB; --green:#3B6D11; --greenbg:#EAF3DE;
+    --radius:12px; --radius-sm:8px;
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#1f1e1b;--surface:#2c2c2a;--surface2:#262522;--line:rgba(255,255,255,.14);
+    --line2:rgba(255,255,255,.26);--txt:#f1efe8;--txt2:#b4b2a9;--txt3:#888780;
+    --blue:#85B7EB;--bluebg:#0C447C;--teal:#5DCAA5;--tealbg:#085041;--amber:#EF9F27;--amberbg:#633806;
+    --purple:#AFA9EC;--purplebg:#3C3489;--red:#F09595;--redbg:#791F1F;--green:#97C459;--greenbg:#27500A;}
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--txt);padding:24px;line-height:1.5;}
+  .wrap{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;}
+  h1{font-size:22px;font-weight:500;margin:0 0 4px;}
+  .sub{color:var(--txt2);font-size:13px;margin:0 0 18px;}
+  .full{grid-column:1 / -1;}
+  .card{background:var(--surface);border:.5px solid var(--line);border-radius:var(--radius);padding:16px 18px;}
+  .card h2{font-size:15px;font-weight:500;margin:0 0 2px;display:flex;align-items:center;gap:8px;}
+  .badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:6px;}
+  .card .hint{color:var(--txt3);font-size:12px;margin:0 0 14px;}
+  .row{display:flex;align-items:center;gap:10px;margin:10px 0;}
+  .row label{font-size:13px;color:var(--txt2);flex:0 0 200px;}
+  .row input[type=range]{flex:1;}
+  .row .val{font-size:13px;font-weight:500;min-width:42px;text-align:right;}
+  input[type=range]{-webkit-appearance:none;height:4px;border-radius:4px;background:var(--line2);outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--blue);cursor:pointer;}
+  input[type=number]{width:64px;height:30px;border:.5px solid var(--line2);border-radius:6px;background:var(--surface);color:var(--txt);text-align:center;font-size:13px;}
+  table.mtab{width:100%;border-collapse:collapse;font-size:13px;}
+  table.mtab th{text-align:left;color:var(--txt3);font-weight:500;font-size:11px;padding:4px 6px;}
+  table.mtab td{padding:5px 6px;border-top:.5px solid var(--line);}
+  table.mtab td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  .bar{height:6px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:3px;}
+  .bar>span{display:block;height:100%;}
+  /* results */
+  .final{background:var(--surface);border:.5px solid var(--line);border-radius:var(--radius);padding:18px;}
+  .finalnum{font-size:48px;font-weight:500;line-height:1;}
+  .stack{display:flex;height:30px;border-radius:8px;overflow:hidden;margin:14px 0 6px;border:.5px solid var(--line);}
+  .stack>div{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#fff;min-width:0;}
+  .comps{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:8px;}
+  .comp{background:var(--surface2);border-radius:var(--radius-sm);padding:10px 12px;}
+  .comp .k{font-size:11px;color:var(--txt2);}
+  .comp .v{font-size:22px;font-weight:500;}
+  .comp .w{font-size:11px;color:var(--txt3);}
+  .status{font-size:12px;padding:6px 10px;border-radius:6px;display:inline-block;margin-top:4px;}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--txt2);margin-top:8px;}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px;}
+  .pillrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;}
+  .chk{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--txt2);}
+  .tip{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;border:.5px solid var(--line2);color:var(--txt3);font-size:10px;cursor:help;position:relative;font-weight:400;flex:none;}
+  .tip .tipbox{visibility:hidden;opacity:0;position:absolute;z-index:20;bottom:150%;left:50%;transform:translateX(-50%);width:250px;background:var(--surface);color:var(--txt);border:.5px solid var(--line2);border-radius:8px;padding:9px 11px;font-size:11px;line-height:1.5;font-weight:400;text-align:left;box-shadow:0 6px 20px rgba(0,0,0,.16);transition:opacity .12s;}
+  .tip .tipbox b{font-weight:500;}
+  .tip:hover .tipbox{visibility:visible;opacity:1;}
+  .row label .tip{margin-left:4px;vertical-align:middle;}
+  .mid{display:flex;gap:8px;margin-top:10px;}
+  .mid .chip{flex:1;background:var(--surface2);border-radius:8px;padding:6px 8px;font-size:11px;color:var(--txt2);}
+  .mid .chip b{display:block;font-size:16px;font-weight:500;color:var(--txt);}
+  #days7{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;}
+  .dayblk{border:.5px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface);}
+  .dayhd{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+  .dayhd .dn{font-size:13px;font-weight:500;}
+  .dayhd .rest{font-size:11px;color:var(--txt3);}
+  .addex{width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;border:.5px solid var(--line2);border-radius:50%;background:var(--surface);color:var(--blue);font-size:16px;cursor:pointer;line-height:1;}
+  .addex:hover{background:var(--bluebg);}
+  .exhd{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--txt3);margin-top:4px;padding-bottom:2px;border-bottom:.5px solid var(--line);}
+  .exhd span:nth-child(1){flex:1;min-width:0;}
+  .exhd span:nth-child(2){width:42px;text-align:center;}
+  .exhd span:nth-child(3){width:54px;text-align:center;}
+  .exhd span:nth-child(4){width:62px;text-align:center;}
+  .exhd span:nth-child(5){width:18px;}
+  .exrow{display:flex;align-items:center;gap:6px;margin-top:6px;}
+  .exrow select,.exrow input{height:28px;font-size:12px;}
+  .exrow .h_ex{flex:1;min-width:0;}
+  .exrow .h_del{border:none;background:none;color:var(--txt3);cursor:pointer;font-size:16px;padding:0 2px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="full">
+    <h1>Fitness Balance v4 — 指标测试器</h1>
+    <p class="sub">调整任意输入，实时查看 G / S / E / C、Recovery 调整与最终 Balance 的变化。公式取自《Fitness Balance 指标计算说明文档 v4》。</p>
+  </div>
+
+  <!-- LEFT COLUMN: inputs -->
+  <div style="display:flex;flex-direction:column;gap:18px;">
+
+    <div class="card">
+      <h2>G <span class="badge" style="background:var(--bluebg);color:var(--blue);">15% · 指南参考</span>
+        <span class="tip">?<span class="tipbox"><b>G 衡量"是否接近官方力量指南"。</b><br>取频率与覆盖度的<b>短板</b>(min):只达到天数但肌群不全,或肌群全但天数不够,都拿不到高分。占比仅 15%,只看下限。</span></span></h2>
+      <p class="hint">G = 100 × min( min(天数/2,1), 覆盖主要肌群/7 )</p>
+      <div class="row"><label>有效力量训练天数 (7天内)
+        <span class="tip">?<span class="tipbox"><b>此滑块同时影响 G 和 C。</b><br>G 频率项 min(天数/2,1) <b>2 天封顶</b>;C 的 day_consistency min(天数/4,1) <b>4 天封顶</b>。<br>所以拖到 3–4 天时还在涨的是 C,不是 G。</span></span></label><input type="range" id="days" min="0" max="7" step="1" value="3"><span class="val" id="days_v">3</span></div>
+      <div style="font-size:11px;color:var(--txt3);margin:-4px 0 4px 0;">↳ 天数同时驱动 <b style="color:var(--blue);">G(2天封顶)</b> 和 <b style="color:var(--purple);">C(4天封顶)</b></div>
+      <div class="row"><label>已覆盖主要肌群数 (满分7)</label><input type="range" id="cov" min="0" max="7" step="1" value="3"><span class="val" id="cov_v">3</span></div>
+    </div>
+
+    <div class="card">
+      <h2>C <span class="badge" style="background:var(--purplebg);color:var(--purple);">25% · 一致性 & 剂量</span>
+        <span class="tip">?<span class="tipbox"><b>C 奖励"坚持 + 总量",和 E 不同维度。</b><br>同肌群重复练不会提升结构分 S,但作为<b>剂量</b>体现在 C(如每周第 3、4 次训练)。<br>C 看宏观频率与总量;E 看每条动作的识别质量。</span></span></h2>
+      <p class="hint">C = 100 × (0.6×min(天数/4,1) + 0.4×min(总单位/8,1))。天数同上。</p>
+      <div class="row"><label>7天总有效训练单位 (Σ exercise_unit)
+        <span class="tip">?<span class="tipbox">所有有效动作的 exercise_unit 之和。<b>剂量项在 8 单位封顶</b>(≈每周4次×2单位),再多不加分,以防过度训练/刷分。滑块到 32 只是输入范围。</span></span></label><input type="range" id="units" min="0" max="16" step="0.5" value="6"><span class="val" id="units_v">6</span></div>
+      <div class="mid">
+        <div class="chip">day_consistency<b id="m_dc">—</b>min(天数/4,1)</div>
+        <div class="chip">unit_dose<b id="m_dose">—</b>min(单位/8,1) · 封顶 8</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>E <span class="badge" style="background:var(--tealbg);color:var(--teal);">20% · 有效训练证据</span>
+        <span class="tip">?<span class="tipbox"><b>E 判断"识别到的训练是否真实有效"。</b><br>每条动作算一个证据分,再按其 unit 加权平均。回答的是"系统看到的这些训练靠不靠谱",而非练了多少(那是 C)。</span></span></h2>
+      <p class="hint">证据 = 0.35×动作置信 + 0.25×重复模式 + 0.25×min(unit/2,1) + 0.15×计划支持</p>
+      <div class="row"><label>action_confidence (识别置信)
+        <span class="tip">?<span class="tipbox">模型对"这是个什么动作"判断的把握程度(0–1)。同时也是有效动作的准入门槛之一(≥0.70)。</span></span></label><input type="range" id="e_conf" min="0" max="1" step="0.05" value="0.85"><span class="val" id="e_conf_v">0.85</span></div>
+      <div class="row"><label>repetition_pattern_score
+        <span class="tip">?<span class="tipbox">有没有检测到清晰的重复节奏。<b>1.0</b>=明确重复 / <b>0.5</b>=疑似重复 / <b>0</b>=无重复证据。</span></span></label><input type="range" id="e_rep" min="0" max="1" step="0.05" value="1"><span class="val" id="e_rep_v">1.00</span></div>
+      <div class="row"><label>代表 exercise_unit (算充足度)
+        <span class="tip">?<span class="tipbox">用于充足度 min(unit/2,1):该动作做的量够不够,<b>2 单位即满分</b>。这里取一个代表值近似全部动作的加权平均。</span></span></label><input type="range" id="e_unit" min="0" max="4" step="0.25" value="2"><span class="val" id="e_unit_v">2.00</span></div>
+      <div class="row"><label>user_or_plan_support
+        <span class="tip">?<span class="tipbox">外部佐证。<b>1.0</b>=用户手动确认了该动作 / <b>0.7</b>=该动作在训练计划中 / <b>0</b>=都不在。</span></span></label><input type="range" id="e_plan" min="0" max="1" step="0.05" value="0.7"><span class="val" id="e_plan_v">0.70</span></div>
+    </div>
+
+    <div class="card">
+      <h2>Recovery <span class="badge" style="background:var(--amberbg);color:var(--amber);">调整 −5 ~ +3</span>
+        <span class="tip">?<span class="tipbox"><b>R 是"恢复间隔质量分",正向指标。</b><br>同肌群相邻两次训练间隔:≥48h→1.0、24–48h→0.7、&lt;24h→0.3,按曝光加权×100。<br><b>R 高=间隔充分(好)→加分;R 低=练太密、恢复不足→扣分。</b>练太密会把 R 压低,所以"重复扣分"对应的是 R 低,而非 R 越小越好。</span></span></h2>
+      <p class="hint">R≥85 → +3 · 70–85 → 0 · 50–70 → −2 · &lt;50 → −5 · 无重复肌群 → 0</p>
+      <div class="row"><label class="chk"><input type="checkbox" id="r_null"> 7天内无同一肌群重复 (R=null)</label></div>
+      <div class="row"><label>Recovery Spacing Score R</label><input type="range" id="r_score" min="0" max="100" step="1" value="65"><span class="val" id="r_score_v">65</span></div>
+    </div>
+
+    <div class="card">
+      <h2>权重 <span class="badge" style="background:var(--surface2);color:var(--txt2);">默认 .15/.40/.20/.25</span></h2>
+      <p class="hint">base = wG·G + wS·S + wE·E + wC·C（可改，便于做敏感度测试）</p>
+      <div class="row"><label>wG</label><input type="number" id="wG" value="0.15" step="0.05" min="0" max="1">
+        <label style="flex:0 0 30px;text-align:center;">wS</label><input type="number" id="wS" value="0.40" step="0.05" min="0" max="1"></div>
+      <div class="row"><label>wE</label><input type="number" id="wE" value="0.20" step="0.05" min="0" max="1">
+        <label style="flex:0 0 30px;text-align:center;">wC</label><input type="number" id="wC" value="0.25" step="0.05" min="0" max="1"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN: structure + results -->
+  <div style="display:flex;flex-direction:column;gap:18px;">
+
+    <div class="final">
+      <div style="font-size:12px;color:var(--txt2);">最终 Fitness Balance</div>
+      <div class="finalnum" id="final">—</div>
+      <div id="status_box"></div>
+      <div class="stack" id="stack"></div>
+      <div class="legend">
+        <span><i style="background:#185FA5;"></i>G</span>
+        <span><i style="background:#534AB7;"></i>S</span>
+        <span><i style="background:#0F6E56;"></i>E</span>
+        <span><i style="background:#BA7517;"></i>C</span>
+        <span><i style="background:#888780;"></i>Recovery 调整</span>
+      </div>
+      <div class="comps">
+        <div class="comp" style="border-left:3px solid #185FA5;"><div class="k">G 指南参考</div><div class="v" id="cG">—</div><div class="w">权重贡献 <span id="cGw">—</span></div></div>
+        <div class="comp" style="border-left:3px solid #534AB7;"><div class="k">S 结构匹配</div><div class="v" id="cS">—</div><div class="w">权重贡献 <span id="cSw">—</span></div></div>
+        <div class="comp" style="border-left:3px solid #0F6E56;"><div class="k">E 有效证据</div><div class="v" id="cE">—</div><div class="w">权重贡献 <span id="cEw">—</span></div></div>
+        <div class="comp" style="border-left:3px solid #BA7517;"><div class="k">C 一致性剂量</div><div class="v" id="cC">—</div><div class="w">权重贡献 <span id="cCw">—</span></div></div>
+        <div class="comp" style="border-left:3px solid #888780;"><div class="k">Recovery 调整</div><div class="v" id="cR">—</div><div class="w">直接加减</div></div>
+        <div class="comp" style="border-left:3px solid var(--line2);"><div class="k">base 小计</div><div class="v" id="cBase">—</div><div class="w">clamp 前</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>S <span class="badge" style="background:var(--purplebg);color:var(--purple);">40% · 结构 / 肌群分布</span>
+        <span class="tip">?<span class="tipbox"><b>S 判断训练结构是否匹配用户偏好。</b><br><b>曝光量</b>=该肌群7天受到的刺激总量 = Σ(unit × 该动作对此肌群权重[主练1.0/辅助0.5] × 识别置信)。<br>归一化得实际分布,与目标分布比差异。只练同几个肌群→分布偏斜→S 低。</span></span></h2>
+      <p class="hint">S = 100 × [1 − 0.5×Σ|实际占比 − 目标占比|]。填各肌群曝光量(units)，勾选"避免增大"调整目标。</p>
+      <table class="mtab">
+        <thead><tr><th>肌群</th><th>曝光量</th><th>避免增大</th><th style="text-align:right;">实际%</th><th style="text-align:right;">目标%</th></tr></thead>
+        <tbody id="mbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1180px;margin:28px auto 0;">
+  <div class="card" style="border:.5px solid var(--line2);">
+    <h2 style="font-size:18px;"><i class="ti ti-calendar-event"></i> 训练历史模拟器 <span class="badge" style="background:var(--greenbg);color:var(--green);">从真实历史反推分数</span></h2>
+    <p class="hint">固定 7 天,直接在每天里加/改动作(一次训练含多个动作);空的就是休息日。系统自动跑完整管线(有效天数 / 肌群曝光 / 恢复间隔 …)算出 G/S/E/C 与最终 Balance。<br>假设:重复模式 = 1.0(清晰重复);exercise_unit = 组数(封顶4);置信 &lt; 0.70 的动作视为无效、不计入。</p>
+    <label style="display:inline-flex;align-items:center;gap:8px;margin:2px 0 14px;padding:8px 12px;border:.5px solid var(--line2);border-radius:8px;font-size:13px;cursor:pointer;">
+      <input type="checkbox" id="fuseConf">
+      <span><b style="font-weight:500;">置信融合</b>:动作来源为"确认"时,把识别置信提到 ≥0.9
+        <span class="tip">?<span class="tipbox">关:忠实于 v4——来源只进 E,不改置信。<br>开:模拟 v5 设想——用户确认时把 exercise_confidence 提到 max(原值,0.9),会同时影响有效性门槛、肌群曝光(G/S)和 E。打开后对比最终分变化。</span></span></span>
+    </label>
+    <div id="days7"></div>
+
+    <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:18px;margin-top:18px;align-items:start;">
+      <div>
+        <div class="final" style="border:.5px solid var(--line2);">
+          <div style="font-size:12px;color:var(--txt2);">该历史下的 Fitness Balance</div>
+          <div class="finalnum" id="h_final">—</div>
+          <div id="h_status"></div>
+          <div class="stack" id="h_stack"></div>
+          <div class="comps">
+            <div class="comp" style="border-left:3px solid #185FA5;"><div class="k">G</div><div class="v" id="h_G">—</div></div>
+            <div class="comp" style="border-left:3px solid #534AB7;"><div class="k">S</div><div class="v" id="h_S">—</div></div>
+            <div class="comp" style="border-left:3px solid #0F6E56;"><div class="k">E</div><div class="v" id="h_E">—</div></div>
+            <div class="comp" style="border-left:3px solid #BA7517;"><div class="k">C</div><div class="v" id="h_C">—</div></div>
+            <div class="comp" style="border-left:3px solid #888780;"><div class="k">Recovery 调整</div><div class="v" id="h_R">—</div></div>
+            <div class="comp" style="border-left:3px solid var(--line2);"><div class="k">base 小计</div><div class="v" id="h_base">—</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="background:var(--surface2);border:none;">
+        <h2 style="font-size:14px;">派生中间量</h2>
+        <table class="mtab" id="h_derived"><tbody></tbody></table>
+        <div style="font-size:11px;color:var(--txt3);margin-top:8px;" id="h_recnote"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const MUSCLES=[
+  ["legs","腿",0.16],["hips","臀",0.14],["back","背",0.16],["abdomen","核心",0.14],
+  ["chest","胸",0.14],["shoulders","肩",0.14],["arms","臂",0.12]
+];
+const DEF_EXPOSURE={legs:2,hips:0,back:2.1,abdomen:0,chest:0,shoulders:0,arms:2.1};
+
+const mbody=document.getElementById('mbody');
+MUSCLES.forEach(([k,zh,def])=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${zh} <span style="color:var(--txt3);font-size:11px;">${k}</span></td>
+    <td><input type="number" class="mexp" data-k="${k}" value="${DEF_EXPOSURE[k]}" min="0" step="0.1"></td>
+    <td><input type="checkbox" class="mavoid" data-k="${k}"></td>
+    <td class="num" id="as_${k}">0%</td>
+    <td class="num" id="ts_${k}">0%</td>`;
+  mbody.appendChild(tr);
+});
+
+const $=id=>document.getElementById(id);
+const r2=x=>Math.round(x*100)/100;
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+
+function readNum(id){return parseFloat($(id).value)||0;}
+
+function compute(){
+  const days=readNum('days'), cov=readNum('cov');
+  // G
+  const freq=Math.min(days/2,1);
+  const covr=cov/7;
+  const G=100*Math.min(freq,covr);
+  // C
+  const units=readNum('units');
+  const dayCons=Math.min(days/4,1);
+  const dose=Math.min(units/8,1);
+  const C=100*(0.6*dayCons+0.4*dose);
+  $('m_dc').textContent=dayCons.toFixed(2);
+  $('m_dose').textContent=dose.toFixed(2)+(units>=8?' (封顶)':'');
+  // E
+  const evi=0.35*readNum('e_conf')+0.25*readNum('e_rep')+0.25*Math.min(readNum('e_unit')/2,1)+0.15*readNum('e_plan');
+  const E=100*evi;
+  // S
+  let tgt={}, sumT=0;
+  MUSCLES.forEach(([k,,def])=>{
+    const avoid=document.querySelector(`.mavoid[data-k="${k}"]`).checked;
+    let w=avoid?Math.max(def*0.4,0.05):def;
+    tgt[k]=w; sumT+=w;
+  });
+  let exp={}, sumE=0;
+  document.querySelectorAll('.mexp').forEach(inp=>{const k=inp.dataset.k;const v=parseFloat(inp.value)||0;exp[k]=v;sumE+=v;});
+  let S=null, sumAbs=0;
+  MUSCLES.forEach(([k])=>{
+    const ts=tgt[k]/sumT;
+    const as=sumE>0?exp[k]/sumE:0;
+    $('ts_'+k).textContent=Math.round(ts*100)+'%';
+    $('as_'+k).textContent=sumE>0?Math.round(as*100)+'%':'—';
+    sumAbs+=Math.abs(as-ts);
+  });
+  if(sumE>0) S=100*(1-0.5*sumAbs);
+  // Recovery
+  const rNull=$('r_null').checked;
+  const R=readNum('r_score');
+  let radj=0;
+  if(rNull) radj=0;
+  else if(R>=85) radj=3;
+  else if(R>=70) radj=0;
+  else if(R>=50) radj=-2;
+  else radj=-5;
+
+  // weights
+  const wG=readNum('wG'),wS=readNum('wS'),wE=readNum('wE'),wC=readNum('wC');
+
+  const insufficient=(S===null);
+  // render components
+  $('cG').textContent=Math.round(G);
+  $('cS').textContent=insufficient?'null':Math.round(S);
+  $('cE').textContent=insufficient?'null':Math.round(E);
+  $('cC').textContent=Math.round(C);
+  $('cR').textContent=(radj>=0?'+':'')+radj;
+  $('cGw').textContent=r2(wG*G).toFixed(1);
+  $('cSw').textContent=insufficient?'—':r2(wS*S).toFixed(1);
+  $('cEw').textContent=insufficient?'—':r2(wE*E).toFixed(1);
+  $('cCw').textContent=r2(wC*C).toFixed(1);
+
+  const statusBox=$('status_box');
+  if(insufficient){
+    $('final').textContent='null';
+    $('cBase').textContent='—';
+    statusBox.innerHTML='<span class="status" style="background:var(--redbg);color:var(--red);">status: insufficient_strength_data（total_muscle_exposure = 0）</span>';
+    $('stack').innerHTML='';
+    return;
+  }
+  const base=wG*G+wS*S+wE*E+wC*C;
+  const finalv=clamp(base+radj,0,100);
+  $('cBase').textContent=Math.round(base);
+  $('final').textContent=Math.round(finalv);
+  statusBox.innerHTML='<span class="status" style="background:var(--greenbg);color:var(--green);">status: active</span>';
+
+  // stacked bar (scaled to base, then note adj)
+  const parts=[[wG*G,'#185FA5','G'],[wS*S,'#534AB7','S'],[wE*E,'#0F6E56','E'],[wC*C,'#BA7517','C']];
+  const stack=$('stack'); stack.innerHTML='';
+  parts.forEach(([val,col,lab])=>{
+    const d=document.createElement('div');
+    d.style.background=col; d.style.flex=val;
+    d.textContent=val>6?lab+' '+Math.round(val):'';
+    d.style.color = (col==='#BA7517')?'#412402':'#fff';
+    stack.appendChild(d);
+  });
+  if(radj!==0){
+    const d=document.createElement('div');
+    d.style.background='#888780'; d.style.flex=Math.abs(radj);
+    d.textContent=(radj>0?'+':'')+radj; stack.appendChild(d);
+  }
+}
+
+document.querySelectorAll('input').forEach(el=>{
+  el.addEventListener('input',()=>{
+    const v=$(el.id+'_v');
+    if(v){let n=parseFloat(el.value);v.textContent=(el.step&&el.step.includes('.'))?n.toFixed(2).replace(/\.00$/,'') : el.value; if(el.id==='e_conf'||el.id==='e_rep'||el.id==='e_unit'||el.id==='e_plan'||el.id==='units')v.textContent=n.toFixed(el.id==='units'?1:2);}
+    compute();
+  });
+});
+compute();
+
+/* ===== 训练历史模拟器 ===== */
+const EX={
+  squat:{zh:"深蹲",w:{legs:1.0,hips:0.5}},
+  leg_press:{zh:"腿举",w:{legs:1.0,hips:0.5}},
+  deadlift:{zh:"硬拉",w:{hips:1.0,back:0.5,legs:0.5}},
+  lat_pulldown:{zh:"高位下拉",w:{back:1.0,arms:0.5}},
+  seated_row:{zh:"坐姿划船",w:{back:1.0,arms:0.5}},
+  machine_chest_press:{zh:"器械推胸",w:{chest:1.0,shoulders:0.5,arms:0.5}},
+  shoulder_press:{zh:"肩上推举",w:{shoulders:1.0,arms:0.5}},
+  lateral_raise:{zh:"侧平举",w:{shoulders:1.0}},
+  biceps_curl:{zh:"二头弯举",w:{arms:1.0}},
+  triceps_pushdown:{zh:"三头下压",w:{arms:1.0}},
+  crunch:{zh:"卷腹",w:{abdomen:1.0}},
+  plank:{zh:"平板支撑",w:{abdomen:1.0}}
+};
+const ZH={legs:"腿",hips:"臀",back:"背",abdomen:"核心",chest:"胸",shoulders:"肩",arms:"臂"};
+const DEFT={legs:0.16,hips:0.14,back:0.16,abdomen:0.14,chest:0.14,shoulders:0.14,arms:0.12};
+const SEED={
+  1:[{ex:"squat",sets:3,conf:0.9,src:0.7},{ex:"leg_press",sets:2,conf:0.85,src:0.7}],
+  3:[{ex:"lat_pulldown",sets:3,conf:0.85,src:0.7},{ex:"seated_row",sets:2,conf:0.8,src:0.7}],
+  5:[{ex:"biceps_curl",sets:2,conf:0.8,src:1.0}]
+};
+const days7=document.getElementById('days7');
+function exOptions(sel){return Object.entries(EX).map(([k,v])=>`<option value="${k}" ${k===sel?'selected':''}>${v.zh}</option>`).join('');}
+function srcOptions(sel){return [["1","确认"],["0.7","计划"],["0","无"]].map(([v,l])=>`<option value="${v}" ${v==sel?'selected':''}>${l}</option>`).join('');}
+function makeExRow(list,r){
+  const div=document.createElement('div');div.className='exrow';
+  div.innerHTML=`<select class="h_ex">${exOptions(r.ex)}</select>
+    <input type="number" class="h_sets" min="0" max="8" step="1" value="${r.sets}" style="width:42px;" title="组数">
+    <input type="number" class="h_conf" min="0" max="1" step="0.05" value="${r.conf}" style="width:54px;" title="识别置信">
+    <select class="h_src" title="来源(E)" style="width:62px;">${srcOptions(r.src)}</select>
+    <button class="h_del" title="删除">&times;</button>`;
+  list.appendChild(div);
+  div.querySelectorAll('select,input').forEach(el=>el.addEventListener('input',computeHistory));
+  div.querySelector('.h_del').addEventListener('click',()=>{div.remove();computeHistory();});
+}
+for(let d=1;d<=7;d++){
+  const blk=document.createElement('div');blk.className='dayblk';blk.dataset.day=d;
+  blk.innerHTML=`<div class="dayhd"><span class="dn">第 ${d} 天 <span class="rest"></span></span><button class="addex" title="添加动作" aria-label="添加动作">+</button></div><div class="exhd"><span>动作</span><span>组数</span><span>置信</span><span>来源</span><span></span></div><div class="exlist"></div>`;
+  days7.appendChild(blk);
+  const list=blk.querySelector('.exlist');
+  (SEED[d]||[]).forEach(r=>makeExRow(list,r));
+  blk.querySelector('.addex').addEventListener('click',()=>{makeExRow(list,{ex:"squat",sets:3,conf:0.9,src:0.7});computeHistory();});
+}
+
+function spacingScore(gapH){return gapH>=48?1.0:(gapH>=24?0.7:0.3);}
+
+function computeHistory(){
+  const fuse=document.getElementById('fuseConf').checked;
+  let boosted=0;
+  const rows=[];
+  days7.querySelectorAll('.dayblk').forEach(blk=>{
+    const day=+blk.dataset.day;
+    const exrows=blk.querySelectorAll('.exrow');
+    blk.querySelector('.rest').textContent=exrows.length?'':'休息日';
+    blk.querySelector('.exhd').style.display=exrows.length?'flex':'none';
+    exrows.forEach(div=>{
+      const rawConf=parseFloat(div.querySelector('.h_conf').value)||0;
+      const src=parseFloat(div.querySelector('.h_src').value)||0;
+      let conf=rawConf;
+      if(fuse && src===1.0 && rawConf<0.9){conf=0.9;boosted++;}
+      const r={day,ex:div.querySelector('.h_ex').value,
+        unit:clamp(parseFloat(div.querySelector('.h_sets').value)||0,0,4),
+        conf,src};
+      if(r.conf>=0.70 && r.unit>0) rows.push(r);
+    });
+  });
+
+  const exp={},dayExp={},validDays=new Set();
+  Object.keys(ZH).forEach(m=>{exp[m]=0;dayExp[m]={};});
+  let totalUnits=0;
+  rows.forEach(r=>{
+    validDays.add(r.day); totalUnits+=r.unit;
+    for(const[m,w]of Object.entries(EX[r.ex].w)){
+      const e=r.unit*w*r.conf;
+      exp[m]+=e;
+      dayExp[m][r.day]=(dayExp[m][r.day]||0)+e;
+    }
+  });
+  const vDays=validDays.size;
+  const covered=Object.keys(ZH).filter(m=>exp[m]>0);
+  const totExp=Object.values(exp).reduce((a,b)=>a+b,0);
+
+  // G
+  const G=100*Math.min(Math.min(vDays/2,1),covered.length/7);
+  // C
+  const C=100*(0.6*Math.min(vDays/4,1)+0.4*Math.min(totalUnits/8,1));
+  // E
+  let wsum=0,esum=0;
+  rows.forEach(r=>{const evi=0.35*r.conf+0.25*1.0+0.25*Math.min(r.unit/2,1)+0.15*r.src;esum+=evi*r.unit;wsum+=r.unit;});
+  const E=wsum>0?100*esum/wsum:null;
+  // S
+  let S=null,sumAbs=0;
+  if(totExp>0){Object.keys(ZH).forEach(m=>{sumAbs+=Math.abs(exp[m]/totExp-DEFT[m]);});S=100*(1-0.5*sumAbs);}
+  // Recovery
+  let pairW=0,pairS=0,pairCount=0,recDetail=[];
+  Object.keys(ZH).forEach(m=>{
+    const days=Object.keys(dayExp[m]).map(Number).filter(d=>dayExp[m][d]>=1.0).sort((a,b)=>a-b);
+    for(let i=1;i<days.length;i++){
+      const gap=(days[i]-days[i-1])*24;
+      const sc=spacingScore(gap);
+      const w=Math.min(dayExp[m][days[i]],dayExp[m][days[i-1]]);
+      pairW+=w;pairS+=sc*w;pairCount++;
+      recDetail.push(`${ZH[m]}: 第${days[i-1]}↔${days[i]}天 (${gap}h → ${sc})`);
+    }
+  });
+  let R=null,radj=0;
+  if(pairCount>0&&pairW>0){R=100*pairS/pairW;radj=R>=85?3:(R>=70?0:(R>=50?-2:-5));}
+
+  // render
+  const insuf=(totExp===0);
+  $('h_G').textContent=insuf?'—':Math.round(G);
+  $('h_S').textContent=S===null?'null':Math.round(S);
+  $('h_E').textContent=E===null?'null':Math.round(E);
+  $('h_C').textContent=Math.round(C);
+  $('h_R').textContent=(radj>=0?'+':'')+radj;
+  const sb=$('h_status'),stack=$('h_stack');
+  const der=$('h_derived').querySelector('tbody');
+  der.innerHTML=`
+    <tr><td>有效训练天数</td><td class="num">${vDays} <span style="color:var(--txt3)">/ G满分2 · C满分4</span></td></tr>
+    <tr><td>覆盖主要肌群</td><td class="num">${covered.length} <span style="color:var(--txt3)">/7 · ${covered.map(m=>ZH[m]).join(' ')||'—'}</span></td></tr>
+    <tr><td>总训练单位</td><td class="num">${r2(totalUnits)} <span style="color:var(--txt3)">/ C满分8</span></td></tr>
+    <tr><td>总曝光量</td><td class="num">${r2(totExp)}</td></tr>
+    ${Object.keys(ZH).map(m=>exp[m]>0?`<tr><td style="color:var(--txt3)">　${ZH[m]} 曝光 / 占比</td><td class="num">${r2(exp[m])} · ${Math.round(exp[m]/totExp*100)}%</td></tr>`:'').join('')}
+    <tr><td>Recovery R</td><td class="num">${R===null?'null (无重复肌群)':Math.round(R)}</td></tr>`;
+  const recTxt=recDetail.length?'恢复配对: '+recDetail.join('；'):'无同肌群跨天重复,不评估恢复(调整=0)。';
+  $('h_recnote').textContent=(fuse?`置信融合已开启:${boosted} 个"确认"动作的置信被提到 0.9。 `:'')+recTxt;
+
+  if(insuf){
+    $('h_final').textContent='null';$('h_base').textContent='—';
+    sb.innerHTML='<span class="status" style="background:var(--redbg);color:var(--red);">status: insufficient_strength_data</span>';
+    stack.innerHTML='';return;
+  }
+  const base=0.15*G+0.40*S+0.20*E+0.25*C;
+  const fin=clamp(base+radj,0,100);
+  $('h_base').textContent=Math.round(base);
+  $('h_final').textContent=Math.round(fin);
+  sb.innerHTML='<span class="status" style="background:var(--greenbg);color:var(--green);">status: active</span>';
+  const parts=[[0.15*G,'#185FA5','G'],[0.40*S,'#534AB7','S'],[0.20*E,'#0F6E56','E'],[0.25*C,'#BA7517','C']];
+  stack.innerHTML='';
+  parts.forEach(([val,col,lab])=>{const d=document.createElement('div');d.style.background=col;d.style.flex=val;d.textContent=val>6?lab+' '+Math.round(val):'';d.style.color=(col==='#BA7517')?'#412402':'#fff';stack.appendChild(d);});
+  if(radj!==0){const d=document.createElement('div');d.style.background='#888780';d.style.flex=Math.abs(radj);d.textContent=(radj>0?'+':'')+radj;stack.appendChild(d);}
+}
+document.getElementById('fuseConf').addEventListener('change',computeHistory);
+computeHistory();
+</script>
+</body>
+</html>

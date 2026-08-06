@@ -1,0 +1,36 @@
+{
+  "user_folder": "8",
+  "action_id": "动作7",
+  "image_path": "graph/8/动作7.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.1,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "UNKNOWN_ACTION",
+      "confidence": 0.2,
+      "support": "画面中可见龙门架结构，但用户未进行训练动作"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "钢索", "滑轮"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户处于站立状态，视角在观察器械上方后转为观察手中持有的电子设备（手机），无周期性肢体运动。",
+    "movement_direction": "unknown",
+    "first_person_subject_evidence": "画面下方可见用户双手持手机，相机随用户头部/身体晃动，但无器械操作迹象。",
+    "uncertainty_notes": "拼图中完全没有显示任何训练动作的往复周期，用户明显处于组间休息或准备阶段。"
+  },
+  "sets": [],
+  "total_sets": 0,
+  "total_reps": 0,
+  "action_disambiguation": {
+    "selected_evidence": "用户双手始终持有手机，未接触器械把手，且无任何符合力量训练特征的重复性动作。",
+    "rejected_or_close_candidates": [
+      {"exercise": "cable_lat_pulldown", "reason": "虽然身处龙门架前，但双手未抓握横杆，无下拉动作。"},
+      {"exercise": "cable_triceps_pushdown", "reason": "双手持手机而非把手，无下压动作。"}
+    ]
+  },
+  "needs_manual_review": true
+}

@@ -1,0 +1,48 @@
+{
+  "user_folder": "4",
+  "action_id": "动作1",
+  "image_path": "graph/4/动作1.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.95,
+      "support": "第一人称视角下，清晰可见高位下拉横杆及连接钢索，横杆在胸前做垂直往复运动。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["高位下拉横杆", "钢索", "配重滑轨结构"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "横杆从画面上方进入，下拉至胸前高度，随后回弹至上方，循环往复。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面中心为正在操作的器械横杆，双手握持横杆两端，动作与相机视角同步。",
+    "uncertainty_notes": "无"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 8,
+      "evidence": "拼图共8行，每行末尾（第6列）均显示横杆被拉至最低点的状态，推测为8次动作。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 8,
+  "action_disambiguation": {
+    "selected_evidence": "可见明显的上方钢索连接的长横杆，且运动轨迹为垂直上下，符合高位下拉特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "引体向上",
+        "reason": "引体向上时相机应随身体整体上升，而图中相机相对背景较稳定，仅横杆在移动。"
+      },
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "坐姿划船的钢索通常来自前方而非上方，且运动轨迹为水平前后。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

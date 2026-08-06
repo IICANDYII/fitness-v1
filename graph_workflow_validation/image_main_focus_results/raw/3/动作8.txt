@@ -1,0 +1,54 @@
+{
+  "user_folder": "3",
+  "action_id": "动作8",
+  "image_path": "graph/3/动作8.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索夹胸",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索夹胸",
+      "confidence": 0.85,
+      "support": "用户站在龙门架中心，双手抓取两侧高位绳索把手，向胸前中线做合拢动作，符合绳索夹胸特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.3,
+      "support": "同样涉及从高处向下拉的动作，但通常为坐姿且使用长杆，此处为站姿双把手。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "绳索", "滑轮", "配重片"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手从身体两侧斜上方位置向胸前下方合拢，随后缓慢放回。",
+    "movement_direction": "mixed",
+    "first_person_subject_evidence": "画面下方可见用户双手握持把手，且动作与相机视角同步移动。",
+    "uncertainty_notes": "由于缺乏光流和IMU数据，无法精确判定动作的起始点和完整次数。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": null,
+      "evidence": "拼图中显示了从准备、抓取把手到开始进行夹胸动作的过程，可见至少1-2次完整的往复。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": null,
+  "action_disambiguation": {
+    "selected_evidence": "站姿，双手操作两侧独立绳索，动作轨迹为从外侧高位向内侧低位合拢，典型的胸部水平内收动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压通常上臂固定在躯干两侧，仅肘关节屈伸；此处有明显的肩关节内收，属于夹胸动作。"
+      },
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常为坐姿，且双手下拉轨迹更偏向垂直向下而非向中线合拢。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

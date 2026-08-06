@@ -1,0 +1,47 @@
+```json
+{
+  "user_folder": "3",
+  "action_id": "动作7",
+  "image_path": "graph/3/动作7.jpg",
+  "selected_equipment": "引体向上架",
+  "selected_exercise": "引体向上",
+  "exercise_id": "pullup",
+  "selected_confidence": 0.9,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "引体向上架",
+      "exercise": "引体向上",
+      "confidence": 0.9,
+      "support": "第一人称视角下，胸部相机随身体向上方固定横杆运动，背景同步下移，符合引体向上特征。"
+    },
+    {
+      "equipment": "辅助引体向上机",
+      "exercise": "辅助引体向上",
+      "confidence": 0.35,
+      "support": "动作模式相同，但画面中未见明显的辅助踏板或机器框架。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["引体向上横杆", "功率架/深蹲架顶部结构"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "相机（身体）相对于固定横杆进行周期性的上下往复运动，横杆带有防滑滚花，背景天花板随身体上升而下移。",
+    "first_person_subject_evidence": "画面中可见用户双手握住横杆，且相机运动与手臂发力感官同步，镜中可见用户头部随身体上升。",
+    "uncertainty_notes": "由于未见下肢，无法完全排除辅助引体向上的可能性，但画面中未见辅助机器结构。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "身体（相机）向固定横杆靠近而非横杆向身体靠近，排除了高位下拉；无明显机器框架，优先判定为自重引体向上。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉中身体固定而横杆下移，此处为身体上移。"
+      },
+      {
+        "exercise": "辅助引体向上",
+        "reason": "未见辅助踏板或配重联动结构。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}
+```

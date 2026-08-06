@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 进场帧（网格图前3帧）显示用户站在龙门架前，双手正准备抓取上方高位滑轮连接的绳索（rope）配件，背景可见健身房其他器械和镜子。
+Step 2 — 器械识别: 按照规则三，用户处于站姿，绳索从头顶上方高位滑轮垂下，排除坐姿的高位下拉；根据规则六，该器械为龙门架（cable）。
+Step 3 — 光流验证: 连续帧显示用户双手握住绳索，从胸口高度向下推压至大腿前侧，肘部保持相对固定，符合向下发力的运动轨迹。
+Step 4 — 动作判定: 综合站姿、高位绳索来向及向下推压的动作特征，判定为标准动作“绳索下压”。
+Step 5 — 组次统计: 画面中可观察到3次完整的从胸前下压至底部并受控回弹的动作周期。
+
+{"user_folder": "肩背-叶翔", "action_id": "动作8", "image_path": "graph/肩背-叶翔/动作8.jpg", "selected_equipment": "龙门架", "selected_exercise": "绳索下压", "selected_confidence": 0.92, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "龙门架", "exercise": "绳索下压", "confidence": 0.92, "support": "站姿，绳索从上方高位滑轮垂下，双手握绳索向下推压，肘部固定。"}], "context": {"visible_equipment": ["龙门架", "绳索配件", "高位滑轮"], "body_posture": "standing", "motion_cues_from_grid": "双手握住绳索从胸前位置向下推至腹部前方，伴随绳索张力变化。", "first_person_subject_evidence": "画面下方出现用户双手及前臂，动作与相机视角同步。", "uncertainty_notes": "缺少IMU数据，次数仅凭视觉周期估算。"}, "action_disambiguation": {"selected_evidence": "站姿 + 高位滑轮绳索 + 向下推压动作", "rejected_or_close_candidates": [{"exercise": "高位下拉", "reason": "用户为站姿而非坐姿，且动作轨迹为向下推压而非向下拉至胸口"}, {"exercise": "面拉", "reason": "手部轨迹向下而非向面部拉动，肘部未见明显外展"}]}, "exercise_id": "cable_triceps_pushdown", "sets": [{"start_time": "00:12:46", "end_time": "00:13:15", "reps": 3}], "phase1_adjustment": {"expand_before_sec": 2, "expand_after_sec": 2, "reason": "增加动作起始抓握和结束放回的完整性"}, "needs_manual_review": false}

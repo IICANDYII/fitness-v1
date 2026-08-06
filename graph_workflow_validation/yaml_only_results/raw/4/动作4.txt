@@ -1,0 +1,51 @@
+{
+  "user_folder": "4",
+  "action_id": "动作4",
+  "image_path": "graph/4/动作4.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索夹胸",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索夹胸",
+      "exercise_id": "cable_chest_fly",
+      "confidence": 0.95,
+      "support": "第一人称视角可见双手握持绳索手柄，从身体两侧向胸前中线合拢；背景镜子中清晰可见用户站在龙门架（Cable Machine）中间进行训练。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索侧平举",
+      "exercise_id": "cable_lateral_raise",
+      "confidence": 0.2,
+      "support": "同为绳索器械，但运动轨迹为水平内收而非向上外展。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "绳索手柄",
+      "钢索",
+      "健身房镜子"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手在水平面内做周期性的内收与外展动作，从画面两侧向中心汇聚再打开。",
+    "first_person_subject_evidence": "画面下方出现的双手与相机运动同步，且镜中反射的训练者动作与第一人称视角完全一致。",
+    "uncertainty_notes": "视觉证据非常充分，动作特征典型，无明显不确定性。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜中反射提供了全局视角，确认用户处于龙门架中心；第一人称视角记录了完整的手部水平内收轨迹，符合绳索夹胸特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索侧平举",
+        "reason": "侧平举动作手臂应向斜上方抬起，而本动作轨迹为胸前水平合拢。"
+      },
+      {
+        "exercise": "蝴蝶机夹胸",
+        "reason": "蝴蝶机通常为坐姿且有固定转轴，画面中可见自由晃动的钢索和手柄，且用户为站姿。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

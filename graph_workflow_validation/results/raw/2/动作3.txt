@@ -1,0 +1,51 @@
+Step 1 — 进场帧分析: 网格图前 3 帧显示用户双手向上伸出，准备抓握位于头顶上方的 V 型把手，背景可见高位滑轮、钢索及配重塔结构，符合高位下拉器械特征。
+Step 2 — 器械识别: 依据规则三与规则 6A，用户处于坐姿（视角由下往上仰视滑轮），钢索从头顶上方垂下，且使用了 V 型把手，判定为高位下拉机。
+Step 3 — 光流验证: 画面中把手从画面上方拉至胸前，呈现明显的上下（UP/DOWN）周期性运动，符合拉背动作的轨迹。
+Step 4 — 动作判定: 综合坐姿、上方滑轮来向及大幅度下拉至胸口的动作，判定为高位下拉。
+Step 5 — 组次统计: 观察到 3 次完整的下拉与回放周期（分别在第 4-6 帧、7-9 帧、10-12 帧左右）。
+
+{
+  "user_folder": "2",
+  "action_id": "动作3",
+  "image_path": "graph/2/动作3.jpg",
+  "selected_equipment": "高位下拉机",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "高位下拉机",
+      "exercise": "高位下拉",
+      "confidence": 0.85,
+      "support": "坐姿仰视视角，V型把手从头顶上方大幅度下拉至胸前，可见高位滑轮和钢索。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["高位滑轮", "钢索", "V型把手", "配重塔"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手抓握把手从画面上方边缘拉至相机近端（胸口位置），随后受控回放，循环3次。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手直接操作把手，且相机随躯干有轻微的后倾与复位，与下拉动作同步。",
+    "uncertainty_notes": "缺少IMU数据，次数仅凭视觉关键帧估算；未见大腿挡板，但仰视视角和动作幅度足以判定为坐姿下拉。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "高位滑轮来向 + 坐姿仰视 + 大幅度下拉至胸口。",
+    "rejected_or_close_candidates": [
+      {"exercise": "绳索下压", "reason": "绳索下压通常为站姿，且动作范围在胸部到大腿之间，不会有如此大幅度的仰视和过头拉伸。"},
+      {"exercise": "坐姿绳索划船", "reason": "划船的绳索来自正前方水平方向，而非头顶上方。"}
+    ]
+  },
+  "needs_manual_review": false,
+  "exercise_id": "cable_lat_pulldown",
+  "sets": [
+    {
+      "start_time": "00:02:49",
+      "end_time": "00:03:15",
+      "reps": 3
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 3,
+    "expand_after_sec": 2,
+    "reason": "增加起始抓握把手的准备时间和结束放回把手的缓冲时间。"
+  }
+}

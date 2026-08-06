@@ -1,0 +1,57 @@
+{
+  "user_folder": "4",
+  "action_id": "动作7",
+  "image_path": "graph/4/动作7.jpg",
+  "selected_equipment": "杠铃",
+  "selected_exercise": "杠铃弯举",
+  "selected_confidence": 0.9,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "杠铃",
+      "exercise": "杠铃弯举",
+      "confidence": 0.9,
+      "support": "第一人称视角清晰可见双手握持EZ曲杠（杠铃的一种），进行从腰部向胸口的弯举动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "EZ曲杠 (EZ-bar)",
+      "配重片"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面中用户双手握住曲杠，肘部弯曲将杠铃向上抬起至胸前，随后下放，呈现明显的周期性弯举轨迹。",
+    "first_person_subject_evidence": "双手从画面下方伸出握持杠铃，且杠铃运动与相机视角同步，符合第一人称胸前相机特征。",
+    "uncertainty_notes": "虽然没有光流和IMU，但EZ杠铃弯举的视觉特征极其典型，置信度较高。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到典型的EZ曲杠，用户采取站姿，上臂相对固定，前臂绕肘关节向上旋转，这是标准的弯举动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "哑铃弯举",
+        "reason": "画面中是连接在一起的曲杠，而非两个独立的哑铃。"
+      },
+      {
+        "exercise": "绳索弯举",
+        "reason": "未见绳索连接，杠铃两端有自由配重片，判定为自由重量杠铃。"
+      },
+      {
+        "exercise": "杠铃俯身划船",
+        "reason": "用户躯干直立，并非俯身姿态，且动作轨迹为圆弧形而非垂直拉向腹部。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:16:00",
+      "end_time": "00:16:59",
+      "reps": 4
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 2,
+    "reason": "适当扩展以包含完整的起杠和放杠动作。"
+  },
+  "needs_manual_review": false
+}

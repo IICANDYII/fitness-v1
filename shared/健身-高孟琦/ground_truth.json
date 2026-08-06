@@ -1,0 +1,60 @@
+[
+  {
+    "start": 0,
+    "end": 85.3,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 85.3,
+    "end": 104.9,
+    "type": "exercise",
+    "label": "哑铃侧举",
+    "reps": "10"
+  },
+  {
+    "start": 104.9,
+    "end": 123.3,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 123.3,
+    "end": 136.1,
+    "type": "exercise",
+    "label": "哑铃夹胸",
+    "reps": "3"
+  },
+  {
+    "start": 136.1,
+    "end": 228.3,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 228.3,
+    "end": 259.4,
+    "type": "exercise",
+    "label": "杠铃卧推",
+    "reps": "2"
+  },
+  {
+    "start": 259.4,
+    "end": 281.7,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 281.7,
+    "end": 320.1,
+    "type": "exercise",
+    "label": "绳索下拉",
+    "reps": "11"
+  },
+  {
+    "start": 320.1,
+    "end": 351.6,
+    "type": "transition",
+    "label": "过渡"
+  }
+]

@@ -1,0 +1,57 @@
+{
+  "user_folder": "8",
+  "action_id": "动作7",
+  "image_path": "graph/8/动作7.jpg",
+  "selected_equipment": "高位下拉机",
+  "selected_exercise": "高位下拉",
+  "selected_id": "cable_lat_pulldown",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "高位下拉机",
+      "exercise": "高位下拉",
+      "confidence": 0.95,
+      "support": "进场帧显示用户坐在带有大腿挡板的专用座椅上，上方有宽横杆和钢索。训练帧显示双手握宽杆从头顶拉至胸前，符合高位下拉典型特征。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "高位下拉机框架",
+      "宽横杆",
+      "钢索",
+      "配重塔",
+      "座椅"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "用户双手握住宽杆，在垂直方向上做大幅度的下拉和回放动作，躯干保持相对稳定。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手握杆动作与相机（胸前）同步，且画面中可见用户操作器械的实时反馈。",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "坐姿、上方钢索连接宽横杆、大幅度下拉至胸口轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压为站姿且动作幅度较小，本视频为坐姿大幅度下拉。"
+      },
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "划船的绳索来自正前方水平方向，本视频绳索来自头顶正上方。"
+      }
+    ]
+  },
+  "needs_manual_review": false,
+  "sets": [
+    {
+      "start_time": "00:00:11",
+      "end_time": "00:00:35",
+      "reps": 5
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 5,
+    "expand_after_sec": 3,
+    "reason": "包含坐下准备和放回横杆的完整过程。"
+  }
+}

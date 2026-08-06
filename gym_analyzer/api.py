@@ -14,6 +14,7 @@ Endpoints:
 from __future__ import annotations
 
 import json
+import uuid
 from datetime import date, datetime
 from pathlib import Path
 
@@ -28,6 +29,11 @@ from .agent import GymAnalyzerAgent
 from .db import get_conn
 from .tools import load_results
 
+try:
+    import psycopg2
+except Exception:  # pragma: no cover - psycopg2 is optional for fallback handling
+    psycopg2 = None
+
 app = FastAPI(title="Gym Analyzer API")
 app.add_middleware(
     CORSMiddleware,
@@ -38,6 +44,63 @@ app.add_middleware(
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
+
+LOCAL_USERS_PATH = config.RESULTS_DIR / "local_users.json"
+
+
+def _user_label(user: dict) -> str:
+    return (
+        f"{user.get('gender', '')}  {user.get('age', '')}岁  "
+        f"{user.get('height', '')}cm / {user.get('weight', '')}kg  "
+        f"{user.get('fitness_goal', '') or ''}"
+    ).strip()
+
+
+def _format_user(user: dict) -> dict:
+    return {
+        "user_id": str(user["user_id"]),
+        "gender": user.get("gender", ""),
+        "age": user.get("age"),
+        "height": user.get("height"),
+        "weight": user.get("weight"),
+        "fitness_goal": user.get("fitness_goal") or "",
+        "experience_level": user.get("experience_level") or "",
+        "label": user.get("label") or _user_label(user),
+        "source": user.get("source", "db"),
+    }
+
+
+def _load_local_users() -> list[dict]:
+    if not LOCAL_USERS_PATH.exists():
+        default = {
+            "user_id": config.DEFAULT_USER_ID,
+            "gender": "female",
+            "age": 25,
+            "height": 170,
+            "weight": 65,
+            "fitness_goal": "本地默认用户",
+            "experience_level": "intermediate",
+            "source": "local",
+        }
+        _save_local_users([default])
+    try:
+        return json.loads(LOCAL_USERS_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return []
+
+
+def _save_local_users(users: list[dict]) -> None:
+    LOCAL_USERS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    LOCAL_USERS_PATH.write_text(
+        json.dumps(users, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+
+def _is_db_unavailable(exc: Exception) -> bool:
+    if psycopg2 is None:
+        return True
+    return isinstance(exc, psycopg2.OperationalError)
 
 def _latest_result() -> dict:
     """Return the most recent saved result, or raise 404."""
@@ -142,9 +205,9 @@ class UserCreate(BaseModel):
 @app.get("/api/users")
 def list_users():
     """List all users from user_profile_long_term."""
-    conn = get_conn()
-    cur  = conn.cursor()
     try:
+        conn = get_conn()
+        cur  = conn.cursor()
         cur.execute("""
             SELECT user_id, gender, age, height, weight,
                    fitness_goal, experience_level
@@ -152,35 +215,21 @@ def list_users():
             ORDER BY id
         """)
         rows = cur.fetchall()
-    finally:
         conn.close()
-    return [
-        {
-            "user_id":          str(r["user_id"]),
-            "gender":           r["gender"],
-            "age":              r["age"],
-            "height":           r["height"],
-            "weight":           r["weight"],
-            "fitness_goal":     r["fitness_goal"] or "",
-            "experience_level": r["experience_level"] or "",
-            "label": (
-                f"{r['gender']}  {r['age']}岁  "
-                f"{r['height']}cm / {r['weight']}kg  "
-                f"{r['fitness_goal'] or ''}"
-            ).strip(),
-        }
-        for r in rows
-    ]
+        return [_format_user(dict(r)) for r in rows]
+    except Exception as exc:
+        if not _is_db_unavailable(exc):
+            raise
+        return [_format_user(u) for u in _load_local_users()]
 
 
 @app.post("/api/users")
 def create_user(body: UserCreate):
     """Create a new user in user_profile_long_term. Returns the new user_id."""
-    import uuid
     new_id = str(uuid.uuid4())
-    conn = get_conn()
-    cur  = conn.cursor()
     try:
+        conn = get_conn()
+        cur  = conn.cursor()
         cur.execute("""
             INSERT INTO user_profile_long_term
                 (user_id, gender, age, height, weight,
@@ -195,8 +244,24 @@ def create_user(body: UserCreate):
             ON CONFLICT (user_id) DO NOTHING
         """, (new_id, body.height, body.weight, body.age, body.gender))
         conn.commit()
-    finally:
         conn.close()
+        source = "db"
+    except Exception as exc:
+        if not _is_db_unavailable(exc):
+            raise
+        users = _load_local_users()
+        users.append({
+            "user_id": new_id,
+            "gender": body.gender,
+            "age": body.age,
+            "height": body.height,
+            "weight": body.weight,
+            "fitness_goal": body.fitness_goal,
+            "experience_level": body.experience_level,
+            "source": "local",
+        })
+        _save_local_users(users)
+        source = "local"
     return {
         "user_id": new_id,
         "gender":  body.gender,
@@ -204,6 +269,8 @@ def create_user(body: UserCreate):
         "height":  body.height,
         "weight":  body.weight,
         "fitness_goal": body.fitness_goal,
+        "experience_level": body.experience_level,
+        "source": source,
         "label": f"{body.gender}  {body.age}岁  {body.height}cm / {body.weight}kg  {body.fitness_goal}".strip(),
     }
 

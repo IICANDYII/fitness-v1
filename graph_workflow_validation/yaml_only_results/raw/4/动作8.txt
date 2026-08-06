@@ -1,0 +1,48 @@
+{
+  "user_folder": "4",
+  "action_id": "动作8",
+  "image_path": "graph/4/动作8.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.1,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃弯举",
+      "confidence": 0.1,
+      "support": "用户在最后一帧伸手接触哑铃，但未开始动作"
+    },
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃推肩",
+      "confidence": 0.1,
+      "support": "用户在最后一帧伸手接触哑铃，但未开始动作"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "固定器械（腿举机）",
+      "哑铃架",
+      "哑铃"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "前7帧为在健身房内行走移动，第8帧显示双手伸向哑铃架上的哑铃。",
+    "first_person_subject_evidence": "第一人称视角，画面随步行节奏晃动，最后一帧出现用户双手抓取器械的动作。",
+    "uncertainty_notes": "该片段仅包含行走和准备动作（取重物），没有任何完整的动作重复周期，无法判定具体训练科目。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "画面主要记录了用户从器械区走动到哑铃架并准备取下哑铃的过程，无运动轨迹证据。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "machine_leg_press",
+        "reason": "用户仅是走过该器械，并未坐下或操作。"
+      },
+      {
+        "exercise": "dumbbell_biceps_curl",
+        "reason": "虽然用户接触了哑铃，但视频在动作开始前结束，无弯举轨迹。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

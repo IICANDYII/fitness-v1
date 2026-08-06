@@ -1,0 +1,50 @@
+Step 1 — 进场帧分析: 网格图前两行显示用户在健身房内行走，经过跑步机区域，随后接近一台橙红色的固定器械。该器械具有座椅、靠背以及位于身体两侧的腿部挡板/垫子，属于典型的坐姿腿部训练机。
+Step 2 — 器械识别: 用户坐下并调整位置，双手握住座椅两侧的把手。根据器械结构（座椅、侧向挡板）以及文件夹名称“腿-张开”，该器械为坐姿腿外展/内收机（Hip Abduction/Adduction Machine）。由于该器械不在标准动作列表中，且缺乏光流和IMU辅助，无法映射到具体的标准动作。
+Step 3 — 光流验证: 虽无数值光流，但从最后两行关键帧可见用户双腿有向两侧打开的趋势，符合“腿外展”动作特征。
+Step 4 — 动作判定: 识别为坐姿腿外展，但因不在标准动作名称列表中，判定为 UNKNOWN_ACTION。
+Step 5 — 组次统计: 视频后半段显示用户坐稳并开始尝试发力，可见 1 次明显的起始动作。
+
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作6",
+  "image_path": "graph/腿-张开/动作6.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.45,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "固定器械",
+      "exercise": "坐姿腿外展",
+      "confidence": 0.8,
+      "support": "画面显示用户坐在带有侧向挡板的橙红色器械上，文件夹名为‘腿-张开’，符合腿外展特征。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["橙红色固定器械框架", "座椅", "侧向腿部靠垫", "侧边把手"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "用户坐下后，双腿放置在挡板内侧并尝试向外推开。",
+    "first_person_subject_evidence": "第一人称视角下可见用户双手握住器械把手，双腿进入器械工作区。",
+    "uncertainty_notes": "观察到的动作（坐姿腿外展）不在提供的标准动作名称列表中；且由于缺少光流和IMU数据，无法通过运动矢量进一步验证，故降低置信度并按规则填入 UNKNOWN。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "器械的侧向挡板结构与用户坐姿，结合‘腿-张开’的标签。",
+    "rejected_or_close_candidates": [
+      {"exercise": "machine_leg_press", "reason": "腿举机通常有大型足部踏板，且运动方向为向前推，而非向两侧张开。"},
+      {"exercise": "machine_leg_extension", "reason": "腿屈伸机的滚垫位于小腿前侧，而非大腿/膝盖外侧。"}
+    ]
+  },
+  "needs_manual_review": true,
+  "sets": [
+    {
+      "start_time": "00:11:55",
+      "end_time": "00:12:15",
+      "reps": 1
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 0,
+    "expand_after_sec": 5,
+    "reason": "用户在片段末尾刚开始动作，建议向后扩展以观察完整组次。"
+  }
+}

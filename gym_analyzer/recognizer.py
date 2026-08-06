@@ -34,6 +34,7 @@ from .optical_flow import (
     summarize_window_flow,
 )
 from .stitcher import (
+    resolve_frame_path,
     sec_to_hhmmss,
     sec_to_mmss,
     mmss_to_sec,
@@ -1048,10 +1049,8 @@ def _recognize_one_exercise(
         if ent_start <= m.timestamp <= ent_end
     ][:3]
     for em in entrance_metas:
-        img_path = frames_dir / em.path
-        if not img_path.exists():
-            img_path = frames_dir.parent / em.path
-        if img_path.exists():
+        img_path = resolve_frame_path(em, frames_dir, output_dir)
+        if img_path:
             img = cv2.imdecode(np.fromfile(str(img_path), dtype=np.uint8), cv2.IMREAD_COLOR)
             if img is not None:
                 h, w = img.shape[:2]

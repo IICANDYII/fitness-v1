@@ -1,0 +1,111 @@
+[
+  {
+    "start": 0,
+    "end": 14,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 14,
+    "end": 104.7,
+    "type": "exercise",
+    "label": "史密斯卧推",
+    "equipment": "史密斯机",
+    "reps": "10 10"
+  },
+  {
+    "start": 104.7,
+    "end": 194.1,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 194.1,
+    "end": 333.4,
+    "type": "exercise",
+    "label": "水平哑铃卧推",
+    "equipment": "哑铃",
+    "reps": "12 10 11"
+  },
+  {
+    "start": 333.4,
+    "end": 363.6,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 363.6,
+    "end": 395.1,
+    "type": "exercise",
+    "label": "上斜 30 度哑铃卧推",
+    "equipment": "哑铃",
+    "reps": "14"
+  },
+  {
+    "start": 395.1,
+    "end": 415.1,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 415.1,
+    "end": 483.9,
+    "type": "exercise",
+    "label": "哑铃卧推",
+    "equipment": "哑铃",
+    "reps": "7 4"
+  },
+  {
+    "start": 483.9,
+    "end": 512.4,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 512.4,
+    "end": 579.4,
+    "type": "exercise",
+    "label": "上斜史密斯卧推",
+    "equipment": "史密斯机",
+    "reps": "8"
+  },
+  {
+    "start": 579.4,
+    "end": 598.7,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 598.7,
+    "end": 726.5,
+    "type": "exercise",
+    "label": "器械夹胸",
+    "reps": "10 10 10"
+  },
+  {
+    "start": 726.5,
+    "end": 768.5,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 768.5,
+    "end": 861.2,
+    "type": "exercise",
+    "label": "直杆绳索下压",
+    "reps": "10 10 10"
+  },
+  {
+    "start": 861.2,
+    "end": 887.5,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 887.5,
+    "end": 1012.5,
+    "type": "exercise",
+    "label": "绳索下拉",
+    "reps": "5 2 6 6"
+  }
+]

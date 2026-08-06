@@ -1,0 +1,50 @@
+{
+  "user_folder": "健身-高孟琦",
+  "action_id": "动作3",
+  "image_path": "graph/健身-高孟琦/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "exercise_id": "cable_triceps_pushdown",
+      "confidence": 0.95,
+      "support": "第一人称视角可见双手握持龙门架绳索附件，从高位向下做伸展动作，肘部固定在身体两侧。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "exercise_id": "cable_lat_pulldown",
+      "confidence": 0.25,
+      "support": "同为高位绳索动作，但轨迹和姿态不符。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架 (Cable Machine)",
+      "绳索附件 (Rope Attachment)",
+      "滑轮与配重块"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握住绳索两端，从胸前高度向下压至大腿两侧，随后受控回放，呈现明显的上下往复周期。",
+    "first_person_subject_evidence": "画面下方出现用户双臂和双手，动作与相机轻微晃动同步，且直接操作绳索附件。",
+    "uncertainty_notes": "视觉证据非常充分，动作特征典型，无明显不确定性。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到典型的绳索附件（Rope），用户站姿且肘关节做屈伸运动，负重轨迹由上至下，完全符合绳索下压（Triceps Pushdown）的生物力学特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常使用长横杆并采取坐姿拉向胸部，而此处为站姿使用绳索下压。"
+      },
+      {
+        "exercise": "绳索面拉",
+        "reason": "面拉是将绳索拉向面部/额头方向，此处动作轨迹是垂直向下延伸至髋部。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

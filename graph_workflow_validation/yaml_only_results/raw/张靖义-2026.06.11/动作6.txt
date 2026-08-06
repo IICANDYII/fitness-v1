@@ -1,0 +1,41 @@
+```json
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作6",
+  "image_path": "graph/张靖义-2026.06.11/动作6.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃侧平举",
+  "exercise_id": "dumbbell_lateral_raise",
+  "selected_confidence": 0.8,
+  "confidence_policy": "multiple_close",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃侧平举",
+      "confidence": 0.8,
+      "support": "镜中反射清晰显示用户站立位进行双臂侧向外展动作，且观察到5次完整重复。"
+    },
+    {
+      "equipment": "固定器械",
+      "exercise": "固定器械推胸",
+      "confidence": 0.4,
+      "support": "视频末尾（49帧后）显示用户坐于推胸机上并开始推举动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃", "哑铃架", "固定器械推胸机"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "1-32帧：站立位，通过镜子可见双臂向两侧做周期性平举动作；33-48帧：放下哑铃并走动；49-58帧：坐上推胸机并开始推举。",
+    "first_person_subject_evidence": "第一人称视角，画面下方可见用户双手握持哑铃，镜中反射动作与相机位移同步，确认是佩戴者本人。",
+    "uncertainty_notes": "视频包含两个不同动作的转换（哑铃侧平举切换到固定器械推胸），主要动作证据充分，次要动作仅有开头。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜中反射显示的侧向外展轨迹与哑铃侧平举完全一致，且观察到5次完整周期，随后有明确的放回哑铃动作。",
+    "rejected_or_close_candidates": [
+      {"exercise": "哑铃推肩", "reason": "动作轨迹为侧向外展而非垂直向上推举。"},
+      {"exercise": "固定器械推胸", "reason": "虽在视频末尾出现，但非本段视频的主要训练内容，且器械与前半段完全不同。"}
+    ]
+  },
+  "needs_manual_review": true
+}
+```

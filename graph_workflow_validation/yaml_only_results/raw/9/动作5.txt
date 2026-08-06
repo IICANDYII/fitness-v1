@@ -1,0 +1,50 @@
+{
+  "user_folder": "9",
+  "action_id": "动作5",
+  "image_path": "graph/9/动作5.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "exercise_id": "cable_triceps_pushdown",
+      "confidence": 0.92,
+      "support": "第一人称视角下双手握持绳索附件，执行从高位向下的推压动作，符合肱三头肌训练特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "exercise_id": "cable_lat_pulldown",
+      "confidence": 0.25,
+      "support": "同为高位向下的拉/压动作，但通常使用横杆且为坐姿。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架 (Cable Machine)",
+      "绳索附件 (Rope Attachment)",
+      "滑轮与钢索"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "从第二行开始，用户双手握住绳索从胸口高度向下延伸至腹部/大腿高度，呈现明显的上下往复周期。",
+    "first_person_subject_evidence": "画面近端出现用户双手及前臂，且动作与相机视野中心高度同步，确认为佩戴者本人操作。",
+    "uncertainty_notes": "缺少IMU和光流数据，具体次数通过视觉周期估算，可能存在1-2次误差。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "入场及关键帧中清晰可见绳索把手（Rope），用户站姿稳定，肘关节做屈伸运动将绳索下压，这是典型的绳索下压动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常使用长横杆并采取坐姿，且主要动作为肩内收/后伸；此处为站姿且使用绳索，更符合三头肌训练。"
+      },
+      {
+        "exercise": "绳索弯举",
+        "reason": "弯举动作方向相反，应为从低位向上拉起。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

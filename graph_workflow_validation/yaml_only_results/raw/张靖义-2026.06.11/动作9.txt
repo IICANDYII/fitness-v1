@@ -1,0 +1,52 @@
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作9",
+  "image_path": "graph/张靖义-2026.06.11/动作9.jpg",
+  "selected_equipment": "固定器械",
+  "selected_exercise": "固定器械推胸",
+  "selected_exercise_id": "machine_chest_press",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "固定器械",
+      "exercise": "固定器械推胸",
+      "exercise_id": "machine_chest_press",
+      "confidence": 0.85,
+      "support": "用户坐姿，双手握住器械手柄向前方推伸，符合推胸动作轨迹。"
+    },
+    {
+      "equipment": "固定器械",
+      "exercise": "固定器械坐姿划船",
+      "exercise_id": "machine_seated_row",
+      "confidence": 0.2,
+      "support": "同为坐姿固定器械，但运动方向通常为向后拉回。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "固定器械推胸机",
+      "座椅",
+      "推杆把手",
+      "配重框架"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "从第21帧到35帧，用户双手握住把手，由胸前向前方推离身体，随后有控制地收回，呈现明显的前后往复运动。",
+    "first_person_subject_evidence": "画面下方出现用户双手操作器械，相机随躯干在座椅上保持稳定，运动节奏与器械位移完全同步。",
+    "uncertainty_notes": "由于缺少光流和IMU数据，无法精确判定完整组数和次数，但动作类型和器械特征非常明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "第一人称视角下，用户坐于器械上，双手将把手从胸前推向远端（FORWARD），随后收回（BACKWARD）。器械结构符合固定推胸机特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "固定器械坐姿划船",
+        "reason": "划船动作应为将把手从远端拉向身体，且起始位手臂通常处于伸直状态，与此处推离动作相反。"
+      },
+      {
+        "exercise": "蝴蝶机夹胸",
+        "reason": "夹胸动作轨迹为左右向中线合拢的弧线，而此处为直线前推。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

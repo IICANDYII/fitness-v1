@@ -1,0 +1,53 @@
+Step 1 — 进场帧分析: 网格图第 1 帧背景中可见一台跑步机，用户正前方是一台带有大型数字化控制面板（Technogym Live 界面）的健身器械。
+Step 2 — 器械识别: 根据规则六 B，该器械具有大型独立控制面板，正对面部，面板上有复杂的触控界面和数据展示。结合背景中的同类器械，判定为跑步机。
+Step 3 — 光流验证: 画面中未见明显的上下节奏性起伏或前后滑动，用户双手主要在屏幕上进行点击和滑动操作，表明当前处于器械设置或准备阶段。
+Step 4 — 动作判定: 虽然未观察到实际的走跑运动，但用户已就位并操作跑步机控制面板，根据标准动作列表判定为跑步机（treadmill_walk_run）。
+Step 5 — 组次统计: 整个片段为器械设置过程，无周期性运动，故次数计为 0。
+
+{
+  "user_folder": "1",
+  "action_id": "动作1",
+  "image_path": "graph/1/动作1.jpg",
+  "selected_equipment": "跑步机",
+  "selected_exercise": "跑步机",
+  "selected_exercise_id": "treadmill_walk_run",
+  "selected_confidence": 0.65,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.65,
+      "support": "第一人称正对大型跑步机控制面板，背景可见其他跑步机，用户正在进行触屏设置。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["跑步机控制面板", "显示屏", "背景跑步机"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户双手在屏幕上点击、滑动，相机位置稳定，无走跑引起的震动。",
+    "first_person_subject_evidence": "第一人称视角，双手从画面下方伸出操作屏幕，与相机视角同步。",
+    "uncertainty_notes": "视频全程记录的是器械设置阶段，尚未开始正式的走跑锻炼，缺乏运动轨迹证据。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "典型的 Technogym 跑步机数字化中控界面，且背景环境明确为有氧器械区。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "登阶机/爬楼机",
+        "reason": "面板虽然相似，但视角高度和背景中的跑步机暗示该器械为跑步机的概率更高。"
+      }
+    ]
+  },
+  "needs_manual_review": false,
+  "sets": [
+    {
+      "start_time": "00:00:44",
+      "end_time": "00:02:55",
+      "reps": 0
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 0,
+    "expand_after_sec": 5,
+    "reason": "当前片段仅为设置阶段，建议向后扩展以捕捉实际运动开始的帧。"
+  }
+}

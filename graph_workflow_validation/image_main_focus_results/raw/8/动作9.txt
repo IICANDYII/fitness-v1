@@ -1,0 +1,54 @@
+{
+  "user_folder": "8",
+  "action_id": "动作9",
+  "image_path": "graph/8/动作9.jpg",
+  "selected_equipment": "固定器械",
+  "selected_exercise": "固定器械推胸",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "固定器械",
+      "exercise": "固定器械推胸",
+      "confidence": 0.85,
+      "support": "第一人称视角显示用户坐在固定器械上，双手握住前方手柄进行推放动作，肘部有明显的屈伸过程。"
+    },
+    {
+      "equipment": "固定器械",
+      "exercise": "蝴蝶机夹胸",
+      "confidence": 0.4,
+      "support": "器械结构与某些夹胸机相似，但动作轨迹更偏向直线推举而非圆弧夹合。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["配重片堆栈", "推胸机手柄", "座椅结构"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "用户双手向前推离身体，随后缓慢收回，伴随器械连杆的往复运动。",
+    "movement_direction": "forward_backward",
+    "first_person_subject_evidence": "画面中心出现用户双手握持手柄，且手柄运动与相机（身体）的轻微震动同步。",
+    "uncertainty_notes": "仅凭拼图难以精确判断完整的重复次数，且部分帧存在运动模糊。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 2,
+      "evidence": "从第9帧到第17帧观察到约1-2次完整的推起与还原动作。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 2,
+  "action_disambiguation": {
+    "selected_evidence": "用户呈坐姿，双手握住垂直或水平手柄向前推举，器械具有明显的固定轨迹和配重块，符合固定器械推胸特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "固定器械推肩",
+        "reason": "推肩动作通常向上方推举，而画面显示手柄向前方推离，且相机视角未出现大幅度仰视。"
+      },
+      {
+        "exercise": "蝴蝶机夹胸",
+        "reason": "夹胸动作通常保持肘角相对固定进行圆弧运动，画面中观察到明显的肘部伸展，更符合推胸特征。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

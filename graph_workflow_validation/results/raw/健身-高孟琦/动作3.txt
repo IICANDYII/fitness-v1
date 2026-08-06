@@ -1,0 +1,59 @@
+{
+  "user_folder": "健身-高孟琦",
+  "action_id": "动作3",
+  "image_path": "graph/健身-高孟琦/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.95,
+      "support": "站姿，使用高位滑轮连接的绳索配件，双手向下推压至大腿前方，肘部固定在身体两侧。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架立柱",
+      "高位滑轮",
+      "绳索配件 (Rope Attachment)"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握住绳索两端，从胸口高度向下推至腰部/大腿位置，随后受控回弹，呈现明显的上下往复周期。",
+    "first_person_subject_evidence": "第一人称视角下可见佩戴者的双手握持绳索，且动作与相机轻微的呼吸起伏同步。",
+    "uncertainty_notes": "无光流和IMU数据，但视觉特征极其典型，置信度高。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "进场帧明确显示用户站立于龙门架前并抓取高位绳索；训练帧中手部发力方向向下，肘部保持贴身，符合绳索下压特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉必须是坐姿且有大幅度下拉至胸口的动作，画面显示为站姿且动作幅度较小。"
+      },
+      {
+        "exercise": "面拉",
+        "reason": "面拉需将绳索拉向面部且肘部外展，画面中手部向下运动且肘部贴身。"
+      },
+      {
+        "exercise": "绳索弯举",
+        "reason": "绳索弯举需使用低位滑轮且向上发力，此处为高位滑轮向下发力。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:04:39",
+      "end_time": "00:05:20",
+      "reps": 6
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 2,
+    "reason": "动作起始抓握和结束放回绳索的缓冲。"
+  },
+  "needs_manual_review": false
+}

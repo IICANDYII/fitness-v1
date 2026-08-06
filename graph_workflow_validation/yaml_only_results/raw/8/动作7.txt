@@ -1,0 +1,50 @@
+{
+  "user_folder": "8",
+  "action_id": "动作7",
+  "image_path": "graph/8/动作7.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.65,
+  "confidence_policy": "multiple_close",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.65,
+      "support": "用户站在龙门架前，双手握住高位把手并有向下按压的动作趋势。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索夹胸",
+      "confidence": 0.45,
+      "support": "高位绳索下划动作与高位夹胸的起始轨迹有重合。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "钢索",
+      "滑轮",
+      "D型把手"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "从第4行开始，用户双手接触绳索把手，并伴随向下的拉伸/按压动作；最后一行显示用户在操作手机，可能处于组间或准备阶段。",
+    "first_person_subject_evidence": "画面下方近端出现用户手臂和双手，动作与相机视角同步，且直接操作龙门架把手。",
+    "uncertainty_notes": "用户在动作期间多次查看或操作手机，实际有效的训练行程较短，可能为试重或准备动作。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户处于站姿，面对龙门架，双手握住处于高位的把手向下发力，符合绳索下压（Triceps Pushdown）的典型起始与发力特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "用户为站姿且未见座椅，且动作轨迹更接近垂直下压而非向胸前下拉。"
+      },
+      {
+        "exercise": "绳索弯举",
+        "reason": "运动方向相反，弯举应从低位向上拉。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

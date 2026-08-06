@@ -1,0 +1,56 @@
+Step 1 — 进场帧分析: 网格图前 3 帧显示用户正走向一台龙门架（电缆交叉训练机），上方高位滑轮连接着一根短直杆把手，背景可见配重塔和立柱结构。
+Step 2 — 器械识别: 用户处于站姿，面对龙门架，双手正握高位滑轮连接的直杆。根据规则三，站姿 + 绳索从上方来 + 肘部固定贴身，初步判定为绳索下压。
+Step 3 — 光流验证: 画面中用户双手持杆在胸前至大腿高度之间做垂直往复运动，光流呈现明显的 UP/DOWN 交替，且幅度集中在下半身区域，符合下压动作特征。
+Step 4 — 动作判定: 综合站姿、高位绳索来向、肘部贴身不动的动作模式，判定为标准的三头肌训练动作：绳索下压。
+Step 5 — 组次统计: 观察到两个明显的运动簇，第一组在第 4-18 帧（约 3 次），随后在 19-30 帧期间用户持杆停顿并与他人交流（组间休息/暂停），第二组在 31-42 帧继续进行（约 3 次）。
+
+{
+  "user_folder": "2",
+  "action_id": "动作5",
+  "image_path": "graph/2/动作5.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.95,
+      "support": "站姿，高位滑轮绳索，肘部固定于体侧，手部向下推压至大腿前。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架立柱", "高位滑轮", "直杆把手", "配重塔"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握杆从胸口高度向下推伸至手臂近乎直立，随后受控回放。",
+    "first_person_subject_evidence": "第一人称视角下双手握持把手，动作与相机微弱的垂直位移同步。",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "站姿且绳索从头顶上方滑轮引出，发力方向向下，肘关节做屈伸运动而上臂保持静止。",
+    "rejected_or_close_candidates": [
+      {"exercise": "高位下拉", "reason": "高位下拉需为坐姿且有大幅度背部收缩动作，此处为站姿且仅前臂运动"},
+      {"exercise": "面拉", "reason": "面拉需将绳索拉向面部且肘部外展，此处为向下推压且肘部贴身"}
+    ]
+  },
+  "needs_manual_review": false,
+  "sets": [
+    {
+      "start_time": "00:04:42",
+      "end_time": "00:05:32",
+      "reps": 3
+    },
+    {
+      "start_time": "00:06:11",
+      "end_time": "00:06:41",
+      "reps": 3
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 5,
+    "reason": "起始段包含就位动作，结束段用户仍在进行动作，需向后扩展以覆盖完整组次。"
+  }
+}

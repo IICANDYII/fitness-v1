@@ -1,0 +1,59 @@
+[
+  {
+    "start": 0,
+    "end": 21.9,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 21.9,
+    "end": 232.9,
+    "type": "exercise",
+    "label": "跑步"
+  },
+  {
+    "start": 232.9,
+    "end": 257.4,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 257.4,
+    "end": 374,
+    "type": "exercise",
+    "label": "绳索下拉",
+    "reps": "10 10 10 10"
+  },
+  {
+    "start": 374,
+    "end": 408.1,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 408.1,
+    "end": 596.3,
+    "type": "exercise",
+    "label": "绳索上拉",
+    "reps": "11 10 10 10 11"
+  },
+  {
+    "start": 596.3,
+    "end": 613.3,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 613.3,
+    "end": 821.1,
+    "type": "exercise",
+    "label": "单臂绳索下拉",
+    "reps": "10 7 10 10 9 7"
+  },
+  {
+    "start": 821.1,
+    "end": 851.6,
+    "type": "transition",
+    "label": "过渡"
+  }
+]

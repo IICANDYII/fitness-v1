@@ -1,0 +1,2223 @@
+{
+  "created_at": "2026-06-25T17:44:39.849630",
+  "model": "gemini-3-flash-preview",
+  "prompt_source": "phase2_exercise_recognize_v9.yaml",
+  "prompt_mode": "image-main-focus",
+  "graph_dir": "graph",
+  "workers": 4,
+  "results": [
+    {
+      "user_folder": "3",
+      "action_id": "动作7",
+      "image_path": "graph/3/动作7.jpg",
+      "selected_equipment": "史密斯机",
+      "selected_exercise": "史密斯卧推",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "史密斯机",
+          "exercise": "史密斯卧推",
+          "confidence": 0.85,
+          "support": "第一人称视角仰视天花板，可见史密斯机导轨和带有旋转挂钩的杠铃杆，杠铃在胸前做垂直往复运动。"
+        },
+        {
+          "equipment": "史密斯机",
+          "exercise": "史密斯上斜卧推",
+          "confidence": 0.6,
+          "support": "同样符合史密斯机卧推特征，仅靠仰视角度难以完全区分平卧或上斜。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "史密斯机导轨",
+          "史密斯杠铃杆",
+          "挂钩",
+          "天花板灯具"
+        ],
+        "body_posture": "supine",
+        "motion_cues_from_grid": "杠铃杆从画面远端（上方）下降至近端（胸前），随后推起，循环往复。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "双手握持杠铃杆，相机随胸部位于杠铃正下方，符合第一人称卧推视角。",
+        "uncertainty_notes": "无法通过拼图确定长凳的具体倾斜角度（平卧 vs 上斜），默认选择最基础的卧推。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 3,
+          "evidence": "从第20帧开始，杠铃有明显的三次下放再推起的完整周期。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 3,
+      "action_disambiguation": {
+        "selected_evidence": "画面中清晰可见史密斯机的固定导轨和杠铃杆上的旋转锁钩，用户处于仰卧姿态，杠铃在胸部上方做推举动作。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "杠铃卧推",
+            "reason": "画面中可见明显的史密斯机导轨结构，并非自由杠铃。"
+          },
+          {
+            "exercise": "史密斯深蹲",
+            "reason": "相机视角完全仰视天花板，且杠铃在胸前正上方运动，符合卧推而非深蹲的背杠姿态。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/3/动作7.txt"
+    },
+    {
+      "user_folder": "3",
+      "action_id": "动作8",
+      "image_path": "graph/3/动作8.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索夹胸",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索夹胸",
+          "confidence": 0.85,
+          "support": "用户站在龙门架中心，双手抓取两侧高位绳索把手，向胸前中线做合拢动作，符合绳索夹胸特征。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "高位下拉",
+          "confidence": 0.3,
+          "support": "同样涉及从高处向下拉的动作，但通常为坐姿且使用长杆，此处为站姿双把手。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "绳索",
+          "滑轮",
+          "配重片"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "双手从身体两侧斜上方位置向胸前下方合拢，随后缓慢放回。",
+        "movement_direction": "mixed",
+        "first_person_subject_evidence": "画面下方可见用户双手握持把手，且动作与相机视角同步移动。",
+        "uncertainty_notes": "由于缺乏光流和IMU数据，无法精确判定动作的起始点和完整次数。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": null,
+          "evidence": "拼图中显示了从准备、抓取把手到开始进行夹胸动作的过程，可见至少1-2次完整的往复。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": null,
+      "action_disambiguation": {
+        "selected_evidence": "站姿，双手操作两侧独立绳索，动作轨迹为从外侧高位向内侧低位合拢，典型的胸部水平内收动作。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "绳索下压",
+            "reason": "绳索下压通常上臂固定在躯干两侧，仅肘关节屈伸；此处有明显的肩关节内收，属于夹胸动作。"
+          },
+          {
+            "exercise": "高位下拉",
+            "reason": "高位下拉通常为坐姿，且双手下拉轨迹更偏向垂直向下而非向中线合拢。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/3/动作8.txt"
+    },
+    {
+      "user_folder": "3",
+      "action_id": "动作9",
+      "image_path": "graph/3/动作9.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "高位下拉",
+      "selected_confidence": 0.95,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "高位下拉",
+          "confidence": 0.95,
+          "support": "第一人称视角下，双手握持宽杆，钢索从上方连接，动作轨迹为从头顶上方拉至胸前，符合高位下拉特征。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "高位下拉宽杆",
+          "钢索",
+          "龙门架/高位下拉机框架"
+        ],
+        "body_posture": "seated",
+        "motion_cues_from_grid": "双手握杠做垂直向下的拉动动作，随后受控回放。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面中心可见用户双手握住横杠，且横杠运动与相机（胸前）位置有明显的相对位移，符合佩戴者本人操作。",
+        "uncertainty_notes": "视觉证据非常充分，动作模式单一且清晰。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 6,
+          "evidence": "从拼图网格观察，大约每 8 帧完成一次完整的下拉与回放周期，共计约 6 次重复。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 6,
+      "action_disambiguation": {
+        "selected_evidence": "宽握横杠、上方钢索连接、垂直下拉至胸前的运动轨迹。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "坐姿绳索划船",
+            "reason": "划船动作钢索通常从前方水平拉向腹部，而此处钢索明显来自上方。"
+          },
+          {
+            "exercise": "绳索下压",
+            "reason": "绳索下压通常为窄握且仅有肘关节屈伸，此处为宽握且伴随明显的肩关节内收动作。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/3/动作9.txt"
+    },
+    {
+      "user_folder": "3",
+      "action_id": "动作10",
+      "image_path": "graph/3/动作10.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索下压",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索下压",
+          "confidence": 0.85,
+          "support": "第一人称视角下，用户双手握持龙门架高位滑轮连接的绳索附件，进行由上至下的下压动作，符合绳索下压特征。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "高位下拉",
+          "confidence": 0.3,
+          "support": "同样是高位向下的拉动，但绳索附件和手部轨迹更偏向于肱三头肌的下压延伸。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "绳索附件",
+          "配重片堆"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "双手握住绳索从胸口高度向下延伸至腹部/大腿高度，随后受控回放。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面下方出现用户双手及前臂，且动作与相机视角同步移动。",
+        "uncertainty_notes": "中间部分帧（第5-7行）出现大面积遮挡（可能是手臂靠近镜头），导致中间次数判断不准。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": null,
+          "evidence": "拼图中可见明显的起始、下压和回放过程，但由于中间帧遮挡，无法精确统计完整次数。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": null,
+      "action_disambiguation": {
+        "selected_evidence": "用户使用绳索附件（Rope Attachment）在龙门架前站立，双手执行明显的肘关节伸展动作（下压），这是绳索下压的典型特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "高位下拉",
+            "reason": "高位下拉通常使用长杆且侧重背部收缩，当前动作手部轨迹更窄且更接近身体中线，符合下压动作。"
+          },
+          {
+            "exercise": "绳索面拉",
+            "reason": "面拉轨迹是向面部拉动，而此动作轨迹是垂直向下的。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/3/动作10.txt"
+    },
+    {
+      "user_folder": "3",
+      "action_id": "动作11",
+      "image_path": "graph/3/动作11.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索下压",
+      "selected_confidence": 0.65,
+      "confidence_policy": "multiple_close",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索下压",
+          "confidence": 0.65,
+          "support": "第一人称视角可见双手握持龙门架的高位绳索附件，并在末尾帧有明显的向下按压动作。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "面拉",
+          "confidence": 0.25,
+          "support": "同样使用绳索附件，但目前下压轨迹更符合肱三头肌训练。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "绳索附件",
+          "滑轮"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "前两排主要为准备动作（抓握绳索、调整站位），第三排显示双手握住绳索末端球头向下发力。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面近端出现用户双手和前臂，且动作与相机（胸前）高度一致，正在操作绳索。",
+        "uncertainty_notes": "视频大部分时间处于准备阶段，实际有效的动作行程较短，仅在最后几帧可见完整下压。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 1,
+          "evidence": "拼图最后一行显示了一次完整的从高位向下的拉伸/按压动作。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 1,
+      "action_disambiguation": {
+        "selected_evidence": "用户使用高位滑轮的绳索附件，双手握住球头，动作轨迹为从胸前高度向下延伸，符合绳索下压特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "面拉",
+            "reason": "面拉通常将绳索拉向面部/后方，而图中动作轨迹更偏向垂直向下。"
+          },
+          {
+            "exercise": "绳索弯举",
+            "reason": "滑轮位于高位，且动作为向下按压而非向上卷屈，故排除。"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/3/动作11.txt"
+    },
+    {
+      "user_folder": "4",
+      "action_id": "动作1",
+      "image_path": "graph/4/动作1.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "高位下拉",
+      "selected_confidence": 0.95,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "高位下拉",
+          "confidence": 0.95,
+          "support": "第一人称视角下，清晰可见高位下拉横杆及连接钢索，横杆在胸前做垂直往复运动。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "高位下拉横杆",
+          "钢索",
+          "配重滑轨结构"
+        ],
+        "body_posture": "seated",
+        "motion_cues_from_grid": "横杆从画面上方进入，下拉至胸前高度，随后回弹至上方，循环往复。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面中心为正在操作的器械横杆，双手握持横杆两端，动作与相机视角同步。",
+        "uncertainty_notes": "无"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 8,
+          "evidence": "拼图共8行，每行末尾（第6列）均显示横杆被拉至最低点的状态，推测为8次动作。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 8,
+      "action_disambiguation": {
+        "selected_evidence": "可见明显的上方钢索连接的长横杆，且运动轨迹为垂直上下，符合高位下拉特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "引体向上",
+            "reason": "引体向上时相机应随身体整体上升，而图中相机相对背景较稳定，仅横杆在移动。"
+          },
+          {
+            "exercise": "坐姿绳索划船",
+            "reason": "坐姿划船的钢索通常来自前方而非上方，且运动轨迹为水平前后。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/4/动作1.txt"
+    },
+    {
+      "user_folder": "4",
+      "action_id": "动作3",
+      "image_path": "graph/4/动作3.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "cable_chest_fly",
+      "selected_confidence": 0.65,
+      "confidence_policy": "multiple_close",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_chest_fly",
+          "confidence": 0.65,
+          "support": "第一人称视角下双手握持绳索手柄，从高位向斜下方做夹胸动作，符合高位绳索夹胸轨迹。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_lat_pulldown",
+          "confidence": 0.4,
+          "support": "双手从高位下拉，但轨迹更偏向身体中线而非垂直下拉，且用户处于站姿而非坐姿。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_triceps_pushdown",
+          "confidence": 0.3,
+          "support": "存在向下按压的动作，但手臂外展幅度较大，更符合夹胸特征。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "绳索手柄",
+          "龙门架框架",
+          "健身长凳（背景）"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "前两排显示双手从高处外侧向低处内侧拉动绳索；第三排起动作停止，用户保持站立。",
+        "movement_direction": "down_down",
+        "first_person_subject_evidence": "画面近端出现用户双臂及手部，且手部动作与相机视角同步移动。",
+        "uncertainty_notes": "动作持续时间极短（仅前两排），后续大部分时间为站立休息，导致动作特征捕捉不充分。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 2,
+          "evidence": "前两排网格中可观察到两次明显的手臂从高位下拉至胸前的往复动作。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 2,
+      "action_disambiguation": {
+        "selected_evidence": "用户站姿，双手握持独立绳索手柄，动作轨迹为从高向低、从外向内的弧线，这是典型的绳索夹胸（High-to-Low Cable Fly）特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "cable_lat_pulldown",
+            "reason": "高位下拉通常使用长杆且为坐姿，画面中为独立手柄且用户站立。"
+          },
+          {
+            "exercise": "cable_triceps_pushdown",
+            "reason": "下压动作通常要求大臂固定在躯干两侧，画面中手臂有明显的水平内收动作。"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/4/动作3.txt"
+    },
+    {
+      "user_folder": "4",
+      "action_id": "动作5",
+      "image_path": "graph/4/动作5.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索下压",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索下压",
+          "confidence": 0.85,
+          "support": "第一人称视角可见双手握持绳索附件（Triceps Rope），从高位滑轮向下做伸肘动作，符合绳索下压特征。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "高位下拉",
+          "confidence": 0.1,
+          "support": "同样使用高位滑轮，但通常使用横杆且为坐姿，此处动作更偏向肘部屈伸。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架/绳索机",
+          "绳索把手 (Rope Attachment)",
+          "配重片滑轨"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "用户双手握住绳索，从胸前位置向下伸展手臂，随后缓慢回放至胸前，呈现周期性的上下往复运动。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面下方出现用户双臂，且手臂运动与相机（身体）的轻微晃动同步，正在操作前方的绳索把手。",
+        "uncertainty_notes": "仅凭拼图无法确定精确的负重重量，但动作轨迹非常典型。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 4,
+          "evidence": "拼图中可见约4个完整的下压与回弹周期。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 4,
+      "action_disambiguation": {
+        "selected_evidence": "高位滑轮、绳索附件、站姿、纯粹的肘关节屈伸（下压）动作。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "高位下拉",
+            "reason": "高位下拉通常涉及肩关节大幅度内收，且多为坐姿使用横杆，本视频中明显是针对肱三头肌的下压动作。"
+          },
+          {
+            "exercise": "绳索面拉",
+            "reason": "面拉的拉动方向是向后指向面部，而此处方向是垂直向下。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/4/动作5.txt"
+    },
+    {
+      "user_folder": "4",
+      "action_id": "动作6",
+      "image_path": "graph/4/动作6.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索下压",
+      "selected_confidence": 0.92,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索下压",
+          "confidence": 0.92,
+          "support": "第一人称视角明确显示双手握持绳索附件（Rope Attachment），从胸前位置向下发力延伸至大腿前侧，符合典型的肱三头肌绳索下压动作。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架 (Cable Machine)",
+          "绳索附件 (Rope Attachment)",
+          "配重片导轨"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "画面起始于双手握绳处于高位，随后连续帧显示双手向下推移，直至手臂接近完全伸直，随后有轻微回弹趋势。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面下方出现用户双手及前臂，动作与相机视角同步，且双手直接操作绳索附件。",
+        "uncertainty_notes": "仅凭抽帧拼图难以精确判断完整组数，但单次动作轨迹非常清晰。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 1,
+          "evidence": "拼图展示了一个完整的从高位下压到低位的动作周期。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 1,
+      "action_disambiguation": {
+        "selected_evidence": "双手握持绳索附件，动作方向为由上至下的垂直下压，肘关节由屈到伸，符合绳索下压特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "绳索弯举",
+            "reason": "运动方向相反，弯举应为由下向上拉。"
+          },
+          {
+            "exercise": "高位下拉",
+            "reason": "高位下拉通常使用长杆且为坐姿，此处为站姿且使用绳索，动作幅度更符合孤立练习。"
+          },
+          {
+            "exercise": "绳索面拉",
+            "reason": "面拉轨迹应向面部拉动，此处轨迹明显向下指向腹部/大腿。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/4/动作6.txt"
+    },
+    {
+      "user_folder": "4",
+      "action_id": "动作8",
+      "image_path": "graph/4/动作8.jpg",
+      "selected_equipment": "UNKNOWN_EQUIPMENT",
+      "selected_exercise": "UNKNOWN_EXERCISE",
+      "selected_confidence": 0.3,
+      "confidence_policy": "insufficient_evidence",
+      "top_candidates": [
+        {
+          "equipment": "哑铃",
+          "exercise": "UNKNOWN_ACTION",
+          "confidence": 0.4,
+          "support": "末帧显示用户双手接近哑铃架上的哑铃，疑似准备开始哑铃类训练"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "哑铃架",
+          "哑铃",
+          "腿举机",
+          "配重片"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "前7帧为在健身房内行走的动态，最后一帧停留在哑铃架前",
+        "movement_direction": "unknown",
+        "first_person_subject_evidence": "第一人称视角随步行晃动，末帧双手出现在画面下方准备接触器械",
+        "uncertainty_notes": "该片段主要记录了用户从健身房一处走到哑铃架并准备取哑铃的过程，尚未观察到任何有效的动作重复周期"
+      },
+      "sets": [],
+      "total_sets": 0,
+      "total_reps": 0,
+      "action_disambiguation": {
+        "selected_evidence": "画面显示用户正在移动并最终靠近哑铃架，无具体动作轨迹",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "dumbbell_biceps_curl",
+            "reason": "仅见接近哑铃，无弯举动作"
+          },
+          {
+            "exercise": "dumbbell_shoulder_press",
+            "reason": "仅见接近哑铃，无推举动作"
+          },
+          {
+            "exercise": "treadmill_walk_run",
+            "reason": "虽然在走动，但背景显示是在器械区穿行而非在跑步机上"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/4/动作8.txt"
+    },
+    {
+      "user_folder": "4",
+      "action_id": "动作9",
+      "image_path": "graph/4/动作9.jpg",
+      "selected_equipment": "哑铃",
+      "selected_exercise": "哑铃弯举",
+      "selected_confidence": 0.92,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "哑铃",
+          "exercise": "哑铃弯举",
+          "confidence": 0.92,
+          "support": "第一人称视角下双手握持哑铃，上臂贴近躯干，进行明显的肘关节屈伸运动，哑铃从大腿高度抬升至胸前。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "哑铃",
+          "哑铃架",
+          "健身房背景器械"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "用户从地面/架子上拿起哑铃，随后双手交替或同步进行向上弯举动作，最后将哑铃放回。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面下方出现佩戴者的双手和前臂，动作与相机抖动同步，且哑铃始终处于第一人称视野中心。",
+        "uncertainty_notes": "无光流和IMU，但视觉特征极其典型，置信度高。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 5,
+          "evidence": "从第3行第4帧开始出现明显的向上弯举动作，至第6行第3帧左右完成约5次重复。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 5,
+      "action_disambiguation": {
+        "selected_evidence": "典型的肘关节屈伸轨迹，哑铃在胸腹前上下移动，未过肩，未向两侧平开。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "哑铃侧平举",
+            "reason": "侧平举手臂应向身体两侧外展，而图中哑铃在身体正前方移动。"
+          },
+          {
+            "exercise": "哑铃推肩",
+            "reason": "推肩需要将哑铃推过头顶，图中动作高度仅到胸肩部。"
+          },
+          {
+            "exercise": "哑铃前平举",
+            "reason": "前平举通常保持手臂伸直，图中肘部有明显大幅度折叠。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/4/动作9.txt"
+    },
+    {
+      "user_folder": "4",
+      "action_id": "动作10",
+      "image_path": "graph/4/动作10.jpg",
+      "selected_equipment": "哑铃",
+      "selected_exercise": "dumbbell_lateral_raise",
+      "selected_confidence": 0.65,
+      "confidence_policy": "multiple_close",
+      "top_candidates": [
+        {
+          "equipment": "哑铃",
+          "exercise": "dumbbell_lateral_raise",
+          "confidence": 0.65,
+          "support": "第一人称视角下双手握持哑铃向两侧上方做弧线运动，符合侧平举轨迹。"
+        },
+        {
+          "equipment": "哑铃",
+          "exercise": "dumbbell_shoulder_press",
+          "confidence": 0.5,
+          "support": "哑铃最终举至较高位置，不排除是推肩动作的起始或结束阶段。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "哑铃",
+          "背景中的史密斯机",
+          "龙门架"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "前6帧显示哑铃从低位向两侧高位抬起，随后哑铃垂在身体两侧，用户保持站立不动。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面下方出现用户双手握持哑铃，且动作与相机抖动同步。",
+        "uncertainty_notes": "有效运动时间极短（仅前几帧），后续大部分时间为站立待机，难以判断完整组数和动作连贯性。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 1,
+          "evidence": "仅在第一排前几帧观察到一个完整的上抬动作。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 1,
+      "action_disambiguation": {
+        "selected_evidence": "用户双手握持哑铃，手臂向身体两侧外展上抬，轨迹呈弧线而非垂直向上推举。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "dumbbell_shoulder_press",
+            "reason": "推肩通常轨迹更偏向垂直向上，且肘部会有明显的屈伸过程，此处更像手臂伸直的外展。"
+          },
+          {
+            "exercise": "dumbbell_biceps_curl",
+            "reason": "哑铃抬升高度超过肩部，且没有明显的肘关节大幅度屈曲动作。"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/4/动作10.txt"
+    },
+    {
+      "user_folder": "8",
+      "action_id": "动作3",
+      "image_path": "graph/8/动作3.jpg",
+      "selected_equipment": "UNKNOWN_EQUIPMENT",
+      "selected_exercise": "UNKNOWN_ACTION",
+      "selected_confidence": 0.2,
+      "confidence_policy": "insufficient_evidence",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "UNKNOWN_ACTION",
+          "confidence": 0.2,
+          "support": "画面前半段用户站在龙门架前，但从镜子中可见双手正持手机/相机，未进行训练动作。"
+        },
+        {
+          "equipment": "杠铃",
+          "exercise": "barbell_bench_press",
+          "confidence": 0.1,
+          "support": "画面后半段出现卧推架与杠铃，但用户处于站立走动状态，无试举动作。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "杠铃",
+          "卧推凳"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "画面前半段用户在镜前站立，随后出现剧烈的相机晃动和视角转动，表明用户正在走动或转身。",
+        "movement_direction": "unknown",
+        "first_person_subject_evidence": "镜中可见佩戴相机的用户（紫色上衣），双手持握拍摄设备，动作与相机位移同步。",
+        "uncertainty_notes": "拼图中未观察到任何周期性的力量训练动作，主要为站立、调整设备或在器械间走动。"
+      },
+      "sets": [],
+      "total_sets": 0,
+      "total_reps": 0,
+      "action_disambiguation": {
+        "selected_evidence": "镜面反射显示用户双手持手机位于胸前，且全过程伴随非训练性质的位移（走动），无器械操作轨迹。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "cable_chest_fly",
+            "reason": "虽站在龙门架前，但双手未抓握把手，而是在操作拍摄设备"
+          },
+          {
+            "exercise": "barbell_bench_press",
+            "reason": "画面后期虽靠近卧推架，但用户保持站立姿态并走动，未就位"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/8/动作3.txt"
+    },
+    {
+      "user_folder": "8",
+      "action_id": "动作4",
+      "image_path": "graph/8/动作4.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "cable_lat_pulldown",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_lat_pulldown",
+          "confidence": 0.85,
+          "support": "第一人称视角下，双手宽握典型的长横杆，横杆从上方拉向胸前，符合高位下拉特征。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_triceps_pushdown",
+          "confidence": 0.3,
+          "support": "同为钢索类器械，但握距和动作幅度更符合背部训练而非手臂下压。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "高位下拉长杆",
+          "钢索",
+          "健身房背景"
+        ],
+        "body_posture": "seated",
+        "motion_cues_from_grid": "横杆在画面中呈现明显的上下垂直往复运动，从画面顶端拉至胸前高度。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面下方出现用户双手握持横杆，且横杆的运动轨迹与相机（胸前）相对位置变化符合下拉动作。",
+        "uncertainty_notes": "拼图中段（第2-3行）存在较多相机晃动和视角偏移，可能是组内调整或观察环境，导致次数统计存在一定模糊性。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 8,
+          "evidence": "从第4行开始到第6行，可以观察到约6-8次完整的横杆下拉与回放周期。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 8,
+      "action_disambiguation": {
+        "selected_evidence": "观察到典型的宽握长杆，且运动方向为由上至下的拉拽动作，排除推举类动作。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "pullup",
+            "reason": "引体向上通常表现为相机随身体向上移动靠近固定横杆，而此处是横杆向相机移动，符合下拉器械特征。"
+          },
+          {
+            "exercise": "cable_triceps_pushdown",
+            "reason": "下压动作通常握距较窄，且肘部相对固定，画面中的宽握距和大幅度动作更符合高位下拉。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/8/动作4.txt"
+    },
+    {
+      "user_folder": "8",
+      "action_id": "动作5",
+      "image_path": "graph/8/动作5.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "cable_lat_pulldown",
+      "selected_confidence": 0.92,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_lat_pulldown",
+          "confidence": 0.92,
+          "support": "第一人称视角可见双手握持典型的高位下拉宽杆，动作方向为从头顶向胸前下拉，背景为仰视天花板，符合坐姿高位下拉特征。"
+        },
+        {
+          "equipment": "无器械",
+          "exercise": "pullup",
+          "confidence": 0.15,
+          "support": "动作轨迹相似，但画面中横杆随手部运动明显，且背景相对稳定，更符合器械下拉而非自重引体。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "高位下拉宽杆",
+          "钢索（隐约可见）"
+        ],
+        "body_posture": "seated",
+        "motion_cues_from_grid": "双手握杠从画面上方（头顶）拉至画面下方（胸前），随后受控回放，呈现明显的垂直上下周期性。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面下方出现的双手及手臂与相机视角同步，且直接操作器械横杆。",
+        "uncertainty_notes": "无光流和IMU辅助，但视觉特征极其典型，不确定性极低。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 2,
+          "evidence": "拼图中完整展示了两次下拉至胸前并回放的过程（第1-8帧为第一次，第9-11帧开始第二次）。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 2,
+      "action_disambiguation": {
+        "selected_evidence": "典型的宽握下拉杆，垂直向下的拉拽轨迹，以及仰视的相机角度。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "pullup",
+            "reason": "引体向上通常伴随身体整体剧烈升降，且横杆通常固定不动；此处横杆随手部大幅度位移，判定为高位下拉。"
+          },
+          {
+            "exercise": "cable_triceps_pushdown",
+            "reason": "下压动作通常握距较窄，且肘部相对固定；此处为宽握且伴随明显的肩关节内收，符合背部训练特征。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/8/动作5.txt"
+    },
+    {
+      "user_folder": "8",
+      "action_id": "动作6",
+      "image_path": "graph/8/动作6.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索下压",
+      "selected_confidence": 0.65,
+      "confidence_policy": "multiple_close",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索下压",
+          "confidence": 0.65,
+          "support": "第一人称视角下，用户右手握住一个圆柱形把手（可能是绳索或单手把手），手臂在身体前方进行上下往复运动，背景可见龙门架钢索结构。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索弯举",
+          "confidence": 0.25,
+          "support": "同样表现为手部在胸腹前方的上下运动，由于视角限制，无法完全排除是下往上拉的弯举动作。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "钢索",
+          "滑轨柱"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "从连续帧中可以看到用户右手握持把手，在画面左侧近端有小幅度的上下往复移动，但整体姿态相对固定。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面左侧近端始终出现一只握住把手的手臂，与相机运动同步，属于当前用户本人。",
+        "uncertainty_notes": "缺少光流和IMU数据，无法通过精确的力学方向和周期信号来百分之百确认是下压还是弯举，且手部运动幅度在第一人称视角下较局限。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": null,
+          "evidence": "画面中动作连续，但由于视角固定且缺乏光流，难以精确目测出完整的重复次数。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": null,
+      "action_disambiguation": {
+        "selected_evidence": "用户右手在胸前握住龙门架把手，且手部位置偏高，向下延伸的趋势更符合下压动作的起始和发力轨迹。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "绳索弯举",
+            "reason": "绳索弯举通常从低位往上拉，而图中手部常态化停留在中高位，更符合下压的准备与控制阶段。"
+          },
+          {
+            "exercise": "高位下拉",
+            "reason": "并非双手大横杆下拉，且身体没有坐在下拉器械上的迹象，故排除。"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/8/动作6.txt"
+    },
+    {
+      "user_folder": "8",
+      "action_id": "动作7",
+      "image_path": "graph/8/动作7.jpg",
+      "selected_equipment": "UNKNOWN_EQUIPMENT",
+      "selected_exercise": "UNKNOWN_EXERCISE",
+      "selected_confidence": 0.1,
+      "confidence_policy": "insufficient_evidence",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "UNKNOWN_ACTION",
+          "confidence": 0.2,
+          "support": "画面中可见龙门架结构，但用户未进行训练动作"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "钢索",
+          "滑轮"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "用户处于站立状态，视角在观察器械上方后转为观察手中持有的电子设备（手机），无周期性肢体运动。",
+        "movement_direction": "unknown",
+        "first_person_subject_evidence": "画面下方可见用户双手持手机，相机随用户头部/身体晃动，但无器械操作迹象。",
+        "uncertainty_notes": "拼图中完全没有显示任何训练动作的往复周期，用户明显处于组间休息或准备阶段。"
+      },
+      "sets": [],
+      "total_sets": 0,
+      "total_reps": 0,
+      "action_disambiguation": {
+        "selected_evidence": "用户双手始终持有手机，未接触器械把手，且无任何符合力量训练特征的重复性动作。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "cable_lat_pulldown",
+            "reason": "虽然身处龙门架前，但双手未抓握横杆，无下拉动作。"
+          },
+          {
+            "exercise": "cable_triceps_pushdown",
+            "reason": "双手持手机而非把手，无下压动作。"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/8/动作7.txt"
+    },
+    {
+      "user_folder": "8",
+      "action_id": "动作8",
+      "image_path": "graph/8/动作8.jpg",
+      "selected_equipment": "UNKNOWN_EQUIPMENT",
+      "selected_exercise": "UNKNOWN_ACTION",
+      "selected_confidence": 0.2,
+      "confidence_policy": "insufficient_evidence",
+      "top_candidates": [
+        {
+          "equipment": "跑步机",
+          "exercise": "treadmill_walk_run",
+          "confidence": 0.15,
+          "support": "画面开头用户手部靠近类似跑步机扶手的结构，且伴随走动震动。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "扶手/横杆",
+          "跑步机区域",
+          "固定器械（背景）"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "用户在画面开头手扶器械，随后松开手并开始在健身房内行走，期间还拿出了手机。",
+        "movement_direction": "unknown",
+        "first_person_subject_evidence": "第一人称视角下可见用户手臂、手表以及手持手机的动作，相机随步行产生剧烈晃动。",
+        "uncertainty_notes": "视频内容主要为组间休息或转场走动，没有观察到任何连续、重复的抗阻力训练或有氧训练动作周期。"
+      },
+      "sets": [],
+      "total_sets": 0,
+      "total_reps": 0,
+      "action_disambiguation": {
+        "selected_evidence": "用户在视频大部分时间内处于行走状态，并有查看手机的行为，不符合任何特定训练动作的特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "treadmill_walk_run",
+            "reason": "虽然有走动，但背景环境在快速变化（经过柱子和其它器械），表明是在地面行走而非在跑步机上运动。"
+          },
+          {
+            "exercise": "cable_lat_pulldown",
+            "reason": "开头出现的横杆仅为用户走过或短暂接触，无下拉动作。"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/8/动作8.txt"
+    },
+    {
+      "user_folder": "8",
+      "action_id": "动作9",
+      "image_path": "graph/8/动作9.jpg",
+      "selected_equipment": "固定器械",
+      "selected_exercise": "固定器械推胸",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "固定器械",
+          "exercise": "固定器械推胸",
+          "confidence": 0.85,
+          "support": "第一人称视角显示用户坐在固定器械上，双手握住前方手柄进行推放动作，肘部有明显的屈伸过程。"
+        },
+        {
+          "equipment": "固定器械",
+          "exercise": "蝴蝶机夹胸",
+          "confidence": 0.4,
+          "support": "器械结构与某些夹胸机相似，但动作轨迹更偏向直线推举而非圆弧夹合。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "配重片堆栈",
+          "推胸机手柄",
+          "座椅结构"
+        ],
+        "body_posture": "seated",
+        "motion_cues_from_grid": "用户双手向前推离身体，随后缓慢收回，伴随器械连杆的往复运动。",
+        "movement_direction": "forward_backward",
+        "first_person_subject_evidence": "画面中心出现用户双手握持手柄，且手柄运动与相机（身体）的轻微震动同步。",
+        "uncertainty_notes": "仅凭拼图难以精确判断完整的重复次数，且部分帧存在运动模糊。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 2,
+          "evidence": "从第9帧到第17帧观察到约1-2次完整的推起与还原动作。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 2,
+      "action_disambiguation": {
+        "selected_evidence": "用户呈坐姿，双手握住垂直或水平手柄向前推举，器械具有明显的固定轨迹和配重块，符合固定器械推胸特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "固定器械推肩",
+            "reason": "推肩动作通常向上方推举，而画面显示手柄向前方推离，且相机视角未出现大幅度仰视。"
+          },
+          {
+            "exercise": "蝴蝶机夹胸",
+            "reason": "夹胸动作通常保持肘角相对固定进行圆弧运动，画面中观察到明显的肘部伸展，更符合推胸特征。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/8/动作9.txt"
+    },
+    {
+      "user_folder": "健身-高孟琦",
+      "action_id": "动作1",
+      "image_path": "graph/健身-高孟琦/动作1.jpg",
+      "selected_equipment": "UNKNOWN_EQUIPMENT",
+      "selected_exercise": "UNKNOWN_ACTION",
+      "selected_confidence": 0.2,
+      "confidence_policy": "insufficient_evidence",
+      "top_candidates": [
+        {
+          "equipment": "哑铃",
+          "exercise": "哑铃弯举",
+          "confidence": 0.2,
+          "support": "第一帧显示用户双手握持哑铃，但后续帧仅见行走"
+        },
+        {
+          "equipment": "哑铃",
+          "exercise": "哑铃侧平举",
+          "confidence": 0.1,
+          "support": "手持哑铃站立，但无外展动作"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "哑铃",
+          "哑铃架",
+          "镜子"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "第一帧用户低头看手中的哑铃，随后视角抬起并在健身房内走动，伴随大幅度转头和环境观察",
+        "movement_direction": "unknown",
+        "first_person_subject_evidence": "第一帧近端可见用户双手握持哑铃，随后视角随身体走动而平移旋转",
+        "uncertainty_notes": "拼图中除第一帧外，其余帧均在行走或观察环境，未捕捉到任何有效的动作重复周期（Repetitions）"
+      },
+      "sets": [],
+      "total_sets": 0,
+      "total_reps": 0,
+      "action_disambiguation": {
+        "selected_evidence": "拼图显示用户在第一帧握持哑铃后即开始在健身房内行走，镜中影像也证实用户处于移动状态而非训练状态",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "dumbbell_biceps_curl",
+            "reason": "无肘关节屈伸往复运动"
+          },
+          {
+            "exercise": "dumbbell_lateral_raise",
+            "reason": "无手臂侧向外展运动"
+          },
+          {
+            "exercise": "dumbbell_squat",
+            "reason": "无身体重心上下起伏"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/健身-高孟琦/动作1.txt"
+    },
+    {
+      "user_folder": "健身-高孟琦",
+      "action_id": "动作2",
+      "image_path": "graph/健身-高孟琦/动作2.jpg",
+      "selected_equipment": "史密斯机",
+      "selected_exercise": "smith_bench_press",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "史密斯机",
+          "exercise": "smith_bench_press",
+          "confidence": 0.85,
+          "support": "镜子中清晰可见用户仰卧在长凳上，双手握杠进行推举；画面两侧可见史密斯机固定的垂直导轨。"
+        },
+        {
+          "equipment": "杠铃",
+          "exercise": "barbell_bench_press",
+          "confidence": 0.1,
+          "support": "动作模式一致，但画面中导轨结构更符合史密斯机。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "史密斯机导轨",
+          "杠铃杆",
+          "卧推凳"
+        ],
+        "body_posture": "supine",
+        "motion_cues_from_grid": "杠铃杆在胸前做垂直往复运动，镜中可见手臂屈伸。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "第一人称视角下双手握杠，且镜中人物动作与相机抖动及手臂运动完全同步。",
+        "uncertainty_notes": "仅凭拼图难以完全排除微小倾角的上斜卧推，但从镜中视角看更接近平板卧推。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 2,
+          "evidence": "拼图显示了从推起到下放再推起的约1.5-2个完整周期。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 2,
+      "action_disambiguation": {
+        "selected_evidence": "镜中反射确认了仰卧姿态（supine），画面边缘出现的固定金属滑轨确认了史密斯机而非自由杠铃。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "smith_shoulder_press",
+            "reason": "镜中显示用户为仰卧位，而非坐姿垂直推举。"
+          },
+          {
+            "exercise": "barbell_bench_press",
+            "reason": "画面中可见明显的史密斯机垂直导轨结构。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/健身-高孟琦/动作2.txt"
+    },
+    {
+      "user_folder": "肩-秦紫渝",
+      "action_id": "动作1",
+      "image_path": "graph/肩-秦紫渝/动作1.jpg",
+      "selected_equipment": "跑步机",
+      "selected_exercise": "跑步机",
+      "selected_confidence": 0.95,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "跑步机",
+          "exercise": "跑步机",
+          "confidence": 0.95,
+          "support": "第一人称视角正对典型的跑步机仪表盘，可见红色紧急停止按钮、速度/坡度调节键及两侧扶手。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "跑步机仪表盘",
+          "扶手",
+          "紧急停止按钮"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "画面呈现轻微的周期性上下震动，符合在跑步机上行走或跑步的相机运动特征。",
+        "movement_direction": "mixed",
+        "first_person_subject_evidence": "用户双手握住或靠近跑步机两侧扶手，视角随身体运动同步起伏。",
+        "uncertainty_notes": "无"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": null,
+          "evidence": "有氧运动，表现为持续的单一过程"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": null,
+      "action_disambiguation": {
+        "selected_evidence": "仪表盘布局、红色安全夹/停止按钮以及固定的扶手位置是跑步机的核心特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "椭圆机",
+            "reason": "椭圆机通常有移动的长手柄，且仪表盘UI风格与此不同。"
+          },
+          {
+            "exercise": "登阶机/爬楼机",
+            "reason": "登阶机仪表盘通常更高，且扶手形状与此有差异。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩-秦紫渝/动作1.txt"
+    },
+    {
+      "user_folder": "肩-秦紫渝",
+      "action_id": "动作2",
+      "image_path": "graph/肩-秦紫渝/动作2.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索下压",
+      "selected_confidence": 0.9,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索下压",
+          "confidence": 0.9,
+          "support": "第一人称视角下，用户双手握持绳索把手（rope attachment），在龙门架前进行明显的向下伸展动作，符合绳索下压的典型轨迹。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "绳索把手",
+          "钢索"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "双手握住绳索从胸口高度向下推至大腿前侧，随后受控回放，呈现周期性的上下往复运动。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面中心可见用户双手及佩戴相机的身体随动作轻微晃动，且绳索运动与相机视角高度同步。",
+        "uncertainty_notes": "虽然文件夹名为‘肩’，但当前动作视觉特征完全符合肱三头肌的绳索下压；若为肩部训练，可能是面拉（Face Pull），但轨迹更偏向下而非向后，且面拉不在标准动作列表中。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 4,
+          "evidence": "拼图中可观察到约4次完整的向下推压及回弹周期。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 4,
+      "action_disambiguation": {
+        "selected_evidence": "双手握持绳索附件，肘关节固定在身体两侧进行屈伸，运动主轴为垂直向下的UP/DOWN。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "高位下拉",
+            "reason": "高位下拉通常使用长横杆且为坐姿，当前为站姿且使用绳索。"
+          },
+          {
+            "exercise": "绳索弯举",
+            "reason": "弯举为向上发力，当前动作明显为向下推压发力。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩-秦紫渝/动作2.txt"
+    },
+    {
+      "user_folder": "肩-秦紫渝",
+      "action_id": "动作3",
+      "image_path": "graph/肩-秦紫渝/动作3.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索下压",
+      "exercise_id": "cable_triceps_pushdown",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索下压",
+          "exercise_id": "cable_triceps_pushdown",
+          "confidence": 0.85,
+          "support": "第一人称视角下可见双手握持绳索附件，从高位向腰部位置做下压动作，且在底部绳索有明显向两侧分开的动作，符合绳索下压标准轨迹。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "高位下拉",
+          "exercise_id": "cable_lat_pulldown",
+          "confidence": 0.1,
+          "support": "同为高位向下的拉伸动作，但通常使用横杆且为坐姿。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架 (Cable Machine)",
+          "绳索附件 (Rope Attachment)"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "双手握住绳索，从画面上方（高位）向下方（腹部/腰部）移动，随后返回高位，循环两次。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面近端可见用户佩戴手套的双手的完整操作过程，且动作与相机视角同步。",
+        "uncertainty_notes": "虽然文件夹名为‘肩’，但视觉证据（手部下压至腰部高度）更符合肱三头肌的绳索下压动作，而非典型的肩部动作（如面拉或侧平举）。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 2,
+          "evidence": "从第9帧到第33帧完成第一次下压与回弹，从第33帧到第48帧完成第二次下压与回弹。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 2,
+      "action_disambiguation": {
+        "selected_evidence": "用户站姿使用龙门架绳索，双手从胸前高度下压至大腿前侧，肘关节做屈伸运动，这是典型的绳索下压特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "绳索面拉 (Face Pull)",
+            "reason": "面拉通常将绳索拉向面部/额头高度，而本视频中手部轨迹明显下压至腰部。"
+          },
+          {
+            "exercise": "高位下拉",
+            "reason": "用户为站姿且使用绳索，而非坐姿使用长横杆。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩-秦紫渝/动作3.txt"
+    },
+    {
+      "user_folder": "肩-秦紫渝",
+      "action_id": "动作4",
+      "image_path": "graph/肩-秦紫渝/动作4.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索下压",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索下压",
+          "confidence": 0.85,
+          "support": "第一人称视角可见双手握持绳索附件，从高位向下方做伸展动作，符合绳索下压特征。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "高位下拉",
+          "confidence": 0.3,
+          "support": "同样是高位向下的动作，但通常使用横杠且为坐姿，画面中更像站姿绳索下压。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "绳索附件",
+          "滑轮"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "画面中可见用户双手握住绳索，从斜上方拉至身体下方，伴随明显的肘关节屈伸。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面中心出现用户双臂，且动作与相机晃动同步，绳索附件由用户直接操作。",
+        "uncertainty_notes": "仅凭拼图难以完全确认是否为面拉（Face Pull），但从手部下压的终点位置看，更符合下压动作。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 5,
+          "evidence": "从第4行开始到最后，可以观察到约5次明显的绳索下拉并回弹的周期。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 5,
+      "action_disambiguation": {
+        "selected_evidence": "高位滑轮、绳索附件、站姿、肘关节屈伸主导的向下运动。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "绳索面拉",
+            "reason": "面拉通常将绳索拉向面部/额头，而画面中手部轨迹明显向下延伸至腹部/大腿高度。"
+          },
+          {
+            "exercise": "高位下拉",
+            "reason": "高位下拉通常使用长横杠且为坐姿，画面中为绳索附件且用户处于站姿。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩-秦紫渝/动作4.txt"
+    },
+    {
+      "user_folder": "肩-秦紫渝",
+      "action_id": "动作5",
+      "image_path": "graph/肩-秦紫渝/动作5.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索下压",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索下压",
+          "confidence": 0.85,
+          "support": "第一人称视角可见双手握持绳索附件（rope attachment），动作轨迹为从上向下按压，符合绳索下压特征。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "高位下拉",
+          "confidence": 0.3,
+          "support": "同样是向下牵拉绳索，但通常使用横杆且伴随明显的背部收缩，画面中更像针对肱三头肌的下压。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架钢索",
+          "绳索把手",
+          "配重滑轨"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "画面显示双手握住绳索从高位向低位（腹部/大腿方向）移动，随后受控回放。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面中心出现用户双手握持绳索，且相机随身体发力有轻微同步震动。",
+        "uncertainty_notes": "仅凭拼图难以判断精确的肘部固定情况，但绳索附件和下压轨迹非常典型。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 3,
+          "evidence": "拼图中可观察到约3次完整的从高位拉下到回弹的周期。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 3,
+      "action_disambiguation": {
+        "selected_evidence": "观察到典型的绳索附件（双头绳）以及由上至下的按压动作，这是肱三头肌绳索下压的标志性特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "高位下拉",
+            "reason": "高位下拉通常使用长横杆且用户处于坐姿，此处为站姿且使用绳索，更符合下压动作。"
+          },
+          {
+            "exercise": "绳索面拉",
+            "reason": "面拉的轨迹是向面部水平拉动，而此处轨迹明显向下。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩-秦紫渝/动作5.txt"
+    },
+    {
+      "user_folder": "肩-秦紫渝",
+      "action_id": "动作6",
+      "image_path": "graph/肩-秦紫渝/动作6.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索侧平举",
+      "selected_confidence": 0.65,
+      "confidence_policy": "multiple_close",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索侧平举",
+          "confidence": 0.65,
+          "support": "用户站在龙门架旁，右手抓取单手D型把手并向侧上方拉动，符合肩部训练特征。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索弯举",
+          "confidence": 0.25,
+          "support": "单手操作绳索，若存在明显的肘部屈伸则可能为弯举，但目前观察更倾向于肩外展。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "钢索",
+          "D型把手",
+          "镜子"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "拼图前段用户在镜前站立准备，后段（底排）右手伸向画面左侧抓取绳索把手并开始向外侧拉动。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面下方出现用户右手及手臂，其动作与镜中反映的身体侧向拉动绳索动作同步。",
+        "uncertainty_notes": "视频仅捕捉到动作的起始阶段（抓取把手并开始第一下提拉），缺乏完整的往复周期，导致置信度受限。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 1,
+          "evidence": "底排最后三帧显示用户完成了一次抓取并开始上提的动作。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 1,
+      "action_disambiguation": {
+        "selected_evidence": "用户处于站姿，侧对龙门架，右手抓取低位或中位把手进行侧向外展运动，结合文件夹名‘肩’，判定为绳索侧平举。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "绳索弯举",
+            "reason": "虽然也是单手操作绳索，但镜中观察到大臂有明显的外展趋势，而非单纯的肘关节屈伸。"
+          },
+          {
+            "exercise": "绳索夹胸",
+            "reason": "用户身体侧对器械，且仅单手操作，不符合常规双臂夹胸的姿态。"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩-秦紫渝/动作6.txt"
+    },
+    {
+      "user_folder": "肩-背-秦紫渝",
+      "action_id": "动作4",
+      "image_path": "graph/肩-背-秦紫渝/动作4.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索下压",
+      "selected_confidence": 0.92,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索下压",
+          "confidence": 0.92,
+          "support": "第一人称视角清晰可见双手握持绳索附件（rope attachment），从胸前位置向下延伸至大腿两侧，符合绳索下压轨迹。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "面拉",
+          "confidence": 0.15,
+          "support": "同样使用绳索附件，但面拉通常向面部拉动且肘部外展，图中轨迹明显向下。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架 (Cable Machine)",
+          "绳索附件 (Rope Attachment)",
+          "配重片"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "双手握住绳索，肘部相对固定在身体两侧，前臂做下压和回放的周期性运动。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面中心下方出现用户双手握持绳索，且随着动作进行，相机（胸前）有轻微的同步震动，背景中其他人处于静止或不同步状态。",
+        "uncertainty_notes": "无光流和IMU数据，但视觉特征极其典型，不确定性极低。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 6,
+          "evidence": "从拼图第一行开始到最后一行，可观察到约6次完整的下压-回弹周期。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 6,
+      "action_disambiguation": {
+        "selected_evidence": "用户双手握持绳索附件，运动轨迹为从上向下延伸，肘关节做屈伸运动，符合肱三头肌训练的绳索下压特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "面拉",
+            "reason": "面拉的拉动方向是向后指向面部，而图中双手最终位置在身体下方。"
+          },
+          {
+            "exercise": "绳索弯举",
+            "reason": "弯举是从下向上拉，图中起始位置在高处。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩-背-秦紫渝/动作4.txt"
+    },
+    {
+      "user_folder": "肩-背-秦紫渝",
+      "action_id": "动作5",
+      "image_path": "graph/肩-背-秦紫渝/动作5.jpg",
+      "selected_equipment": "跑步机",
+      "selected_exercise": "跑步机",
+      "selected_confidence": 0.95,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "跑步机",
+          "exercise": "跑步机",
+          "confidence": 0.95,
+          "support": "第一人称视角下清晰可见跑步机控制面板（VOLZEN品牌），用户腿部出现在画面左侧并踏上跑带，随后画面呈现稳定的步行/跑步震动模式。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "跑步机控制面板",
+          "扶手",
+          "跑带（部分）"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "起始帧显示用户抬腿踏上器械，后续帧相机随身体步行产生轻微的上下节奏性晃动。",
+        "movement_direction": "forward_backward",
+        "first_person_subject_evidence": "画面左侧出现用户穿着浅蓝色长裤和米色运动鞋的腿部，且相机视角始终固定在器械控制台正前方。",
+        "uncertainty_notes": "无"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": null,
+          "evidence": "连续的有氧运动过程，不适用重复次数统计"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": null,
+      "action_disambiguation": {
+        "selected_evidence": "典型的跑步机电子仪表盘及扶手结构，配合用户上机及后续的步行震动特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "登阶机/爬楼机",
+            "reason": "虽然起始有抬腿动作，但控制面板的宽度和布局更符合跑步机特征。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩-背-秦紫渝/动作5.txt"
+    },
+    {
+      "user_folder": "肩背-叶翔",
+      "action_id": "动作3",
+      "image_path": "graph/肩背-叶翔/动作3.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "cable_triceps_pushdown",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_triceps_pushdown",
+          "confidence": 0.85,
+          "support": "第一人称视角下，用户双手握持龙门架横杆，上臂贴近躯干，进行下压动作。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_biceps_curl",
+          "confidence": 0.1,
+          "support": "同样使用龙门架和横杆，但运动方向相反（向上弯举）。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "直杆/曲杆把手",
+          "钢索",
+          "配重片塔"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "画面中横杆从胸部高度向下移动至腹部/大腿前侧，随后回弹，具有明显的上下往复周期。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "第一人称视角中，用户佩戴运动手表的双手直接握持并操作横杆，且横杆运动与相机视角同步。",
+        "uncertainty_notes": "仅凭拼图无法精确判断每组的呼吸和肌肉发力细节，但动作轨迹和器械非常明确。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 12,
+          "evidence": "拼图显示了从准备到连续下压的过程，目测约有10-12次完整往复。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 12,
+      "action_disambiguation": {
+        "selected_evidence": "用户站姿面对龙门架，双手正握横杆，肘关节做屈伸运动将横杆向下压，符合绳索下压特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "cable_lat_pulldown",
+            "reason": "高位下拉通常为坐姿且下拉幅度更大，此处用户为站姿且动作范围集中在腹部前方。"
+          },
+          {
+            "exercise": "cable_biceps_curl",
+            "reason": "弯举是向上发力，而画面显示钢索连接在上方，用户向下发力。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩背-叶翔/动作3.txt"
+    },
+    {
+      "user_folder": "肩背-叶翔",
+      "action_id": "动作4",
+      "image_path": "graph/肩背-叶翔/动作4.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "高位下拉",
+      "selected_confidence": 0.92,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "高位下拉",
+          "confidence": 0.92,
+          "support": "第一人称视角下可见典型的高位下拉横杠，且动作呈现明显的上下垂直拉伸轨迹。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "高位下拉横杠",
+          "钢索"
+        ],
+        "body_posture": "seated",
+        "motion_cues_from_grid": "横杠从画面上方拉至胸前高度，随后有控制地回弹至上方，循环往复。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "横杠位于相机正前方近端，且其运动与相机（用户身体）的轻微晃动同步。",
+        "uncertainty_notes": "无光流和IMU，但视觉特征极其典型，不确定性极低。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 6,
+          "evidence": "通过拼图观察到约6次完整的拉下与回弹周期。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 6,
+      "action_disambiguation": {
+        "selected_evidence": "画面中出现了典型的高位下拉宽柄横杠，且运动轨迹为垂直向下的拉动作，符合高位下拉的标准特征。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "坐姿绳索划船",
+            "reason": "划船动作通常为水平方向拉动，而本视频中钢索连接点在上方，轨迹为垂直方向。"
+          },
+          {
+            "exercise": "绳索下压",
+            "reason": "绳索下压通常使用较短的直杆或绳索，且动作幅度较小，主要集中在肘关节屈伸，而此处为大臂带动的全身段下拉。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩背-叶翔/动作4.txt"
+    },
+    {
+      "user_folder": "肩背-叶翔",
+      "action_id": "动作5",
+      "image_path": "graph/肩背-叶翔/动作5.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "绳索弯举",
+      "selected_confidence": 0.92,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索弯举",
+          "confidence": 0.92,
+          "support": "第一人称视角可见双手握持连接钢索的横杆，镜中反射明确显示用户站姿进行肱二头肌弯举动作。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索直立划船",
+          "confidence": 0.3,
+          "support": "同样是站姿向上拉动横杆，但镜中肘部外展特征不明显，更符合弯举轨迹。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "钢索",
+          "直杆把手",
+          "配重滑轨"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "横杆从画面底部（腰部高度）向上移动至胸前，随后下放，呈现明显的周期性上下运动。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "用户双手始终握持横杆，横杆运动与相机（身体）的轻微晃动同步，镜中反射确认是佩戴者本人。",
+        "uncertainty_notes": "无光流和IMU，但视觉证据（尤其是镜面反射）非常清晰，不确定性极低。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 2,
+          "evidence": "拼图中可观察到两次完整的上升和下降周期（第1-12帧为第一次，第13-18帧为第二次的上升阶段）。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 2,
+      "action_disambiguation": {
+        "selected_evidence": "镜中反射清晰显示用户站姿、上臂固定于躯干两侧、肘关节屈伸带动横杆上升，这是典型的绳索弯举动作。钢索连接在龙门架底部滑轮。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "绳索下压",
+            "reason": "绳索下压是从上向下推，而画面中钢索从下方拉起，方向相反。"
+          },
+          {
+            "exercise": "绳索直立划船",
+            "reason": "直立划船通常伴随肘部大幅度向两侧外展且手部高度更高，镜中动作更符合弯举的弧线轨迹。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩背-叶翔/动作5.txt"
+    },
+    {
+      "user_folder": "肩背-叶翔",
+      "action_id": "动作6",
+      "image_path": "graph/肩背-叶翔/动作6.jpg",
+      "selected_equipment": "UNKNOWN_EQUIPMENT",
+      "selected_exercise": "UNKNOWN_EXERCISE",
+      "selected_confidence": 0.3,
+      "confidence_policy": "insufficient_evidence",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_triceps_pushdown",
+          "confidence": 0.4,
+          "support": "用户走向龙门架并伸手抓握绳索附件，符合绳索下压的起始准备姿态。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "绳索附件"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "用户在健身房内行走，随后停在龙门架前，双手伸向绳索附件进行抓握。",
+        "movement_direction": "unknown",
+        "first_person_subject_evidence": "画面末尾出现用户本人的双手抓握器械附件，且相机随步行晃动。",
+        "uncertainty_notes": "整个片段主要记录了用户走向器械和准备抓握的过程，未观察到任何完整的动作重复周期（reps）。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 0,
+          "evidence": "仅见入场与抓握准备动作，无有效次数。"
+        }
+      ],
+      "total_sets": 0,
+      "total_reps": 0,
+      "action_disambiguation": {
+        "selected_evidence": "视频片段主要为用户在健身房走动并接近龙门架的过程，末尾仅显示抓握动作，无运动轨迹。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "cable_triceps_pushdown",
+            "reason": "虽有抓握绳索动作，但未见向下推下的完整行程，无法判定为已开始训练。"
+          },
+          {
+            "exercise": "cable_seated_row",
+            "reason": "画面中虽有他人进行坐姿划船，但当前用户本人处于站立位且正在走动，应予忽略。"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩背-叶翔/动作6.txt"
+    },
+    {
+      "user_folder": "肩背-叶翔",
+      "action_id": "动作7",
+      "image_path": "graph/肩背-叶翔/动作7.jpg",
+      "selected_equipment": "UNKNOWN_EQUIPMENT",
+      "selected_exercise": "UNKNOWN_EXERCISE",
+      "selected_confidence": 0.3,
+      "confidence_policy": "insufficient_evidence",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "绳索下压",
+          "confidence": 0.4,
+          "support": "前两帧显示用户手持绳索附件向下运动，符合绳索下压的收尾动作。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "高位下拉",
+          "confidence": 0.2,
+          "support": "同样使用龙门架，但通常为坐姿，且画面中未见下拉横杆。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架",
+          "绳索附件",
+          "配重片"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "前两帧有短暂的向下释放绳索的动作，随后用户保持站立不动，环顾四周并查看手机。",
+        "movement_direction": "unknown",
+        "first_person_subject_evidence": "前两帧可见用户双手握持绳索，随后相机随用户身体转动和低头看手机的动作同步移动。",
+        "uncertainty_notes": "该片段绝大部分时间（帧3-16）处于组间休息状态，缺乏连续的动作周期，无法判定为完整的训练组。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 0,
+          "evidence": "画面主要记录了组间休息过程，仅在开头捕捉到疑似上一组结束的残影。"
+        }
+      ],
+      "total_sets": 0,
+      "total_reps": 0,
+      "action_disambiguation": {
+        "selected_evidence": "用户在大部分时间内处于站立休息、查看手机和环顾四周的状态，没有进行重复性的训练动作。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "绳索下压",
+            "reason": "虽然器械和初始手势符合，但由于缺乏完整的动作次数，仅判定为休息片段。"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩背-叶翔/动作7.txt"
+    },
+    {
+      "user_folder": "肩背-叶翔",
+      "action_id": "动作8",
+      "image_path": "graph/肩背-叶翔/动作8.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "UNKNOWN_ACTION",
+      "selected_confidence": 0.6,
+      "confidence_policy": "multiple_close",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_triceps_pushdown",
+          "confidence": 0.4,
+          "support": "使用绳索附件，双手向下/向后拉拽，属于常见的绳索动作。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_lat_pulldown",
+          "confidence": 0.2,
+          "support": "从高位向下拉，但通常高位下拉使用横杆且为坐姿。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架 (Cable Machine)",
+          "绳索附件 (Rope Attachment)"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "第一排显示用户双手握住绳索从高位向面部/胸前拉近；第二排显示用户站立在器械前，动作幅度减小或处于间歇。",
+        "movement_direction": "forward_backward",
+        "first_person_subject_evidence": "画面中心出现用户双手握持绳索，且随相机视角同步运动；背景镜子中可见用户站立拉动绳索的侧影。",
+        "uncertainty_notes": "该动作视觉上非常接近‘面拉 (Face Pull)’，但该动作不在标准动作列表中。若强行归类，最接近的绳索动作是绳索下压，但轨迹不符。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": null,
+          "evidence": "拼图时间跨度约29秒，第一排可见明显的拉伸动作，第二排动作不明显，可能为一组的末尾或调整。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": null,
+      "action_disambiguation": {
+        "selected_evidence": "用户站立面对龙门架，使用绳索附件，双手从高位向面部方向拉动，肘部向两侧张开。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "cable_triceps_pushdown",
+            "reason": "绳索下压通常要求肘部固定在身体两侧并向下伸展手臂，而图中肘部明显外展且向后拉，更符合面拉轨迹。"
+          },
+          {
+            "exercise": "cable_lat_pulldown",
+            "reason": "高位下拉通常为坐姿且使用长杆拉向胸锁骨，图中为站立绳索动作。"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩背-叶翔/动作8.txt"
+    },
+    {
+      "user_folder": "肩背-叶翔",
+      "action_id": "动作9",
+      "image_path": "graph/肩背-叶翔/动作9.jpg",
+      "selected_equipment": "龙门架",
+      "selected_exercise": "cable_triceps_pushdown",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_triceps_pushdown",
+          "confidence": 0.85,
+          "support": "第一人称视角下可见双手握持绳索附件（rope attachment），动作轨迹为从高处向下按压，且在底部有明显的绳索向两侧分开（split）的动作，符合绳索下压特征。"
+        },
+        {
+          "equipment": "龙门架",
+          "exercise": "cable_lat_pulldown",
+          "confidence": 0.4,
+          "support": "同样是高位向下的拉力动作，但通常使用横杆且伴随坐姿，画面中更像站姿且使用了绳索。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "龙门架钢索",
+          "绳索附件",
+          "配重架（背景）"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "双手握住绳索从头高位置向下推至胸腹部高度，随后受控回放。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面两侧出现的双臂与相机运动同步，且直接操作前方的绳索附件。",
+        "uncertainty_notes": "由于没有侧面视角，无法完全排除是直臂下压，但从手部动作看更像肘关节屈伸的绳索下压。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 2,
+          "evidence": "第3-5帧为第一次下压，第11-13帧为第二次下压。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 2,
+      "action_disambiguation": {
+        "selected_evidence": "可见明显的绳索附件（Rope）以及向下按压时双手向两侧分开的典型三头肌训练动作。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "cable_lat_pulldown",
+            "reason": "高位下拉通常使用长杆且为坐姿，绳索附件更多用于下压或面拉。"
+          },
+          {
+            "exercise": "cable_face_pull",
+            "reason": "面拉的轨迹是向面部拉动，而画面中手部最终位置在胸部以下，属于向下按压。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/肩背-叶翔/动作9.txt"
+    },
+    {
+      "user_folder": "腿-张开",
+      "action_id": "动作1",
+      "image_path": "graph/腿-张开/动作1.jpg",
+      "selected_equipment": "登阶机/爬楼机",
+      "selected_exercise": "stepmill",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "登阶机/爬楼机",
+          "exercise": "stepmill",
+          "confidence": 0.85,
+          "support": "第一人称视角正对电子控制面板，双手握持两侧扶手，身体有明显的上下节奏性晃动，符合爬楼机运动特征。"
+        },
+        {
+          "equipment": "跑步机",
+          "exercise": "treadmill_walk_run",
+          "confidence": 0.1,
+          "support": "同样具有电子面板，但相机晃动频率和手部扶握姿态更接近登阶动作。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "登阶机控制面板",
+          "侧边扶手",
+          "显示屏"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "相机随身体重心上下起伏，手部在部分帧中调整面板参数，随后固定在扶手位置。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "画面中心为操作面板，用户双手从画面两侧伸出操作按键并扶住把手，动作与相机位移同步。",
+        "uncertainty_notes": "仅凭拼图较难区分极慢速跑步与登阶，但面板高度和扶手位置更符合登阶机。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": null,
+          "evidence": "有氧运动，表现为持续性的周期运动，非计次力量训练。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": null,
+      "action_disambiguation": {
+        "selected_evidence": "观察到典型的登阶机（Stepmill）控制台，用户双手扶在较高的侧轨上，且躯干有明显的垂直位移分量。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "treadmill_walk_run",
+            "reason": "跑步机通常步频更快，且扶手位置相对较低，垂直起伏感不如登阶机强烈。"
+          },
+          {
+            "exercise": "elliptical",
+            "reason": "椭圆机通常伴随手柄的前后大幅度摆动，图中手部相对固定在静态扶手上。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/腿-张开/动作1.txt"
+    },
+    {
+      "user_folder": "腿-张开",
+      "action_id": "动作2",
+      "image_path": "graph/腿-张开/动作2.jpg",
+      "selected_equipment": "杠铃",
+      "selected_exercise": "barbell_squat",
+      "selected_confidence": 0.85,
+      "confidence_policy": "single_clear",
+      "top_candidates": [
+        {
+          "equipment": "杠铃",
+          "exercise": "barbell_squat",
+          "confidence": 0.85,
+          "support": "第一人称视角下，用户双手握持自由杠铃，身体伴随杠铃进行明显的上下升降运动，且处于深蹲架环境中。"
+        },
+        {
+          "equipment": "史密斯机",
+          "exercise": "smith_squat",
+          "confidence": 0.4,
+          "support": "虽然在深蹲架内，但需排除是否为带导轨的史密斯机，目前视觉更倾向于自由杠铃。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "杠铃",
+          "深蹲架",
+          "杠铃片",
+          "镜子"
+        ],
+        "body_posture": "standing",
+        "motion_cues_from_grid": "画面显示用户扛起杠铃后，身体重心及相机高度发生明显的下沉与升起循环。",
+        "movement_direction": "up_down",
+        "first_person_subject_evidence": "用户双手从画面两侧伸出握住杠铃杆，且镜中反射的动作与相机运动同步。",
+        "uncertainty_notes": "仅凭图片难以百分之百确认杠铃是否完全自由（无隐蔽导轨），但从架子结构看自由杠铃概率极大。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": 3,
+          "evidence": "从拼图中可观察到约3次完整的下蹲与站起周期。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": 3,
+      "action_disambiguation": {
+        "selected_evidence": "用户双手握持杠铃，在深蹲架前进行垂直位移，镜中影像证实了深蹲动作。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "smith_squat",
+            "reason": "画面中未见明显的史密斯机固定导轨，更符合自由杠铃深蹲架特征。"
+          },
+          {
+            "exercise": "barbell_deadlift",
+            "reason": "杠铃位置始终在肩背部高度而非垂于体前，且身体直立程度符合深蹲。"
+          }
+        ]
+      },
+      "needs_manual_review": false,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/腿-张开/动作2.txt"
+    },
+    {
+      "user_folder": "腿-张开",
+      "action_id": "动作8",
+      "image_path": "graph/腿-张开/动作8.jpg",
+      "selected_equipment": "固定器械",
+      "selected_exercise": "UNKNOWN_ACTION",
+      "selected_confidence": 0.5,
+      "confidence_policy": "insufficient_evidence",
+      "top_candidates": [
+        {
+          "equipment": "固定器械",
+          "exercise": "machine_leg_press",
+          "confidence": 0.4,
+          "support": "用户处于坐姿，双手握住座椅两侧把手，符合腿部固定器械（如腿举机）的典型姿态。"
+        }
+      ],
+      "context": {
+        "visible_equipment": [
+          "座椅把手",
+          "器械框架",
+          "配重区（远处可见）"
+        ],
+        "body_posture": "seated",
+        "motion_cues_from_grid": "前6帧显示用户处于坐姿且手握把手，后9帧显示用户起身并离开器械，伴随剧烈的相机晃动和视角切换。",
+        "movement_direction": "unknown",
+        "first_person_subject_evidence": "第一人称视角下可见用户双手握住器械把手，且大腿位于画面下方，与相机运动同步。",
+        "uncertainty_notes": "文件夹名‘腿-张开’暗示可能是大腿外展机（Hip Abduction），但该动作不在标准动作列表中；且拼图主要记录了动作结束和离场过程，缺乏完整的重复周期。"
+      },
+      "sets": [
+        {
+          "set_number": 1,
+          "reps": null,
+          "evidence": "画面仅显示了动作的末尾及离场过程，无法观察到完整的往复周期。"
+        }
+      ],
+      "total_sets": 1,
+      "total_reps": null,
+      "action_disambiguation": {
+        "selected_evidence": "用户坐姿操作带有侧边把手的固定器械，结合文件夹名称，推测为腿部训练器械。",
+        "rejected_or_close_candidates": [
+          {
+            "exercise": "machine_leg_press",
+            "reason": "虽然姿态相似，但‘腿-张开’的描述更符合外展/内收器械，而非线性的腿举动作。"
+          },
+          {
+            "exercise": "machine_leg_extension",
+            "reason": "把手位置相似，但无法看到小腿的屈伸动作，且与‘张开’的描述不符。"
+          }
+        ]
+      },
+      "needs_manual_review": true,
+      "raw_response_path": "graph_workflow_validation/image_main_focus_results/raw/腿-张开/动作8.txt"
+    }
+  ]
+}

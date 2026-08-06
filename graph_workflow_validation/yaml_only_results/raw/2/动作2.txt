@@ -1,0 +1,50 @@
+{
+  "user_folder": "2",
+  "action_id": "动作2",
+  "image_path": "graph/2/动作2.jpg",
+  "selected_equipment": "高位下拉机",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "高位下拉机",
+      "exercise": "高位下拉",
+      "exercise_id": "cable_lat_pulldown",
+      "confidence": 0.95,
+      "support": "第一人称视角下，双手握住上方横杆并向胸前下拉，可见钢索连接，镜中反射确认坐姿下拉动作。"
+    },
+    {
+      "equipment": "辅助引体向上机",
+      "exercise": "辅助引体向上",
+      "exercise_id": "assisted_pullup",
+      "confidence": 0.2,
+      "support": "同为背部拉类动作，但画面显示横杆向相机移动，而非相机向横杆移动。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "高位下拉横杆",
+      "钢索",
+      "配重片（镜中可见）"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "横杆从画面上方边缘进入，周期性地向相机（胸前）拉近并复位，呈现典型的上下往复运动轨迹。",
+    "first_person_subject_evidence": "用户双手出现在画面两侧并握住横杆，横杆的运动与相机视角（用户躯干）的相对位置变化符合第一人称操作特征。",
+    "uncertainty_notes": "视觉证据非常充分，横杆形状、钢索连接方式及运动轨迹均指向高位下拉。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到典型的弯曲长横杆，通过中心钢索连接。动作过程中横杆向下拉至胸前高度，随后受控回放，符合 cable_lat_pulldown 的标准轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "引体向上",
+        "reason": "引体向上中横杆是固定的，相机（身体）会向上移动；此处横杆相对于背景和相机向下移动。"
+      },
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "划船动作的钢索通常来自前方水平方向，而此处钢索来自头顶上方。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

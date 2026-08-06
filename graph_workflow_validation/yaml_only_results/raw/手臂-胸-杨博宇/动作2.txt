@@ -1,0 +1,47 @@
+{
+  "user_folder": "手臂-胸-杨博宇",
+  "action_id": "动作2",
+  "image_path": "graph/手臂-胸-杨博宇/动作2.jpg",
+  "selected_equipment": "杠铃",
+  "selected_exercise": "杠铃弯举",
+  "exercise_id": "barbell_biceps_curl",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "杠铃",
+      "exercise": "杠铃弯举",
+      "confidence": 0.92,
+      "support": "第一人称视角可见双手握持曲杆杠铃，在胸前进行明显的肘屈伸动作，符合弯举轨迹。"
+    },
+    {
+      "equipment": "杠铃",
+      "exercise": "杠铃推举",
+      "confidence": 0.2,
+      "support": "同为杠铃动作，但轨迹未过头。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "杠铃 (EZ-bar)"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "杠铃从画面下方升起至胸口高度（Row 2-3），随后下降（Row 4），呈现典型的周期性弯举运动。",
+    "first_person_subject_evidence": "画面近端可见用户双手握杠，且杠铃运动与相机视角同步。",
+    "uncertainty_notes": "无明显不确定性，动作特征典型。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "站姿下杠铃在胸前做圆弧形上下运动，肘部作为支点明显，符合杠铃弯举。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "杠铃推举",
+        "reason": "杠铃运动高度仅到胸/肩部，未出现过顶动作。"
+      },
+      {
+        "exercise": "杠铃俯身划船",
+        "reason": "用户躯干保持直立，未见俯身姿态。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

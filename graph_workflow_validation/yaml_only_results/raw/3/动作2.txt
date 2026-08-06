@@ -1,0 +1,48 @@
+{
+  "user_folder": "3",
+  "action_id": "动作2",
+  "image_path": "graph/3/动作2.jpg",
+  "selected_equipment": "史密斯机",
+  "selected_exercise": "史密斯卧推",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯卧推",
+      "confidence": 0.85,
+      "support": "第一人称视角仰卧，可见史密斯机横杠及两侧固定导轨，双手做推举动作。"
+    },
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯上斜卧推",
+      "confidence": 0.45,
+      "support": "同为史密斯机推举，但视角更接近水平仰卧而非明显斜向上。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "史密斯机导轨",
+      "带有滚花纹路的横杠",
+      "安全挂钩结构"
+    ],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "横杠在画面中由远及近（下放至胸前）再由近及远（推起），呈现典型的垂直推举轨迹。",
+    "first_person_subject_evidence": "用户双手对称握持横杠，相机随身体仰卧固定，视野完全随器械运动同步。",
+    "uncertainty_notes": "由于缺少侧面视角，难以完全排除上斜卧推的可能性，但从天花板灯光垂直度判断，平卧可能性更高。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "画面中清晰可见史密斯机的垂直/倾斜导轨，用户处于仰卧姿态（视角直对天花板），双手握杠在胸前做推举动作，符合史密斯卧推特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "史密斯推肩",
+        "reason": "推肩通常为坐姿，视角应平视或微仰，而非直接面对正上方天花板。"
+      },
+      {
+        "exercise": "杠铃卧推",
+        "reason": "画面中横杠两端连接在固定导轨上，属于史密斯机而非自由杠铃。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

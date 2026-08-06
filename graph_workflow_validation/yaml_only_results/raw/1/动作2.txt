@@ -1,0 +1,49 @@
+{
+  "user_folder": "1",
+  "action_id": "动作2",
+  "image_path": "graph/1/动作2.jpg",
+  "selected_equipment": "史密斯机",
+  "selected_exercise": "史密斯深蹲",
+  "exercise_id": "smith_squat",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯深蹲",
+      "confidence": 0.85,
+      "support": "可见史密斯机垂直导轨，画面随用户身体重心有明显的上下往复运动周期。"
+    },
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯推肩",
+      "confidence": 0.35,
+      "support": "同为史密斯机上的垂直运动，但画面起伏幅度更接近全身性的深蹲动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "史密斯机垂直导轨",
+      "杠铃杆",
+      "配重片"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "从第4帧开始，画面相对于背景墙面和两侧固定导轨呈现明显的上下位移，具有典型的动作节奏感。",
+    "first_person_subject_evidence": "相机佩戴在胸前，两侧导轨在画面边缘保持平行且固定，画面整体的升降反映了用户本人的下蹲与站起动作。",
+    "uncertainty_notes": "由于用户正对白墙/挡板，视野受限，无法看到腿部细节，但垂直位移和器械特征非常明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "识别到史密斯机特有的固定垂直导轨；第一人称视角随身体重心产生大幅度垂直位移，符合深蹲动作特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "杠铃深蹲",
+        "reason": "画面中存在明显的固定垂直导轨，属于史密斯机而非自由杠铃架。"
+      },
+      {
+        "exercise": "腿举",
+        "reason": "用户处于站姿且身体整体在空间中发生位移，而非坐姿/仰卧踩踏板。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

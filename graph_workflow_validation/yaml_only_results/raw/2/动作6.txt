@@ -1,0 +1,39 @@
+{
+  "user_folder": "2",
+  "action_id": "动作6",
+  "image_path": "graph/2/动作6.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索弯举",
+  "exercise_id": "cable_biceps_curl",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索弯举",
+      "confidence": 0.85,
+      "support": "第一人称视角下可见双手握持EZ型绳索附件，在龙门架前进行由下至上的弯举动作，动作轨迹与相机（胸前）垂直方向一致。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.25,
+      "support": "同为绳索附件动作，但画面显示器械从下方升起靠近相机，与下压方向相反。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架/绳索机", "EZ弯杆附件", "钢索"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "第1帧附件位于高位，第4-7帧附件降至画面底部，第10-12帧附件再次升至胸前，呈现明显的上下往复周期。",
+    "first_person_subject_evidence": "用户双手直接握持附件，且附件运动占据画面近端中心，与相机视角同步。",
+    "uncertainty_notes": "由于相机仰角较大，无法完全排除提拉类动作（如直立划船），但EZ杆通常用于弯举。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到典型的龙门架EZ杆附件，运动方向为从下向上弯起至胸前，符合绳索弯举的生物力学特征。",
+    "rejected_or_close_candidates": [
+      {"exercise": "绳索下压", "reason": "运动方向相反，画面中附件是向上靠近相机而非向下推离"},
+      {"exercise": "坐姿绳索划船", "reason": "用户处于站立姿态，且运动轨迹为垂直上下而非水平前后"}
+    ]
+  },
+  "needs_manual_review": false
+}

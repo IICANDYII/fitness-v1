@@ -1,0 +1,48 @@
+{
+  "user_folder": "4",
+  "action_id": "动作1",
+  "image_path": "graph/4/动作1.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.95,
+      "support": "第一人称视角下，高位下拉横杆及钢索从上方进入画面并向胸前下拉，动作轨迹清晰。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "坐姿绳索划船",
+      "confidence": 0.15,
+      "support": "同为背部拉类动作，但划船通常为水平方向拉动，而非从斜上方下拉。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "高位下拉横杆",
+      "钢索",
+      "龙门架/高位下拉机框架"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "横杆在画面上方出现，并周期性地向画面中心（用户胸部方向）下拉再回弹，呈现典型的上下运动轨迹。",
+    "first_person_subject_evidence": "用户双手握持横杆，横杆的运动与相机（胸前）的相对位置变化符合坐姿下拉动作。",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "画面中清晰可见高位下拉专用的长横杆及连接顶部的钢索，运动方向为从上至下的拉动，符合高位下拉标准动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "坐姿划船的钢索通常来自前方而非上方，且拉动轨迹更偏向水平方向。"
+      },
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压时肘关节位置相对固定，仅前臂下摆，而画面中显示的是整个横杆的大幅度下拉，属于多关节背部训练。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

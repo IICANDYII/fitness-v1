@@ -1,0 +1,48 @@
+{
+  "user_folder": "1",
+  "action_id": "动作3",
+  "image_path": "graph/1/动作3.jpg",
+  "selected_equipment": "引体向上架",
+  "selected_exercise": "引体向上",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "exercise_id": "pullup",
+  "top_candidates": [
+    {
+      "equipment": "引体向上架",
+      "exercise": "引体向上",
+      "confidence": 0.95,
+      "support": "镜中反射显示用户全身在做引体向上，相机随胸部高度上下起伏，上方可见固定的引体向上横杆。"
+    },
+    {
+      "equipment": "辅助引体向上机",
+      "exercise": "辅助引体向上",
+      "confidence": 0.2,
+      "support": "同为引体动作，但镜中未见辅助踏板或配重支撑。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "Technogym 龙门架",
+      "引体向上横杆"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "第一人称视角显示相机相对于上方固定的横杆进行剧烈的上下往复运动，符合引体向上特征。",
+    "first_person_subject_evidence": "镜子中的反射人物动作与第一人称相机的上下位移完全同步，确认是当前用户在进行训练。",
+    "uncertainty_notes": "无光流和IMU数据，但视觉证据（尤其是镜面反射）极其充分。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜面反射提供了完整的第三方视角，确认用户身体整体升降；第一人称视角中横杆位置固定，排除了下拉类动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉中横杆应向下拉向用户，而画面中横杆固定，是用户身体向上移动。"
+      },
+      {
+        "exercise": "辅助引体向上",
+        "reason": "镜中可见用户双腿自然下垂，没有踩在辅助机的踏板上。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

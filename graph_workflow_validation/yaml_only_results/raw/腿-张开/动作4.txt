@@ -1,0 +1,49 @@
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作4",
+  "image_path": "graph/腿-张开/动作4.jpg",
+  "selected_equipment": "史密斯机",
+  "selected_exercise": "史密斯深蹲",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯深蹲",
+      "confidence": 0.95,
+      "support": "可见史密斯机固定导轨，第一人称视角双手握杠，镜中反射显示用户进行深蹲动作。"
+    },
+    {
+      "equipment": "杠铃",
+      "exercise": "杠铃深蹲",
+      "confidence": 0.2,
+      "support": "同为深蹲动作，但画面中导轨结构明显，非自由杠铃。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "史密斯机导轨",
+      "橙色框架",
+      "横杠",
+      "配重片"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "相机随躯干整体上下起伏，镜中反射显示明显的下蹲与站起周期。",
+    "first_person_subject_evidence": "画面上方可见用户双手握持横杠，且相机运动与镜中用户动作完全同步。",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "关键帧中清晰可见史密斯机的垂直导轨和挂钩结构；镜中反射证实用户正背负杠铃进行深蹲；第一人称视角下的高度变化符合深蹲轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "杠铃深蹲",
+        "reason": "器械具有固定垂直导轨，属于史密斯机而非自由杠铃架。"
+      },
+      {
+        "exercise": "史密斯推肩",
+        "reason": "镜中反射显示用户是下肢屈伸带动身体升降，而非单纯手臂推举。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

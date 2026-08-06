@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 画面前几帧显示用户已就位，双手握持宽横杆，视角仰视，上方可见高位滑轮和钢索。
+Step 2 — 器械识别: 采用规则6A，坐姿仰视视角，配合宽横杆和高位滑轮，确认为高位下拉机。
+Step 3 — 光流验证: 画面中横杆呈现明显的上下往复运动，符合垂直拉伸动作特征。
+Step 4 — 动作判定: 综合坐姿、高位滑轮、宽横杆及下拉轨迹，判定为高位下拉。
+Step 5 — 组次统计: 在23秒区间内，观察到横杆从低位升起并再次下拉的过程，计为1组，约2次动作。
+
+{"equipment": "高位下拉机", "exercise": "高位下拉", "exercise_id": "cable_lat_pulldown", "selected_confidence": 0.85, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "高位下拉机", "exercise": "高位下拉", "confidence": 0.85, "support": "坐姿仰视视角，可见高位滑轮和宽横杆，动作轨迹为从上向下大幅度拉动。"}], "context": {"visible_equipment": ["高位滑轮", "宽横杆", "大型器械框架"], "body_posture": "seated", "motion_cues_from_grid": "横杆在画面中从上方拉近至胸前（F1, F9-F12），中间有放回过程（F2-F8）。", "first_person_subject_evidence": "双手对称握持横杆，视角随拉伸动作有规律变化。", "uncertainty_notes": "缺少IMU和光流数据，仅凭视觉判断次数可能存在偏差。"}, "action_disambiguation": {"selected_evidence": "符合规则6A：坐姿 + 从上方拉 + 宽横杆 = 高位下拉。", "rejected_or_close_candidates": [{"exercise": "绳索下压", "reason": "绳索下压通常为站姿，且动作幅度较小，不使用此类宽横杆。"}, {"exercise": "引体向上", "reason": "引体向上中横杆是固定的，画面中横杆相对于背景框架有明显位移。"}]}, "sets": [{"start_time": "00:07:16", "end_time": "00:07:39", "reps": 2}], "phase1_adjustment": {"expand_before_sec": 3, "expand_after_sec": 2, "reason": "高位下拉需要入座调整及结束后的放杆缓冲时间。"}, "needs_manual_review": false}

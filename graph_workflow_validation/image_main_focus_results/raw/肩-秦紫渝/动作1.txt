@@ -1,0 +1,48 @@
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作1",
+  "image_path": "graph/肩-秦紫渝/动作1.jpg",
+  "selected_equipment": "跑步机",
+  "selected_exercise": "跑步机",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.95,
+      "support": "第一人称视角正对典型的跑步机仪表盘，可见红色紧急停止按钮、速度/坡度调节键及两侧扶手。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["跑步机仪表盘", "扶手", "紧急停止按钮"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面呈现轻微的周期性上下震动，符合在跑步机上行走或跑步的相机运动特征。",
+    "movement_direction": "mixed",
+    "first_person_subject_evidence": "用户双手握住或靠近跑步机两侧扶手，视角随身体运动同步起伏。",
+    "uncertainty_notes": "无"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": null,
+      "evidence": "有氧运动，表现为持续的单一过程"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": null,
+  "action_disambiguation": {
+    "selected_evidence": "仪表盘布局、红色安全夹/停止按钮以及固定的扶手位置是跑步机的核心特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "椭圆机",
+        "reason": "椭圆机通常有移动的长手柄，且仪表盘UI风格与此不同。"
+      },
+      {
+        "exercise": "登阶机/爬楼机",
+        "reason": "登阶机仪表盘通常更高，且扶手形状与此有差异。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

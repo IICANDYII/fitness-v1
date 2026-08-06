@@ -1,0 +1,39 @@
+Step 1 — 进场帧分析: 网格图前3帧显示用户走向并坐在一台双柱龙门架（综合训练架）前，可见座椅结构、配重塔以及上方的滑轮和钢索。
+Step 2 — 器械识别: 用户采用坐姿，双手握住从头顶上方垂下的D型把手，根据规则 6A.3，在龙门架上坐着做下拉动作，器械判定为高位下拉机。
+Step 3 — 光流验证: 连续帧中手部和器械呈现明显的垂直上下往复运动（UP/DOWN），符合下拉动作的典型轨迹。
+Step 4 — 动作判定: 综合坐姿、上方绳索来源及大幅度下拉至胸前的动作特征，判定为高位下拉。
+Step 5 — 组次统计: 观察到约 6 次完整的坐姿下拉周期（从第 1 行末尾到第 7 行初），随后用户起身。
+
+{
+  "user_folder": "肩-背-秦紫渝",
+  "action_id": "动作3",
+  "image_path": "graph/肩-背-秦紫渝/动作3.jpg",
+  "selected_equipment": "高位下拉机",
+  "selected_exercise": "高位下拉",
+  "exercise_id": "cable_lat_pulldown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "高位下拉机",
+      "exercise": "高位下拉",
+      "confidence": 0.85,
+      "support": "坐姿状态下从头顶上方滑轮大幅度下拉至胸前，符合高位下拉标准模式。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "D型把手", "座椅", "配重塔"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "手部从画面上方拉入并向下运动，具有明显的周期性往复。",
+    "first_person_subject_evidence": "第一人称视角，双手从近端伸出操作器械，视角随身体发力有轻微晃动。",
+    "uncertainty_notes": "缺少光流和IMU数据，末尾出现站姿切换，可能涉及动作结束后的整理或切换动作。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "坐姿 + 上方滑轮来源 + 大幅度下拉轨迹，符合规则 6A 判定流程。",
+    "rejected_or_close_candidates": [
+      {"exercise": "绳索下压", "reason": "下压为站姿且动作幅度较小，本动作为坐姿且肩关节大幅度参与"},
+      {"exercise": "坐姿绳索划船", "reason": "划船绳索应水平来自前方，本动作绳索来自正上方"}
+    ]
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,52 @@
+{
+  "user_folder": "3",
+  "action_id": "动作6",
+  "image_path": "graph/3/动作6.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "dumbbell_bench_press",
+  "selected_confidence": 0.65,
+  "confidence_policy": "multiple_close",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "dumbbell_bench_press",
+      "confidence": 0.65,
+      "support": "前两排关键帧显示用户仰卧在长凳上，双手持哑铃在胸前做推举动作，符合卧推特征。"
+    },
+    {
+      "equipment": "哑铃",
+      "exercise": "dumbbell_bench_press",
+      "confidence": 0.45,
+      "support": "仰卧位下的哑铃胸前运动也可能是夹胸，但推举更为常见。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "哑铃",
+      "训练长凳",
+      "史密斯机"
+    ],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "前两排（约前15帧）显示用户处于仰卧姿态，双手持哑铃在胸前上方进行往复运动；第三排起用户坐起并转为站立，随后出现在史密斯机旁。",
+    "first_person_subject_evidence": "画面近端清晰可见用户本人的双手握持哑铃，且视角随用户起身动作同步变化。",
+    "uncertainty_notes": "该片段包含了一组哑铃动作的结尾及随后的起身休息/换项过程。哑铃动作阶段由于缺乏光流，难以完全排除夹胸（Fly）的可能性。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户处于仰卧位（可见天花板和长凳边缘），双手持哑铃在胸部上方做垂直于身体平面的推举动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "dumbbell_chest_fly",
+        "reason": "视觉上与卧推相似，但卧推的推举轨迹通常比飞鸟的弧线轨迹更符合当前画面中哑铃的运动位置。"
+      },
+      {
+        "exercise": "smith_bench_press",
+        "reason": "虽然画面后期出现了史密斯机，但实际运动阶段用户使用的是哑铃。"
+      },
+      {
+        "exercise": "dumbbell_shoulder_press",
+        "reason": "用户姿态为仰卧而非坐姿/站姿直立，且哑铃在胸前而非肩上。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

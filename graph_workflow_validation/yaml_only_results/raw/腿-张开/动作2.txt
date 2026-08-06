@@ -1,0 +1,49 @@
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作2",
+  "image_path": "graph/腿-张开/动作2.jpg",
+  "selected_equipment": "杠铃",
+  "selected_exercise": "barbell_squat",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "杠铃",
+      "exercise": "barbell_squat",
+      "confidence": 0.85,
+      "support": "镜中可见用户背负杠铃进行深蹲动作，且杠铃从红色的深蹲架挂钩上取下，无固定导轨。"
+    },
+    {
+      "equipment": "史密斯机",
+      "exercise": "smith_squat",
+      "confidence": 0.3,
+      "support": "同为深蹲动作，但画面中未见史密斯机特有的垂直导轨，更像自由杠铃。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "杠铃",
+      "深蹲架",
+      "杠铃片",
+      "镜子"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "网格前半段显示用户在器械前准备/调整，后半段（约第25帧起）从镜子中观察到明显的身体重心下移再回升的深蹲周期。",
+    "first_person_subject_evidence": "第一人称视角下双手握持杠铃，且镜中人物的动作、衣着与相机移动完全同步。",
+    "uncertainty_notes": "由于缺少IMU和光流，次数判定仅凭视觉抽帧观察，可能存在细微误差。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜面反射提供了清晰的全身动作证据，确认用户正背负杠铃进行深蹲；器械为红色的自由深蹲架，杠铃放置在J-钩上，符合杠铃深蹲特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "smith_squat",
+        "reason": "未观察到史密斯机的固定导轨，杠铃在架子上的放置方式属于自由杠铃架。"
+      },
+      {
+        "exercise": "bodyweight_squat",
+        "reason": "用户肩部明显负重杠铃。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

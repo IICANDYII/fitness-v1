@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness Balance v4 — 函数曲线</title>
+<style>
+  :root{
+    --bg:#faf9f5;--surface:#fff;--surface2:#f1efe8;--line:rgba(0,0,0,.14);--line2:rgba(0,0,0,.28);
+    --grid:rgba(0,0,0,.08);--txt:#1f1e1b;--txt2:#5f5e5a;--txt3:#888780;--blue:#185FA5;
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#1f1e1b;--surface:#2c2c2a;--surface2:#262522;--line:rgba(255,255,255,.16);--line2:rgba(255,255,255,.3);
+    --grid:rgba(255,255,255,.1);--txt:#f1efe8;--txt2:#b4b2a9;--txt3:#888780;--blue:#85B7EB;}}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--txt);padding:24px;line-height:1.5;}
+  .wrap{max-width:1100px;margin:0 auto;}
+  h1{font-size:22px;font-weight:500;margin:0 0 4px;}
+  .sub{color:var(--txt2);font-size:13px;margin:0 0 16px;}
+  .top{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-bottom:14px;}
+  .top label{font-size:13px;color:var(--txt2);margin-right:6px;}
+  select{height:34px;border:.5px solid var(--line2);border-radius:8px;background:var(--surface);color:var(--txt);font-size:13px;padding:0 8px;}
+  .chk{font-size:13px;color:var(--txt2);display:inline-flex;align-items:center;gap:6px;cursor:pointer;}
+  .panel{background:var(--surface);border:.5px solid var(--line);border-radius:12px;padding:10px;}
+  svg{width:100%;height:auto;display:block;}
+  .axt{font-size:11px;fill:var(--txt3);}
+  .axlab{font-size:12px;fill:var(--txt2);}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--txt2);margin:10px 2px 0;}
+  .legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle;}
+  .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:18px;}
+  .cg{background:var(--surface);border:.5px solid var(--line);border-radius:10px;padding:10px 14px;}
+  .row{display:flex;align-items:center;gap:8px;margin:7px 0;}
+  .row label{font-size:12px;color:var(--txt2);flex:0 0 92px;}
+  .row label.sweep{color:var(--blue);font-weight:500;}
+  .row input[type=range]{flex:1;}
+  .row .v{font-size:12px;font-weight:500;min-width:38px;text-align:right;}
+  input[type=range]{-webkit-appearance:none;height:4px;border-radius:4px;background:var(--line2);}
+  input[type=range]:disabled{opacity:.45;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--blue);cursor:pointer;}
+  .hint{font-size:11px;color:var(--txt3);margin:2px 0 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Fitness Balance v4 — 函数曲线</h1>
+  <p class="sub">选一个输入作为横轴,纵轴是分数。曲线由当前其它滑块值决定,竖虚线是"当前取值"。注意 min/clamp 造成的拐点(封顶、触底)。</p>
+
+  <div class="top">
+    <span><label>横轴变量</label>
+      <select id="xvar">
+        <option value="days">有效天数 (0–7)</option>
+        <option value="cov">覆盖肌群 (0–7)</option>
+        <option value="units">总单位 (0–16)</option>
+        <option value="dev">S 分布偏差 (0–2)</option>
+        <option value="conf">识别置信 (0–1)</option>
+        <option value="plan">计划支持 (0–1)</option>
+        <option value="unit">E 充足unit (0–4)</option>
+        <option value="R">恢复分 R (0–100)</option>
+      </select>
+    </span>
+    <label class="chk"><input type="checkbox" id="showComp" checked> 显示分项曲线 G/S/E/C</label>
+  </div>
+
+  <div class="panel">
+    <svg id="chart" viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fitness Balance 函数曲线">
+      <g id="grid"></g>
+      <line x1="44" y1="340" x2="704" y2="340" stroke="var(--line2)" stroke-width="1"/>
+      <line x1="44" y1="16" x2="44" y2="340" stroke="var(--line2)" stroke-width="1"/>
+      <text class="axlab" x="6" y="14">分</text>
+      <text class="axlab" id="xlabel" x="360" y="374" text-anchor="middle">有效天数</text>
+      <g id="xticks"></g>
+      <g id="curves"></g>
+      <g id="marker"></g>
+    </svg>
+  </div>
+  <div class="legend">
+    <span><i style="background:#3B6D11;height:4px;"></i>最终 Balance</span>
+    <span class="cl"><i style="background:#185FA5;"></i>G 指南</span>
+    <span class="cl"><i style="background:#534AB7;"></i>S 结构</span>
+    <span class="cl"><i style="background:#0F6E56;"></i>E 证据</span>
+    <span class="cl"><i style="background:#BA7517;"></i>C 剂量</span>
+  </div>
+
+  <div class="controls">
+    <div class="cg">
+      <div class="row"><label data-k="days">有效天数</label><input type="range" id="days" min="0" max="7" step="1" value="3"><span class="v" id="days_v">3</span></div>
+      <div class="row"><label data-k="cov">覆盖肌群</label><input type="range" id="cov" min="0" max="7" step="1" value="3"><span class="v" id="cov_v">3</span></div>
+      <div class="row"><label data-k="units">总单位</label><input type="range" id="units" min="0" max="16" step="0.5" value="6"><span class="v" id="units_v">6.0</span></div>
+    </div>
+    <div class="cg">
+      <div class="row"><label data-k="dev">S 分布偏差</label><input type="range" id="dev" min="0" max="2" step="0.05" value="0.6"><span class="v" id="dev_v">0.60</span></div>
+      <div class="row"><label data-k="conf">识别置信</label><input type="range" id="conf" min="0" max="1" step="0.05" value="0.85"><span class="v" id="conf_v">0.85</span></div>
+      <div class="row"><label data-k="rep">重复模式</label><input type="range" id="rep" min="0" max="1" step="0.05" value="1"><span class="v" id="rep_v">1.00</span></div>
+    </div>
+    <div class="cg">
+      <div class="row"><label data-k="unit">E 充足unit</label><input type="range" id="unit" min="0" max="4" step="0.25" value="2"><span class="v" id="unit_v">2.00</span></div>
+      <div class="row"><label data-k="plan">计划支持</label><input type="range" id="plan" min="0" max="1" step="0.05" value="0.7"><span class="v" id="plan_v">0.70</span></div>
+      <div class="row"><label class="chk" style="flex:auto;"><input type="checkbox" id="rnull"> 无同肌群重复 (R=null)</label></div>
+      <div class="row"><label data-k="R">恢复分 R</label><input type="range" id="R" min="0" max="100" step="1" value="65"><span class="v" id="R_v">65</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const VARS={
+  days:{label:"有效天数",min:0,max:7},cov:{label:"覆盖肌群",min:0,max:7},
+  units:{label:"总单位",min:0,max:16},dev:{label:"S 分布偏差 Σ|Δ|",min:0,max:2},
+  conf:{label:"识别置信",min:0,max:1},plan:{label:"计划支持",min:0,max:1},
+  unit:{label:"E 充足 unit",min:0,max:4},R:{label:"恢复分 R",min:0,max:100}
+};
+const L=44,R=704,T=16,B=340,W=R-L,H=B-T;
+const yPix=v=>T+(1-clamp(v,0,100)/100)*H;
+
+function readP(){
+  return {days:+$('days').value,cov:+$('cov').value,units:+$('units').value,dev:+$('dev').value,
+    conf:+$('conf').value,rep:+$('rep').value,unit:+$('unit').value,plan:+$('plan').value,
+    R:+$('R').value,rnull:$('rnull').checked};
+}
+function calc(p){
+  const G=clamp(100*Math.min(Math.min(p.days/2,1),p.cov/7),0,100);
+  const S=clamp(100*(1-0.5*p.dev),0,100);
+  const E=clamp(100*(0.35*p.conf+0.25*p.rep+0.25*Math.min(p.unit/2,1)+0.15*p.plan),0,100);
+  const C=clamp(100*(0.6*Math.min(p.days/4,1)+0.4*Math.min(p.units/8,1)),0,100);
+  const radj=p.rnull?0:(p.R>=85?3:(p.R>=70?0:(p.R>=50?-2:-5)));
+  const base=0.15*G+0.40*S+0.20*E+0.25*C;
+  return {G,S,E,C,radj,final:clamp(base+radj,0,100)};
+}
+function poly(key,p,xv){
+  const v=VARS[xv];const N=240;let pts=[];
+  for(let i=0;i<=N;i++){
+    const x=v.min+(v.max-v.min)*i/N;
+    const pp=Object.assign({},p);pp[xv]=x;
+    const y=calc(pp)[key];
+    pts.push((L+(x-v.min)/(v.max-v.min)*W).toFixed(1)+','+yPix(y).toFixed(1));
+  }
+  return pts.join(' ');
+}
+function svgEl(t,a){const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+
+function draw(){
+  const p=readP();const xv=$('xvar').value;const v=VARS[xv];const showC=$('showComp').checked;
+  // grid + y ticks (static-ish)
+  const grid=$('grid');grid.innerHTML='';
+  [0,25,50,75,100].forEach(t=>{
+    const y=yPix(t);
+    grid.appendChild(svgEl('line',{x1:L,y1:y,x2:R,y2:y,stroke:'var(--grid)','stroke-width':1}));
+    const tx=svgEl('text',{x:L-6,y:y+4,'text-anchor':'end',class:'axt'});tx.textContent=t;grid.appendChild(tx);
+  });
+  // x ticks
+  const xt=$('xticks');xt.innerHTML='';
+  for(let i=0;i<=5;i++){
+    const val=v.min+(v.max-v.min)*i/5;const x=L+W*i/5;
+    const tx=svgEl('text',{x:x,y:356,'text-anchor':'middle',class:'axt'});
+    tx.textContent=(val%1?val.toFixed(1):val);xt.appendChild(tx);
+  }
+  $('xlabel').textContent=v.label;
+  // curves
+  const cv=$('curves');cv.innerHTML='';
+  const comps=[['G','#185FA5'],['S','#534AB7'],['E','#0F6E56'],['C','#BA7517']];
+  if(showC)comps.forEach(([k,c])=>cv.appendChild(svgEl('polyline',{points:poly(k,p,xv),fill:'none',stroke:c,'stroke-width':1.4,opacity:.7})));
+  cv.appendChild(svgEl('polyline',{points:poly('final',p,xv),fill:'none',stroke:'#3B6D11','stroke-width':3}));
+  document.querySelectorAll('.legend .cl').forEach(e=>e.style.display=showC?'inline':'none');
+  // marker at current value
+  const mk=$('marker');mk.innerHTML='';
+  const cur=p[xv];const cx=L+(cur-v.min)/(v.max-v.min)*W;const cy=yPix(calc(p).final);
+  mk.appendChild(svgEl('line',{x1:cx,y1:T,x2:cx,y2:B,stroke:'var(--blue)','stroke-width':1,'stroke-dasharray':'4 3',opacity:.7}));
+  mk.appendChild(svgEl('circle',{cx:cx,cy:cy,r:4.5,fill:'#3B6D11',stroke:'var(--surface)','stroke-width':1.5}));
+  const lab=svgEl('text',{x:clamp(cx+8,L,R-70),y:Math.max(cy-10,26),class:'axlab',fill:'#3B6D11','font-weight':500});
+  lab.textContent='Balance '+Math.round(calc(p).final);mk.appendChild(lab);
+  // disable swept slider's emphasis
+  document.querySelectorAll('.row label[data-k]').forEach(l=>l.classList.toggle('sweep',l.dataset.k===xv));
+}
+document.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',()=>{
+  const vo=$(el.id+'_v');
+  if(vo){const x=parseFloat(el.value);vo.textContent=(['dev','conf','plan','rep','unit'].includes(el.id))?x.toFixed(2):(el.id==='units')?x.toFixed(1):el.value;}
+  draw();
+}));
+$('xvar').addEventListener('change',draw);
+draw();
+</script>
+</body>
+</html>

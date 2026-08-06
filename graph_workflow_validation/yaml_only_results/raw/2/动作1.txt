@@ -1,0 +1,48 @@
+{
+  "user_folder": "2",
+  "action_id": "动作1",
+  "image_path": "graph/2/动作1.jpg",
+  "selected_equipment": "史密斯机",
+  "selected_exercise": "smith_bench_press",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "史密斯机",
+      "exercise": "smith_bench_press",
+      "confidence": 0.85,
+      "support": "可见史密斯机导轨，杠铃杆在胸前相机上方做靠近和远离的周期运动，符合卧推轨迹。"
+    },
+    {
+      "equipment": "史密斯机",
+      "exercise": "smith_shoulder_press",
+      "confidence": 0.45,
+      "support": "同为史密斯机推举动作，但画面视角更接近仰卧而非坐姿直立。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "史密斯机导轨",
+      "杠铃杆（带滚花）",
+      "配重片（边缘可见）"
+    ],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "杠铃杆在第12-14帧明显放大并靠近相机，随后在第15帧远离，显示了一个完整的下放和推起过程。",
+    "first_person_subject_evidence": "用户双手握持杠铃杆，画面随用户呼吸和发力有轻微震动，且杠铃运动与第一人称视角完全同步。",
+    "uncertainty_notes": "缺少IMU数据确认具体的仰卧角度（平卧或上斜），但卧推大类确定。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "画面中清晰可见史密斯机的垂直导轨。杠铃杆从画面上方（远端）向相机（胸前）靠近，这是典型的卧推（Bench Press）在第一人称视角下的表现。此外，前方教练/助攻人员向下注视的视角进一步确认了用户处于仰卧位。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "smith_squat",
+        "reason": "深蹲时杠铃位于颈后背部，胸前相机不会观察到杠铃杆在正面如此近距离地上下移动。"
+      },
+      {
+        "exercise": "barbell_bench_press",
+        "reason": "画面两侧可见明显的史密斯机固定导轨，而非自由杠铃架。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

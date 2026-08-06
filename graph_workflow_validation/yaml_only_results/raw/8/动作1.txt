@@ -1,0 +1,39 @@
+{
+  "user_folder": "8",
+  "action_id": "动作1",
+  "image_path": "graph/8/动作1.jpg",
+  "selected_equipment": "跑步机",
+  "selected_exercise": "跑步机",
+  "exercise_id": "treadmill_walk_run",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.95,
+      "support": "第一人称视角正对大型电子仪表盘，可见典型的跑步机运动参数显示屏（时间、距离、速度）及两侧储物槽。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["跑步机控制台", "电子显示屏", "手机"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面中心始终为跑步机仪表盘，用户双手在画面中操作手机或点击屏幕，伴随轻微的身体重心起伏，符合在跑步机上行走或慢跑的视觉特征。",
+    "first_person_subject_evidence": "用户双手从相机下方伸出操作手机，视角随躯干运动同步晃动，且正对器械中心。",
+    "uncertainty_notes": "由于是有氧运动且用户在操作手机，无明显的抗阻力动作重复周期，但器械特征极度明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "仪表盘的宽大布局、显示屏上的运动UI界面以及用户站立平视的视角高度，完全符合跑步机的使用场景。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "椭圆机",
+        "reason": "未见椭圆机特有的高位往复运动手柄，且仪表盘倾斜角度更接近跑步机。"
+      },
+      {
+        "exercise": "健身车/动感单车",
+        "reason": "视角高度较高，且控制台的宽度和按键布局是典型的商用跑步机设计。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

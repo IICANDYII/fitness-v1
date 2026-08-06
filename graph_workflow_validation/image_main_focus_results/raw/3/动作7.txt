@@ -1,0 +1,54 @@
+{
+  "user_folder": "3",
+  "action_id": "动作7",
+  "image_path": "graph/3/动作7.jpg",
+  "selected_equipment": "史密斯机",
+  "selected_exercise": "史密斯卧推",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯卧推",
+      "confidence": 0.85,
+      "support": "第一人称视角仰视天花板，可见史密斯机导轨和带有旋转挂钩的杠铃杆，杠铃在胸前做垂直往复运动。"
+    },
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯上斜卧推",
+      "confidence": 0.6,
+      "support": "同样符合史密斯机卧推特征，仅靠仰视角度难以完全区分平卧或上斜。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["史密斯机导轨", "史密斯杠铃杆", "挂钩", "天花板灯具"],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "杠铃杆从画面远端（上方）下降至近端（胸前），随后推起，循环往复。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "双手握持杠铃杆，相机随胸部位于杠铃正下方，符合第一人称卧推视角。",
+    "uncertainty_notes": "无法通过拼图确定长凳的具体倾斜角度（平卧 vs 上斜），默认选择最基础的卧推。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 3,
+      "evidence": "从第20帧开始，杠铃有明显的三次下放再推起的完整周期。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 3,
+  "action_disambiguation": {
+    "selected_evidence": "画面中清晰可见史密斯机的固定导轨和杠铃杆上的旋转锁钩，用户处于仰卧姿态，杠铃在胸部上方做推举动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "杠铃卧推",
+        "reason": "画面中可见明显的史密斯机导轨结构，并非自由杠铃。"
+      },
+      {
+        "exercise": "史密斯深蹲",
+        "reason": "相机视角完全仰视天花板，且杠铃在胸前正上方运动，符合卧推而非深蹲的背杠姿态。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

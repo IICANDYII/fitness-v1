@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 观察网格图前几帧，用户右手持一只黑色六角哑铃，哑铃侧面清晰可见“VOLZEN FITNESS”及“2.5KG”字样。背景为健身房天花板，可见排布整齐的条形灯管，表明用户处于仰卧姿态。
+Step 2 — 器械识别: 画面中仅出现哑铃，无其他大型器械结构。根据规则二，相机完全朝向正上方天花板且用户处于仰卧位，符合卧推类动作特征。器械确认为哑铃。
+Step 3 — 光流验证: 哑铃在画面中呈现明显的由边缘向中心（推起）及由中心向边缘（下放）的往复运动，主轴为相对于胸部的上下运动。虽然 2.5KG 负重较轻，但动作轨迹符合推举模式。
+Step 4 — 动作判定: 综合仰卧姿态、哑铃器械以及垂直于胸部的推举轨迹，判定为哑铃卧推。
+Step 5 — 组次统计: 观察哑铃在画面中的出现频率，大约每 2 帧完成一次推起与下放的循环。全过程约 47 帧，扣除起始准备，约完成 22 次动作。
+
+{"equipment": "哑铃", "exercise": "哑铃卧推", "exercise_id": "dumbbell_bench_press", "confidence": 0.85, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "哑铃", "exercise": "哑铃卧推", "confidence": 0.85, "support": "仰卧姿态，天花板视角，手持哑铃进行垂直推举动作"}], "sets": [{"start_time": "00:09:06", "end_time": "00:10:38", "reps": 22}], "context": {"visible_equipment": ["2.5KG六角哑铃"], "body_posture": "supine", "motion_cues_from_grid": "哑铃从画面两侧向中心上方推起，随后下放，循环往复", "first_person_subject_evidence": "第一人称视角下右手持握哑铃，动作与相机视角同步", "uncertainty_notes": "负重极轻（2.5KG），可能是热身或高次数训练；缺少IMU交叉验证次数"}, "action_disambiguation": {"selected_evidence": "仰卧姿态（天花板视角）结合哑铃推举轨迹", "rejected_or_close_candidates": [{"exercise": "哑铃推肩", "reason": "推肩通常为坐姿或站姿，视角应平视或斜上，而非完全仰卧对准天花板"}, {"exercise": "哑铃弯举", "reason": "运动轨迹和身体姿态完全不符"}]}, "phase1_adjustment": {"expand_before_sec": 3, "expand_after_sec": 2, "reason": "哑铃动作起始需就位，结束需放下，适当扩展以包含完整动作区间"}, "needs_manual_review": false}

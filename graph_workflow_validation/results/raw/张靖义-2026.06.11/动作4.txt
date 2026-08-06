@@ -1,0 +1,40 @@
+Step 1 — 进场帧分析: 网格图前几帧显示用户正在健身房内移动，经过哑铃架，最终走向一个配重架/深蹲架区域。
+Step 2 — 器械识别: 观察后续帧（如第3行第8列及第4行第8列的镜子反射），可见用户仰卧在长凳上，上方有一根横向长杆，符合杠铃卧推的布局。相机视角始终朝向天花板和圆形顶灯，这是典型的仰卧（supine）姿态。
+Step 3 — 光流验证: 虽无光流数据，但从镜中反射可见杠铃在胸部上方做垂直往复运动，且第一人称视角中偶尔出现的双手握持位置符合杠铃间距。
+Step 4 — 动作判定: 综合仰卧姿态、天花板视角以及镜中可见的杠铃和长凳，判定为杠铃卧推。
+Step 5 — 组次统计: 画面显示了从准备就位到开始推举的过程，镜中可见明显的下放与推起动作，由于帧率限制和时长跨度大，判定为1组，次数根据可见周期初步估算。
+
+{"equipment": "杠铃", "exercise": "杠铃卧推", "exercise_id": "barbell_bench_press", "confidence": 0.85, "sets": [{"start_time": "00:21:30", "end_time": "00:27:10", "reps": 8}], "phase1_adjustment": {"expand_before_sec": 5, "expand_after_sec": 5, "reason": "仰卧动作需要较长的就位和起身时间"}}
+
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作4",
+  "image_path": "graph/张靖义-2026.06.11/动作4.jpg",
+  "selected_equipment": "杠铃",
+  "selected_exercise": "杠铃卧推",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "杠铃",
+      "exercise": "杠铃卧推",
+      "confidence": 0.85,
+      "support": "第一人称视角朝向天花板（仰卧），镜子反射显示用户在长凳上推举杠铃。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["杠铃", "卧推凳", "深蹲架/权力架", "镜子"],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "相机视角固定朝上，镜中可见杠铃上下移动。",
+    "first_person_subject_evidence": "镜中人物穿着与第一人称视角可见的衣袖一致，且动作与相机抖动同步。",
+    "uncertainty_notes": "缺少光流和IMU，无法精确判定每组的起止时刻和准确次数。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜子中清晰可见的仰卧姿态和杠铃横杆，以及第一人称典型的朝天视角。",
+    "rejected_or_close_candidates": [
+      {"exercise": "哑铃卧推", "reason": "镜中可见为长杆而非两个独立负重。"},
+      {"exercise": "史密斯卧推", "reason": "架子结构看起来是自由深蹲架，未见史密斯机特有的固定导轨。"}
+    ]
+  },
+  "needs_manual_review": false
+}

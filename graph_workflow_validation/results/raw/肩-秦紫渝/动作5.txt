@@ -1,0 +1,51 @@
+Step 1 — 进场帧分析: 网格图前几帧显示用户正面向龙门架（双立柱结构），右手正抓握绳索（rope）附件，滑轮固定在上方高位。
+Step 2 — 器械识别: 根据规则三和规则六，用户处于站姿，使用龙门架的高位滑轮和绳索附件。排除坐姿的高位下拉机。
+Step 3 — 光流验证: 画面中可见用户双手持绳索从胸前高度向下推压至大腿位置，呈现明显的上下（UP/DOWN）周期性运动，符合推压轨迹。
+Step 4 — 动作判定: 站姿 + 绳索从上方来 + 手向下推压，符合“绳索下压”的典型特征。
+Step 5 — 组次统计: 观察到约 5 次完整的下压动作周期。
+
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作5",
+  "image_path": "graph/肩-秦紫渝/动作5.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "站姿，高位滑轮，绳索附件，向下推压动作"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架立柱", "高位滑轮", "绳索附件"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手持绳索从胸口高度向下推至腹部/大腿前侧，随后受控回放",
+    "first_person_subject_evidence": "第一人称视角下可见用户双手操作绳索，且相机随身体发力有轻微同步震动",
+    "uncertainty_notes": "缺少光流数据，仅凭视觉判断次数可能存在±1误差"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "站姿且动作方向向下，绳索来自上方高位滑轮",
+    "rejected_or_close_candidates": [
+      {"exercise": "高位下拉", "reason": "用户为站姿而非坐姿，且无大腿固定结构"},
+      {"exercise": "绳索弯举", "reason": "绳索来自上方而非下方，发力方向向下而非向上"}
+    ]
+  },
+  "needs_manual_review": false,
+  "sets": [
+    {
+      "start_time": "00:11:21",
+      "end_time": "00:12:22",
+      "reps": 5
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 2,
+    "reason": "包含起始抓握准备和结束放回器械的过程"
+  }
+}

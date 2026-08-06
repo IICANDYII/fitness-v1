@@ -1,0 +1,72 @@
+[
+  {
+    "start": 0,
+    "end": 143.6,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 143.6,
+    "end": 337.1,
+    "type": "exercise",
+    "label": "爬楼机"
+  },
+  {
+    "start": 337.1,
+    "end": 420.9,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 420.9,
+    "end": 524.2,
+    "type": "exercise",
+    "label": "直杆高位下拉",
+    "reps": "10 10 10"
+  },
+  {
+    "start": 524.2,
+    "end": 537.6,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 537.6,
+    "end": 648.6,
+    "type": "exercise",
+    "label": "绳索上拉",
+    "reps": "9 11 10"
+  },
+  {
+    "start": 648.6,
+    "end": 653.8,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 653.8,
+    "end": 792.9,
+    "type": "exercise",
+    "label": "坐姿划船（V型把手）",
+    "reps": "10 11 10"
+  },
+  {
+    "start": 792.9,
+    "end": 810.2,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 810.2,
+    "end": 936.1,
+    "type": "exercise",
+    "label": "绳索下拉",
+    "reps": "10 10 10"
+  },
+  {
+    "start": 936.1,
+    "end": 1042,
+    "type": "transition",
+    "label": "过渡"
+  }
+]

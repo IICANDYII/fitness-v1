@@ -1,0 +1,48 @@
+{
+  "user_folder": "2",
+  "action_id": "动作8",
+  "image_path": "graph/2/动作8.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "cable_lat_pulldown",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_lat_pulldown",
+      "confidence": 0.92,
+      "support": "第一人称视角下，双手握住上方手柄并向下牵引，符合高位下拉的标准轨迹。"
+    },
+    {
+      "equipment": "辅助引体向上机",
+      "exercise": "assisted_pullup",
+      "confidence": 0.35,
+      "support": "动作轨迹相似，但画面中相机（躯干）相对稳定，更像是坐姿下拉而非身体整体上升的引体向上。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "上方手柄",
+      "钢索/机械臂结构",
+      "健身房天花板圆形灯"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手从画面上方出现，垂直向下移动至肩部高度，随后受控回放，呈现明显的上下往复周期。",
+    "first_person_subject_evidence": "画面两侧出现的双手与相机运动同步，且手柄位于用户正上方，符合佩戴者本人操作器械的特征。",
+    "uncertainty_notes": "仅凭拼图无法完全区分是纯绳索龙门架还是固定轨迹的高位下拉机，但动作类型明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "明确的垂直下拉动作，双手握持上方器械手柄，运动主轴为UP/DOWN，且起始位置在头顶上方。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "machine_shoulder_press",
+        "reason": "推肩动作方向相反（由下向上推），而当前动作是拉向身体。"
+      },
+      {
+        "exercise": "cable_seated_row",
+        "reason": "坐姿划船通常是水平方向拉动，而此动作手柄来自上方。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

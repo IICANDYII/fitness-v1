@@ -1,0 +1,50 @@
+{
+  "user_folder": "4",
+  "action_id": "动作2",
+  "image_path": "graph/4/动作2.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "cable_lat_pulldown",
+  "selected_exercise_id": "cable_lat_pulldown",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_lat_pulldown",
+      "confidence": 0.95,
+      "support": "第一人称视角可见高位钢索、V型把手及固定腿部的护膝垫，动作方向为由上向下下拉。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_seated_row",
+      "confidence": 0.2,
+      "support": "同为钢索类背部训练，但本动作轨迹为垂直向下而非水平向后。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架/高位下拉机",
+      "钢索",
+      "V型把手",
+      "护膝垫"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手握持把手从斜上方拉至胸前位置，随后受控回放，躯干保持相对稳定，呈现明显的上下往复周期。",
+    "first_person_subject_evidence": "画面下方出现用户双手及前臂，且双腿明显固定在器械护膝垫下，相机随呼吸和发力有轻微同步震动。",
+    "uncertainty_notes": "无明显不确定性，器械特征与动作轨迹高度匹配标准高位下拉。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到典型的下拉器械结构（高位滑轮、护膝压腿栏），且用户动作主轴为垂直方向的UP/DOWN，符合高位下拉特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_seated_row",
+        "reason": "坐姿划船的拉动方向通常为水平向后，而此处把手来自头顶上方。"
+      },
+      {
+        "exercise": "assisted_pullup",
+        "reason": "辅助引体向上中相机（胸部）应随身体整体上升，而此处相机相对于器械框架高度基本不变，仅手臂在运动。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

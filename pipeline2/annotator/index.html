@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>双机位健身标注</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "PingFang SC", sans-serif; background: #0f1117; color: #e2e8f0; padding: 14px 18px; }
+  h1 { font-size: 17px; font-weight: 700; margin-bottom: 2px; }
+  .sub { font-size: 12px; color: #64748b; margin-bottom: 12px; }
+  .videos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .vwrap { position: relative; background: #000; border: 1px solid #2d3748; border-radius: 10px; overflow: hidden; aspect-ratio: 16/9; }
+  .vwrap video { width: 100%; height: 100%; display: block; object-fit: contain; background:#000; }
+  .vtag { position: absolute; top: 8px; left: 8px; background: rgba(15,17,23,.8); color: #93c5fd;
+          font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 5px; z-index:2; }
+  .vtime { position: absolute; bottom: 8px; right: 8px; background: rgba(15,17,23,.8); color: #cbd5e1;
+           font-size: 12px; font-family: ui-monospace, monospace; padding: 3px 8px; border-radius: 5px; z-index:2; }
+  .gap { position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
+         color: #475569; font-size: 14px; background: #0b0d12; z-index:1; }
+  .gap.show { display: flex; }
+
+  .transport { margin: 12px 0 8px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .mt { font-family: ui-monospace, monospace; font-size: 15px; color: #f8fafc; min-width: 150px; }
+  #seek { flex: 1; min-width: 300px; accent-color: #3b82f6; }
+  button { background: #1e2330; color: #e2e8f0; border: 1px solid #2d3748; border-radius: 7px;
+           padding: 7px 12px; font-size: 13px; cursor: pointer; }
+  button:hover { border-color: #3b82f6; }
+  button.primary { background: #3b82f6; border-color: #3b82f6; color: #fff; font-weight: 600; }
+  button.danger { background: #7f1d1d; border-color: #991b1b; }
+  select, input[type=text], input[type=number] { background: #0f1117; color: #e2e8f0;
+           border: 1px solid #2d3748; border-radius: 7px; padding: 7px 9px; font-size: 13px; }
+  .row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  label.fld { font-size: 12px; color: #94a3b8; }
+  .card { background: #171b26; border: 1px solid #2d3748; border-radius: 10px; padding: 12px 14px; margin-top: 12px; }
+  .card h2 { font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #232838; }
+  th { color: #64748b; font-weight: 600; font-size: 11px; text-transform: uppercase; }
+  td.mono { font-family: ui-monospace, monospace; color: #cbd5e1; }
+  .pill { font-size: 11px; padding: 2px 7px; border-radius: 4px; }
+  .pill.exercise { background: #14532d; color: #86efac; }
+  .pill.rest { background: #422006; color: #fdba74; }
+  .pill.transition { background: #1e293b; color: #94a3b8; }
+  .tiny { font-size: 11px; color: #64748b; }
+  .kbd { font-family: ui-monospace, monospace; background: #1e2330; border: 1px solid #2d3748;
+         border-radius: 4px; padding: 1px 5px; font-size: 11px; color: #93c5fd; }
+</style>
+</head>
+<body>
+  <h1>双机位健身标注</h1>
+  <div class="sub" id="sub">加载清单…</div>
+
+  <div class="videos">
+    <div class="vwrap">
+      <video id="vNormal" preload="auto" muted playsinline></video>
+      <div class="vtag">normal（基准）</div>
+      <div class="vtime" id="tNormal">--:--</div>
+      <div class="gap" id="gapNormal">此刻无 normal 画面</div>
+    </div>
+    <div class="vwrap">
+      <video id="v45" preload="auto" muted playsinline></video>
+      <div class="vtag">45</div>
+      <div class="vtime" id="t45">--:--</div>
+      <div class="gap" id="gap45">此刻无 45 画面</div>
+    </div>
+  </div>
+
+  <div class="transport">
+    <button id="playBtn" class="primary">▶ 播放</button>
+    <span class="mt" id="mt">00:00.0 / 00:00.0</span>
+    <input type="range" id="seek" min="0" max="100" step="0.033" value="0">
+    <label class="fld">速度</label>
+    <select id="rate">
+      <option value="0.25">0.25x</option>
+      <option value="0.5">0.5x</option>
+      <option value="1" selected>1x</option>
+      <option value="2">2x</option>
+      <option value="4">4x</option>
+    </select>
+    <label class="fld">45 偏移微调(s)</label>
+    <input type="number" id="nudge" value="0" step="0.1" style="width:80px">
+  </div>
+
+  <div class="card">
+    <h2>打点标注</h2>
+    <div class="row">
+      <button id="setStart">设起点 [</button>
+      <span class="mono tiny" id="segStart">起点 --:--.-</span>
+      <button id="setEnd">设终点 ]</button>
+      <span class="mono tiny" id="segEnd">终点 --:--.-</span>
+      <span style="width:12px"></span>
+      <label class="fld">类型</label>
+      <select id="segType">
+        <option value="exercise">动作 exercise</option>
+        <option value="rest">休息 rest</option>
+        <option value="transition">过渡 transition</option>
+      </select>
+      <label class="fld">动作</label>
+      <input type="text" id="segLabel" list="labels" placeholder="如 史密斯深蹲" style="width:150px">
+      <datalist id="labels"></datalist>
+      <label class="fld">次数</label>
+      <input type="number" id="segReps" placeholder="reps" style="width:72px">
+      <button id="addSeg" class="primary">添加片段 ⏎</button>
+    </div>
+    <div class="tiny" style="margin-top:8px">
+      快捷键：<span class="kbd">空格</span>播放/暂停　<span class="kbd">←/→</span>±0.2s
+      <span class="kbd">Shift+←/→</span>±2s　<span class="kbd">[</span>设起点　<span class="kbd">]</span>设终点
+      <span class="kbd">Enter</span>添加片段
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>已标注片段 <span id="segCount" class="tiny"></span></h2>
+    <table>
+      <thead><tr><th>#</th><th>起</th><th>止</th><th>时长</th><th>类型</th><th>动作</th><th>次数</th><th></th></tr></thead>
+      <tbody id="segBody"></tbody>
+    </table>
+    <div class="row" style="margin-top:12px">
+      <button id="saveBtn" class="primary">保存到本地</button>
+      <button id="dlBtn">下载 ground_truth.json</button>
+      <button id="reloadBtn">重新载入已存标注</button>
+      <span class="tiny" id="saveMsg"></span>
+    </div>
+  </div>
+
+<script>
+const $ = s => document.getElementById(s);
+const COMMON_LABELS = ["史密斯深蹲","杠铃深蹲","罗马尼亚硬拉","硬拉","站姿提踵","俯卧撑","平板卧推","哑铃卧推",
+  "哑铃飞鸟","坐姿推举","杠铃推举","侧平举","杠铃弯举","哑铃弯举","高位下拉","坐姿划船","杠铃划船","绳索下压",
+  "腿举","腿屈伸","腿弯举","卷腹","平板支撑","跑步","椭圆机"];
+$("labels").innerHTML = COMMON_LABELS.map(l => `<option value="${l}">`).join("");
+
+// ── 播放器状态 ──
+let manifest = null, duration = 0;
+let masterT = 0, playing = false, rate = 1, nudge = 0;
+let rafId = null, lastPerf = 0;
+const cams = {
+  normal: { video: $("vNormal"), segs: [], curFile: null, pending: null, timeEl: $("tNormal"), gapEl: $("gapNormal") },
+  "45":   { video: $("v45"),     segs: [], curFile: null, pending: null, timeEl: $("t45"),    gapEl: $("gap45") },
+};
+// 标注
+let segments = [];
+let pend = { start: null, end: null };
+
+function fmt(t) {
+  if (t == null || isNaN(t)) return "--:--.-";
+  const m = Math.floor(t / 60), s = (t % 60);
+  return `${String(m).padStart(2,"0")}:${s.toFixed(1).padStart(4,"0")}`;
+}
+function effWall(cam, seg) { return seg.wall_start + (cam === "45" ? nudge : 0); }
+function pickSeg(cam, t) {
+  for (const s of cams[cam].segs) {
+    const ws = effWall(cam, s);
+    if (t >= ws && t < ws + s.duration) return s;
+  }
+  return null;
+}
+
+function setupCam(cam) {
+  const c = cams[cam];
+  // 元数据就绪后落 pending seek（解决 load→seek 竞态）
+  c.video.addEventListener("loadedmetadata", () => {
+    if (c.pending != null) { try { c.video.currentTime = c.pending; } catch(e){} c.pending = null; }
+  });
+}
+
+// 把某机位画面渲染到主时刻 t
+function setCam(cam, t) {
+  const c = cams[cam];
+  const seg = pickSeg(cam, t);
+  if (!seg) {                                   // 此刻该机位无画面
+    c.gapEl.classList.add("show");
+    c.timeEl.textContent = "无画面";
+    if (!c.video.paused) c.video.pause();
+    return;
+  }
+  c.gapEl.classList.remove("show");
+  const local = t - effWall(cam, seg);
+  c.timeEl.textContent = fmt(local);
+
+  if (c.curFile !== seg.file) {                 // 需要切换分段文件
+    c.curFile = seg.file;
+    c.pending = local;                          // 元数据就绪后再 seek
+    c.video.src = "/videos/" + seg.file;
+    c.video.load();
+    return;
+  }
+  if (c.video.readyState < 1) { c.pending = local; return; }
+
+  if (playing) {
+    if (c.video.playbackRate !== rate) c.video.playbackRate = rate;
+    if (Math.abs(c.video.currentTime - local) > 0.3) c.video.currentTime = local;
+    if (c.video.paused) c.video.play().catch(()=>{});
+  } else {
+    if (!c.video.paused) c.video.pause();
+    if (Math.abs(c.video.currentTime - local) > 0.05) { try { c.video.currentTime = local; } catch(e){} }
+  }
+}
+
+function render(t) {
+  setCam("normal", t);
+  setCam("45", t);
+  $("mt").textContent = `${fmt(t)} / ${fmt(duration)}`;
+  if (document.activeElement !== $("seek")) $("seek").value = t;
+}
+
+// 同步 seek —— 不依赖播放循环，拖动条即时生效
+function seek(t) { masterT = Math.max(0, Math.min(duration, t)); render(masterT); }
+
+function tick(now) {
+  if (!playing) { rafId = null; return; }
+  if (!lastPerf) lastPerf = now;
+  const dt = (now - lastPerf) / 1000; lastPerf = now;
+
+  // 选一个"就绪且在播"的机位做时钟源；都没有则按 dt 空转
+  let driver = null;
+  for (const cam of ["normal", "45"]) {
+    const seg = pickSeg(cam, masterT);
+    const c = cams[cam];
+    if (seg && c.curFile === seg.file && c.video.readyState >= 2 && !c.video.seeking) { driver = cam; break; }
+  }
+  if (driver) {
+    const seg = pickSeg(driver, masterT);
+    masterT = effWall(driver, seg) + cams[driver].video.currentTime;
+  } else {
+    masterT += dt * rate;
+  }
+  if (masterT >= duration) { masterT = duration; setPlaying(false); return; }
+  render(masterT);
+  rafId = requestAnimationFrame(tick);
+}
+
+function setPlaying(p) {
+  playing = p;
+  $("playBtn").textContent = p ? "⏸ 暂停" : "▶ 播放";
+  lastPerf = 0;
+  render(masterT);
+  if (p) { if (!rafId) rafId = requestAnimationFrame(tick); }
+  else   { cams.normal.video.pause(); cams["45"].video.pause();
+           if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+}
+
+async function init() {
+  manifest = await (await fetch("/manifest.json")).json();
+  if (manifest.error) { $("sub").textContent = "清单未就绪：" + manifest.error; return; }
+  duration = manifest.duration_sec;
+  cams.normal.segs = manifest.cameras.normal || [];
+  cams["45"].segs = manifest.cameras["45"] || [];
+  setupCam("normal"); setupCam("45");
+  $("seek").max = duration;
+  $("sub").textContent = `会话起点 ${manifest.session_start_iso}　总时长 ${(duration/60).toFixed(1)}min　`
+    + `normal ${cams.normal.segs.length}段 / 45 ${cams["45"].segs.length}段`;
+  await loadExisting();
+  seek(0);
+}
+
+// ── 控件 ──
+$("playBtn").onclick = () => setPlaying(!playing);
+$("rate").onchange = e => { rate = parseFloat(e.target.value);
+  if (playing) { cams.normal.video.playbackRate = rate; cams["45"].video.playbackRate = rate; } };
+$("nudge").onchange = e => { nudge = parseFloat(e.target.value) || 0;
+  cams["45"].curFile = null; render(masterT); };     // 偏移变了强制 45 重挑分段
+$("seek").oninput = e => { if (playing) setPlaying(false); seek(parseFloat(e.target.value)); };
+
+// ── 打点 ──
+$("setStart").onclick = () => { pend.start = masterT; $("segStart").textContent = "起点 " + fmt(masterT); };
+$("setEnd").onclick   = () => { pend.end = masterT;   $("segEnd").textContent   = "终点 " + fmt(masterT); };
+function addSegment() {
+  const a = pend.start, b = pend.end;
+  if (a == null || b == null || b <= a) { flash("请先设有效的起点/终点"); return; }
+  segments.push({ start_offset: +a.toFixed(2), end_offset: +b.toFixed(2),
+    type: $("segType").value, label: $("segLabel").value.trim(), reps: $("segReps").value.trim() || null });
+  segments.sort((x,y) => x.start_offset - y.start_offset);
+  pend = { start: null, end: null };
+  $("segStart").textContent = "起点 --:--.-"; $("segEnd").textContent = "终点 --:--.-";
+  $("segLabel").value = ""; $("segReps").value = "";
+  renderSegs();
+}
+$("addSeg").onclick = addSegment;
+
+function renderSegs() {
+  $("segCount").textContent = `(${segments.length})`;
+  $("segBody").innerHTML = segments.map((s,i) => `
+    <tr>
+      <td>${i+1}</td>
+      <td class="mono seekcell" data-t="${s.start_offset}">${fmt(s.start_offset)}</td>
+      <td class="mono seekcell" data-t="${s.end_offset}">${fmt(s.end_offset)}</td>
+      <td class="mono">${(s.end_offset - s.start_offset).toFixed(1)}s</td>
+      <td><span class="pill ${s.type}">${s.type}</span></td>
+      <td>${s.label || "<span class='tiny'>—</span>"}</td>
+      <td class="mono">${s.reps ?? ""}</td>
+      <td><button class="danger del" data-i="${i}">删</button></td>
+    </tr>`).join("");
+  document.querySelectorAll(".del").forEach(b => b.onclick = () => { segments.splice(+b.dataset.i,1); renderSegs(); });
+  document.querySelectorAll(".seekcell").forEach(c => { c.style.cursor="pointer"; c.onclick = () => seek(+c.dataset.t); });
+}
+
+function toGT() {
+  const base = manifest.session_start_iso ? new Date(manifest.session_start_iso) : null;
+  return segments.map(s => {
+    const o = { ...s };
+    if (base) {
+      o.start = new Date(base.getTime() + s.start_offset*1000).toISOString();
+      o.end   = new Date(base.getTime() + s.end_offset*1000).toISOString();
+    }
+    return o;
+  });
+}
+$("saveBtn").onclick = async () => {
+  const r = await fetch("/save", { method:"POST", body: JSON.stringify(toGT()) });
+  flash(r.ok ? "已保存到本地 ✓" : "保存失败");
+};
+$("dlBtn").onclick = () => {
+  const blob = new Blob([JSON.stringify(toGT(), null, 2)], {type:"application/json"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = "ground_truth.json"; a.click();
+};
+async function loadExisting() {
+  try {
+    const gt = await (await fetch("/ground_truth")).json();
+    if (Array.isArray(gt) && gt.length) {
+      segments = gt.map(s => ({ start_offset:s.start_offset, end_offset:s.end_offset,
+        type:s.type, label:s.label||"", reps:s.reps ?? null }));
+      renderSegs();
+    }
+  } catch(e){}
+}
+$("reloadBtn").onclick = loadExisting;
+function flash(m){ $("saveMsg").textContent = m; setTimeout(()=>$("saveMsg").textContent="",2500); }
+
+// ── 键盘 ──
+document.addEventListener("keydown", e => {
+  const tag = document.activeElement.tagName;
+  if (tag === "INPUT" || tag === "SELECT") {
+    if (e.key === "Enter" && document.activeElement.id === "segLabel") { addSegment(); e.preventDefault(); }
+    return;
+  }
+  if (e.key === " ") { setPlaying(!playing); e.preventDefault(); }
+  else if (e.key === "ArrowLeft")  { if(playing) setPlaying(false); seek(masterT - (e.shiftKey?2:0.2)); e.preventDefault(); }
+  else if (e.key === "ArrowRight") { if(playing) setPlaying(false); seek(masterT + (e.shiftKey?2:0.2)); e.preventDefault(); }
+  else if (e.key === "[") { pend.start = masterT; $("segStart").textContent = "起点 " + fmt(masterT); }
+  else if (e.key === "]") { pend.end = masterT; $("segEnd").textContent = "终点 " + fmt(masterT); }
+  else if (e.key === "Enter") addSegment();
+});
+
+init();
+</script>
+</body>
+</html>

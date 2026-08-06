@@ -1,0 +1,54 @@
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作6",
+  "image_path": "graph/肩-秦紫渝/动作6.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索侧平举",
+  "selected_confidence": 0.65,
+  "confidence_policy": "multiple_close",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索侧平举",
+      "confidence": 0.65,
+      "support": "用户站在龙门架旁，右手抓取单手D型把手并向侧上方拉动，符合肩部训练特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索弯举",
+      "confidence": 0.25,
+      "support": "单手操作绳索，若存在明显的肘部屈伸则可能为弯举，但目前观察更倾向于肩外展。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "钢索", "D型把手", "镜子"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "拼图前段用户在镜前站立准备，后段（底排）右手伸向画面左侧抓取绳索把手并开始向外侧拉动。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面下方出现用户右手及手臂，其动作与镜中反映的身体侧向拉动绳索动作同步。",
+    "uncertainty_notes": "视频仅捕捉到动作的起始阶段（抓取把手并开始第一下提拉），缺乏完整的往复周期，导致置信度受限。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 1,
+      "evidence": "底排最后三帧显示用户完成了一次抓取并开始上提的动作。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 1,
+  "action_disambiguation": {
+    "selected_evidence": "用户处于站姿，侧对龙门架，右手抓取低位或中位把手进行侧向外展运动，结合文件夹名‘肩’，判定为绳索侧平举。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索弯举",
+        "reason": "虽然也是单手操作绳索，但镜中观察到大臂有明显的外展趋势，而非单纯的肘关节屈伸。"
+      },
+      {
+        "exercise": "绳索夹胸",
+        "reason": "用户身体侧对器械，且仅单手操作，不符合常规双臂夹胸的姿态。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

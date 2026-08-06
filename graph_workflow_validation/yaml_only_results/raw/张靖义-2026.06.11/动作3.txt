@@ -1,0 +1,48 @@
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作3",
+  "image_path": "graph/张靖义-2026.06.11/动作3.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.3,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_lateral_raise",
+      "confidence": 0.25,
+      "support": "用户侧对弹力带挂点，有向侧上方拉伸的动作趋势。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_biceps_curl",
+      "confidence": 0.15,
+      "support": "手部存在一定的屈肘拉伸动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "红色弹力带",
+      "球类/药球存放架",
+      "D型手柄"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户右手抓握挂在球架上的红色弹力带进行拉伸，但动作极不连贯，中间伴随大量相机大幅度晃动（如看向天花板、地面或侧向），无明显的训练周期。",
+    "first_person_subject_evidence": "第一人称视角下可见用户右手操作手柄，且弹力带的形变与手部动作同步。",
+    "uncertainty_notes": "器材为非标准训练器械（弹力带临时挂在储物架上），且动作呈现为零散的拉伸或调试，不符合标准动作库中的正式训练模式。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户正在使用非标准固定的红色弹力带进行不规则的拉伸动作，画面中缺乏稳定的运动轨迹和重复周期。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_lateral_raise",
+        "reason": "虽然有侧向拉伸，但器材非标准龙门架，且动作断续，更像热身。"
+      },
+      {
+        "exercise": "cable_biceps_curl",
+        "reason": "存在屈肘动作，但轨迹随机，无法判定为正式弯举训练。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

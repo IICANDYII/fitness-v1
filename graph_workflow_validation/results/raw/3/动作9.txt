@@ -1,0 +1,51 @@
+Step 1 — 进场帧分析: 网格图前几帧显示用户正面对一台龙门架/综合训练架，双手向上伸出抓握一个挂在高位滑轮上的宽型横杆（Lat Bar），可见明显的配重塔结构。
+Step 2 — 器械识别: 依据规则 6A，用户采用坐姿（视角较低且稳定），使用宽横杆从头顶上方下拉，符合“高位下拉机”的典型特征。虽然是在龙门架区域操作，但动作模式完全符合高位下拉。
+Step 3 — 光流验证: 画面中横杆呈现明显的上下（UP/DOWN）周期性往复运动，且位移幅度较大，从画面顶部拉至胸口高度，验证了下拉动作。
+Step 4 — 动作判定: 综合坐姿、高位滑轮、宽横杆以及由上至下的拉动轨迹，判定为高位下拉（cable_lat_pulldown）。
+Step 5 — 组次统计: 观察网格图，每一行基本对应一次完整的下拉与回放周期，共计 6 行，识别为 1 组，每组约 6 次。
+
+{
+  "user_folder": "3",
+  "action_id": "动作9",
+  "image_path": "graph/3/动作9.jpg",
+  "selected_equipment": "高位下拉机",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "高位下拉机",
+      "exercise": "高位下拉",
+      "confidence": 0.95,
+      "support": "坐姿，使用宽横杆从高位滑轮向下拉至胸前，轨迹为大幅度垂直位移。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架立柱", "高位滑轮", "宽横杆", "钢索"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "横杆从画面上方拉入，随后返回上方，循环往复。",
+    "first_person_subject_evidence": "用户双手握住横杆，相机随躯干有轻微的同步后仰运动。",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "宽横杆配件、高位滑轮来向、坐姿下拉轨迹。",
+    "rejected_or_close_candidates": [
+      {"exercise": "绳索下压", "reason": "绳索下压为站姿且为小幅度推压，此处为坐姿大幅度下拉。"},
+      {"exercise": "坐姿绳索划船", "reason": "划船绳索应从正前方水平拉来，此处绳索来自头顶上方。"}
+    ]
+  },
+  "needs_manual_review": false,
+  "exercise_id": "cable_lat_pulldown",
+  "sets": [
+    {
+      "start_time": "00:12:42",
+      "end_time": "00:14:15",
+      "reps": 6
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 3,
+    "expand_after_sec": 2,
+    "reason": "增加起始抓杆和结束放杆的完整性。"
+  }
+}

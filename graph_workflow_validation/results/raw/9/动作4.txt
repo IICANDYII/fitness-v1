@@ -1,0 +1,51 @@
+{
+  "user_folder": "9",
+  "action_id": "动作4",
+  "image_path": "graph/9/动作4.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索夹胸",
+  "selected_confidence": 0.85,
+  "exercise_id": "cable_chest_fly",
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索夹胸",
+      "confidence": 0.85,
+      "support": "站姿，双手持D型把手从高位滑轮引出，做向胸前合拢的弧线运动，符合高位绳索夹胸特征。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架立柱",
+      "配重塔",
+      "D型把手",
+      "钢索"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手持握把手从身体两侧斜上方起始，向胸前中下方合拢，随后有节奏地张开还原，呈现典型的夹胸轨迹。",
+    "first_person_subject_evidence": "第一人称视角，画面下方可见用户双腿及白色运动鞋，双手持握把手并随相机同步运动。",
+    "uncertainty_notes": "由于缺少光流和IMU数据，动作次数仅根据关键帧周期性估算；环境光线较暗，但器械结构和动作轨迹清晰。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "站姿配合高位绳索的水平/斜向下内收动作，是判定绳索夹胸的核心依据。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "下压动作要求肘部固定于体侧且仅前臂向下推，而当前动作涉及肩关节的大幅度内收，属于夹胸类动作。"
+      },
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常为坐姿且有腿部固定，动作方向为垂直向下拉向锁骨，与此处的站姿水平合拢动作不符。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:11:15",
+      "end_time": "00:12:55",
+      "reps": 5
+    }
+  ],
+  "needs_manual_review": false
+}

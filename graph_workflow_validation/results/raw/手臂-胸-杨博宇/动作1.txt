@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 画面前几帧清晰显示了大型跑步机控制面板，包含LED数值显示区和下方的物理按键，面板中央有明显的红色急停安全开关。
+Step 2 — 器械识别: 参照规则 6B，设备具有大型独立控制面板、红色急停按钮，且用户处于站立平视姿态，无车座或随动臂，确认为跑步机。
+Step 3 — 光流验证: 连续帧显示画面随用户步伐产生规律的上下节奏性起伏，符合步行或跑步时的相机运动特征。
+Step 4 — 动作判定: 结合器械特征与步态运动，判定动作为跑步机（treadmill_walk_run）。
+Step 5 — 组次统计: 该片段记录了一段持续的有氧运动，从 00:00:18 持续至 00:06:05，计为 1 组。
+
+{"user_folder": "手臂-胸-杨博宇", "action_id": "动作1", "image_path": "graph/手臂-胸-杨博宇/动作1.jpg", "selected_equipment": "跑步机", "selected_exercise": "跑步机", "selected_confidence": 0.95, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "跑步机", "exercise": "跑步机", "exercise_id": "treadmill_walk_run", "confidence": 0.95, "support": "视角正对带有红色急停按钮的典型跑步机面板，画面伴随规律的上下起伏晃动"}], "context": {"visible_equipment": ["跑步机控制面板", "红色急停按钮", "LED显示屏"], "body_posture": "standing", "motion_cues_from_grid": "画面呈现明显的上下节奏性起伏，与步行/跑步步态一致", "first_person_subject_evidence": "第一人称胸前视角，画面晃动与佩戴者运动完全同步", "uncertainty_notes": "无"}, "action_disambiguation": {"selected_evidence": "控制面板的特定布局及红色安全开关，配合步频产生的垂直位移", "rejected_or_close_candidates": [{"exercise": "登阶机/爬楼机", "reason": "虽然面板相似，但画面中未观察到台阶循环移动，且面板更符合跑步机特征"}, {"exercise": "健身车/动感单车", "reason": "视角为站姿平视而非坐姿俯视，且无车把结构"}]}, "needs_manual_review": false}

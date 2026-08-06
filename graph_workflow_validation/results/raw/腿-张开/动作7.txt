@@ -1,0 +1,56 @@
+Step 1 — 进场帧分析: 观察网格图前几帧，用户双脚踩在一个巨大的黑色矩形踏板上，腿部呈弯曲状态准备发力。最后两行显示用户完成训练后起身离开，清晰可见腿举机的斜向导轨、配重挂杆和座椅结构。
+Step 2 — 器械识别: 按照规则二，相机以约45°斜下方视角观察踏板，且用户处于半躺/坐姿，双腿蹬动踏板。这完全符合腿举机的特征。
+Step 3 — 光流验证: 画面中踏板沿斜向轴线做远离（FORWARD/UP）和靠近（BACKWARD/DOWN）身体的周期性运动，验证了蹬伸动作。
+Step 4 — 动作判定: 综合器械（腿举机）和动作模式（双腿蹬伸踏板），判定为“腿举”。
+Step 5 — 组次统计: 从网格图第1帧开始到第45帧左右，可以观察到约7次完整的蹬伸循环，随后用户锁死器械并起身。
+
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作7",
+  "image_path": "graph/腿-张开/动作7.jpg",
+  "selected_equipment": "腿举机",
+  "selected_exercise": "腿举",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "腿举机",
+      "exercise": "腿举",
+      "confidence": 0.95,
+      "support": "第一人称视角下双脚踩在大型踏板上进行蹬伸，最后几帧可见清晰的腿举机框架。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["大型黑色踏板", "斜向滑轨", "配重挂杆", "座椅"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双腿周期性蹬开踏板并回收，踏板沿固定轨迹移动。",
+    "first_person_subject_evidence": "用户双腿占据画面主体，且踏板运动与相机视角位移同步。",
+    "uncertainty_notes": "无明显不确定性，器械特征极其典型。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "45度斜下视角、大型蹬脚踏板、双腿线性蹬伸动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "杠铃深蹲",
+        "reason": "深蹲为站姿且身体整体升降，此处为固定器械上的腿部蹬伸。"
+      },
+      {
+        "exercise": "坐姿腿屈伸",
+        "reason": "腿屈伸仅有小腿绕轴摆动，此处为整条腿推动踏板的线性位移。"
+      }
+    ]
+  },
+  "needs_manual_review": false,
+  "sets": [
+    {
+      "start_time": "00:00:00",
+      "end_time": "00:00:12",
+      "reps": 7
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 4,
+    "reason": "起始段已包含准备动作，结尾需包含锁死器械和起身过程。"
+  }
+}

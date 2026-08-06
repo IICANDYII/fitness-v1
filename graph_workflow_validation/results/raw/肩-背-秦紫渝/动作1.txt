@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 进场帧清晰显示了一台带有大型电子显示屏和中心红色急停按钮的有氧器械控制面板，符合跑步机或登阶机的典型外观。
+Step 2 — 器械识别: 根据规则四和六，该大型面板正对镜头，且用户采取站姿握住两侧固定扶手，结合面板布局判定为跑步机。
+Step 3 — 光流验证: 画面中存在持续且规律的上下起伏（UP/DOWN），反映了用户在跑带上行走或跑步时的身体重心移动。
+Step 4 — 动作判定: 综合器械特征与节奏性运动模式，判定为跑步机步行/跑步。
+Step 5 — 组次统计: 该片段为连续的有氧运动，计为 1 组，持续时间约 5 分 48 秒。
+
+{"user_folder": "肩-背-秦紫渝", "action_id": "动作1", "image_path": "graph/肩-背-秦紫渝/动作1.jpg", "selected_equipment": "跑步机", "selected_exercise": "跑步机", "selected_exercise_id": "treadmill_walk_run", "selected_confidence": 0.95, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "跑步机", "exercise": "跑步机", "confidence": 0.95, "support": "可见典型的跑步机大型控制面板、红色急停按钮及侧边扶手，画面伴随步行节奏产生规律的上下起伏。"}], "context": {"visible_equipment": ["跑步机电子控制面板", "红色急停按钮", "固定侧扶手"], "body_posture": "standing", "motion_cues_from_grid": "画面呈现持续且有节奏的上下震动，符合在跑步机上行走或慢跑的特征；双手始终握持扶手。", "first_person_subject_evidence": "第一人称视角，双手从画面近端伸出握住器械扶手，视角随身体重心移动而起伏。", "uncertainty_notes": "无"}, "action_disambiguation": {"selected_evidence": "进场帧及训练帧均显示完整的跑步机控制台，且运动模式为典型的有氧步进起伏。", "rejected_or_close_candidates": [{"exercise": "登阶机/爬楼机", "reason": "虽然面板相似，但画面起伏的平稳度更接近跑步机，且最后几帧显示用户平地走离，而非从高处下台阶。"}]}, "needs_manual_review": false, "sets": [{"start_time": "00:00:22", "end_time": "00:06:10", "reps": 1}], "phase1_adjustment": {"expand_before_sec": 0, "expand_after_sec": 0, "reason": "区间定义准确"}}

@@ -1,0 +1,49 @@
+{
+  "user_folder": "3",
+  "action_id": "动作1",
+  "image_path": "graph/3/动作1.jpg",
+  "selected_equipment": "史密斯机",
+  "selected_exercise": "史密斯卧推",
+  "exercise_id": "smith_bench_press",
+  "selected_confidence": 0.9,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯卧推",
+      "confidence": 0.9,
+      "support": "可见史密斯机固定导轨，用户呈仰卧姿态，杠铃杆在胸前做上下往复运动。"
+    },
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯上斜卧推",
+      "confidence": 0.4,
+      "support": "同为史密斯推举动作，但第一人称视角难以精确区分长凳倾斜角度。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "史密斯机导轨",
+      "杠铃杆",
+      "配重片"
+    ],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "杠铃杆相对于相机（胸前）做远离和靠近的垂直运动，对应推起和下放过程。",
+    "first_person_subject_evidence": "画面下方可见用户双手握持杠铃杆，视角随躯干固定在长凳上，与器械运动同步。",
+    "uncertainty_notes": "仅凭视觉难以判断长凳是否具有微小坡度（上斜），故优先判定为标准卧推。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "关键帧中清晰可见史密斯机的垂直导轨和挂钩结构，用户视角直对天花板，符合仰卧推举的特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "杠铃卧推",
+        "reason": "画面中存在明显的固定导轨，并非自由杠铃。"
+      },
+      {
+        "exercise": "史密斯推肩",
+        "reason": "推肩通常为坐姿，视角会更偏向前方墙面而非正上方天花板。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

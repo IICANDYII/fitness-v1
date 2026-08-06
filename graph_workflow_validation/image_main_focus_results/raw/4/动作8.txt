@@ -1,0 +1,37 @@
+{
+  "user_folder": "4",
+  "action_id": "动作8",
+  "image_path": "graph/4/动作8.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.3,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "UNKNOWN_ACTION",
+      "confidence": 0.4,
+      "support": "末帧显示用户双手接近哑铃架上的哑铃，疑似准备开始哑铃类训练"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃架", "哑铃", "腿举机", "配重片"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "前7帧为在健身房内行走的动态，最后一帧停留在哑铃架前",
+    "movement_direction": "unknown",
+    "first_person_subject_evidence": "第一人称视角随步行晃动，末帧双手出现在画面下方准备接触器械",
+    "uncertainty_notes": "该片段主要记录了用户从健身房一处走到哑铃架并准备取哑铃的过程，尚未观察到任何有效的动作重复周期"
+  },
+  "sets": [],
+  "total_sets": 0,
+  "total_reps": 0,
+  "action_disambiguation": {
+    "selected_evidence": "画面显示用户正在移动并最终靠近哑铃架，无具体动作轨迹",
+    "rejected_or_close_candidates": [
+      {"exercise": "dumbbell_biceps_curl", "reason": "仅见接近哑铃，无弯举动作"},
+      {"exercise": "dumbbell_shoulder_press", "reason": "仅见接近哑铃，无推举动作"},
+      {"exercise": "treadmill_walk_run", "reason": "虽然在走动，但背景显示是在器械区穿行而非在跑步机上"}
+    ]
+  },
+  "needs_manual_review": true
+}

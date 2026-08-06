@@ -1,0 +1,44 @@
+{
+  "user_folder": "9",
+  "action_id": "动作1",
+  "image_path": "graph/9/动作1.jpg",
+  "selected_equipment": "跑步机",
+  "selected_exercise": "跑步机",
+  "exercise_id": "treadmill_walk_run",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.95,
+      "support": "第一帧可见跑步机履带，后续帧显示典型的跑步机控制面板、红色安全扣及扶手，用户双手握持扶手或操作屏幕。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "跑步机控制面板",
+      "扶手",
+      "跑步带",
+      "紧急停止按钮"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面伴随轻微的周期性上下震动，符合步行或跑步时的相机位移；用户在起始阶段有明显的点击屏幕操作。",
+    "first_person_subject_evidence": "用户双手从画面两侧伸出操作面板并握住扶手，视角高度与站立操作跑步机一致。",
+    "uncertainty_notes": "无明显不确定性，器械特征极其明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "第一帧左上角清晰可见跑步机履带和侧边框；控制面板布局（时间、速度、坡度显示）为标准跑步机设计；用户动作表现为持续的站立有氧运动。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "椭圆机",
+        "reason": "椭圆机通常有长纵向摆臂，且控制台高度和扶手形状与此不同，且此处可见平整履带。"
+      },
+      {
+        "exercise": "登阶机/爬楼机",
+        "reason": "未见阶梯状结构，且运动轨迹为水平履带滚动而非垂直攀爬。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

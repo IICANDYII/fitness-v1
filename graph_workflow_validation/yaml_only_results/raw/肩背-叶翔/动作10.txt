@@ -1,0 +1,49 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作10",
+  "image_path": "graph/肩背-叶翔/动作10.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "cable_seated_row",
+  "exercise_id": "cable_seated_row",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_seated_row",
+      "confidence": 0.95,
+      "support": "第一人称视角下，用户双手握持V型把手，将绳索从前方水平拉向躯干，姿态为坐姿，符合坐姿划船特征。"
+    },
+    {
+      "equipment": "固定器械",
+      "exercise": "machine_seated_row",
+      "confidence": 0.45,
+      "support": "同为坐姿划船动作，但画面中可见明显的钢索和滑轮系统，更符合cable类器械。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架/绳索系统",
+      "V型划船把手",
+      "配重片导轨"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "用户双手在胸腹高度进行前后的水平拉伸运动，伴随明显的绳索张力变化。",
+    "first_person_subject_evidence": "画面下方可见用户双臂和双手直接操作把手，且相机随躯干轻微后仰同步运动。",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "坐姿状态下的水平拉拽动作，且能清晰看到前方连接的钢索和把手，运动轨迹为FORWARD/BACKWARD。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_lat_pulldown",
+        "reason": "高位下拉为垂直向下的拉拽动作，而当前画面为水平向后的拉拽。"
+      },
+      {
+        "exercise": "machine_chest_press",
+        "reason": "推胸为向外推离身体的动作，当前动作为向身体方向拉回。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 网格图第1帧显示用户处于健身房哑铃架区域，右手正握持一只哑铃，准备进入训练位。
+Step 2 — 器械识别: 规则二显示相机完全朝向天花板且画面稳定，判定用户处于仰卧（supine）姿态；画面中左右两侧各出现一只哑铃，判定器械为哑铃。
+Step 3 — 光流验证: 哑铃从画面两侧边缘向中心汇聚并伴随上下起伏，符合胸部推举或飞鸟的运动轨迹。
+Step 4 — 动作判定: 综合仰卧姿态与哑铃运动轨迹，判定为哑铃卧推（Dumbbell Bench Press）。
+Step 5 — 组次统计: 观察哑铃从张开到合拢的周期性变化，约每4-5帧完成一次往复，在34秒片段中可见约4次完整动作。
+
+{"equipment": "哑铃", "exercise": "哑铃卧推", "exercise_id": "dumbbell_bench_press", "confidence": 0.85, "sets": [{"start_time": "00:06:02", "end_time": "00:06:30", "reps": 4}], "phase1_adjustment": {"expand_before_sec": 3, "expand_after_sec": 3, "reason": "增加起始就位和结束放下的缓冲时间"}, "selected_equipment": "哑铃", "selected_exercise": "哑铃卧推", "selected_confidence": 0.85, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "哑铃", "exercise": "哑铃卧推", "confidence": 0.85, "support": "仰卧姿态，双手持哑铃做胸前推举动作"}], "context": {"visible_equipment": ["哑铃", "健身长凳"], "body_posture": "supine", "motion_cues_from_grid": "哑铃从画面两侧向中心汇聚并推起，呈现明显的推举周期", "first_person_subject_evidence": "第一人称视角下双手持哑铃，动作与相机位移同步", "uncertainty_notes": "缺少光流和IMU数据，仅凭视觉判断动作次数可能存在±1误差"}, "action_disambiguation": {"selected_evidence": "相机直视天花板确认仰卧姿态，哑铃在胸部上方做向心运动", "rejected_or_close_candidates": [{"exercise": "哑铃推肩", "reason": "推肩通常为坐姿或站姿，相机应平视或斜视，而非完全仰视天花板"}, {"exercise": "哑铃侧平举", "reason": "侧平举为站姿且手臂向两侧外展，与画面中的仰卧推举轨迹不符"}]}, "needs_manual_review": false}

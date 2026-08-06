@@ -1,0 +1,54 @@
+{
+  "user_folder": "3",
+  "action_id": "动作11",
+  "image_path": "graph/3/动作11.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.65,
+  "confidence_policy": "multiple_close",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.65,
+      "support": "第一人称视角可见双手握持龙门架的高位绳索附件，并在末尾帧有明显的向下按压动作。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "面拉",
+      "confidence": 0.25,
+      "support": "同样使用绳索附件，但目前下压轨迹更符合肱三头肌训练。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "绳索附件", "滑轮"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "前两排主要为准备动作（抓握绳索、调整站位），第三排显示双手握住绳索末端球头向下发力。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面近端出现用户双手和前臂，且动作与相机（胸前）高度一致，正在操作绳索。",
+    "uncertainty_notes": "视频大部分时间处于准备阶段，实际有效的动作行程较短，仅在最后几帧可见完整下压。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 1,
+      "evidence": "拼图最后一行显示了一次完整的从高位向下的拉伸/按压动作。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 1,
+  "action_disambiguation": {
+    "selected_evidence": "用户使用高位滑轮的绳索附件，双手握住球头，动作轨迹为从胸前高度向下延伸，符合绳索下压特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "面拉",
+        "reason": "面拉通常将绳索拉向面部/后方，而图中动作轨迹更偏向垂直向下。"
+      },
+      {
+        "exercise": "绳索弯举",
+        "reason": "滑轮位于高位，且动作为向下按压而非向上卷屈，故排除。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

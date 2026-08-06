@@ -1,0 +1,116 @@
+[
+  {
+    "start": 0,
+    "end": 67.8,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 67.8,
+    "end": 574.8,
+    "type": "exercise",
+    "label": "跑步",
+    "equipment": "跑步机"
+  },
+  {
+    "start": 574.8,
+    "end": 581.7,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 581.7,
+    "end": 673.8,
+    "type": "exercise",
+    "label": "爬楼",
+    "equipment": "爬楼机"
+  },
+  {
+    "start": 673.8,
+    "end": 815.3,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 815.3,
+    "end": 849.5,
+    "type": "exercise",
+    "label": "夹胸",
+    "equipment": "蝴蝶机",
+    "reps": "15"
+  },
+  {
+    "start": 849.5,
+    "end": 1001.7,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 1001.7,
+    "end": 1021.8,
+    "type": "exercise",
+    "label": "杠铃弯举",
+    "equipment": "杠铃",
+    "reps": "4"
+  },
+  {
+    "start": 1021.8,
+    "end": 1079.5,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 1079.5,
+    "end": 1169.7,
+    "type": "exercise",
+    "label": "史密斯卧推",
+    "equipment": "史密斯机",
+    "reps": "2 5 5"
+  },
+  {
+    "start": 1169.7,
+    "end": 1226.3,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 1226.3,
+    "end": 1283.3,
+    "type": "exercise",
+    "label": "举腿",
+    "reps": "7 4"
+  },
+  {
+    "start": 1283.3,
+    "end": 1291.2,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 1291.2,
+    "end": 1324.2,
+    "type": "exercise",
+    "label": "直杆高位下拉",
+    "reps": "10"
+  },
+  {
+    "start": 1324.2,
+    "end": 1414.3,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 1414.3,
+    "end": 1439.2,
+    "type": "exercise",
+    "label": "划船",
+    "equipment": "坐姿划船机",
+    "reps": "9"
+  },
+  {
+    "start": 1439.2,
+    "end": 1493.4,
+    "type": "transition",
+    "label": "过渡"
+  }
+]

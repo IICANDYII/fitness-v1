@@ -1,0 +1,57 @@
+Step 1 — 进场帧分析: 网格图前几帧显示用户正面对龙门架（Cable Machine），上方高位滑轮挂有绳索配件（Rope Attachment），用户双手向上伸出抓握绳索。
+Step 2 — 器械识别: 明确为龙门架。用户处于站姿，视角平视且略微仰视上方滑轮，符合龙门架站姿训练特征。
+Step 3 — 光流验证: 画面中绳索从上方垂下，用户双手抓握绳索后向下推压至胸腹部高度，呈现明显的上下（UP/DOWN）周期性运动，符合绳索下压的轨迹。
+Step 4 — 动作判定: 结合站姿、高位绳索、向下推压的动作特征，判定为绳索下压（cable_triceps_pushdown）。虽然用户文件夹名为“肩”，但该动作视觉特征完全符合三头肌的绳索下压。
+Step 5 — 组次统计: 观察到约 7 次完整的下压动作周期。
+
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作2",
+  "image_path": "graph/肩-秦紫渝/动作2.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "站姿，高位滑轮绳索配件，双手向下推压至大腿/腹部前方。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架立柱", "高位滑轮", "绳索配件"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手抓握绳索从面部高度向下推至腰部，随后受控回放，循环往复。",
+    "first_person_subject_evidence": "第一人称视角下双手操作绳索，动作与相机轻微晃动同步。",
+    "uncertainty_notes": "文件夹名为‘肩’，但动作视觉特征更符合三头肌训练；若为面拉（Face Pull），因不在标准列表中且动作轨迹更偏向下而非完全向后，故选定绳索下压。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "站姿+高位滑轮+绳索+向下发力轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常为坐姿且使用宽杆，此处为站姿且使用绳索。"
+      },
+      {
+        "exercise": "UNKNOWN_ACTION",
+        "reason": "若考虑为面拉（Face Pull），因其不在标准动作列表中，且当前动作向下分量明显，优先匹配绳索下压。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:04:16",
+      "end_time": "00:06:00",
+      "reps": 7
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 2,
+    "reason": "动作起始抓握和结束放回有少量裁剪，建议微扩。"
+  },
+  "needs_manual_review": false
+}

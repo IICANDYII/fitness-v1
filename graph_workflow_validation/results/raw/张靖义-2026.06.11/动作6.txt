@@ -1,0 +1,44 @@
+Step 1 — 进场帧分析: 画面前 32 帧显示用户处于仰卧姿态，双手持哑铃在胸前上方运动，背景为健身房天花板灯光；第 33-40 帧显示用户起身并将哑铃放回蓝色哑铃架；第 49-58 帧显示用户坐到一台 Precor 品牌的高位下拉机上。
+Step 2 — 器械识别: 前半段使用哑铃和卧推凳，属于自由重量区域；后半段切换至固定器械（高位下拉机），可见黑色高靠背座椅和上方的拉杆。
+Step 3 — 光流验证: 前半段（1-32帧）手部哑铃呈现明显的上下往复运动（UP/DOWN），符合推举特征；后半段（56-58帧）可见拉杆从上方被拉向胸前。
+Step 4 — 动作判定: 本段为混合动作片段，前半段主要动作为仰卧状态下的哑铃卧推，后半段开始进行高位下拉。根据时长占比，主判定为哑铃卧推。
+Step 5 — 组次统计: 哑铃卧推部分从第 1 帧开始至第 32 帧结束，共观察到约 4 次完整的推举动作；高位下拉部分仅处于起始阶段，不计入完整组数。
+
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作6",
+  "image_path": "graph/张靖义-2026.06.11/动作6.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃卧推",
+  "selected_confidence": 0.65,
+  "confidence_policy": "multiple_close",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃卧推",
+      "confidence": 0.6,
+      "support": "仰卧姿态，双手持哑铃进行垂直推举，肘部有明显的屈伸过程。"
+    },
+    {
+      "equipment": "高位下拉机",
+      "exercise": "高位下拉",
+      "confidence": 0.35,
+      "support": "片段末尾用户切换至高位下拉机并开始拉动横杆。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃", "卧推凳", "哑铃架", "高位下拉机 (Precor)"],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "前半段哑铃在胸前做上下往复运动；中间包含放回哑铃和走动的过渡；末尾出现坐姿下拉动作。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手持哑铃运动，且随后起身走动及操作器械的动作与相机位移完全同步。",
+    "uncertainty_notes": "该片段包含两个完全不同的动作（哑铃卧推和高位下拉），属于 Phase 1 切分不当，导致单一标签置信度受限。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "前 32 帧中，用户处于仰卧位，哑铃轨迹呈线性上下运动，且肘部弯曲角度符合卧推特征。",
+    "rejected_or_close_candidates": [
+      {"exercise": "哑铃飞鸟", "reason": "动作轨迹更偏向线性推举而非弧形开合，且肘部有明显伸展。"},
+      {"exercise": "高位下拉", "reason": "虽然片段末尾出现了该动作，但其时长占比远小于前半段的哑铃卧推。"}
+    ]
+  },
+  "needs_manual_review": true
+}

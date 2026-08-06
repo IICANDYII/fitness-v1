@@ -1,0 +1,61 @@
+Step 1 — 进场帧分析: 画面前几帧显示用户正前方为一个大型电子控制面板，面板中央有明显的红色圆形急停按钮，两侧有水平延伸的扶手，符合典型有氧器械（跑步机或登山机）的特征。
+Step 2 — 器械识别: 依据规则四和六B，大型面板正对镜头、具备红色急停按钮、且用户处于站立位，排除有车座的动感单车；扶手固定不动，排除把手随身体摆动的椭圆机；控制面板布局为典型的跑步机样式。
+Step 3 — 光流验证: 观察连续帧，画面整体呈现明显的、有节奏的上下起伏，这与步行或跑步时身体重心的垂直位移完全吻合。
+Step 4 — 动作判定: 综合器械外观（跑步机控制台）和第一人称视角的运动模式，判定动作为跑步机步行或跑步。
+Step 5 — 组次统计: 整个片段表现为连续的有氧运动过程，无明显停顿，计为1组。
+
+{
+  "user_folder": "8",
+  "action_id": "动作2",
+  "image_path": "graph/8/动作2.jpg",
+  "selected_equipment": "跑步机",
+  "selected_exercise": "跑步机",
+  "selected_exercise_id": "treadmill_walk_run",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.85,
+      "support": "可见大型电子控制面板、红色急停按钮、固定侧扶手，且画面有明显的上下节奏性晃动。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "跑步机控制面板",
+      "红色急停按钮",
+      "侧边固定扶手"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面随步行节奏产生明显的上下起伏，用户双手偶尔接触面板或扶手。",
+    "first_person_subject_evidence": "用户双手从画面下方进入操作面板，画面晃动频率与人体步行步频一致。",
+    "uncertainty_notes": "缺少光流和IMU数据，无法精确判断步行速度或坡度变化。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "典型的跑步机控制台结构及与之匹配的步行/跑步身体起伏特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "登阶机/爬楼机",
+        "reason": "虽然同样有上下晃动，但该器械的面板高度和扶手延伸方式更符合跑步机特征。"
+      },
+      {
+        "exercise": "椭圆机",
+        "reason": "画面中可见的扶手是固定不动的，而椭圆机把手会随身体前后摆动。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:09:42",
+      "end_time": "00:11:12",
+      "reps": 1
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 0,
+    "expand_after_sec": 0,
+    "reason": "当前片段已完整覆盖运动区间。"
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,39 @@
+{
+  "user_folder": "手臂-胸-杨博宇",
+  "action_id": "动作4",
+  "image_path": "graph/手臂-胸-杨博宇/动作4.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃弯举",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃弯举",
+      "confidence": 0.92,
+      "support": "第一人称视角可见手部持哑铃做屈伸动作，镜中反射显示用户正进行双臂哑铃弯举。"
+    },
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃前平举",
+      "confidence": 0.3,
+      "support": "同样存在哑铃向上运动，但镜中动作更符合肘部固定的弯举而非肩部主导的平举。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃 (2.5KG)"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "哑铃在画面近端呈现明显的上下周期性运动，伴随肘关节屈伸轨迹。",
+    "first_person_subject_evidence": "奇数帧显示第一人称视角下的手部（佩戴黑色手表和珠串）直接操作哑铃；偶数帧为镜面反射，显示用户（浅绿色上衣）动作与第一人称手部运动同步。",
+    "uncertainty_notes": "无光流和IMU数据，但镜面反射与第一人称视角高度一致，判定置信度较高。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "第一人称视角中哑铃从低位向胸前/肩部做弧线运动，且镜中反射清晰显示用户双臂交替或同时进行肱二头肌弯举，动作轴心位于肘部。",
+    "rejected_or_close_candidates": [
+      {"exercise": "哑铃推肩", "reason": "哑铃未推过头顶，运动轨迹始终在肩部以下。"},
+      {"exercise": "哑铃侧平举", "reason": "运动方向为身体前方上抬而非向两侧外展。"},
+      {"exercise": "哑铃卧推", "reason": "用户处于站立位而非仰卧位。"}
+    ]
+  },
+  "needs_manual_review": false
+}

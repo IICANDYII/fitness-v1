@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import asdict, dataclass
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 import cv2
 import numpy as np
@@ -57,6 +57,17 @@ def _imwrite_unicode(path: str, img: np.ndarray, quality: int = JPEG_QUALITY) ->
     return True
 
 
+def _frame_exists(work_dir: Path, frame_path: str) -> bool:
+    normalized = frame_path.replace("\\", "/")
+    name = PureWindowsPath(frame_path).name
+    candidates = [
+        work_dir / normalized,
+        work_dir / "frames" / name,
+        work_dir / "frames" / normalized.removeprefix("frames/"),
+    ]
+    return any(p.exists() for p in candidates)
+
+
 # ──────────────────────────────────────────────
 # 核心函数
 # ──────────────────────────────────────────────
@@ -96,8 +107,10 @@ def extract_frames(
         with open(meta_path, "r", encoding="utf-8") as f:
             raw = json.load(f)
         metas = [FrameMeta(**m) for m in raw]
-        print(f"[extractor] 使用缓存：{len(metas)} 帧（{meta_path}）")
-        return metas
+        if metas and _frame_exists(work_dir, metas[0].path):
+            print(f"[extractor] 使用缓存：{len(metas)} 帧（{meta_path}）")
+            return metas
+        print(f"[extractor] 缓存不完整，重新抽帧：{meta_path}")
 
     frames_dir.mkdir(parents=True, exist_ok=True)
 

@@ -1,0 +1,54 @@
+{
+  "user_folder": "8",
+  "action_id": "动作5",
+  "image_path": "graph/8/动作5.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "cable_lat_pulldown",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_lat_pulldown",
+      "confidence": 0.92,
+      "support": "第一人称视角可见双手握持典型的高位下拉宽杆，动作方向为从头顶向胸前下拉，背景为仰视天花板，符合坐姿高位下拉特征。"
+    },
+    {
+      "equipment": "无器械",
+      "exercise": "pullup",
+      "confidence": 0.15,
+      "support": "动作轨迹相似，但画面中横杆随手部运动明显，且背景相对稳定，更符合器械下拉而非自重引体。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["高位下拉宽杆", "钢索（隐约可见）"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手握杠从画面上方（头顶）拉至画面下方（胸前），随后受控回放，呈现明显的垂直上下周期性。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面下方出现的双手及手臂与相机视角同步，且直接操作器械横杆。",
+    "uncertainty_notes": "无光流和IMU辅助，但视觉特征极其典型，不确定性极低。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 2,
+      "evidence": "拼图中完整展示了两次下拉至胸前并回放的过程（第1-8帧为第一次，第9-11帧开始第二次）。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 2,
+  "action_disambiguation": {
+    "selected_evidence": "典型的宽握下拉杆，垂直向下的拉拽轨迹，以及仰视的相机角度。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "pullup",
+        "reason": "引体向上通常伴随身体整体剧烈升降，且横杆通常固定不动；此处横杆随手部大幅度位移，判定为高位下拉。"
+      },
+      {
+        "exercise": "cable_triceps_pushdown",
+        "reason": "下压动作通常握距较窄，且肘部相对固定；此处为宽握且伴随明显的肩关节内收，符合背部训练特征。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

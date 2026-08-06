@@ -1,0 +1,50 @@
+Step 1 — 进场帧分析：网格图前几帧显示用户走向一台多功能龙门架/绳索训练机，画面下方出现了明显的脚踏板和低位滑轮结构，用户随后坐下并将双脚踩在踏板上。
+Step 2 — 器械识别：根据规则三和规则六，用户处于坐姿，绳索从正前方低位水平拉来，且可见明确的踏脚板，这完全符合“坐姿绳索划船”的器械特征。
+Step 3 — 光流验证：画面中双手握住V型把手向腹部拉动，产生明显的 BACKWARD（向后拉）和 FORWARD（放回）的周期性光流，符合划船类动作特征。
+Step 4 — 动作判定：综合坐姿、前方低位绳索来向、向腹部拉动的动作轨迹，判定为“坐姿绳索划船”。
+Step 5 — 组次统计：从网格图第二行开始到第四行前半段，可以观察到约 8 次完整的拉伸往复周期。
+
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作11",
+  "image_path": "graph/肩背-叶翔/动作11.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "坐姿绳索划船",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "坐姿绳索划船",
+      "confidence": 0.95,
+      "support": "坐姿，双脚踩在踏板上，绳索从正前方低位拉向腹部，可见V型把手。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架立柱", "低位滑轮", "脚踏板", "V型把手"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手持把手从前方水平拉向躯干，伴随躯干轻微前后晃动，具有明显的周期性。",
+    "first_person_subject_evidence": "第一人称视角下双手操作把手，双腿踩在器械踏板上，动作与相机运动同步。",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "明确的坐姿、脚踏板、以及从正前方水平方向拉动的绳索轨迹。",
+    "rejected_or_close_candidates": [
+      {"exercise": "高位下拉", "reason": "绳索并非从头顶上方垂下，而是从正前方水平拉来。"},
+      {"exercise": "绳索下压", "reason": "用户为坐姿而非站姿，且发力方向为向后拉而非向下推。"}
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:17:30",
+      "end_time": "00:17:58",
+      "reps": 8
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 4,
+    "expand_after_sec": 2,
+    "reason": "坐姿划船起始需要抓握并调整坐姿，结束需要放回把手并起身。"
+  },
+  "needs_manual_review": false
+}

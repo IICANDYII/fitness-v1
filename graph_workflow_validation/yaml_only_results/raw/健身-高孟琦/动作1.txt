@@ -1,0 +1,46 @@
+{
+  "user_folder": "健身-高孟琦",
+  "action_id": "动作1",
+  "image_path": "graph/健身-高孟琦/动作1.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.2,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "UNKNOWN_EXERCISE",
+      "confidence": 0.3,
+      "support": "第一帧可见用户双手持哑铃，但后续过程仅为在健身房内行走。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "哑铃",
+      "镜子",
+      "哑铃架"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "相机随步伐产生明显的左右和前后晃动，背景环境（如镜子、其他器械）随用户走动而发生水平位移，无垂直方向的周期性抗阻运动。",
+    "first_person_subject_evidence": "第一帧画面下方可见用户双手握持哑铃，且画面底部出现黄色运动鞋尖，与相机运动同步。",
+    "uncertainty_notes": "该片段记录的是用户手持哑铃在馆内移动/转场的动作，不属于标准库中的任何训练动作。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户虽手持哑铃，但全程处于行走状态，相机轨迹与步行特征一致，未观察到任何针对特定肌群的重复性抗阻训练轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "dumbbell_squat",
+        "reason": "无身体重心下沉及起立的垂直位移周期。"
+      },
+      {
+        "exercise": "dumbbell_biceps_curl",
+        "reason": "手臂始终保持自然下垂状态，无肘关节屈伸动作。"
+      },
+      {
+        "exercise": "dumbbell_lunge",
+        "reason": "虽在行走，但步幅和节奏为普通步行，无受控的下蹲受力过程。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

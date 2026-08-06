@@ -1,0 +1,33 @@
+{
+  "user_folder": "3",
+  "action_id": "动作10",
+  "image_path": "graph/3/动作10.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.95,
+      "support": "站姿，绳索从上方高位滑轮引出，双手握绳索向下推压，肘部贴身固定。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架立柱", "高位滑轮", "绳索配件(Rope)"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握绳索从胸前高度向下推至腹部/大腿前，随后受控回放。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手及佩戴的手表/护腕在画面下方操作绳索，与相机运动同步。",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "站姿且绳索来向为上方，动作轨迹为向下推压，配件为绳索。",
+    "rejected_or_close_candidates": [
+      {"exercise": "高位下拉", "reason": "高位下拉通常为坐姿且动作幅度更大，此处为站姿小幅度下压。"},
+      {"exercise": "面拉", "reason": "面拉需将绳索拉向面部且肘部外展，此处肘部贴身向下推。"}
+    ]
+  },
+  "needs_manual_review": false
+}

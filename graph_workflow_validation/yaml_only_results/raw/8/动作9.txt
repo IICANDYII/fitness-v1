@@ -1,0 +1,48 @@
+{
+  "user_folder": "8",
+  "action_id": "动作9",
+  "image_path": "graph/8/动作9.jpg",
+  "selected_equipment": "蝴蝶机",
+  "selected_exercise": "蝴蝶机夹胸",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "蝴蝶机",
+      "exercise": "蝴蝶机夹胸",
+      "confidence": 0.92,
+      "support": "可见典型的蝴蝶机垂直手柄结构，双手做水平内收合拢动作，轨迹呈弧线。"
+    },
+    {
+      "equipment": "固定器械推胸机",
+      "exercise": "固定器械推胸",
+      "confidence": 0.25,
+      "support": "同为胸部器械，但推胸通常为线性向前推，而非弧线合拢。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "蝴蝶机垂直手柄",
+      "配重片导轨",
+      "器械框架"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "从第5帧开始，双手握住手柄向画面中心（胸前）合拢，在第10帧左右达到最窄处，随后向两侧打开。运动主轴为左右水平开合。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手从画面两侧伸出并握住器械手柄，动作与相机位移同步。",
+    "uncertainty_notes": "无光流和IMU数据，但视觉特征非常典型，器械识别明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "画面中清晰可见蝴蝶机（Pec Deck）的垂直握把，用户双手进行水平内收（Horizontal Adduction）运动，符合蝴蝶机夹胸的典型特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "固定器械推胸",
+        "reason": "推胸动作的轨迹通常是直线向前，而视频中手柄的运动轨迹是明显的向中线靠拢的弧线。"
+      },
+      {
+        "exercise": "蝴蝶机反向飞鸟",
+        "reason": "反向飞鸟（练后三角肌）通常需要用户面向器械背对相机，或向后拉动手柄，而此处是向前合拢。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

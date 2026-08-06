@@ -1,0 +1,10 @@
+分析过程：
+Step 1 — 进场帧分析: 网格图前几帧显示用户正走向龙门架（绳索机），可以看到低位滑轮处连接着一根短直杆或曲杆。
+Step 2 — 器械识别: 用户处于站姿，视角平视前方。通过画面下方和镜子中的反射可见，绳索是从地面附近的低位滑轮拉出的，符合龙门架低位配置。
+Step 3 — 光流验证: 画面中杆部和手部呈现明显的上下往复运动（UP/DOWN），且发力方向为向上拉起，符合弯举的运动轨迹。
+Step 4 — 动作判定: 根据“站姿 + 绳索从下方来 + 向上弯举”的规则，判定为绳索弯举。镜中影像进一步确认了用户双臂贴身、前臂向上发力的动作特征。
+Step 5 — 组次统计: 观察网格图中杆状物体的起伏周期，大约在第4-7帧、8-11帧、12-15帧各完成一次动作，结合时间跨度，判定为1组，图中可见约4-5次重复。
+
+```json
+{"equipment": "龙门架", "exercise": "绳索弯举", "exercise_id": "cable_biceps_curl", "confidence": 0.85, "sets": [{"start_time": "00:09:26", "end_time": "00:10:00", "reps": 5}], "phase1_adjustment": {"expand_before_sec": 2, "expand_after_sec": 2, "reason": "动作起始和结束有少量准备与放回动作"}, "selected_equipment": "龙门架", "selected_exercise": "绳索弯举", "selected_confidence": 0.85, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "龙门架", "exercise": "绳索弯举", "confidence": 0.85, "support": "站姿，绳索从低位滑轮向上拉起，镜中可见明显的弯举动作"}], "context": {"visible_equipment": ["龙门架立柱", "低位滑轮", "短杆配件", "配重塔"], "body_posture": "standing", "motion_cues_from_grid": "手持短杆从大腿高度向上弯曲至胸前，随后受控下放", "first_person_subject_evidence": "第一人称视角下双手握持移动中的短杆，且动作与镜中用户完全同步", "uncertainty_notes": "缺少光流数据，仅凭视觉判定次数可能存在轻微误差"}, "action_disambiguation": {"selected_evidence": "绳索连接位置在地面（低位），动作方向向上，排除下压类动作", "rejected_or_close_candidates": [{"exercise": "绳索下压", "reason": "绳索下压要求滑轮在高位且向下推，与实测方向相反"}, {"exercise": "杠铃弯举", "reason": "画面中清晰可见连接杆部中心的钢索，属于绳索类器械而非自由重量"}]}, "needs_manual_review": false}
+```

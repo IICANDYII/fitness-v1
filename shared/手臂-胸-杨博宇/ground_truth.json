@@ -1,0 +1,90 @@
+[
+  {
+    "start": 0,
+    "end": 32,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 32,
+    "end": 364,
+    "type": "exercise",
+    "label": "热身"
+  },
+  {
+    "start": 364,
+    "end": 440,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 440,
+    "end": 510,
+    "type": "exercise",
+    "label": "杠铃弯举",
+    "equipment": "杠铃",
+    "reps": "5 5"
+  },
+  {
+    "start": 510,
+    "end": 545,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 545,
+    "end": 853,
+    "type": "exercise",
+    "label": "哑铃弯举",
+    "equipment": "哑铃",
+    "reps": "10 11 9 38"
+  },
+  {
+    "start": 853,
+    "end": 926,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 926,
+    "end": 1025,
+    "type": "exercise",
+    "label": "蝴蝶机飞鸟",
+    "equipment": "蝴蝶机",
+    "reps": "15"
+  },
+  {
+    "start": 1025,
+    "end": 1061,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 1061,
+    "end": 1114,
+    "type": "exercise",
+    "label": "器械弯举",
+    "equipment": "器械",
+    "reps": "2"
+  },
+  {
+    "start": 1114,
+    "end": 1137,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 1137,
+    "end": 1227,
+    "type": "exercise",
+    "label": "器械推胸",
+    "equipment": "器械",
+    "reps": "5 5"
+  },
+  {
+    "start": 1227,
+    "end": 1283.2,
+    "type": "transition",
+    "label": "过渡"
+  }
+]

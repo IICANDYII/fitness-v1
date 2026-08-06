@@ -1,0 +1,52 @@
+```json
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作7",
+  "image_path": "graph/肩背-叶翔/动作7.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.3,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.4,
+      "support": "前两帧显示用户手持绳索附件向下运动，符合绳索下压的收尾动作。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.2,
+      "support": "同样使用龙门架，但通常为坐姿，且画面中未见下拉横杆。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "绳索附件", "配重片"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "前两帧有短暂的向下释放绳索的动作，随后用户保持站立不动，环顾四周并查看手机。",
+    "movement_direction": "unknown",
+    "first_person_subject_evidence": "前两帧可见用户双手握持绳索，随后相机随用户身体转动和低头看手机的动作同步移动。",
+    "uncertainty_notes": "该片段绝大部分时间（帧3-16）处于组间休息状态，缺乏连续的动作周期，无法判定为完整的训练组。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 0,
+      "evidence": "画面主要记录了组间休息过程，仅在开头捕捉到疑似上一组结束的残影。"
+    }
+  ],
+  "total_sets": 0,
+  "total_reps": 0,
+  "action_disambiguation": {
+    "selected_evidence": "用户在大部分时间内处于站立休息、查看手机和环顾四周的状态，没有进行重复性的训练动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "虽然器械和初始手势符合，但由于缺乏完整的动作次数，仅判定为休息片段。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}
+```

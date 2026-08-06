@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 第一帧显示用户双手各持一只黑色哑铃，视角向下看到黄色运动鞋和健身房地面。
+Step 2 — 器械识别: 虽然初始帧出现了哑铃，但从第 2 帧到第 14 帧，画面显示用户在健身房内大范围走动，镜中影像证实用户处于行走状态，而非进行特定的抗阻训练。
+Step 3 — 光流验证: 画面背景随用户行走持续大幅度变换，无任何周期性的器械或肢体运动轨迹，不符合任何训练动作的特征。
+Step 4 — 动作判定: 该片段记录的是用户拿起哑铃后的位移过程或组间休息走动，不属于标准动作库中的任何训练动作。
+Step 5 — 组次统计: 无有效动作周期，计为 0 次。
+
+{"user_folder": "健身-高孟琦", "action_id": "动作1", "image_path": "graph/健身-高孟琦/动作1.jpg", "selected_equipment": "UNKNOWN_EQUIPMENT", "selected_exercise": "UNKNOWN_ACTION", "selected_confidence": 0.1, "confidence_policy": "insufficient_evidence", "top_candidates": [{"equipment": "哑铃", "exercise": "哑铃弯举", "confidence": 0.2, "support": "初始帧用户双手持有哑铃"}, {"equipment": "无", "exercise": "跑步机", "confidence": 0.05, "support": "存在行走位移但背景环境并非跑步机"}], "context": {"visible_equipment": ["哑铃", "哑铃架", "镜子"], "body_posture": "standing", "motion_cues_from_grid": "用户在健身房内持续行走，背景和镜中影像随位移大幅度改变", "first_person_subject_evidence": "第一人称视角看到双手持哑铃及下方的黄色运动鞋，与镜中人物特征一致", "uncertainty_notes": "片段内无任何重复性动作，仅为行走位移，无法判定为任何训练动作"}, "action_disambiguation": {"selected_evidence": "画面显示用户在健身房内持续行走，无任何抗阻力训练的动作轨迹或周期性特征", "rejected_or_close_candidates": [{"exercise": "哑铃弯举", "reason": "虽持有哑铃但无肘部屈伸动作"}, {"exercise": "哑铃深蹲", "reason": "无身体重心起伏，仅有水平位移"}]}, "needs_manual_review": true}

@@ -1,0 +1,56 @@
+{
+  "user_folder": "2",
+  "action_id": "动作4",
+  "image_path": "graph/2/动作4.jpg",
+  "selected_equipment": "高位下拉机",
+  "selected_exercise": "高位下拉",
+  "selected_exercise_id": "cable_lat_pulldown",
+  "selected_confidence": 0.9,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "高位下拉机",
+      "exercise": "高位下拉",
+      "confidence": 0.9,
+      "support": "第一人称视角仰视，可见V型把手从上方钢索连接；镜中反射显示用户为坐姿，将把手从头顶拉向胸前。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "V型把手",
+      "钢索",
+      "高位滑轮",
+      "圆形天花板镜子"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手握住V型把手，从高处（手臂伸直）向下拉至胸前（手臂弯曲），呈现明显的上下垂直往复运动。",
+    "first_person_subject_evidence": "画面中心出现用户双手握持把手，且动作与上方镜子中反射的坐姿人影完全同步。",
+    "uncertainty_notes": "虽然缺少IMU和光流，但镜面反射提供了极强的姿态证据，动作特征非常典型。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "坐姿状态（镜子可见）配合从上方垂下的钢索和V型把手，且动作方向为由上向下大幅度拉动，完全符合高位下拉定义。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压通常为站姿，且动作范围在胸部到大腿之间，而此动作是坐姿且从头顶拉至胸前。"
+      },
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "划船的绳索应从正前方水平拉来，而画面中绳索明显来自斜上方。"
+      }
+    ]
+  },
+  "needs_manual_review": false,
+  "sets": [
+    {
+      "start_time": "00:03:23",
+      "end_time": "00:03:52",
+      "reps": 4
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 3,
+    "expand_after_sec": 2,
+    "reason": "增加起始抓握和结束放回把手的完整性。"
+  }
+}

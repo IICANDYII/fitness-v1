@@ -1,0 +1,51 @@
+Step 1 — 进场帧分析: 网格图前几帧显示用户正走向一台史密斯机，画面中清晰可见史密斯机特有的竖直固定导轨和挂钩结构，杠铃杆横跨在导轨之间。
+Step 2 — 器械识别: 训练帧中，相机始终朝向天花板，且杠铃杆沿两侧可见的固定导轨做上下往复运动，符合规则二（仰卧+天花板视角）和规则四（史密斯机特征），判定为史密斯机。
+Step 3 — 光流验证: 杠铃杆在画面中由远及近（下放至胸前）再由近及远（向上推起），呈现明显的上下（UP/DOWN）周期性变化，验证了推举动作。
+Step 4 — 动作判定: 综合仰卧姿态、史密斯机器械以及胸前推举的运动轨迹，判定为史密斯卧推。
+Step 5 — 组次统计: 观察到一次完整的杠铃下放与推起过程（约从第4帧开始下放，第10帧降至最低，第13帧推回高位），计为1组1次。
+
+{
+  "user_folder": "2",
+  "action_id": "动作1",
+  "image_path": "graph/2/动作1.jpg",
+  "selected_equipment": "史密斯机",
+  "selected_exercise": "史密斯卧推",
+  "selected_exercise_id": "smith_bench_press",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯卧推",
+      "confidence": 0.95,
+      "support": "第一人称仰卧视角，可见史密斯机导轨，杠铃在胸部上方做线性推举动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["史密斯机导轨", "杠铃杆", "挂钩"],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "杠铃杆从高位下降至贴近相机（胸部），随后再次推离，完成一次推举循环。",
+    "first_person_subject_evidence": "双手握持杠铃杆，视角随身体仰卧在长凳上，运动轨迹与相机（胸前）同步。",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "可见史密斯机固定导轨，相机朝向天花板，杠铃在胸前做垂直推举。",
+    "rejected_or_close_candidates": [
+      {"exercise": "杠铃卧推", "reason": "画面中存在明显的固定导轨，并非自由杠铃。"},
+      {"exercise": "史密斯推肩", "reason": "推肩通常为坐姿，相机视角应平视或微斜向上，而非完全仰卧朝向正上方。"}
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:00:16",
+      "end_time": "00:00:44",
+      "reps": 1
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 3,
+    "expand_after_sec": 2,
+    "reason": "增加起始就位和结束挂杠的缓冲时间。"
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,50 @@
+{
+  "user_folder": "2",
+  "action_id": "动作5",
+  "image_path": "graph/2/动作5.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.92,
+      "support": "第一人称视角下，用户双手握持连接在高位滑轮上的直杆，进行向下的推压运动，符合绳索下压的典型特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.25,
+      "support": "同为高位绳索拉拔动作，但用户为站姿且动作轨迹更接近推压而非下拉至胸前。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "高位滑轮",
+      "钢索",
+      "直杆把手"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "从网格图中可见，用户双手握杆从胸部高度向下推至腹部/大腿高度，随后受控回升，呈现明显的上下周期性运动。",
+    "first_person_subject_evidence": "画面下方可见用户双手及前臂，其动作与相机视角同步，且直接操作正前方的器械把手。",
+    "uncertainty_notes": "由于缺少光流和IMU数据，无法精确判定动作的起始和结束时间点，仅凭视觉抽帧判断次数。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "清晰可见的高位滑轮连接直杆，用户站姿进行向下推压（extension）动作，肘部相对固定，这是绳索下压的标准形态。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常需要坐姿固定腿部，并使用较长的横杆拉至上胸部，而此处为站姿推压。"
+      },
+      {
+        "exercise": "绳索弯举",
+        "reason": "绳索弯举的滑轮应位于下方，动作为向上拉起，与图中方向相反。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

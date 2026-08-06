@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 网格图前2帧显示用户双手向上伸出，抓握龙门架高位滑轮连接的绳索（Rope）配件，背景可见龙门架的金属框架和配重塔。
+Step 2 — 器械识别: 根据规则三和规则六A，用户处于站姿，使用龙门架的高位滑轮和绳索配件。由于用户是站立而非坐下，且没有大腿固定装置，排除高位下拉机。
+Step 3 — 光流验证: 画面前3帧显示手部有明显的向下（DOWN）拉动趋势，随后手部松开配件，用户保持站立。后续帧中画面平稳，无周期性起伏，符合组后休息特征。
+Step 4 — 动作判定: 结合“站姿 + 高位绳索 + 向下拉动”的特征，该动作符合“绳索下压”的起始或结束形态。
+Step 5 — 组次统计: 仅在开头观察到一次不完整的下拉动作，随后进入长时间静止站立（约25秒），判定为组间休息或动作结束。
+
+{"user_folder": "肩背-叶翔", "action_id": "动作7", "image_path": "graph/肩背-叶翔/动作7.jpg", "selected_equipment": "龙门架", "selected_exercise": "绳索下压", "exercise_id": "cable_triceps_pushdown", "selected_confidence": 0.55, "confidence_policy": "insufficient_evidence", "top_candidates": [{"equipment": "龙门架", "exercise": "绳索下压", "confidence": 0.55, "support": "可见高位滑轮、绳索配件及用户站姿，符合绳索下压器械配置。"}], "context": {"visible_equipment": ["龙门架立柱", "高位滑轮", "绳索把手"], "body_posture": "standing", "motion_cues_from_grid": "前3帧有向下抓握拉动的趋势，随后用户保持站立不动，疑似组间休息或准备阶段。", "first_person_subject_evidence": "第一人称视角下双手伸向器械并进行操作，动作与相机视角同步。", "uncertainty_notes": "视频大部分时间用户处于静止站立状态，缺乏连续的动作重复证据，仅能根据器械和初始姿态推断。"}, "action_disambiguation": {"selected_evidence": "站姿 + 高位绳索 + 初始向下运动轨迹", "rejected_or_close_candidates": [{"exercise": "高位下拉", "reason": "高位下拉需坐姿且有腿部固定，画面中用户明显站立。"}, {"exercise": "面拉", "reason": "面拉通常将绳索拉向面部两侧且肘部外展，前几帧动作轨迹更偏向垂直向下。"}]}, "sets": [{"start_time": "00:12:00", "end_time": "00:12:05", "reps": 0}], "phase1_adjustment": {"expand_before_sec": 0, "expand_after_sec": 0, "reason": "当前区间主要记录了动作结束后的站立休息状态，无完整重复动作。"}, "needs_manual_review": true}

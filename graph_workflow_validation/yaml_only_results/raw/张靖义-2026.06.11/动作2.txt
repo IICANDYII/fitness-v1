@@ -1,0 +1,33 @@
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作2",
+  "image_path": "graph/张靖义-2026.06.11/动作2.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "exercise_id": "",
+  "selected_confidence": 0.1,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "无器械",
+      "exercise": "UNKNOWN_ACTION",
+      "confidence": 0.1,
+      "support": "画面中仅见用户双手在胸前做击掌或摆动动作，未接触任何训练器械。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["健身房地板线条", "远处器械架"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户双手在胸前频繁活动，伴随身体小幅位移，无明显的负重训练轨迹。",
+    "first_person_subject_evidence": "画面近端可见佩戴黑色护腕的双臂，动作与相机视角同步。",
+    "uncertainty_notes": "当前片段未包含任何有效的抗阻力训练或有氧器械训练动作，仅为用户在场内走动或准备动作。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户双手未持哑铃、杠铃或拉柄，且未在任何固定器械上操作；动作表现为非训练性质的肢体活动。",
+    "rejected_or_close_candidates": [
+      {"exercise": "bodyweight_squat", "reason": "画面无明显的垂直高度周期性升降。"},
+      {"exercise": "treadmill_walk_run", "reason": "地面为普通健身房地胶及标线，非跑步机履带。"}
+    ]
+  },
+  "needs_manual_review": true
+}

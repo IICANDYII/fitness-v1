@@ -1,0 +1,42 @@
+{
+  "user_folder": "手臂-胸-杨博宇",
+  "action_id": "动作5",
+  "image_path": "graph/手臂-胸-杨博宇/动作5.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃弯举",
+  "selected_exercise_id": "dumbbell_biceps_curl",
+  "selected_confidence": 0.75,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃弯举",
+      "exercise_id": "dumbbell_biceps_curl",
+      "confidence": 0.75,
+      "support": "哑铃在胸前相机视野内做周期性靠近和远离运动，符合肘关节屈伸的弯举轨迹；2.5kg负重常见于此类动作。"
+    },
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃侧平举",
+      "exercise_id": "dumbbell_lateral_raise",
+      "confidence": 0.35,
+      "support": "同为站姿哑铃动作，但侧平举通常向画面两侧远离，而非向相机中心靠近。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃", "镜子"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "哑铃从画面下方/远端向相机中心（胸部）靠近，随后复位，呈现明显的周期性往复。",
+    "first_person_subject_evidence": "用户右手持哑铃在画面近端操作，动作与相机视角晃动同步；最后几帧镜子反射显示用户本人正在站立训练。",
+    "uncertainty_notes": "相机安装角度大幅度向右侧倾斜，且负重极轻（2.5kg），动作轨迹在第一人称视角下略显局促。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "哑铃在胸前做明显的向心收缩（靠近相机）和离心伸展（远离相机）运动，且手部握持方式符合弯举；镜面反射确认了站姿。虽然相机倾斜，但运动主轴与手臂屈伸一致。",
+    "rejected_or_close_candidates": [
+      {"exercise": "哑铃侧平举", "reason": "侧平举的哑铃轨迹通常是从身体两侧向外上方划弧，在胸前相机中应表现为向画面边缘移动，而非向中心靠近。"},
+      {"exercise": "哑铃推肩", "reason": "未观察到哑铃向上方推举超过头部的动作轨迹。"},
+      {"exercise": "哑铃卧推", "reason": "虽然背景可见天花板，但镜面反射明确显示用户为站姿，排除了仰卧动作。"}
+    ]
+  },
+  "needs_manual_review": true
+}

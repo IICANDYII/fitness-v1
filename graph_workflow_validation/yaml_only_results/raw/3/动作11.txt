@@ -1,0 +1,48 @@
+{
+  "user_folder": "3",
+  "action_id": "动作11",
+  "image_path": "graph/3/动作11.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "cable_triceps_pushdown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_triceps_pushdown",
+      "confidence": 0.85,
+      "support": "用户站姿，双手握持高位绳索把手，进行由上至下的周期性推压动作。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_lat_pulldown",
+      "confidence": 0.35,
+      "support": "同为高位下拉类动作，但画面中用户为站姿且双手动作更接近手臂屈伸。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架 (Cable Machine)",
+      "绳索把手 (D-handles/Rope)",
+      "滑轮系统"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "第一排显示用户伸手抓取高位把手；第二排用户处于站姿准备状态；第三排显示明显的上下往复运动，手部从胸部高度压至腹部/大腿高度。",
+    "first_person_subject_evidence": "画面下方出现用户双臂，且手臂运动与相机（身体）的轻微晃动同步，把手由用户直接操控。",
+    "uncertainty_notes": "由于是第一人称视角，肘关节的具体屈伸角度被遮挡，但手部轨迹和器械连接点明确指向下压动作。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户站立于龙门架前，双手握住高位滑轮连接的把手，执行向下的推压动作，符合绳索下压的典型特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_lat_pulldown",
+        "reason": "高位下拉通常为坐姿，且动作轨迹更偏向于将横杆拉向胸部，而此处用户为站姿且手部向下推。"
+      },
+      {
+        "exercise": "cable_chest_fly",
+        "reason": "绳索夹胸通常伴随明显的双手向身体中线合拢的水平运动，此处光流主轴为垂直上下。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

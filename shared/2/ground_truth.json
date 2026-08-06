@@ -1,0 +1,119 @@
+[
+  {
+    "start": 0,
+    "end": 20,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 20,
+    "end": 43,
+    "type": "exercise",
+    "label": "卧推",
+    "equipment": "杠铃",
+    "reps": "8"
+  },
+  {
+    "start": 43,
+    "end": 102,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 102,
+    "end": 150,
+    "type": "exercise",
+    "label": "高位宽距下拉",
+    "equipment": "高位下拉",
+    "reps": "3 10"
+  },
+  {
+    "start": 150,
+    "end": 201,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 201,
+    "end": 230,
+    "type": "exercise",
+    "label": "高位V把下拉",
+    "equipment": "龙门架",
+    "reps": "11"
+  },
+  {
+    "start": 230,
+    "end": 279,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 279,
+    "end": 311,
+    "type": "exercise",
+    "label": "绳索直杆下压·1",
+    "equipment": "龙门架"
+  },
+  {
+    "start": 311,
+    "end": 333,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 333,
+    "end": 353,
+    "type": "exercise",
+    "label": "绳索直杆下压·2",
+    "equipment": "龙门架",
+    "reps": "10 6 "
+  },
+  {
+    "start": 353,
+    "end": 373,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 373,
+    "end": 400,
+    "type": "exercise",
+    "label": "绳索直杆下压·3",
+    "equipment": "龙门架",
+    "reps": "10"
+  },
+  {
+    "start": 400,
+    "end": 433,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 433,
+    "end": 458,
+    "type": "exercise",
+    "label": "划船",
+    "equipment": "坐姿划船",
+    "reps": "11"
+  },
+  {
+    "start": 458,
+    "end": 582,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 582,
+    "end": 612,
+    "type": "exercise",
+    "label": "上斜推胸",
+    "equipment": "悍马机",
+    "reps": "9"
+  },
+  {
+    "start": 612,
+    "end": 623.2,
+    "type": "transition",
+    "label": "过渡"
+  }
+]

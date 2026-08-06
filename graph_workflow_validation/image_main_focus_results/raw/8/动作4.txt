@@ -1,0 +1,54 @@
+{
+  "user_folder": "8",
+  "action_id": "动作4",
+  "image_path": "graph/8/动作4.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "cable_lat_pulldown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_lat_pulldown",
+      "confidence": 0.85,
+      "support": "第一人称视角下，双手宽握典型的长横杆，横杆从上方拉向胸前，符合高位下拉特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_triceps_pushdown",
+      "confidence": 0.3,
+      "support": "同为钢索类器械，但握距和动作幅度更符合背部训练而非手臂下压。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["高位下拉长杆", "钢索", "健身房背景"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "横杆在画面中呈现明显的上下垂直往复运动，从画面顶端拉至胸前高度。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面下方出现用户双手握持横杆，且横杆的运动轨迹与相机（胸前）相对位置变化符合下拉动作。",
+    "uncertainty_notes": "拼图中段（第2-3行）存在较多相机晃动和视角偏移，可能是组内调整或观察环境，导致次数统计存在一定模糊性。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 8,
+      "evidence": "从第4行开始到第6行，可以观察到约6-8次完整的横杆下拉与回放周期。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 8,
+  "action_disambiguation": {
+    "selected_evidence": "观察到典型的宽握长杆，且运动方向为由上至下的拉拽动作，排除推举类动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "pullup",
+        "reason": "引体向上通常表现为相机随身体向上移动靠近固定横杆，而此处是横杆向相机移动，符合下拉器械特征。"
+      },
+      {
+        "exercise": "cable_triceps_pushdown",
+        "reason": "下压动作通常握距较窄，且肘部相对固定，画面中的宽握距和大幅度动作更符合高位下拉。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

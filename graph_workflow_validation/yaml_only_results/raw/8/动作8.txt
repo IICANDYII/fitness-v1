@@ -1,0 +1,40 @@
+```json
+{
+  "user_folder": "8",
+  "action_id": "动作8",
+  "image_path": "graph/8/动作8.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.2,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "固定器械",
+      "exercise": "machine_chest_press",
+      "confidence": 0.3,
+      "support": "前三帧显示用户双手握住固定器械的红色把手，姿态疑似坐姿推胸"
+    },
+    {
+      "equipment": "固定器械",
+      "exercise": "machine_seated_row",
+      "confidence": 0.25,
+      "support": "把手位置也可能属于坐姿划船机"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["固定器械红色把手", "背景中的卧推架"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "前4帧用户双手握住把手后随即松开，之后出现大幅度相机旋转和位移，显示用户在查看手机并起身行走",
+    "first_person_subject_evidence": "画面近端可见用户双手操作把手，随后可见用户手持手机及行走时的地面视角",
+    "uncertainty_notes": "视频主要记录了用户在器械上结束动作、休息、看手机及离开的过程，未捕捉到完整的动作重复周期"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户仅在起始几帧接触器械把手，无连续往复运动，大部分时间处于非训练状态",
+    "rejected_or_close_candidates": [
+      {"exercise": "barbell_bench_press", "reason": "背景中虽有人在进行杠铃卧推，但非当前第一人称用户动作"},
+      {"exercise": "machine_chest_press", "reason": "虽有器械接触，但无动作次数，置信度不足"}
+    ]
+  },
+  "needs_manual_review": true
+}
+```

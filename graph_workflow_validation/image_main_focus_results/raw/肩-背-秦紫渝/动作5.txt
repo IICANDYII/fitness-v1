@@ -1,0 +1,44 @@
+{
+  "user_folder": "肩-背-秦紫渝",
+  "action_id": "动作5",
+  "image_path": "graph/肩-背-秦紫渝/动作5.jpg",
+  "selected_equipment": "跑步机",
+  "selected_exercise": "跑步机",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.95,
+      "support": "第一人称视角下清晰可见跑步机控制面板（VOLZEN品牌），用户腿部出现在画面左侧并踏上跑带，随后画面呈现稳定的步行/跑步震动模式。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["跑步机控制面板", "扶手", "跑带（部分）"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "起始帧显示用户抬腿踏上器械，后续帧相机随身体步行产生轻微的上下节奏性晃动。",
+    "movement_direction": "forward_backward",
+    "first_person_subject_evidence": "画面左侧出现用户穿着浅蓝色长裤和米色运动鞋的腿部，且相机视角始终固定在器械控制台正前方。",
+    "uncertainty_notes": "无"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": null,
+      "evidence": "连续的有氧运动过程，不适用重复次数统计"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": null,
+  "action_disambiguation": {
+    "selected_evidence": "典型的跑步机电子仪表盘及扶手结构，配合用户上机及后续的步行震动特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "登阶机/爬楼机",
+        "reason": "虽然起始有抬腿动作，但控制面板的宽度和布局更符合跑步机特征。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

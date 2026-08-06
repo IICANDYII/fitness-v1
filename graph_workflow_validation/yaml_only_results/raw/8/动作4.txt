@@ -1,0 +1,38 @@
+{
+  "user_folder": "8",
+  "action_id": "动作4",
+  "image_path": "graph/8/动作4.jpg",
+  "selected_equipment": "杠铃",
+  "selected_exercise": "barbell_bench_press",
+  "selected_confidence": 0.68,
+  "confidence_policy": "multiple_close",
+  "top_candidates": [
+    {
+      "equipment": "杠铃",
+      "exercise": "barbell_bench_press",
+      "confidence": 0.68,
+      "support": "第一人称仰卧视角，双手对称握持杠铃杆向天花板方向做推举动作，符合杠铃卧推特征。"
+    },
+    {
+      "equipment": "史密斯机",
+      "exercise": "smith_bench_press",
+      "confidence": 0.55,
+      "support": "同为仰卧推举模式，由于无法直接看清杠铃两侧是否连接固定导轨，史密斯卧推为强候选。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["杠铃杆", "卧推凳"],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "在第1行及第4-6行中，画面处于完全仰卧状态，天花板及灯光相对于杠铃杆发生上下往复位移，显示出明显的推举进程；第2-3行伴随短暂的起身与视线环顾。",
+    "first_person_subject_evidence": "用户本人的双手从画面左右下角对称伸出并紧握杠铃杆，整个视野随推举动作的节奏同步发生垂直轴向的位移。",
+    "uncertainty_notes": "由于相机视野局限于正上方，无法观测到杠铃两端的完整结构或史密斯导轨，因此在自由杠铃卧推与史密斯卧推之间存在一定模糊性。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "清晰的仰卧姿态（supine）配合双手胸前推举杠铃的动作轨迹，直接指向卧推类项目。",
+    "rejected_or_close_candidates": [
+      {"exercise": "smith_bench_press", "reason": "运动轨迹极其垂直稳定，高度疑似史密斯卧推，因缺乏导轨直接视觉证据而将其列为第二候选"},
+      {"exercise": "barbell_overhead_press", "reason": "虽然同为杠铃推举，但本动作身体处于仰卧而非站立或坐姿，故排除推举"}
+    ]
+  },
+  "needs_manual_review": true
+}

@@ -1,0 +1,41 @@
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作1",
+  "image_path": "graph/张靖义-2026.06.11/动作1.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.1,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "UNKNOWN_EQUIPMENT",
+      "exercise": "UNKNOWN_EXERCISE",
+      "confidence": 0.1,
+      "support": "画面中未见用户操作任何特定训练器械进行动作"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "哑铃架",
+      "训练凳/垫子"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "无周期性训练运动。画面显示用户双手在平面上支撑或移动，伴随大量的社交互动（如与他人击拳）。",
+    "first_person_subject_evidence": "第一人称视角可见用户双手及佩戴的手表，动作与相机位移同步。",
+    "uncertainty_notes": "该片段完全没有体现任何标准力量训练动作的轨迹或周期，属于典型的组间休息或社交行为。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "关键帧显示用户在 49 帧内主要处于休息状态，与他人进行击拳互动，并环顾健身房环境，无任何负重或自重训练动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "dumbbell_biceps_curl",
+        "reason": "背景虽有哑铃架，但用户并未抓取哑铃进行训练。"
+      },
+      {
+        "exercise": "pushup",
+        "reason": "用户双手虽有支撑动作，但身体无上下起伏的周期性运动，且在进行社交互动。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

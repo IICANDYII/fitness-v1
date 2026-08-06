@@ -1,0 +1,55 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作9",
+  "image_path": "graph/肩背-叶翔/动作9.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "站姿，双手握持绳索配件，绳索从上方高位滑轮引出，手部向下推压。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架立柱",
+      "高位滑轮",
+      "绳索配件(Rope)"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握住绳索两端，从胸前高度向下推至画面下方，随后受控回弹，呈现典型的三头肌下压轨迹。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手及佩戴的手表/手环在画面两侧同步操作绳索。",
+    "uncertainty_notes": "缺少光流和IMU数据，仅凭视觉判断次数可能存在微小偏差。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "明确的站姿视角，绳索从上方垂下，且动作方向为向下推压而非向后拉或向上举。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常为坐姿且伴随大腿固定，此画面为站姿平视，且动作幅度较小，符合三头肌训练特征。"
+      },
+      {
+        "exercise": "面拉",
+        "reason": "面拉需将绳索拉向面部且肘部外展，画面中手部向下运动，肘部明显贴近躯干。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:14:00",
+      "end_time": "00:14:30",
+      "reps": 4
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 2,
+    "reason": "动作起始和结束阶段有明显的准备和放回动作，建议微调区间以包含完整组次。"
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,63 @@
+Step 1 — 进场帧分析: 进场帧显示用户双手握住龙门架（Cable Machine）上方的高位D型把手，视角由下往上观察，背景为健身房天花板，用户处于坐姿准备状态。
+Step 2 — 器械识别: 画面中清晰可见连接把手的钢索从上方垂下，用户采取坐姿，符合龙门架高位下拉的典型布局。根据规则三和规则六A，坐姿且绳索从头顶上方垂下，判定为高位下拉。
+Step 3 — 光流验证: 画面中双手带动把手在垂直方向（UP/DOWN）做大幅度往复运动，从头顶上方拉至肩部高度，符合下拉动作的轨迹特征。
+Step 4 — 动作判定: 综合坐姿、高位绳索来源、D型把手配件以及大幅度垂直拉动轨迹，判定为高位下拉（cable_lat_pulldown）。
+Step 5 — 组次统计: 观察到三次明显的拉下并回弹的周期（约在第1-18帧、22-38帧、42-58帧），计为1组3次。
+
+{
+  "user_folder": "4",
+  "action_id": "动作4",
+  "image_path": "graph/4/动作4.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "selected_exercise_id": "cable_lat_pulldown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.85,
+      "support": "坐姿，双手握D型把手从头顶上方大幅度下拉，可见明显钢索结构。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.1,
+      "support": "同为高位绳索动作，但下压通常为站姿且动作幅度较小。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架钢索", "D型把手"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手持握把手从画面上方拉至胸前高度，随后受控回放，循环3次。",
+    "first_person_subject_evidence": "第一人称视角下双手同步操作把手，相机随躯干稳定，符合佩戴者本人动作。",
+    "uncertainty_notes": "缺少IMU数据验证发力强度，仅凭视觉判定次数。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "坐姿状态下，双手从头顶上方滑轮处拉动D型把手至肩部，符合高位下拉定义。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压通常为站姿，且肘部固定在体侧仅前臂摆动，而画面中是大臂带动的整体下拉。"
+      },
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "划船动作绳索应从正前方水平拉来，而非头顶上方。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:10:00",
+      "end_time": "00:11:00",
+      "reps": 3
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 3,
+    "expand_after_sec": 2,
+    "reason": "高位下拉需要抓握把手和调整坐姿的准备时间，以及放回把手的缓冲时间。"
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,45 @@
+{
+  "user_folder": "2",
+  "action_id": "动作4",
+  "image_path": "graph/2/动作4.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "exercise_id": "cable_lat_pulldown",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.92,
+      "support": "第一人称视角下，双手握持V型把手（V-bar），钢索从上方连接，做明显的垂直下拉动作。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.35,
+      "support": "同为龙门架下压/下拉类动作，但画面显示手臂从高处起始，更符合背部下拉轨迹。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["V型把手", "钢索", "龙门架框架"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手握持把手从斜上方拉至胸前，随后受控回放，呈现典型的上下（UP/DOWN）周期性运动。",
+    "first_person_subject_evidence": "用户双手及前臂从画面两侧近端伸出，动作与相机视角高度同步，符合第一人称胸前相机特征。",
+    "uncertainty_notes": "虽然没有IMU数据，但V型把手和高位下拉的运动轨迹在视觉上非常明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到用户使用V型把手连接上方钢索，手臂有完整的从高处向下的拉伸和收缩过程，符合高位下拉（Lat Pulldown）的动作模式。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压通常仅涉及肘关节屈伸，且起始位置较低；当前动作涉及肩关节大幅度内收，属于下拉类动作。"
+      },
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "划船动作的钢索通常来自前方，轨迹为水平前后；当前钢索来自上方，轨迹为垂直上下。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

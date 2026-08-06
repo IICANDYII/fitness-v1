@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 import math
 from dataclasses import asdict, dataclass
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 import cv2
 import numpy as np
@@ -124,23 +124,26 @@ def _draw_timestamp(cell: np.ndarray, text: str) -> np.ndarray:
     return cell
 
 
-def _resolve_frame_path(fm: FrameMeta, frames_dir: Path, output_dir: Path) -> Path:
+def frame_path_candidates(fm: FrameMeta, frames_dir: Path, output_dir: Path) -> list[Path]:
+    """Return cross-platform candidate paths for a frame meta path."""
+    raw = str(fm.path)
+    normalized = raw.replace("\\", "/")
+    name = PureWindowsPath(raw).name
+    clean = normalized.removeprefix("frames/")
+    return [
+        frames_dir / name,
+        frames_dir / clean,
+        output_dir / normalized,
+        output_dir / clean,
+    ]
+
+
+def resolve_frame_path(fm: FrameMeta, frames_dir: Path, output_dir: Path) -> Path | None:
     """尝试多种路径解析策略找到帧图片。"""
-    # 尝试直接从 frames_dir
-    name = Path(fm.path).name
-    p = frames_dir / name
-    if p.exists():
-        return p
-    # 尝试去掉 frames/ 前缀
-    clean = fm.path.replace("frames/", "").replace("frames\\", "")
-    p = frames_dir / clean
-    if p.exists():
-        return p
-    # 尝试 output_dir / path
-    p = output_dir / fm.path
-    if p.exists():
-        return p
-    return frames_dir / name   # 返回最可能的路径，让后续报错
+    for path in frame_path_candidates(fm, frames_dir, output_dir):
+        if path.exists():
+            return path
+    return None
 
 
 # ──────────────────────────────────────────────
@@ -173,8 +176,8 @@ def build_grid_bytes(
         row, col = divmod(i, cols)
         x0, y0 = col * CELL_W, row * CELL_H
 
-        img_path = _resolve_frame_path(fm, frames_dir, output_dir)
-        cell = _imread_unicode(str(img_path))
+        img_path = resolve_frame_path(fm, frames_dir, output_dir)
+        cell = _imread_unicode(str(img_path)) if img_path else None
 
         if cell is None:
             cell = np.full((CELL_H, CELL_W, 3), 80, dtype=np.uint8)

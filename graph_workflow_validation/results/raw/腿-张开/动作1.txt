@@ -1,0 +1,48 @@
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作1",
+  "image_path": "graph/腿-张开/动作1.jpg",
+  "selected_equipment": "椭圆机",
+  "selected_exercise": "椭圆机",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "椭圆机",
+      "exercise": "椭圆机",
+      "confidence": 0.85,
+      "support": "可见大型电子控制面板，双手握持随动杆或固定扶手，画面伴随节奏性上下起伏，符合椭圆机运动特征。"
+    },
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.1,
+      "support": "同样具有大型面板和扶手，但画面晃动模式更接近椭圆机的平滑起伏。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "Matrix品牌大型电子控制面板",
+      "侧向扶手/随动杆",
+      "心率感应握把"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面呈现持续的、节奏性的上下起伏，双手在画面两侧交替出现握持动作，显示正在进行有氧运动。",
+    "first_person_subject_evidence": "第一人称视角，双手从画面下方伸向器械控制面板和扶手，视角晃动与人体运动步频同步。",
+    "uncertainty_notes": "缺少光流数据无法精确判定步频，但视觉特征足以锁定为大型有氧器械。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "进场帧显示用户站在一台带有大型显示屏的Matrix器械前。训练帧中，双手握住侧向长杆，且画面有明显的椭圆轨迹起伏感，符合椭圆机特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "跑步机",
+        "reason": "跑步机的画面晃动通常更剧烈且带有冲击感，而此画面起伏较为平滑，且侧向杆件更像椭圆机的动臂。"
+      },
+      {
+        "exercise": "登阶机/爬楼机",
+        "reason": "登阶机的视角通常更高，且扶手多为固定式，画面下沉感更重。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

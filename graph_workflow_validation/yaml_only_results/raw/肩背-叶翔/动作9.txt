@@ -1,0 +1,47 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作9",
+  "image_path": "graph/肩背-叶翔/动作9.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "第一人称视角下可见双手握持绳索附件，执行从高位向下的肘伸展动作，符合绳索下压特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索夹胸",
+      "confidence": 0.35,
+      "support": "高位向下的运动轨迹与高位夹胸有重合，但画面中明显的肘部屈伸更符合三头下压。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架 (Cable Machine)",
+      "绳索附件 (Rope Attachment)"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户双手握住绳索两端，从胸部高度向下推至腹部/大腿高度，伴随明显的肘关节由屈到伸的过程。",
+    "first_person_subject_evidence": "画面下方出现的双手及前臂与相机运动同步，且直接操作器械，确认为佩戴者本人。",
+    "uncertainty_notes": "由于是1fps抽帧，无法完全排除动作末端是否有向外分叉的细节，但绳索下压的主体动作非常明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到典型的绳索附件（Rope），用户站姿操作，运动轨迹为垂直向下的肘部伸展，这是绳索下压（Cable Triceps Pushdown）的标准形态。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常使用长杆且为坐姿，主要动作为肩内收/后缩，而非单纯的肘伸展。"
+      },
+      {
+        "exercise": "绳索夹胸",
+        "reason": "夹胸动作手臂通常保持微屈固定，以肩水平内收为主，而本动作有明显的肘部大幅度屈伸。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

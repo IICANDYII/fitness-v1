@@ -1,0 +1,51 @@
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作3",
+  "image_path": "graph/肩-秦紫渝/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_exercise_id": "cable_triceps_pushdown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "站姿，绳索从高位滑轮引出，双手持绳索向下方推压，肘部固定在身体两侧，符合肱三头肌训练特征。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架立柱", "高位滑轮", "绳索配件", "配重塔"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户双手抓握绳索，从胸前高度向下发力推至大腿高度，伴随明显的肘关节伸展运动。",
+    "first_person_subject_evidence": "画面下方出现佩戴者的双手（黑色手套/护腕），动作与相机轻微位移同步，且器械处于第一人称正前方。",
+    "uncertainty_notes": "缺少光流和IMU数据，仅凭视觉判断次数可能存在小幅误差，但动作类型非常明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "站姿 + 高位滑轮绳索 + 向下推压轨迹 + 肘部贴身固定",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "面拉",
+        "reason": "面拉轨迹应水平向后拉向面部且肘部外展，画面中手部明显向下运动至腹部/大腿高度。"
+      },
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常为坐姿且使用长杆，此处为站姿且使用绳索配件，动作幅度较小。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:06:39",
+      "end_time": "00:09:00",
+      "reps": 2
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 2,
+    "reason": "增加起始抓握绳索和结束放回绳索的缓冲时间。"
+  },
+  "needs_manual_review": false
+}

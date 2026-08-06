@@ -1,0 +1,50 @@
+Step 1 — 进场帧分析: 网格图前两行显示用户站在哑铃架前，右手伸向并抓取了一个黑色哑铃（Row 2, Col 2），背景为典型的健身房自由重量区，可见多层哑铃架。
+Step 2 — 器械识别: 用户直接从架子上取下哑铃并持握，随后在镜子前站立。通过镜子反射（Row 4-6）可以清晰看到用户双手各持一只哑铃，判定器械为“哑铃”。
+Step 3 — 光流验证: 虽无光流数据，但从网格图连续帧（Row 4, Col 5 至 Row 6, Col 3）可见镜中用户手臂有明显的周期性上下摆动，且伴随明显的肘关节屈伸，符合 UP/DOWN 运动轨迹。
+Step 4 — 动作判定: 镜中影像显示用户保持站姿，上臂贴近躯干，前臂向肩部方向弯起，这是典型的肱二头肌训练动作。排除动作：哑铃侧平举（镜中手臂未向两侧外展）、哑铃推肩（哑铃未超过头部高度）。判定为“哑铃弯举”。
+Step 5 — 组次统计: 观察镜中动作周期，Row 4, Col 5-8 为第1次，Row 5, Col 1-4 为第2次，Row 5, Col 5-8 为第3次，Row 6, Col 1-3 为第4次。网格范围内可见约 4 次完整动作。
+
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作5",
+  "image_path": "graph/张靖义-2026.06.11/动作5.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃弯举",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃弯举",
+      "confidence": 0.85,
+      "support": "第一人称视角可见手持哑铃，镜中反射显示站姿及明显的肘部屈伸弯举动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃", "哑铃架", "镜子"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "镜中可见双臂交替或同步将哑铃从大腿高度弯举至胸前高度，肘关节角度变化剧烈。",
+    "first_person_subject_evidence": "画面近端出现的持铃手部与镜中用户动作完全同步，且佩戴相同的手表/饰品。",
+    "uncertainty_notes": "缺少光流和IMU数据，仅凭视觉网格判断次数可能存在微小偏差。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜中全身影像明确显示了站姿肱二头肌弯举的典型轨迹，即上臂固定、前臂绕肘关节向上旋转。",
+    "rejected_or_close_candidates": [
+      {"exercise": "哑铃侧平举", "reason": "镜中手臂运动轨迹为向前上方弯曲而非向身体两侧外展。"},
+      {"exercise": "哑铃推肩", "reason": "动作过程中哑铃始终未到达肩部以上或头顶位置。"}
+    ]
+  },
+  "needs_manual_review": false,
+  "sets": [
+    {
+      "start_time": "00:30:30",
+      "end_time": "00:32:10",
+      "reps": 4
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 5,
+    "expand_after_sec": 5,
+    "reason": "包含从哑铃架取下器械的准备过程及动作结束后的放回过程。"
+  }
+}

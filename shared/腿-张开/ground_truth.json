@@ -1,0 +1,121 @@
+[
+  {
+    "start": 0,
+    "end": 48,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 48,
+    "end": 202,
+    "type": "exercise",
+    "label": "热身"
+  },
+  {
+    "start": 202,
+    "end": 301,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 301,
+    "end": 458,
+    "type": "exercise",
+    "label": "杠铃深蹲",
+    "equipment": "杠铃",
+    "reps": "6 5 5"
+  },
+  {
+    "start": 458,
+    "end": 614,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 614,
+    "end": 625,
+    "type": "exercise",
+    "label": "坐姿腿屈伸",
+    "reps": "2"
+  },
+  {
+    "start": 625,
+    "end": 790,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 790,
+    "end": 800.4,
+    "type": "exercise",
+    "label": "未知动作（无器材 ）"
+  },
+  {
+    "start": 800.4,
+    "end": 818.4,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 818.4,
+    "end": 830.8,
+    "type": "exercise",
+    "label": "未知动作（无器材 ）"
+  },
+  {
+    "start": 830.8,
+    "end": 856,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 856,
+    "end": 898,
+    "type": "exercise",
+    "label": "腿举",
+    "reps": "9 8"
+  },
+  {
+    "start": 898,
+    "end": 944.6,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 944.6,
+    "end": 953.5,
+    "type": "exercise",
+    "label": "推拉",
+    "reps": "3"
+  },
+  {
+    "start": 953.5,
+    "end": 974.8,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 974.8,
+    "end": 985.1,
+    "type": "exercise",
+    "label": "反向推胸"
+  },
+  {
+    "start": 985.1,
+    "end": 995,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 995,
+    "end": 1010,
+    "type": "exercise",
+    "label": "拉伸"
+  },
+  {
+    "start": 1010,
+    "end": 1043.1,
+    "type": "transition",
+    "label": "过渡"
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "user_folder": "8",
+  "action_id": "动作8",
+  "image_path": "graph/8/动作8.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.2,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "跑步机",
+      "exercise": "treadmill_walk_run",
+      "confidence": 0.15,
+      "support": "画面开头用户手部靠近类似跑步机扶手的结构，且伴随走动震动。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["扶手/横杆", "跑步机区域", "固定器械（背景）"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户在画面开头手扶器械，随后松开手并开始在健身房内行走，期间还拿出了手机。",
+    "movement_direction": "unknown",
+    "first_person_subject_evidence": "第一人称视角下可见用户手臂、手表以及手持手机的动作，相机随步行产生剧烈晃动。",
+    "uncertainty_notes": "视频内容主要为组间休息或转场走动，没有观察到任何连续、重复的抗阻力训练或有氧训练动作周期。"
+  },
+  "sets": [],
+  "total_sets": 0,
+  "total_reps": 0,
+  "action_disambiguation": {
+    "selected_evidence": "用户在视频大部分时间内处于行走状态，并有查看手机的行为，不符合任何特定训练动作的特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "treadmill_walk_run",
+        "reason": "虽然有走动，但背景环境在快速变化（经过柱子和其它器械），表明是在地面行走而非在跑步机上运动。"
+      },
+      {
+        "exercise": "cable_lat_pulldown",
+        "reason": "开头出现的横杆仅为用户走过或短暂接触，无下拉动作。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

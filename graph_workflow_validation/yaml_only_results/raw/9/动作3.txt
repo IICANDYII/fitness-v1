@@ -1,0 +1,45 @@
+{
+  "user_folder": "9",
+  "action_id": "动作3",
+  "image_path": "graph/9/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "selected_exercise_id": "cable_lat_pulldown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.85,
+      "support": "第一人称视角可见双手宽握横杆，从头顶上方拉至胸前，伴随钢索运动。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.25,
+      "support": "同为垂直向下的绳索动作，但握距和关节参与度更符合下拉。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "高位下拉横杆", "钢索", "滑轮系统"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "横杆从画面上方边缘出现，垂直下拉至胸部高度，随后受控回放，呈现明显的上下周期性。",
+    "first_person_subject_evidence": "用户双手出现在画面两侧握持横杆，横杆运动与相机（胸前）的轻微后仰同步，确认为本人操作。",
+    "uncertainty_notes": "由于视角受限，无法直接看到腿部压板，但从动作轨迹和横杆类型判断，高位下拉的可能性极高。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "画面中出现了典型的高位下拉宽杆，且运动方向为从上方拉向身体，符合 cable_lat_pulldown 的标准轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压通常使用短杆或绳索，且握距较窄，主要涉及肘关节；当前动作握距极宽且涉及明显的肩关节内收。"
+      },
+      {
+        "exercise": "引体向上",
+        "reason": "引体向上中杆是固定的，而画面中可见横杆相对于背景和相机发生位移，且有钢索连接。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 进场帧（前2帧）清晰显示了史密斯机的典型结构，包括两侧的竖直固定导轨、挂钩以及固定在导轨上的杠铃杆和黑色配重片。
+Step 2 — 器械识别: 画面中始终可见杠铃杆沿两侧黑色竖直导轨运动，符合规则四中史密斯机的特征。用户处于导轨框架内，身体随相机整体上下起伏，判定为史密斯机。
+Step 3 — 光流验证: 画面显示相机（用户胸前）相对于背景墙面有明显的垂直位移（UP/DOWN），且杠铃杆与相机同步运动，符合深蹲时身体重心整体升降的特征。
+Step 4 — 动作判定: 结合史密斯机器械、站姿姿态以及整体升降的运动轨迹，判定为史密斯深蹲。
+Step 5 — 组次统计: 观察到两个完整的下蹲与站起周期（第7-10帧下蹲，11-14帧站起；15-18帧下蹲，19帧站起），计为1组2次。
+
+{"user_folder": "1", "action_id": "动作2", "image_path": "graph/1/动作2.jpg", "selected_equipment": "史密斯机", "selected_exercise": "史密斯深蹲", "selected_confidence": 0.95, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "史密斯机", "exercise": "史密斯深蹲", "confidence": 0.95, "support": "进场帧可见固定导轨，训练帧显示身体重心随导轨垂直升降。"}], "context": {"visible_equipment": ["史密斯机导轨", "固定杠铃杆", "配重片"], "body_posture": "standing", "motion_cues_from_grid": "相机随身体整体上下起伏，杠铃杆在画面两侧边缘保持相对固定位置随动", "first_person_subject_evidence": "第一人称视角，双手握杠（虽未完全露全，但视角在杠铃下方同步移动），器械随相机运动", "uncertainty_notes": "无"}, "action_disambiguation": {"selected_evidence": "史密斯机固定导轨及身体整体垂直位移", "rejected_or_close_candidates": [{"exercise": "杠铃深蹲", "reason": "画面中可见明显的固定导轨，非自由杠铃"}, {"exercise": "史密斯推肩", "reason": "推肩时相机通常平视或仰视且身体不动，此处为身体整体重心升降"}]}, "needs_manual_review": false, "sets": [{"start_time": "00:03:32", "end_time": "00:04:09", "reps": 2}], "phase1_adjustment": {"expand_before_sec": 3, "expand_after_sec": 2, "reason": "增加起杠和放回钩锁的完整性"}}

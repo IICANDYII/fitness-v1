@@ -1,0 +1,44 @@
+Step 1 — 进场帧分析：进场帧显示用户处于站姿，双手在胸前自然活动，未见其走向、握持或操作任何特定的健身器械（如哑铃、杠铃、把手或绳索）。
+Step 2 — 器械识别：在整个序列中，用户双手始终保持空置状态，画面中未出现任何器械结构，背景为健身房空地。根据规则，无法识别到有效器械，判定为 UNKNOWN_EQUIPMENT。
+Step 3 — 光流验证：画面显示双手在胸前进行节律性的左右开合动作（类似拍手或动态拉伸），光流主轴为 LEFT/RIGHT。虽然动作轨迹与“夹胸”略有相似，但因完全缺乏器械负重证据，不能判定为训练动作。
+Step 4 — 动作判定：该动作不符合标准动作列表中的任何力量训练或有氧器械动作，表现为非训练性质的手部节律运动，判定为 UNKNOWN_ACTION。
+Step 5 — 组次统计：通过观察双手合拢的周期，识别到 1 组约 9 次重复动作，但因非标准动作，该统计仅供参考。
+
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作2",
+  "image_path": "graph/张靖义-2026.06.11/动作2.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.2,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "UNKNOWN_EQUIPMENT",
+      "exercise": "UNKNOWN_ACTION",
+      "confidence": 0.2,
+      "support": "用户双手空置，在胸前做节律性开合动作，无任何器械接触证据。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["无"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手在胸前做左右对称的合拢与分开动作，带有明显的节律性。",
+    "first_person_subject_evidence": "第一人称视角下可见佩戴者的双手及手腕上的黑色护具/手表，动作与相机晃动同步。",
+    "uncertainty_notes": "缺乏器械证据，动作不符合任何标准训练类目，可能是热身或非训练行为。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户双手未接触任何器械，且动作不具备力量训练的负重特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_chest_fly",
+        "reason": "虽然有左右开合动作，但画面中完全没有绳索、D型把手或配重塔运动证据。"
+      },
+      {
+        "exercise": "pushup",
+        "reason": "相机视角为平视而非俯视地面，且双手在空中活动而非支撑地面。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

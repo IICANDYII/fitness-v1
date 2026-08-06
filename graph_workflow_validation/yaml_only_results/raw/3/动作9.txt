@@ -1,0 +1,49 @@
+{
+  "user_folder": "3",
+  "action_id": "动作9",
+  "image_path": "graph/3/动作9.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.95,
+      "support": "第一人称视角下，双手宽握长横杠，钢索从上方连接，动作轨迹为垂直下拉至胸前。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "坐姿绳索划船",
+      "confidence": 0.15,
+      "support": "同为背部拉类动作，但划船钢索通常来自前方而非上方。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "高位下拉横杠",
+      "钢索",
+      "滑轮系统",
+      "配重架"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手握杠在垂直方向上做周期性的下拉与回放动作，躯干保持相对稳定，仅有轻微后仰。",
+    "first_person_subject_evidence": "画面近端可见用户双手及前臂，动作与相机视野中心同步，符合第一人称胸前相机特征。",
+    "uncertainty_notes": "无光流和IMU数据，但视觉证据极其充分，动作特征典型。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到典型的宽握下拉横杠，且钢索垂直向上延伸至滑轮，用户下拉至下巴/胸部高度，完全符合高位下拉（Lat Pulldown）的器械与动作特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "划船动作的钢索通常从水平前方拉向腹部，而本视频中钢索来自头顶上方。"
+      },
+      {
+        "exercise": "绳索下压",
+        "reason": "下压动作通常使用短杠或绳索，且主要涉及肘关节屈伸，本动作涉及明显的肩关节内收，属于大肌群拉类动作。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

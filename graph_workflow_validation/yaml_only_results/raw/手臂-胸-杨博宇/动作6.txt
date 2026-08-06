@@ -1,0 +1,49 @@
+{
+  "user_folder": "手臂-胸-杨博宇",
+  "action_id": "动作6",
+  "image_path": "graph/手臂-胸-杨博宇/动作6.jpg",
+  "selected_equipment": "固定器械",
+  "selected_exercise": "固定器械推胸",
+  "selected_exercise_id": "machine_chest_press",
+  "selected_confidence": 0.75,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "固定器械",
+      "exercise": "固定器械推胸",
+      "confidence": 0.75,
+      "support": "可见固定器械的橙色把手，用户呈坐姿，双手向前推展，符合推胸轨迹。"
+    },
+    {
+      "equipment": "固定器械",
+      "exercise": "蝴蝶机夹胸",
+      "confidence": 0.55,
+      "support": "垂直把手也常见于夹胸器械，但画面中更像向前的推力。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "橙色机械臂把手",
+      "固定器械座椅",
+      "配重块区域（背景）"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "用户在第6帧和第21帧左右抓握把手并有明显的向前推举动作，随后放回。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手从画面下方伸出抓握器械把手，且随动作有身体轻微后靠的同步感。",
+    "uncertainty_notes": "视频片段较短，动作次数较少，且光流信息缺失，仅凭关键帧判断推胸与夹胸的细微区别有一定难度。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户坐在固定器械上，双手抓握垂直把手向前推举，结合文件夹名称‘手臂-胸’，判定为固定器械推胸。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "固定器械坐姿划船",
+        "reason": "划船动作应为向后拉动把手，而画面显示把手被推离身体。"
+      },
+      {
+        "exercise": "哑铃卧推",
+        "reason": "画面中明确可见固定器械的机械臂和导轨结构，非自由力量器械。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

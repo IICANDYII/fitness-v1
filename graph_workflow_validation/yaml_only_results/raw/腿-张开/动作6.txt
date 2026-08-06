@@ -1,0 +1,43 @@
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作6",
+  "image_path": "graph/腿-张开/动作6.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.4,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "固定器械",
+      "exercise": "大腿外展 (Hip Abduction)",
+      "confidence": 0.9,
+      "support": "用户坐在带有橙色框架的固定器械上，双手握住座椅两侧把手，双腿做向外张开的动作，与文件夹名称‘腿-张开’高度吻合。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "橙色框架固定器械",
+      "黑色坐垫",
+      "侧边把手",
+      "配重片区域"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "用户从行走状态进入器械并坐下，随后双手握住把手，双腿有明显的向两侧张开的趋势。",
+    "first_person_subject_evidence": "画面显示第一人称视角下用户的手部操作把手，且相机随坐姿调整而移动，确认是佩戴者本人。",
+    "uncertainty_notes": "该动作（大腿外展/Hip Abduction）不在提供的‘标准动作名称列表’中，根据规则，置信度设为低于0.5并输出UNKNOWN。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户坐姿操作带有侧边把手的橙色腿部器械，动作模式为双腿水平外展，符合‘大腿外展机’特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "machine_leg_press",
+        "reason": "画面中未见大型足部踏板，且运动轨迹为双腿向两侧张开而非向前/斜上方蹬推。"
+      },
+      {
+        "exercise": "machine_leg_extension",
+        "reason": "器械结构不符，未见位于小腿前侧的圆柱形阻力垫。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

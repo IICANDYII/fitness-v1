@@ -1,0 +1,2314 @@
+{
+  "created_at": "2026-06-25T15:22:14.409586",
+  "source": {
+    "ground_truth_dir": "shared/*/ground_truth.json",
+    "graph_dir": "graph/*/动作N.jpg",
+    "prediction_file": "graph_workflow_validation/results/graph_action_predictions.json"
+  },
+  "alignment_method": "Order-match type=exercise entries in each shared/<folder>/ground_truth.json to graph/<folder>/动作N.jpg by natural action number. Count mismatches are flagged and not silently corrected.",
+  "merge_rule": {
+    "enabled": true,
+    "confidence_threshold": 0.8,
+    "rule": "Before order alignment, merge adjacent graph actions when selected_exercise is identical and both confidences are >= threshold. UNKNOWN actions are never merged."
+  },
+  "summary": {
+    "folders": 13,
+    "total_rows": 87,
+    "status_counts": {
+      "ok": 5,
+      "count_mismatch": 8
+    },
+    "folder_summaries": [
+      {
+        "folder": "1",
+        "ground_truth_exercise_count": 3,
+        "raw_graph_action_count": 3,
+        "merged_graph_group_count": 3,
+        "raw_alignment_status": "ok",
+        "alignment_status": "ok",
+        "merged_group_count_delta": 0
+      },
+      {
+        "folder": "2",
+        "ground_truth_exercise_count": 8,
+        "raw_graph_action_count": 8,
+        "merged_graph_group_count": 8,
+        "raw_alignment_status": "ok",
+        "alignment_status": "ok",
+        "merged_group_count_delta": 0
+      },
+      {
+        "folder": "3",
+        "ground_truth_exercise_count": 8,
+        "raw_graph_action_count": 11,
+        "merged_graph_group_count": 6,
+        "raw_alignment_status": "count_mismatch",
+        "alignment_status": "count_mismatch",
+        "merged_group_count_delta": 5
+      },
+      {
+        "folder": "4",
+        "ground_truth_exercise_count": 6,
+        "raw_graph_action_count": 10,
+        "merged_graph_group_count": 9,
+        "raw_alignment_status": "count_mismatch",
+        "alignment_status": "count_mismatch",
+        "merged_group_count_delta": 1
+      },
+      {
+        "folder": "8",
+        "ground_truth_exercise_count": 8,
+        "raw_graph_action_count": 9,
+        "merged_graph_group_count": 7,
+        "raw_alignment_status": "count_mismatch",
+        "alignment_status": "count_mismatch",
+        "merged_group_count_delta": 2
+      },
+      {
+        "folder": "9",
+        "ground_truth_exercise_count": 5,
+        "raw_graph_action_count": 6,
+        "merged_graph_group_count": 5,
+        "raw_alignment_status": "count_mismatch",
+        "alignment_status": "ok",
+        "merged_group_count_delta": 1
+      },
+      {
+        "folder": "健身-高孟琦",
+        "ground_truth_exercise_count": 4,
+        "raw_graph_action_count": 3,
+        "merged_graph_group_count": 3,
+        "raw_alignment_status": "count_mismatch",
+        "alignment_status": "count_mismatch",
+        "merged_group_count_delta": 0
+      },
+      {
+        "folder": "张靖义-2026.06.11",
+        "ground_truth_exercise_count": 9,
+        "raw_graph_action_count": 9,
+        "merged_graph_group_count": 9,
+        "raw_alignment_status": "ok",
+        "alignment_status": "ok",
+        "merged_group_count_delta": 0
+      },
+      {
+        "folder": "手臂-胸-杨博宇",
+        "ground_truth_exercise_count": 6,
+        "raw_graph_action_count": 6,
+        "merged_graph_group_count": 6,
+        "raw_alignment_status": "ok",
+        "alignment_status": "ok",
+        "merged_group_count_delta": 0
+      },
+      {
+        "folder": "肩-秦紫渝",
+        "ground_truth_exercise_count": 4,
+        "raw_graph_action_count": 6,
+        "merged_graph_group_count": 2,
+        "raw_alignment_status": "count_mismatch",
+        "alignment_status": "count_mismatch",
+        "merged_group_count_delta": 4
+      },
+      {
+        "folder": "肩-背-秦紫渝",
+        "ground_truth_exercise_count": 6,
+        "raw_graph_action_count": 5,
+        "merged_graph_group_count": 4,
+        "raw_alignment_status": "count_mismatch",
+        "alignment_status": "count_mismatch",
+        "merged_group_count_delta": 1
+      },
+      {
+        "folder": "肩背-叶翔",
+        "ground_truth_exercise_count": 5,
+        "raw_graph_action_count": 11,
+        "merged_graph_group_count": 8,
+        "raw_alignment_status": "count_mismatch",
+        "alignment_status": "count_mismatch",
+        "merged_group_count_delta": 3
+      },
+      {
+        "folder": "腿-张开",
+        "ground_truth_exercise_count": 9,
+        "raw_graph_action_count": 8,
+        "merged_graph_group_count": 7,
+        "raw_alignment_status": "count_mismatch",
+        "alignment_status": "count_mismatch",
+        "merged_group_count_delta": 1
+      }
+    ]
+  },
+  "rows": [
+    {
+      "folder": "1",
+      "sequence_index": 1,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作1",
+      "graph_action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/1/动作1.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "跑步",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 45,
+      "ground_truth_end": 176,
+      "prediction_exercise": "跑步机",
+      "prediction_equipment": "跑步机",
+      "prediction_confidence": 0.65,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "1",
+      "sequence_index": 2,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作2",
+      "graph_action_ids": [
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/1/动作2.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "史密斯机深蹲",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "7",
+      "ground_truth_start": 194,
+      "ground_truth_end": 249,
+      "prediction_exercise": "史密斯深蹲",
+      "prediction_equipment": "史密斯机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "1",
+      "sequence_index": 3,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作3",
+      "graph_action_ids": [
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/1/动作3.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "悬垂举腿",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "7",
+      "ground_truth_start": 258,
+      "ground_truth_end": 282,
+      "prediction_exercise": "引体向上",
+      "prediction_equipment": "引体向上架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "2",
+      "sequence_index": 1,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作1",
+      "graph_action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/2/动作1.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "卧推",
+      "ground_truth_equipment": "杠铃",
+      "ground_truth_reps": "8",
+      "ground_truth_start": 20,
+      "ground_truth_end": 43,
+      "prediction_exercise": "史密斯卧推",
+      "prediction_equipment": "史密斯机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "2",
+      "sequence_index": 2,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作2",
+      "graph_action_ids": [
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/2/动作2.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "高位宽距下拉",
+      "ground_truth_equipment": "高位下拉",
+      "ground_truth_reps": "3 10",
+      "ground_truth_start": 102,
+      "ground_truth_end": 150,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "高位下拉机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "2",
+      "sequence_index": 3,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作3",
+      "graph_action_ids": [
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/2/动作3.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "高位V把下拉",
+      "ground_truth_equipment": "龙门架",
+      "ground_truth_reps": "11",
+      "ground_truth_start": 201,
+      "ground_truth_end": 230,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "高位下拉机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "2",
+      "sequence_index": 4,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作4",
+      "graph_action_ids": [
+        "动作4"
+      ],
+      "graph_image_paths": [
+        "graph/2/动作4.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "绳索直杆下压·1",
+      "ground_truth_equipment": "龙门架",
+      "ground_truth_reps": null,
+      "ground_truth_start": 279,
+      "ground_truth_end": 311,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "高位下拉机",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "2",
+      "sequence_index": 5,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作5",
+      "graph_action_ids": [
+        "动作5"
+      ],
+      "graph_image_paths": [
+        "graph/2/动作5.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "绳索直杆下压·2",
+      "ground_truth_equipment": "龙门架",
+      "ground_truth_reps": "10 6 ",
+      "ground_truth_start": 333,
+      "ground_truth_end": 353,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "2",
+      "sequence_index": 6,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作6",
+      "graph_action_ids": [
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/2/动作6.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "绳索直杆下压·3",
+      "ground_truth_equipment": "龙门架",
+      "ground_truth_reps": "10",
+      "ground_truth_start": 373,
+      "ground_truth_end": 400,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "高位下拉机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "2",
+      "sequence_index": 7,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作7",
+      "graph_action_ids": [
+        "动作7"
+      ],
+      "graph_image_paths": [
+        "graph/2/动作7.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "划船",
+      "ground_truth_equipment": "坐姿划船",
+      "ground_truth_reps": "11",
+      "ground_truth_start": 433,
+      "ground_truth_end": 458,
+      "prediction_exercise": "固定器械推肩",
+      "prediction_equipment": "悍马机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "2",
+      "sequence_index": 8,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作8",
+      "graph_action_ids": [
+        "动作8"
+      ],
+      "graph_image_paths": [
+        "graph/2/动作8.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "上斜推胸",
+      "ground_truth_equipment": "悍马机",
+      "ground_truth_reps": "9",
+      "ground_truth_start": 582,
+      "ground_truth_end": 612,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "高位下拉机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "3",
+      "sequence_index": 1,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作1+动作2",
+      "graph_action_ids": [
+        "动作1",
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作1.jpg",
+        "graph/3/动作2.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": "史密斯卧推",
+      "ground_truth_equipment": "史密斯机",
+      "ground_truth_reps": "10 10",
+      "ground_truth_start": 14,
+      "ground_truth_end": 104.7,
+      "prediction_exercise": "史密斯卧推",
+      "prediction_equipment": "史密斯机",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "3",
+      "sequence_index": 2,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作3+动作4+动作5+动作6",
+      "graph_action_ids": [
+        "动作3",
+        "动作4",
+        "动作5",
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作3.jpg",
+        "graph/3/动作4.jpg",
+        "graph/3/动作5.jpg",
+        "graph/3/动作6.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": "水平哑铃卧推",
+      "ground_truth_equipment": "哑铃",
+      "ground_truth_reps": "12 10 11",
+      "ground_truth_start": 194.1,
+      "ground_truth_end": 333.4,
+      "prediction_exercise": "哑铃卧推",
+      "prediction_equipment": "哑铃",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "3",
+      "sequence_index": 3,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作7",
+      "graph_action_ids": [
+        "动作7"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作7.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "上斜 30 度哑铃卧推",
+      "ground_truth_equipment": "哑铃",
+      "ground_truth_reps": "14",
+      "ground_truth_start": 363.6,
+      "ground_truth_end": 395.1,
+      "prediction_exercise": "史密斯卧推",
+      "prediction_equipment": "史密斯机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "3",
+      "sequence_index": 4,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作8",
+      "graph_action_ids": [
+        "动作8"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作8.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "哑铃卧推",
+      "ground_truth_equipment": "哑铃",
+      "ground_truth_reps": "7 4",
+      "ground_truth_start": 415.1,
+      "ground_truth_end": 483.9,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "3",
+      "sequence_index": 5,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作9",
+      "graph_action_ids": [
+        "动作9"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作9.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "上斜史密斯卧推",
+      "ground_truth_equipment": "史密斯机",
+      "ground_truth_reps": "8",
+      "ground_truth_start": 512.4,
+      "ground_truth_end": 579.4,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "高位下拉机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "3",
+      "sequence_index": 6,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作10+动作11",
+      "graph_action_ids": [
+        "动作10",
+        "动作11"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作10.jpg",
+        "graph/3/动作11.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": "器械夹胸",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "10 10 10",
+      "ground_truth_start": 598.7,
+      "ground_truth_end": 726.5,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "3",
+      "sequence_index": 7,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": null,
+      "graph_action_ids": [],
+      "graph_image_paths": [],
+      "merge_reason": null,
+      "ground_truth_label": "直杆绳索下压",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "10 10 10",
+      "ground_truth_start": 768.5,
+      "ground_truth_end": 861.2,
+      "prediction_exercise": null,
+      "prediction_equipment": null,
+      "prediction_confidence": null,
+      "prediction_policy": null,
+      "prediction_error": null,
+      "notes": "ground_truth_extra_without_graph_group"
+    },
+    {
+      "folder": "3",
+      "sequence_index": 8,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": null,
+      "graph_action_ids": [],
+      "graph_image_paths": [],
+      "merge_reason": null,
+      "ground_truth_label": "绳索下拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "5 2 6 6",
+      "ground_truth_start": 887.5,
+      "ground_truth_end": 1012.5,
+      "prediction_exercise": null,
+      "prediction_equipment": null,
+      "prediction_confidence": null,
+      "prediction_policy": null,
+      "prediction_error": null,
+      "notes": "ground_truth_extra_without_graph_group"
+    },
+    {
+      "folder": "4",
+      "sequence_index": 1,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作1",
+      "graph_action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作1.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "宽距高位下拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "10 10 10",
+      "ground_truth_start": 20.5,
+      "ground_truth_end": 158.4,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "高位下拉机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "4",
+      "sequence_index": 2,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作2",
+      "graph_action_ids": [
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作2.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "坐姿划船",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "10 10 10",
+      "ground_truth_start": 252.3,
+      "ground_truth_end": 434.6,
+      "prediction_exercise": "坐姿绳索划船",
+      "prediction_equipment": "坐姿划船机",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "4",
+      "sequence_index": 3,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作3",
+      "graph_action_ids": [
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作3.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "反握器械高位下拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "8 10 10",
+      "ground_truth_start": 495.7,
+      "ground_truth_end": 668.2,
+      "prediction_exercise": "绳索夹胸",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.75,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "4",
+      "sequence_index": 4,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作4",
+      "graph_action_ids": [
+        "动作4"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作4.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "绳索直臂下压",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "5 6 7 7",
+      "ground_truth_start": 754.7,
+      "ground_truth_end": 921,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "4",
+      "sequence_index": 5,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作5+动作6",
+      "graph_action_ids": [
+        "动作5",
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作5.jpg",
+        "graph/4/动作6.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": "杠铃弯举",
+      "ground_truth_equipment": "杠铃",
+      "ground_truth_reps": "6 3 5 5",
+      "ground_truth_start": 970,
+      "ground_truth_end": 1060.1,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "4",
+      "sequence_index": 6,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作7",
+      "graph_action_ids": [
+        "动作7"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作7.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "哑铃弯举",
+      "ground_truth_equipment": "哑铃",
+      "ground_truth_reps": "7 5 6",
+      "ground_truth_start": 1131.2,
+      "ground_truth_end": 1240,
+      "prediction_exercise": "杠铃弯举",
+      "prediction_equipment": "杠铃",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "4",
+      "sequence_index": 7,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作8",
+      "graph_action_ids": [
+        "动作8"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作8.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": null,
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": null,
+      "ground_truth_end": null,
+      "prediction_exercise": "UNKNOWN_ACTION",
+      "prediction_equipment": "UNKNOWN_EQUIPMENT",
+      "prediction_confidence": 0.2,
+      "prediction_policy": "insufficient_evidence",
+      "prediction_error": null,
+      "notes": "graph_image_extra_without_ground_truth"
+    },
+    {
+      "folder": "4",
+      "sequence_index": 8,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作9",
+      "graph_action_ids": [
+        "动作9"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作9.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": null,
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": null,
+      "ground_truth_end": null,
+      "prediction_exercise": "哑铃侧平举",
+      "prediction_equipment": "哑铃",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": "graph_image_extra_without_ground_truth"
+    },
+    {
+      "folder": "4",
+      "sequence_index": 9,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作10",
+      "graph_action_ids": [
+        "动作10"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作10.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": null,
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": null,
+      "ground_truth_end": null,
+      "prediction_exercise": "哑铃罗马尼亚硬拉",
+      "prediction_equipment": "哑铃",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": "graph_image_extra_without_ground_truth"
+    },
+    {
+      "folder": "8",
+      "sequence_index": 1,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作1+动作2",
+      "graph_action_ids": [
+        "动作1",
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作1.jpg",
+        "graph/8/动作2.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": "跑步",
+      "ground_truth_equipment": "跑步机",
+      "ground_truth_reps": null,
+      "ground_truth_start": 67.8,
+      "ground_truth_end": 574.8,
+      "prediction_exercise": "跑步机",
+      "prediction_equipment": "跑步机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "8",
+      "sequence_index": 2,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作3",
+      "graph_action_ids": [
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作3.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "爬楼",
+      "ground_truth_equipment": "爬楼机",
+      "ground_truth_reps": null,
+      "ground_truth_start": 581.7,
+      "ground_truth_end": 673.8,
+      "prediction_exercise": "固定器械坐姿划船",
+      "prediction_equipment": "固定器械坐姿划船机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "8",
+      "sequence_index": 3,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作4+动作5",
+      "graph_action_ids": [
+        "动作4",
+        "动作5"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作4.jpg",
+        "graph/8/动作5.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": "夹胸",
+      "ground_truth_equipment": "蝴蝶机",
+      "ground_truth_reps": "15",
+      "ground_truth_start": 815.3,
+      "ground_truth_end": 849.5,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "高位下拉机",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "8",
+      "sequence_index": 4,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作6",
+      "graph_action_ids": [
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作6.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "杠铃弯举",
+      "ground_truth_equipment": "杠铃",
+      "ground_truth_reps": "4",
+      "ground_truth_start": 1001.7,
+      "ground_truth_end": 1021.8,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "8",
+      "sequence_index": 5,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作7",
+      "graph_action_ids": [
+        "动作7"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作7.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "史密斯卧推",
+      "ground_truth_equipment": "史密斯机",
+      "ground_truth_reps": "2 5 5",
+      "ground_truth_start": 1079.5,
+      "ground_truth_end": 1169.7,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "高位下拉机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "8",
+      "sequence_index": 6,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作8",
+      "graph_action_ids": [
+        "动作8"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作8.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "举腿",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "7 4",
+      "ground_truth_start": 1226.3,
+      "ground_truth_end": 1283.3,
+      "prediction_exercise": "跑步机",
+      "prediction_equipment": "跑步机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "8",
+      "sequence_index": 7,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作9",
+      "graph_action_ids": [
+        "动作9"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作9.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "直杆高位下拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "10",
+      "ground_truth_start": 1291.2,
+      "ground_truth_end": 1324.2,
+      "prediction_exercise": "固定器械推胸",
+      "prediction_equipment": "固定器械推胸机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "8",
+      "sequence_index": 8,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": null,
+      "graph_action_ids": [],
+      "graph_image_paths": [],
+      "merge_reason": null,
+      "ground_truth_label": "划船",
+      "ground_truth_equipment": "坐姿划船机",
+      "ground_truth_reps": "9",
+      "ground_truth_start": 1414.3,
+      "ground_truth_end": 1439.2,
+      "prediction_exercise": null,
+      "prediction_equipment": null,
+      "prediction_confidence": null,
+      "prediction_policy": null,
+      "prediction_error": null,
+      "notes": "ground_truth_extra_without_graph_group"
+    },
+    {
+      "folder": "9",
+      "sequence_index": 1,
+      "alignment_status": "ok",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作1",
+      "graph_action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/9/动作1.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "爬楼机",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 143.6,
+      "ground_truth_end": 337.1,
+      "prediction_exercise": "跑步机",
+      "prediction_equipment": "跑步机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "9",
+      "sequence_index": 2,
+      "alignment_status": "ok",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作2",
+      "graph_action_ids": [
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/9/动作2.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "直杆高位下拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "10 10 10",
+      "ground_truth_start": 420.9,
+      "ground_truth_end": 524.2,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "高位下拉机",
+      "prediction_confidence": 0.92,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "9",
+      "sequence_index": 3,
+      "alignment_status": "ok",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作3",
+      "graph_action_ids": [
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/9/动作3.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "绳索上拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "9 11 10",
+      "ground_truth_start": 537.6,
+      "ground_truth_end": 648.6,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "9",
+      "sequence_index": 4,
+      "alignment_status": "ok",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作4",
+      "graph_action_ids": [
+        "动作4"
+      ],
+      "graph_image_paths": [
+        "graph/9/动作4.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "坐姿划船（V型把手）",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "10 11 10",
+      "ground_truth_start": 653.8,
+      "ground_truth_end": 792.9,
+      "prediction_exercise": "绳索夹胸",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "9",
+      "sequence_index": 5,
+      "alignment_status": "ok",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作5+动作6",
+      "graph_action_ids": [
+        "动作5",
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/9/动作5.jpg",
+        "graph/9/动作6.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": "绳索下拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "10 10 10",
+      "ground_truth_start": 810.2,
+      "ground_truth_end": 936.1,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "健身-高孟琦",
+      "sequence_index": 1,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作1",
+      "graph_action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/健身-高孟琦/动作1.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "哑铃侧举",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "10",
+      "ground_truth_start": 85.3,
+      "ground_truth_end": 104.9,
+      "prediction_exercise": "UNKNOWN_ACTION",
+      "prediction_equipment": "UNKNOWN_EQUIPMENT",
+      "prediction_confidence": 0.1,
+      "prediction_policy": "insufficient_evidence",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "健身-高孟琦",
+      "sequence_index": 2,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作2",
+      "graph_action_ids": [
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/健身-高孟琦/动作2.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "哑铃夹胸",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "3",
+      "ground_truth_start": 123.3,
+      "ground_truth_end": 136.1,
+      "prediction_exercise": "史密斯卧推",
+      "prediction_equipment": "史密斯机",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "健身-高孟琦",
+      "sequence_index": 3,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作3",
+      "graph_action_ids": [
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/健身-高孟琦/动作3.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "杠铃卧推",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "2",
+      "ground_truth_start": 228.3,
+      "ground_truth_end": 259.4,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "健身-高孟琦",
+      "sequence_index": 4,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": null,
+      "graph_action_ids": [],
+      "graph_image_paths": [],
+      "merge_reason": null,
+      "ground_truth_label": "绳索下拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "11",
+      "ground_truth_start": 281.7,
+      "ground_truth_end": 320.1,
+      "prediction_exercise": null,
+      "prediction_equipment": null,
+      "prediction_confidence": null,
+      "prediction_policy": null,
+      "prediction_error": null,
+      "notes": "ground_truth_extra_without_graph_group"
+    },
+    {
+      "folder": "张靖义-2026.06.11",
+      "sequence_index": 1,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作1",
+      "graph_action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/张靖义-2026.06.11/动作1.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "热身",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 28.5,
+      "ground_truth_end": 433.6,
+      "prediction_exercise": "UNKNOWN_ACTION",
+      "prediction_equipment": "UNKNOWN_EQUIPMENT",
+      "prediction_confidence": 0.0,
+      "prediction_policy": "insufficient_evidence",
+      "prediction_error": "无法解析 JSON：\n",
+      "notes": ""
+    },
+    {
+      "folder": "张靖义-2026.06.11",
+      "sequence_index": 2,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作2",
+      "graph_action_ids": [
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/张靖义-2026.06.11/动作2.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "热身",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 496,
+      "ground_truth_end": 794.2,
+      "prediction_exercise": "UNKNOWN_ACTION",
+      "prediction_equipment": "UNKNOWN_EQUIPMENT",
+      "prediction_confidence": 0.2,
+      "prediction_policy": "insufficient_evidence",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "张靖义-2026.06.11",
+      "sequence_index": 3,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作3",
+      "graph_action_ids": [
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/张靖义-2026.06.11/动作3.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "肩背练习",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "13 12 14 12 25",
+      "ground_truth_start": 838.1,
+      "ground_truth_end": 1186.6,
+      "prediction_exercise": "UNKNOWN_ACTION",
+      "prediction_equipment": "UNKNOWN_EQUIPMENT",
+      "prediction_confidence": 0.3,
+      "prediction_policy": "insufficient_evidence",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "张靖义-2026.06.11",
+      "sequence_index": 4,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作4",
+      "graph_action_ids": [
+        "动作4"
+      ],
+      "graph_image_paths": [
+        "graph/张靖义-2026.06.11/动作4.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "提拉杠铃",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "13 14",
+      "ground_truth_start": 1250.6,
+      "ground_truth_end": 1456.9,
+      "prediction_exercise": "杠铃卧推",
+      "prediction_equipment": "杠铃",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "张靖义-2026.06.11",
+      "sequence_index": 5,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作5",
+      "graph_action_ids": [
+        "动作5"
+      ],
+      "graph_image_paths": [
+        "graph/张靖义-2026.06.11/动作5.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "举重",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "8",
+      "ground_truth_start": 1624.3,
+      "ground_truth_end": 1671.9,
+      "prediction_exercise": "哑铃弯举",
+      "prediction_equipment": "哑铃",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "张靖义-2026.06.11",
+      "sequence_index": 6,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作6",
+      "graph_action_ids": [
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/张靖义-2026.06.11/动作6.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "哑铃卧推",
+      "ground_truth_equipment": "哑铃",
+      "ground_truth_reps": "11 13 11",
+      "ground_truth_start": 1707,
+      "ground_truth_end": 2118.6,
+      "prediction_exercise": "哑铃卧推",
+      "prediction_equipment": "哑铃",
+      "prediction_confidence": 0.65,
+      "prediction_policy": "multiple_close",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "张靖义-2026.06.11",
+      "sequence_index": 7,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作7",
+      "graph_action_ids": [
+        "动作7"
+      ],
+      "graph_image_paths": [
+        "graph/张靖义-2026.06.11/动作7.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "反向推肩",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "12",
+      "ground_truth_start": 2154.9,
+      "ground_truth_end": 2202.3,
+      "prediction_exercise": "UNKNOWN_ACTION",
+      "prediction_equipment": "UNKNOWN_EQUIPMENT",
+      "prediction_confidence": 0.1,
+      "prediction_policy": "insufficient_evidence",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "张靖义-2026.06.11",
+      "sequence_index": 8,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作8",
+      "graph_action_ids": [
+        "动作8"
+      ],
+      "graph_image_paths": [
+        "graph/张靖义-2026.06.11/动作8.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "夹胸",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "9 10 12",
+      "ground_truth_start": 2281.3,
+      "ground_truth_end": 2660,
+      "prediction_exercise": "绳索夹胸",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "张靖义-2026.06.11",
+      "sequence_index": 9,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作9",
+      "graph_action_ids": [
+        "动作9"
+      ],
+      "graph_image_paths": [
+        "graph/张靖义-2026.06.11/动作9.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "拉伸",
+      "ground_truth_equipment": "球",
+      "ground_truth_reps": null,
+      "ground_truth_start": 2779.3,
+      "ground_truth_end": 2912.5,
+      "prediction_exercise": "UNKNOWN_ACTION",
+      "prediction_equipment": "UNKNOWN_EQUIPMENT",
+      "prediction_confidence": 0.1,
+      "prediction_policy": "insufficient_evidence",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "手臂-胸-杨博宇",
+      "sequence_index": 1,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作1",
+      "graph_action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/手臂-胸-杨博宇/动作1.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "热身",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 32,
+      "ground_truth_end": 364,
+      "prediction_exercise": "跑步机",
+      "prediction_equipment": "跑步机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "手臂-胸-杨博宇",
+      "sequence_index": 2,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作2",
+      "graph_action_ids": [
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/手臂-胸-杨博宇/动作2.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "杠铃弯举",
+      "ground_truth_equipment": "杠铃",
+      "ground_truth_reps": "5 5",
+      "ground_truth_start": 440,
+      "ground_truth_end": 510,
+      "prediction_exercise": "杠铃弯举",
+      "prediction_equipment": "杠铃",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "手臂-胸-杨博宇",
+      "sequence_index": 3,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作3",
+      "graph_action_ids": [
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/手臂-胸-杨博宇/动作3.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "哑铃弯举",
+      "ground_truth_equipment": "哑铃",
+      "ground_truth_reps": "10 11 9 38",
+      "ground_truth_start": 545,
+      "ground_truth_end": 853,
+      "prediction_exercise": "哑铃卧推",
+      "prediction_equipment": "哑铃",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "手臂-胸-杨博宇",
+      "sequence_index": 4,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作4",
+      "graph_action_ids": [
+        "动作4"
+      ],
+      "graph_image_paths": [
+        "graph/手臂-胸-杨博宇/动作4.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "蝴蝶机飞鸟",
+      "ground_truth_equipment": "蝴蝶机",
+      "ground_truth_reps": "15",
+      "ground_truth_start": 926,
+      "ground_truth_end": 1025,
+      "prediction_exercise": "哑铃弯举",
+      "prediction_equipment": "哑铃",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "手臂-胸-杨博宇",
+      "sequence_index": 5,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作5",
+      "graph_action_ids": [
+        "动作5"
+      ],
+      "graph_image_paths": [
+        "graph/手臂-胸-杨博宇/动作5.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "器械弯举",
+      "ground_truth_equipment": "器械",
+      "ground_truth_reps": "2",
+      "ground_truth_start": 1061,
+      "ground_truth_end": 1114,
+      "prediction_exercise": "哑铃弯举",
+      "prediction_equipment": "哑铃",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "手臂-胸-杨博宇",
+      "sequence_index": 6,
+      "alignment_status": "ok",
+      "raw_alignment_status": "ok",
+      "graph_action_id": "动作6",
+      "graph_action_ids": [
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/手臂-胸-杨博宇/动作6.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "器械推胸",
+      "ground_truth_equipment": "器械",
+      "ground_truth_reps": "5 5",
+      "ground_truth_start": 1137,
+      "ground_truth_end": 1227,
+      "prediction_exercise": "跑步机",
+      "prediction_equipment": "跑步机",
+      "prediction_confidence": 0.92,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "sequence_index": 1,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作1",
+      "graph_action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/肩-秦紫渝/动作1.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "跑步",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 21.9,
+      "ground_truth_end": 232.9,
+      "prediction_exercise": "登阶机/爬楼机",
+      "prediction_equipment": "登阶机/爬楼机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "sequence_index": 2,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作2+动作3+动作4+动作5+动作6",
+      "graph_action_ids": [
+        "动作2",
+        "动作3",
+        "动作4",
+        "动作5",
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/肩-秦紫渝/动作2.jpg",
+        "graph/肩-秦紫渝/动作3.jpg",
+        "graph/肩-秦紫渝/动作4.jpg",
+        "graph/肩-秦紫渝/动作5.jpg",
+        "graph/肩-秦紫渝/动作6.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": "绳索下拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "10 10 10 10",
+      "ground_truth_start": 257.4,
+      "ground_truth_end": 374,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "sequence_index": 3,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": null,
+      "graph_action_ids": [],
+      "graph_image_paths": [],
+      "merge_reason": null,
+      "ground_truth_label": "绳索上拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "11 10 10 10 11",
+      "ground_truth_start": 408.1,
+      "ground_truth_end": 596.3,
+      "prediction_exercise": null,
+      "prediction_equipment": null,
+      "prediction_confidence": null,
+      "prediction_policy": null,
+      "prediction_error": null,
+      "notes": "ground_truth_extra_without_graph_group"
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "sequence_index": 4,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": null,
+      "graph_action_ids": [],
+      "graph_image_paths": [],
+      "merge_reason": null,
+      "ground_truth_label": "单臂绳索下拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "10 7 10 10 9 7",
+      "ground_truth_start": 613.3,
+      "ground_truth_end": 821.1,
+      "prediction_exercise": null,
+      "prediction_equipment": null,
+      "prediction_confidence": null,
+      "prediction_policy": null,
+      "prediction_error": null,
+      "notes": "ground_truth_extra_without_graph_group"
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "sequence_index": 1,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作1",
+      "graph_action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/肩-背-秦紫渝/动作1.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "热身（跑步机）",
+      "ground_truth_equipment": "跑步机",
+      "ground_truth_reps": null,
+      "ground_truth_start": 25,
+      "ground_truth_end": 360,
+      "prediction_exercise": "跑步机",
+      "prediction_equipment": "跑步机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "sequence_index": 2,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作2+动作3",
+      "graph_action_ids": [
+        "动作2",
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/肩-背-秦紫渝/动作2.jpg",
+        "graph/肩-背-秦紫渝/动作3.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": "高位下拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "11 11 11",
+      "ground_truth_start": 400,
+      "ground_truth_end": 568,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "高位下拉机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "sequence_index": 3,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作4",
+      "graph_action_ids": [
+        "动作4"
+      ],
+      "graph_image_paths": [
+        "graph/肩-背-秦紫渝/动作4.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "坐姿划船",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "5 10 9 21",
+      "ground_truth_start": 598,
+      "ground_truth_end": 768,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "sequence_index": 4,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作5",
+      "graph_action_ids": [
+        "动作5"
+      ],
+      "graph_image_paths": [
+        "graph/肩-背-秦紫渝/动作5.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "面拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "11 10 10",
+      "ground_truth_start": 785,
+      "ground_truth_end": 925,
+      "prediction_exercise": "登阶机/爬楼机",
+      "prediction_equipment": "登阶机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "sequence_index": 5,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": null,
+      "graph_action_ids": [],
+      "graph_image_paths": [],
+      "merge_reason": null,
+      "ground_truth_label": "蝴蝶机反向飞鸟",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "2 8",
+      "ground_truth_start": 959,
+      "ground_truth_end": 1055,
+      "prediction_exercise": null,
+      "prediction_equipment": null,
+      "prediction_confidence": null,
+      "prediction_policy": null,
+      "prediction_error": null,
+      "notes": "ground_truth_extra_without_graph_group"
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "sequence_index": 6,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": null,
+      "graph_action_ids": [],
+      "graph_image_paths": [],
+      "merge_reason": null,
+      "ground_truth_label": "拉伸（跑步机）",
+      "ground_truth_equipment": "跑步机",
+      "ground_truth_reps": null,
+      "ground_truth_start": 1079,
+      "ground_truth_end": 1115,
+      "prediction_exercise": null,
+      "prediction_equipment": null,
+      "prediction_confidence": null,
+      "prediction_policy": null,
+      "prediction_error": null,
+      "notes": "ground_truth_extra_without_graph_group"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "sequence_index": 1,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作1",
+      "graph_action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/肩背-叶翔/动作1.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "爬楼机",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 36.3,
+      "ground_truth_end": 297,
+      "prediction_exercise": "登阶机/爬楼机",
+      "prediction_equipment": "登阶机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "肩背-叶翔",
+      "sequence_index": 2,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作2",
+      "graph_action_ids": [
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/肩背-叶翔/动作2.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "直杆高位下拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "12 12 12 11",
+      "ground_truth_start": 334.7,
+      "ground_truth_end": 605.9,
+      "prediction_exercise": "高位下拉",
+      "prediction_equipment": "高位下拉机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "肩背-叶翔",
+      "sequence_index": 3,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作3+动作4",
+      "graph_action_ids": [
+        "动作3",
+        "动作4"
+      ],
+      "graph_image_paths": [
+        "graph/肩背-叶翔/动作3.jpg",
+        "graph/肩背-叶翔/动作4.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": "绳索面拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "5 2 4 10 10",
+      "ground_truth_start": 652.6,
+      "ground_truth_end": 906.6,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.8,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "肩背-叶翔",
+      "sequence_index": 4,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作5",
+      "graph_action_ids": [
+        "动作5"
+      ],
+      "graph_image_paths": [
+        "graph/肩背-叶翔/动作5.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "坐姿划船",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "10 10 10",
+      "ground_truth_start": 927.2,
+      "ground_truth_end": 1083.5,
+      "prediction_exercise": "绳索弯举",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "肩背-叶翔",
+      "sequence_index": 5,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作6",
+      "graph_action_ids": [
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/肩背-叶翔/动作6.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "拉伸",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 1096.8,
+      "ground_truth_end": 1136.9,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "肩背-叶翔",
+      "sequence_index": 6,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作7",
+      "graph_action_ids": [
+        "动作7"
+      ],
+      "graph_image_paths": [
+        "graph/肩背-叶翔/动作7.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": null,
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": null,
+      "ground_truth_end": null,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.55,
+      "prediction_policy": "insufficient_evidence",
+      "prediction_error": null,
+      "notes": "graph_image_extra_without_ground_truth"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "sequence_index": 7,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作8+动作9",
+      "graph_action_ids": [
+        "动作8",
+        "动作9"
+      ],
+      "graph_image_paths": [
+        "graph/肩背-叶翔/动作8.jpg",
+        "graph/肩背-叶翔/动作9.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": null,
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": null,
+      "ground_truth_end": null,
+      "prediction_exercise": "绳索下压",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": "graph_image_extra_without_ground_truth"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "sequence_index": 8,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作10+动作11",
+      "graph_action_ids": [
+        "动作10",
+        "动作11"
+      ],
+      "graph_image_paths": [
+        "graph/肩背-叶翔/动作10.jpg",
+        "graph/肩背-叶翔/动作11.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": null,
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": null,
+      "ground_truth_end": null,
+      "prediction_exercise": "坐姿绳索划船",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": "graph_image_extra_without_ground_truth"
+    },
+    {
+      "folder": "腿-张开",
+      "sequence_index": 1,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作1",
+      "graph_action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作1.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "热身",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 48,
+      "ground_truth_end": 202,
+      "prediction_exercise": "椭圆机",
+      "prediction_equipment": "椭圆机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "腿-张开",
+      "sequence_index": 2,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作2",
+      "graph_action_ids": [
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作2.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "杠铃深蹲",
+      "ground_truth_equipment": "杠铃",
+      "ground_truth_reps": "6 5 5",
+      "ground_truth_start": 301,
+      "ground_truth_end": 458,
+      "prediction_exercise": "史密斯深蹲",
+      "prediction_equipment": "史密斯机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "腿-张开",
+      "sequence_index": 3,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作3+动作4",
+      "graph_action_ids": [
+        "动作3",
+        "动作4"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作3.jpg",
+        "graph/腿-张开/动作4.jpg"
+      ],
+      "merge_reason": "adjacent_same_prediction_conf>=0.8",
+      "ground_truth_label": "坐姿腿屈伸",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "2",
+      "ground_truth_start": 614,
+      "ground_truth_end": 625,
+      "prediction_exercise": "杠铃深蹲",
+      "prediction_equipment": "杠铃",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "腿-张开",
+      "sequence_index": 4,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作5",
+      "graph_action_ids": [
+        "动作5"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作5.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "未知动作（无器材 ）",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 790,
+      "ground_truth_end": 800.4,
+      "prediction_exercise": "坐姿腿屈伸",
+      "prediction_equipment": "坐姿腿屈伸机",
+      "prediction_confidence": 0.92,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "腿-张开",
+      "sequence_index": 5,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作6",
+      "graph_action_ids": [
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作6.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "未知动作（无器材 ）",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 818.4,
+      "ground_truth_end": 830.8,
+      "prediction_exercise": "UNKNOWN_ACTION",
+      "prediction_equipment": "UNKNOWN_EQUIPMENT",
+      "prediction_confidence": 0.45,
+      "prediction_policy": "insufficient_evidence",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "腿-张开",
+      "sequence_index": 6,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作7",
+      "graph_action_ids": [
+        "动作7"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作7.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "腿举",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "9 8",
+      "ground_truth_start": 856,
+      "ground_truth_end": 898,
+      "prediction_exercise": "腿举",
+      "prediction_equipment": "腿举机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "腿-张开",
+      "sequence_index": 7,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": "动作8",
+      "graph_action_ids": [
+        "动作8"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作8.jpg"
+      ],
+      "merge_reason": null,
+      "ground_truth_label": "推拉",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": "3",
+      "ground_truth_start": 944.6,
+      "ground_truth_end": 953.5,
+      "prediction_exercise": "绳索夹胸",
+      "prediction_equipment": "龙门架",
+      "prediction_confidence": 0.75,
+      "prediction_policy": "single_clear",
+      "prediction_error": null,
+      "notes": ""
+    },
+    {
+      "folder": "腿-张开",
+      "sequence_index": 8,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": null,
+      "graph_action_ids": [],
+      "graph_image_paths": [],
+      "merge_reason": null,
+      "ground_truth_label": "反向推胸",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 974.8,
+      "ground_truth_end": 985.1,
+      "prediction_exercise": null,
+      "prediction_equipment": null,
+      "prediction_confidence": null,
+      "prediction_policy": null,
+      "prediction_error": null,
+      "notes": "ground_truth_extra_without_graph_group"
+    },
+    {
+      "folder": "腿-张开",
+      "sequence_index": 9,
+      "alignment_status": "count_mismatch",
+      "raw_alignment_status": "count_mismatch",
+      "graph_action_id": null,
+      "graph_action_ids": [],
+      "graph_image_paths": [],
+      "merge_reason": null,
+      "ground_truth_label": "拉伸",
+      "ground_truth_equipment": null,
+      "ground_truth_reps": null,
+      "ground_truth_start": 995,
+      "ground_truth_end": 1010,
+      "prediction_exercise": null,
+      "prediction_equipment": null,
+      "prediction_confidence": null,
+      "prediction_policy": null,
+      "prediction_error": null,
+      "notes": "ground_truth_extra_without_graph_group"
+    }
+  ]
+}

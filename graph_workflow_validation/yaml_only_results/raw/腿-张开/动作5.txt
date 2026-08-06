@@ -1,0 +1,34 @@
+```json
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作5",
+  "image_path": "graph/腿-张开/动作5.jpg",
+  "selected_equipment": "固定器械",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.9,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "固定器械",
+      "exercise": "腿部外展机",
+      "confidence": 0.9,
+      "support": "画面显示用户坐姿，双腿置于挡板内侧进行向外张开的运动，属于典型的髋外展器械。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["座椅", "腿部挡板", "配重塔", "侧边把手"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "从第6行开始，用户坐稳并调整姿势；第7-8行显示双腿在水平面内做明显的向两侧张开（外展）再合拢的周期性运动。",
+    "first_person_subject_evidence": "第一人称视角下，用户双腿位于画面近端并与器械挡板同步运动，双手握持座椅两侧把手，符合佩戴者本人操作特征。",
+    "uncertainty_notes": "该动作（腿部外展/Hip Abduction）在提供的标准动作列表中缺失，因此根据规则标记为 UNKNOWN_ACTION。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户坐姿，双腿通过挡板向外侧推开，器械结构具有明显的腿部靠垫和侧向运动轨迹，符合腿部外展机特征。",
+    "rejected_or_close_candidates": [
+      {"exercise": "machine_leg_press", "reason": "腿举为双脚踩踏板向前/斜上方蹬踏，而非双腿左右开合。"},
+      {"exercise": "machine_leg_extension", "reason": "腿屈伸为膝关节伸展动作，小腿向上踢起，而非整体腿部左右开合。"}
+    ]
+  },
+  "needs_manual_review": true
+}
+```

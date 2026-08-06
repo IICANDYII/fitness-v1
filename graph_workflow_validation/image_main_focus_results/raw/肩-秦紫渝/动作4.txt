@@ -1,0 +1,54 @@
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作4",
+  "image_path": "graph/肩-秦紫渝/动作4.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "第一人称视角可见双手握持绳索附件，从高位向下方做伸展动作，符合绳索下压特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.3,
+      "support": "同样是高位向下的动作，但通常使用横杠且为坐姿，画面中更像站姿绳索下压。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "绳索附件", "滑轮"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面中可见用户双手握住绳索，从斜上方拉至身体下方，伴随明显的肘关节屈伸。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面中心出现用户双臂，且动作与相机晃动同步，绳索附件由用户直接操作。",
+    "uncertainty_notes": "仅凭拼图难以完全确认是否为面拉（Face Pull），但从手部下压的终点位置看，更符合下压动作。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 5,
+      "evidence": "从第4行开始到最后，可以观察到约5次明显的绳索下拉并回弹的周期。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 5,
+  "action_disambiguation": {
+    "selected_evidence": "高位滑轮、绳索附件、站姿、肘关节屈伸主导的向下运动。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索面拉",
+        "reason": "面拉通常将绳索拉向面部/额头，而画面中手部轨迹明显向下延伸至腹部/大腿高度。"
+      },
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常使用长横杠且为坐姿，画面中为绳索附件且用户处于站姿。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

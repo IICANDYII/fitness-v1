@@ -1,0 +1,48 @@
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作8",
+  "image_path": "graph/腿-张开/动作8.jpg",
+  "selected_equipment": "固定器械",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.5,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "固定器械",
+      "exercise": "machine_leg_press",
+      "confidence": 0.4,
+      "support": "用户处于坐姿，双手握住座椅两侧把手，符合腿部固定器械（如腿举机）的典型姿态。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["座椅把手", "器械框架", "配重区（远处可见）"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "前6帧显示用户处于坐姿且手握把手，后9帧显示用户起身并离开器械，伴随剧烈的相机晃动和视角切换。",
+    "movement_direction": "unknown",
+    "first_person_subject_evidence": "第一人称视角下可见用户双手握住器械把手，且大腿位于画面下方，与相机运动同步。",
+    "uncertainty_notes": "文件夹名‘腿-张开’暗示可能是大腿外展机（Hip Abduction），但该动作不在标准动作列表中；且拼图主要记录了动作结束和离场过程，缺乏完整的重复周期。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": null,
+      "evidence": "画面仅显示了动作的末尾及离场过程，无法观察到完整的往复周期。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": null,
+  "action_disambiguation": {
+    "selected_evidence": "用户坐姿操作带有侧边把手的固定器械，结合文件夹名称，推测为腿部训练器械。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "machine_leg_press",
+        "reason": "虽然姿态相似，但‘腿-张开’的描述更符合外展/内收器械，而非线性的腿举动作。"
+      },
+      {
+        "exercise": "machine_leg_extension",
+        "reason": "把手位置相似，但无法看到小腿的屈伸动作，且与‘张开’的描述不符。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

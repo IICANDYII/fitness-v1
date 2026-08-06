@@ -1,0 +1,50 @@
+```json
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作2",
+  "image_path": "graph/肩-秦紫渝/动作2.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.9,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.9,
+      "support": "第一人称视角下，用户双手握持绳索把手（rope attachment），在龙门架前进行明显的向下伸展动作，符合绳索下压的典型轨迹。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "绳索把手", "钢索"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握住绳索从胸口高度向下推至大腿前侧，随后受控回放，呈现周期性的上下往复运动。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面中心可见用户双手及佩戴相机的身体随动作轻微晃动，且绳索运动与相机视角高度同步。",
+    "uncertainty_notes": "虽然文件夹名为‘肩’，但当前动作视觉特征完全符合肱三头肌的绳索下压；若为肩部训练，可能是面拉（Face Pull），但轨迹更偏向下而非向后，且面拉不在标准动作列表中。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 4,
+      "evidence": "拼图中可观察到约4次完整的向下推压及回弹周期。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 4,
+  "action_disambiguation": {
+    "selected_evidence": "双手握持绳索附件，肘关节固定在身体两侧进行屈伸，运动主轴为垂直向下的UP/DOWN。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常使用长横杆且为坐姿，当前为站姿且使用绳索。"
+      },
+      {
+        "exercise": "绳索弯举",
+        "reason": "弯举为向上发力，当前动作明显为向下推压发力。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}
+```

@@ -1,0 +1,48 @@
+{
+  "user_folder": "2",
+  "action_id": "动作3",
+  "image_path": "graph/2/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.88,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.88,
+      "support": "第一人称视角可见双手握持V型把手，从头顶上方高位钢索处向下拉至胸前，符合高位下拉动作轨迹。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.35,
+      "support": "同为高位钢索向下运动，但画面中手臂上举幅度较大，更符合背部训练的拉伸感。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架/钢索机",
+      "V型把手",
+      "配重片滑轨"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "从第4帧到第9帧，可见把手从高处被拉下，随后在第10帧后开始回放，呈现明显的上下垂直运动周期。",
+    "first_person_subject_evidence": "画面近端出现用户双手握持把手，且相机视角随拉伸动作有轻微的俯仰同步，确认是佩戴者本人操作。",
+    "uncertainty_notes": "仅凭静态拼图难以精确统计完整次数，但动作类型识别证据充分。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "高位钢索连接、V型把手、双手过头起始并向下拉动、坐姿视角。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压通常肘部固定在身体两侧，而画面显示大臂有明显的上抬和下拉过程，属于肩关节主导的下拉动作。"
+      },
+      {
+        "exercise": "引体向上",
+        "reason": "画面中可见明显的钢索和移动的把手，而非固定横杆。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

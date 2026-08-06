@@ -1,0 +1,52 @@
+分析过程：
+Step 1 — 进场帧分析: 网格图前几帧显示用户已坐在器械上，正前方有明显的推胸把手和配重片塔结构，属于典型的坐姿固定器械。
+Step 2 — 器械识别: 根据规则四和规则六C，用户处于坐姿，把手位于胸前正前方，且可见配重片塔（插销选重），判定为固定器械推胸机。
+Step 3 — 光流验证: 画面显示用户双手握住把手向前推出（FORWARD）并收回（BACKWARD），符合推胸动作的线性轨迹，而非夹胸的弧形轨迹。
+Step 4 — 动作判定: 综合坐姿、前方把手、向前推的动作特征，判定为固定器械推胸。
+Step 5 — 组次统计: 观察到约4次完整的推举循环，动作节奏稳定。
+
+{
+  "user_folder": "8",
+  "action_id": "动作9",
+  "image_path": "graph/8/动作9.jpg",
+  "selected_equipment": "固定器械推胸机",
+  "selected_exercise": "固定器械推胸",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "固定器械推胸机",
+      "exercise": "固定器械推胸",
+      "confidence": 0.85,
+      "support": "坐姿平视，双手握住胸前把手向前推出，可见配重塔结构。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["固定器械推胸机", "配重片塔", "推胸把手"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手握住前方把手，做水平向前的推举动作，随后收回，循环往复。",
+    "first_person_subject_evidence": "第一人称视角，用户双手及左手腕表随器械同步运动。",
+    "uncertainty_notes": "缺少光流和IMU数据，仅凭视觉判断次数，置信度略微下调。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "把手起始位置在胸前，动作方向为向前推出，符合推胸特征。",
+    "rejected_or_close_candidates": [
+      {"exercise": "蝴蝶机夹胸", "reason": "夹胸动作把手通常在身体两侧且轨迹为圆弧，此处为直线向前推。"},
+      {"exercise": "固定器械坐姿划船", "reason": "划船为向后拉，此处动作方向明显为向前推。"}
+    ]
+  },
+  "needs_manual_review": false,
+  "exercise_id": "machine_chest_press",
+  "sets": [
+    {
+      "start_time": "00:24:21",
+      "end_time": "00:24:53",
+      "reps": 4
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 3,
+    "expand_after_sec": 2,
+    "reason": "增加起始就位和结束放回把手的缓冲时间。"
+  }
+}

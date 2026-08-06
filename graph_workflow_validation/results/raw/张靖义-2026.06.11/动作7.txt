@@ -1,0 +1,44 @@
+Step 1 — 进场帧分析：进场帧显示用户双手伸向前方接触器械框架，背景可见龙门架的白色立柱和配重塔结构，但用户并未握持把手。
+Step 2 — 器械识别：虽然用户身处龙门架（cable machine）旁，但在整个片段中，用户双手始终处于自然下垂或做手势状态，未实际操作钢索或配件，无有效器械使用证据。
+Step 3 — 光流验证：画面无周期性运动轨迹，光流仅表现为随机的相机微动，不存在符合力量训练特征的往复周期。
+Step 4 — 动作判定：视频记录的是用户与前方一名灰色T恤男子（疑似教练或伙伴）交流的过程，用户本人处于站立休息状态，未执行任何训练动作。
+Step 5 — 组次统计：无有效动作周期，判定为 0 组 0 次。
+
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作7",
+  "image_path": "graph/张靖义-2026.06.11/动作7.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.1,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "UNKNOWN_ACTION",
+      "confidence": 0.1,
+      "support": "背景可见龙门架结构，但用户仅在站立交流，无动作证据"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架立柱", "配重塔"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "无周期性往复运动，仅见用户手部手势交流",
+    "first_person_subject_evidence": "画面下方多次出现用户本人的双手进行手势表达，视角随用户头部转动而平移",
+    "uncertainty_notes": "该片段完全属于组间休息或交谈，不包含任何有效的力量训练动作"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户未接触器械配件，无发力动作，无周期性光流。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "虽然靠近龙门架，但用户双手未握住把手，无下压轨迹"
+      },
+      {
+        "exercise": "高位下拉",
+        "reason": "用户处于站立姿态且未操作钢索"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

@@ -1,0 +1,49 @@
+{
+  "user_folder": "健身-高孟琦",
+  "action_id": "动作2",
+  "image_path": "graph/健身-高孟琦/动作2.jpg",
+  "selected_equipment": "史密斯机",
+  "selected_exercise": "史密斯卧推",
+  "exercise_id": "smith_bench_press",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯卧推",
+      "confidence": 0.85,
+      "support": "镜子反射显示用户仰卧在长凳上进行推举，且画面边缘可见史密斯机导轨结构。"
+    },
+    {
+      "equipment": "杠铃",
+      "exercise": "杠铃卧推",
+      "confidence": 0.3,
+      "support": "动作轨迹为卧推，但画面中的固定导轨特征更符合史密斯机。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "史密斯机导轨",
+      "杠铃杆",
+      "卧推凳"
+    ],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "杠铃杆在胸前做垂直于躯干的往复运动，从第一人称视角看为明显的上下位移。",
+    "first_person_subject_evidence": "用户双手握持杠铃杆，且镜中反射的动作与相机视角同步。",
+    "uncertainty_notes": "虽然没有IMU和光流，但镜子提供的侧面视角极大地提高了动作和姿态判定的准确性。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜子反射明确显示用户处于仰卧（supine）姿态，且画面左侧和右侧边缘可见史密斯机的垂直导轨和安全挂钩，排除了自由杠铃的可能性。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "史密斯推肩",
+        "reason": "镜中显示用户为仰卧位而非坐姿垂直位。"
+      },
+      {
+        "exercise": "史密斯深蹲",
+        "reason": "用户姿态为仰卧，并非站立位，且正在进行上肢推举动作。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 画面前几帧展示了大型垂直排列的控制面板，面板中心下方有显著的红色急停按钮，两侧配有固定扶手，符合高端有氧器械的典型构造。
+Step 2 — 器械识别: 依据规则 6B，该器械具有正对面部的独立大屏幕面板、红色急停按钮，且用户处于站立姿态、无车座，排除动感单车；扶手固定不随身体摆动，排除椭圆机；判定为登阶机。
+Step 3 — 光流验证: 观察到用户左腿在画面左侧有明显的向上抬起并向下踏步的动作，且相机视角随身体重心有节奏地上下起伏，符合登阶机的运动特征。
+Step 4 — 动作判定: 综合器械外观（大型面板、固定扶手）与踏步运动轨迹，判定动作为登阶机/爬楼机。
+Step 5 — 组次统计: 视频记录了从 00:18:01 到 00:18:35 的一段持续有氧运动过程，计为 1 组。
+
+{"user_folder": "肩-背-秦紫渝", "action_id": "动作5", "image_path": "graph/肩-背-秦紫渝/动作5.jpg", "selected_equipment": "登阶机", "selected_exercise": "登阶机/爬楼机", "selected_exercise_id": "stepmill", "selected_confidence": 0.95, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "登阶机", "exercise": "登阶机/爬楼机", "confidence": 0.95, "support": "可见大型独立控制面板、红色急停按钮，用户站姿进行踏步动作，无车座。"}], "context": {"visible_equipment": ["大型控制面板", "红色急停按钮", "固定扶手", "踏板"], "body_posture": "standing", "motion_cues_from_grid": "用户腿部在画面左侧有明显的上下交替踏步动作，随后手部伸向控制面板。", "first_person_subject_evidence": "用户腿部和手部从相机近端出现，动作与视角移动同步。", "uncertainty_notes": "缺少光流和IMU数据，但视觉特征极其符合登阶机。"}, "action_disambiguation": {"selected_evidence": "符合规则6B中登山机/登阶机的全部特征：大型面板正对面部、红色按钮、站姿无车座、上下起伏感。", "rejected_or_close_candidates": [{"exercise": "跑步机", "reason": "面板虽像，但动作轨迹为垂直踏步而非水平迈步。"}, {"exercise": "健身车/动感单车", "reason": "无车座，且用户处于站立姿态。"}]}, "sets": [{"start_time": "00:18:01", "end_time": "00:18:35", "reps": 1}], "phase1_adjustment": {"expand_before_sec": 0, "expand_after_sec": 0, "reason": "区间完整"}, "needs_manual_review": false}

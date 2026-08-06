@@ -1,0 +1,45 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作6",
+  "image_path": "graph/肩背-叶翔/动作6.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "坐姿绳索划船",
+  "exercise_id": "cable_seated_row",
+  "selected_confidence": 0.88,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "坐姿绳索划船",
+      "confidence": 0.88,
+      "support": "可见用户坐在划船机位，双手握持V型把手，钢索连接前方配重，躯干随动作前后摆动。"
+    },
+    {
+      "equipment": "固定器械",
+      "exercise": "固定器械坐姿划船",
+      "confidence": 0.35,
+      "support": "同为划船动作，但画面中钢索和V型把手特征更符合绳索划船。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架/绳索划船机", "V型把手", "钢索", "配重片堆"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "第1-8帧用户处于准备/观察状态；第9-12帧入座并抓取把手；第13-15帧显示明显的拉回（向后）和放回（向前）的划船周期。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手从画面两侧伸向正前方的把手，且相机随用户躯干的划船发力同步前后移动。",
+    "uncertainty_notes": "缺少IMU和光流数据，仅凭视觉判断次数可能存在误差，但动作类型非常明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户坐在划船机位，双手操作V型把手进行水平拉动，相机（胸前）随躯干有明显的前后位移，符合坐姿绳索划船特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "运动轨迹为水平向后拉动而非垂直向下，且用户处于低位坐姿面对水平钢索。"
+      },
+      {
+        "exercise": "杠铃俯身划船",
+        "reason": "用户为坐姿而非站立俯身，且使用的是绳索器械而非自由杠铃。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

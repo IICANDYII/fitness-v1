@@ -1,0 +1,54 @@
+{
+  "user_folder": "4",
+  "action_id": "动作10",
+  "image_path": "graph/4/动作10.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "dumbbell_lateral_raise",
+  "selected_confidence": 0.65,
+  "confidence_policy": "multiple_close",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "dumbbell_lateral_raise",
+      "confidence": 0.65,
+      "support": "第一人称视角下双手握持哑铃向两侧上方做弧线运动，符合侧平举轨迹。"
+    },
+    {
+      "equipment": "哑铃",
+      "exercise": "dumbbell_shoulder_press",
+      "confidence": 0.5,
+      "support": "哑铃最终举至较高位置，不排除是推肩动作的起始或结束阶段。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃", "背景中的史密斯机", "龙门架"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "前6帧显示哑铃从低位向两侧高位抬起，随后哑铃垂在身体两侧，用户保持站立不动。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面下方出现用户双手握持哑铃，且动作与相机抖动同步。",
+    "uncertainty_notes": "有效运动时间极短（仅前几帧），后续大部分时间为站立待机，难以判断完整组数和动作连贯性。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 1,
+      "evidence": "仅在第一排前几帧观察到一个完整的上抬动作。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 1,
+  "action_disambiguation": {
+    "selected_evidence": "用户双手握持哑铃，手臂向身体两侧外展上抬，轨迹呈弧线而非垂直向上推举。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "dumbbell_shoulder_press",
+        "reason": "推肩通常轨迹更偏向垂直向上，且肘部会有明显的屈伸过程，此处更像手臂伸直的外展。"
+      },
+      {
+        "exercise": "dumbbell_biceps_curl",
+        "reason": "哑铃抬升高度超过肩部，且没有明显的肘关节大幅度屈曲动作。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

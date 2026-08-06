@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 网格图前两行显示用户走向器械区，经过跑步机，最后坐到一台配有黑色坐垫和腿部挡板滚垫的器械上。
+Step 2 — 器械识别: 用户处于坐姿，画面下方出现双腿，小腿前侧（胫骨处）压在圆柱形泡棉滚垫上。根据规则四，这是典型的坐姿腿屈伸机特征。
+Step 3 — 光流验证: 画面底部显示用户双腿从垂直向下位置向上踢起至水平，随后缓慢落下，呈现明显的上下弧形周期性运动，符合腿屈伸动作轨迹。
+Step 4 — 动作判定: 综合坐姿、小腿前侧滚垫以及向上踢伸的动作，判定为坐姿腿屈伸。
+Step 5 — 组次统计: 从第8行开始观察到明显的动作循环，每行约完成1次完整的踢起与下放，至网格结束共观察到约4次重复。
+
+{"user_folder": "腿-张开", "action_id": "动作5", "image_path": "graph/腿-张开/动作5.jpg", "selected_equipment": "坐姿腿屈伸机", "selected_exercise": "坐姿腿屈伸", "selected_confidence": 0.92, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "坐姿腿屈伸机", "exercise": "坐姿腿屈伸", "confidence": 0.92, "support": "第一人称视角下可见双腿前侧压在滚垫上，并做向上踢伸动作，符合坐姿腿屈伸特征。"}], "context": {"visible_equipment": ["坐姿腿屈伸机", "黑色坐垫", "小腿滚垫"], "body_posture": "seated", "motion_cues_from_grid": "双腿从画面底部向上方踢起至接近水平，然后回落，具有明显的周期性。", "first_person_subject_evidence": "画面下方的双腿运动与相机视角同步，且用户双手在动作开始前有调节器械的动作。", "uncertainty_notes": "缺少光流数据，但视觉特征极其明显，不确定性极低。"}, "action_disambiguation": {"selected_evidence": "坐姿状态下，小腿前侧接触滚垫并向上伸展膝关节。", "rejected_or_close_candidates": [{"exercise": "坐姿腿弯举", "reason": "腿弯举的滚垫应在脚后跟/小腿后侧，且动作方向是向下/向后收，与画面相反。"}, {"exercise": "腿举", "reason": "腿举需要脚踩大型踏板，且是整体蹬伸动作，画面中明显是小腿绕膝关节旋转。"}]}, "needs_manual_review": false}

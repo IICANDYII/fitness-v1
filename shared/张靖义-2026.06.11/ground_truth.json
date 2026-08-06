@@ -1,0 +1,124 @@
+[
+  {
+    "start": 0,
+    "end": 28.5,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 28.5,
+    "end": 433.6,
+    "type": "exercise",
+    "label": "热身"
+  },
+  {
+    "start": 433.6,
+    "end": 496,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 496,
+    "end": 794.2,
+    "type": "exercise",
+    "label": "热身"
+  },
+  {
+    "start": 794.2,
+    "end": 838.1,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 838.1,
+    "end": 1186.6,
+    "type": "exercise",
+    "label": "肩背练习",
+    "reps": "13 12 14 12 25"
+  },
+  {
+    "start": 1186.6,
+    "end": 1250.6,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 1250.6,
+    "end": 1456.9,
+    "type": "exercise",
+    "label": "提拉杠铃",
+    "reps": "13 14"
+  },
+  {
+    "start": 1456.9,
+    "end": 1624.3,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 1624.3,
+    "end": 1671.9,
+    "type": "exercise",
+    "label": "举重",
+    "reps": "8"
+  },
+  {
+    "start": 1671.9,
+    "end": 1707,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 1707,
+    "end": 2118.6,
+    "type": "exercise",
+    "label": "哑铃卧推",
+    "equipment": "哑铃",
+    "reps": "11 13 11"
+  },
+  {
+    "start": 2118.6,
+    "end": 2154.9,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 2154.9,
+    "end": 2202.3,
+    "type": "exercise",
+    "label": "反向推肩",
+    "reps": "12"
+  },
+  {
+    "start": 2202.3,
+    "end": 2281.3,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 2281.3,
+    "end": 2660,
+    "type": "exercise",
+    "label": "夹胸",
+    "reps": "9 10 12"
+  },
+  {
+    "start": 2660,
+    "end": 2779.3,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 2779.3,
+    "end": 2912.5,
+    "type": "exercise",
+    "label": "拉伸",
+    "equipment": "球"
+  },
+  {
+    "start": 2912.5,
+    "end": 2922.9,
+    "type": "transition",
+    "label": "过渡"
+  }
+]

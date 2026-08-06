@@ -1,0 +1,48 @@
+{
+  "user_folder": "3",
+  "action_id": "动作5",
+  "image_path": "graph/3/动作5.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "UNKNOWN_ACTION",
+      "confidence": 0.85,
+      "support": "视觉特征明确为哑铃飞鸟 (Dumbbell Fly)，但该动作不在标准动作列表中。"
+    },
+    {
+      "equipment": "哑铃",
+      "exercise": "dumbbell_bench_press",
+      "confidence": 0.3,
+      "support": "同为仰卧哑铃胸部训练，但当前动作轨迹为弧线开合而非线性推举。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃", "健身房天花板/线性灯管"],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "哑铃从身体两侧向胸部上方中线合拢，呈现明显的水平内收弧线运动轨迹。",
+    "first_person_subject_evidence": "第一人称视角下，双手握持哑铃从画面边缘向中心运动，且背景随呼吸/发力有轻微同步晃动。",
+    "uncertainty_notes": "动作本身非常清晰，唯一的不确定性源于标准动作列表缺失‘哑铃飞鸟’这一具体项。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户处于仰卧位，双手握持哑铃进行大弧度的左右开合运动，肘部角度相对固定，符合哑铃飞鸟（Dumbbell Fly）的典型特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "dumbbell_bench_press",
+        "reason": "卧推应伴随明显的肘关节屈伸和垂直向上的线性推举，而此动作更多是肩关节的水平内收。"
+      },
+      {
+        "exercise": "dumbbell_lateral_raise",
+        "reason": "侧平举通常在站姿或坐姿下进行肩外展运动，当前仰卧姿态及向中线合拢的轨迹与之不符。"
+      },
+      {
+        "exercise": "dumbbell_shoulder_press",
+        "reason": "推肩为垂直过顶推举，视角应为水平向前，而非仰视天花板。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

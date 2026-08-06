@@ -1,0 +1,45 @@
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作3",
+  "image_path": "graph/腿-张开/动作3.jpg",
+  "selected_equipment": "杠铃",
+  "selected_exercise": "杠铃深蹲",
+  "selected_exercise_id": "barbell_squat",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "杠铃",
+      "exercise": "杠铃深蹲",
+      "confidence": 0.95,
+      "support": "进场帧可见红色深蹲架和自由杠铃；镜中清晰可见用户将杠铃扛在肩背部进行下蹲和站起动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["红色深蹲架", "自由杠铃", "配重片", "镜子"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "相机随身体重心下移后升起，镜中同步显示深蹲全过程。",
+    "first_person_subject_evidence": "第一人称视角下双手握杠，且镜中人物动作与相机位移完全同步。",
+    "uncertainty_notes": "无明显不确定性，视觉证据非常充分。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "进场帧确认是自由杠铃而非史密斯机；镜中反射确认杠铃位于背部而非胸前或手中，排除硬拉或推举。",
+    "rejected_or_close_candidates": [
+      {"exercise": "史密斯深蹲", "reason": "画面中未见固定导轨，杠铃为自由移动状态。"},
+      {"exercise": "杠铃硬拉", "reason": "杠铃位置在肩背部而非垂于体前。"}
+    ]
+  },
+  "needs_manual_review": false,
+  "sets": [
+    {
+      "start_time": "00:06:00",
+      "end_time": "00:06:25",
+      "reps": 1
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 2,
+    "reason": "动作包含完整的取杠准备和放回过程。"
+  }
+}

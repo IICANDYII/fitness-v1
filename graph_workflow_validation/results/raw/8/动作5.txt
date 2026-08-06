@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 画面前几帧显示用户双手已向上伸出并握住一根宽大的黑色横杆，背景可见橙色的器械顶部框架和天花板灯光，相机处于明显的仰视角度。
+Step 2 — 器械识别: 根据规则六A，用户处于坐姿且操作从上方垂下的宽横杆，器械结构符合典型的高位下拉机。
+Step 3 — 光流验证: 观察网格图序列，横杆从画面上方边缘大幅度向下拉动至胸前位置（相机近端），随后受控升回原位，呈现清晰的垂直上下轨迹。
+Step 4 — 动作判定: 综合坐姿、仰视视角以及宽杆的大幅度下拉轨迹，判定动作为高位下拉。
+Step 5 — 组次统计: 在20秒的片段中，通过横杆的起落周期可观察到约3次完整的动作重复。
+
+{"user_folder": "8", "action_id": "动作5", "image_path": "graph/8/动作5.jpg", "selected_equipment": "高位下拉机", "selected_exercise": "高位下拉", "selected_confidence": 0.92, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "高位下拉机", "exercise": "高位下拉", "exercise_id": "cable_lat_pulldown", "confidence": 0.92, "support": "第一人称视角下，双手握持宽横杆从头顶上方大幅度拉向胸口，背景为固定的器械框架。"}], "context": {"visible_equipment": ["宽横杆", "钢索", "橙色器械框架"], "body_posture": "seated", "motion_cues_from_grid": "横杆在画面中呈现明显的上下往复运动，拉动幅度大，轨迹垂直。", "first_person_subject_evidence": "用户双手出现在画面两侧并同步操作横杆，视角随拉动动作有轻微的身体后仰感。", "uncertainty_notes": "虽然缺少IMU和光流数据，但高位下拉的视觉特征（宽杆、垂直下拉、仰视视角）极其典型且无遮挡。"}, "action_disambiguation": {"selected_evidence": "坐姿仰视视角结合宽杆从上方垂直下拉至胸前的动作模式。", "rejected_or_close_candidates": [{"exercise": "引体向上", "reason": "引体向上中横杆相对环境静止，而此处横杆相对背景明显下移。"}, {"exercise": "绳索下压", "reason": "绳索下压通常为站姿且动作幅度较小，手部不经过头顶，与此处大幅度下拉不符。"}]}, "sets": [{"start_time": "00:19:02", "end_time": "00:19:22", "reps": 3}], "needs_manual_review": false}

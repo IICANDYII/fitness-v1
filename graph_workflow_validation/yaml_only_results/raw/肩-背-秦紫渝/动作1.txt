@@ -1,0 +1,38 @@
+{
+  "user_folder": "肩-背-秦紫渝",
+  "action_id": "动作1",
+  "image_path": "graph/肩-背-秦紫渝/动作1.jpg",
+  "selected_equipment": "跑步机",
+  "selected_exercise": "跑步机",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.95,
+      "support": "第一人称视角可见典型跑步机控制面板，双手握住两侧扶手，画面随步伐有规律地上下晃动。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["跑步机控制面板", "扶手", "显示屏"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面呈现持续的、有节奏的轻微上下起伏，符合步行或跑步时的身体重心移动。",
+    "first_person_subject_evidence": "双手出现在画面两侧并握住器械扶手，视角随身体运动同步晃动。",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "控制面板布局（含停止键、速度调节）、双手握持位置以及步行的节奏感。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "椭圆机",
+        "reason": "椭圆机把手通常会前后摆动，且控制面板设计略有不同。"
+      },
+      {
+        "exercise": "登阶机/爬楼机",
+        "reason": "爬楼机的垂直位移感通常更强，且控制面板高度和角度与此不同。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

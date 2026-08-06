@@ -1,0 +1,39 @@
+Step 1 — 进场帧分析：网格图前几帧显示用户双手握住器械两侧的固定扶手，背景为健身房开阔区域。第14帧清晰可见大型电子控制面板，面板中央有显著的红色圆形急停按钮，这是跑步机或登山机的典型特征。
+Step 2 — 器械识别：根据规则 6B，画面中出现了正对镜头的大型控制面板及红色急停按钮，且用户双手握住的是两侧固定的扶手栏杆（非随身体摆动的动臂），排除了椭圆机。画面伴随节奏性晃动，符合有氧器械特征。结合第14帧的面板样式和第4-12帧的运动视角，判定为跑步机。
+Step 3 — 光流验证：画面呈现持续的、节奏性的上下起伏和轻微前后晃动，符合在跑步机上步行或慢跑的相机运动模式。
+Step 4 — 动作判定：综合器械特征（大面板、红按钮、固定扶手）与运动模式，判定为跑步机步行/跑步。
+Step 5 — 组次统计：有氧运动计为 1 组持续运动，不统计重复次数。
+
+{
+  "user_folder": "8",
+  "action_id": "动作8",
+  "image_path": "graph/8/动作8.jpg",
+  "selected_equipment": "跑步机",
+  "selected_exercise": "跑步机",
+  "selected_exercise_id": "treadmill_walk_run",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.95,
+      "support": "第14帧可见带有红色急停按钮的大型控制面板，双手握住固定扶手，画面有节奏性晃动。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["跑步机控制面板", "红色急停按钮", "固定扶手栏杆"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面持续节奏性上下起伏，背景物体（如橙色墙壁）位置随步伐发生微小透视变化。",
+    "first_person_subject_evidence": "第一人称视角下双手握住扶手，且相机晃动频率与步行节奏一致。",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "第14帧的控制面板细节（红色急停按钮）是判定跑步机的核心证据。",
+    "rejected_or_close_candidates": [
+      {"exercise": "登阶机/爬楼机", "reason": "虽然也有大面板，但画面晃动模式更接近平地走/跑，且未见明显的台阶循环移动。"},
+      {"exercise": "椭圆机", "reason": "扶手固定不动，未见随身体前后摆动的长臂动杆。"}
+    ]
+  },
+  "needs_manual_review": false
+}

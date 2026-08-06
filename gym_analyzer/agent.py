@@ -34,6 +34,10 @@ class GymAnalyzerAgent:
     """Agent that analyzes workout videos by calling tools via an LLM."""
 
     def __init__(self, model: str = config.AGENT_MODEL):
+        if not config.GATEWAY_KEY:
+            raise EnvironmentError(
+                "未设置 NEXTROUTER_API_KEY 或 API_KEY，无法调用视频分析 LLM。"
+            )
         self.model = model
         self.url = f"{config.GATEWAY_URL}/chat/completions"
         self.headers = {

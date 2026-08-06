@@ -1,0 +1,63 @@
+Step 1 — 进场帧分析: 网格图前几帧显示用户已坐在器械上，双手握住一个V型把手，前方有明显的钢索连接至配重系统，大腿上方有黑色泡棉挡板用于固定身体。
+Step 2 — 器械识别: 采用规则三和规则六进行排查。用户处于坐姿，相机平视前方，钢索从正前方水平方向拉来，且画面下方可见大腿固定挡板，这完全符合坐姿划船类器械的特征。
+Step 3 — 光流验证: 画面中双手和把手呈现明显的“由远及近（拉回）”和“由近及远（放回）”的循环，属于典型的 FORWARD/BACKWARD 运动模式，验证了“拉”的动作属性。
+Step 4 — 动作判定: 综合坐姿、水平钢索来向、向腹部拉动的轨迹，判定为“坐姿绳索划船”。
+Step 5 — 组次统计: 观察把手靠近胸部的周期，在 50 帧网格中大约完成了 5 次完整的拉伸往复。
+
+{
+  "user_folder": "4",
+  "action_id": "动作2",
+  "image_path": "graph/4/动作2.jpg",
+  "selected_equipment": "坐姿划船机",
+  "selected_exercise": "坐姿绳索划船",
+  "selected_exercise_id": "cable_seated_row",
+  "selected_confidence": 0.9,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "坐姿划船机",
+      "exercise": "坐姿绳索划船",
+      "confidence": 0.9,
+      "support": "坐姿，水平钢索拉向腹部，可见大腿固定挡板。"
+    },
+    {
+      "equipment": "固定器械划船机",
+      "exercise": "固定器械坐姿划船",
+      "confidence": 0.1,
+      "support": "若该器械为非钢索连接的连杆结构，但视觉上钢索特征更明显。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["V型把手", "钢索", "大腿固定泡棉垫", "配重塔结构"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手持把手在水平方向上做前后往复运动，拉回时肘部向后收缩。",
+    "first_person_subject_evidence": "画面下方出现用户双臂，且把手运动与相机视角同步，符合第一人称特征。",
+    "uncertainty_notes": "缺少光流和IMU数据，仅凭视觉判断次数可能存在微小误差。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "坐姿状态下，钢索从正前方水平拉向身体，且有大腿固定装置，排除高位下拉（上方来向）和推胸（反向运动）。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉的钢索应从头顶上方垂下，而此处钢索为水平来向。"
+      },
+      {
+        "exercise": "固定器械推胸",
+        "reason": "推胸为向外推出的发力模式，此处为向后拉回的发力模式。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:04:11",
+      "end_time": "00:07:28",
+      "reps": 5
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 3,
+    "expand_after_sec": 2,
+    "reason": "增加起始就位和结束放回把手的完整性。"
+  },
+  "needs_manual_review": false
+}

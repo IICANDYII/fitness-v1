@@ -1,0 +1,50 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作5",
+  "image_path": "graph/肩背-叶翔/动作5.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "exercise_id": "cable_triceps_pushdown",
+      "confidence": 0.92,
+      "support": "镜中清晰可见用户站姿面对龙门架，上臂贴紧躯干，肘关节做屈伸动作将横杆向下压，第一人称视角把手同步上下移动。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "exercise_id": "cable_lat_pulldown",
+      "confidence": 0.25,
+      "support": "同为上方钢索下拉动作，但用户为站姿且肘部运动轨迹符合肱三头肌训练而非背部下拉。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架 (Cable Machine)",
+      "直杆/曲杆把手",
+      "钢索"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "第一人称视角中，把手从画面上方出现并向下移动，随后返回；镜中同步显示用户进行站姿下压动作。",
+    "first_person_subject_evidence": "第一人称视角中的把手运动与镜中用户（佩戴相机者）的手部动作完全同步。",
+    "uncertainty_notes": "无明显不确定性，镜中证据非常直接。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜中人像显示典型的站姿肱三头肌下压姿态：双脚站稳，大臂固定，仅前臂绕肘关节上下摆动。第一人称视角把手位于胸前正前方，符合下压轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常为坐姿，且动作涉及肩关节大幅度内收/伸展，而此处主要是肘关节屈伸。"
+      },
+      {
+        "exercise": "绳索弯举",
+        "reason": "弯举钢索应来自下方，此处钢索明显来自上方。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

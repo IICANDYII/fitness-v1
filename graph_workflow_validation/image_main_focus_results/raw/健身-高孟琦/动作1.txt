@@ -1,0 +1,43 @@
+{
+  "user_folder": "健身-高孟琦",
+  "action_id": "动作1",
+  "image_path": "graph/健身-高孟琦/动作1.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.2,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃弯举",
+      "confidence": 0.2,
+      "support": "第一帧显示用户双手握持哑铃，但后续帧仅见行走"
+    },
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃侧平举",
+      "confidence": 0.1,
+      "support": "手持哑铃站立，但无外展动作"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃", "哑铃架", "镜子"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "第一帧用户低头看手中的哑铃，随后视角抬起并在健身房内走动，伴随大幅度转头和环境观察",
+    "movement_direction": "unknown",
+    "first_person_subject_evidence": "第一帧近端可见用户双手握持哑铃，随后视角随身体走动而平移旋转",
+    "uncertainty_notes": "拼图中除第一帧外，其余帧均在行走或观察环境，未捕捉到任何有效的动作重复周期（Repetitions）"
+  },
+  "sets": [],
+  "total_sets": 0,
+  "total_reps": 0,
+  "action_disambiguation": {
+    "selected_evidence": "拼图显示用户在第一帧握持哑铃后即开始在健身房内行走，镜中影像也证实用户处于移动状态而非训练状态",
+    "rejected_or_close_candidates": [
+      {"exercise": "dumbbell_biceps_curl", "reason": "无肘关节屈伸往复运动"},
+      {"exercise": "dumbbell_lateral_raise", "reason": "无手臂侧向外展运动"},
+      {"exercise": "dumbbell_squat", "reason": "无身体重心上下起伏"}
+    ]
+  },
+  "needs_manual_review": true
+}

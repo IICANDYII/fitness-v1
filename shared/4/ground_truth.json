@@ -1,0 +1,88 @@
+[
+  {
+    "start": 0,
+    "end": 20.5,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 20.5,
+    "end": 158.4,
+    "type": "exercise",
+    "label": "宽距高位下拉",
+    "reps": "10 10 10"
+  },
+  {
+    "start": 158.4,
+    "end": 252.3,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 252.3,
+    "end": 434.6,
+    "type": "exercise",
+    "label": "坐姿划船",
+    "reps": "10 10 10"
+  },
+  {
+    "start": 434.6,
+    "end": 495.7,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 495.7,
+    "end": 668.2,
+    "type": "exercise",
+    "label": "反握器械高位下拉",
+    "reps": "8 10 10"
+  },
+  {
+    "start": 668.2,
+    "end": 754.7,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 754.7,
+    "end": 921,
+    "type": "exercise",
+    "label": "绳索直臂下压",
+    "reps": "5 6 7 7"
+  },
+  {
+    "start": 921,
+    "end": 970,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 970,
+    "end": 1060.1,
+    "type": "exercise",
+    "label": "杠铃弯举",
+    "equipment": "杠铃",
+    "reps": "6 3 5 5"
+  },
+  {
+    "start": 1060.1,
+    "end": 1131.2,
+    "type": "transition",
+    "label": "过渡"
+  },
+  {
+    "start": 1131.2,
+    "end": 1240,
+    "type": "exercise",
+    "label": "哑铃弯举",
+    "equipment": "哑铃",
+    "reps": "7 5 6"
+  },
+  {
+    "start": 1240,
+    "end": 1247.8,
+    "type": "transition",
+    "label": "过渡"
+  }
+]

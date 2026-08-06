@@ -1,0 +1,49 @@
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作6",
+  "image_path": "graph/肩-秦紫渝/动作6.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.65,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.65,
+      "support": "用户站立于龙门架前，右手抓握高位滑轮把手并向下牵拉，符合绳索下压动作轨迹。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索侧平举",
+      "confidence": 0.35,
+      "support": "考虑到用户文件夹名为‘肩’，可能在进行某种肩部绳索动作，但高位滑轮更符合下压类动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "钢索",
+      "把手",
+      "配重片"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "从第9帧到第11帧，可以看到用户右手向上伸出抓握把手，随后向下发力牵引钢索。",
+    "first_person_subject_evidence": "第一人称视角下可见用户右手操作器械，且动作与镜中反射的黑色衣服用户完全同步。",
+    "uncertainty_notes": "视频片段较短，仅记录了动作的起始阶段；文件夹名为‘肩’与识别出的‘手臂’动作存在部位冲突，导致置信度下调。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜中可见用户站立，滑轮固定在高位，右手执行从高到低的线性拉动动作，这是绳索下压（Triceps Pushdown）的标准起始模式。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常为坐姿且双臂同时操作，画面中用户为站立单臂操作。"
+      },
+      {
+        "exercise": "绳索侧平举",
+        "reason": "侧平举通常使用低位滑轮向上拉动，而画面中滑轮位于高位且动作为向下压。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

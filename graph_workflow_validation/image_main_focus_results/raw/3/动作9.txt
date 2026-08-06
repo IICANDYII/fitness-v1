@@ -1,0 +1,48 @@
+{
+  "user_folder": "3",
+  "action_id": "动作9",
+  "image_path": "graph/3/动作9.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.95,
+      "support": "第一人称视角下，双手握持宽杆，钢索从上方连接，动作轨迹为从头顶上方拉至胸前，符合高位下拉特征。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["高位下拉宽杆", "钢索", "龙门架/高位下拉机框架"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手握杠做垂直向下的拉动动作，随后受控回放。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面中心可见用户双手握住横杠，且横杠运动与相机（胸前）位置有明显的相对位移，符合佩戴者本人操作。",
+    "uncertainty_notes": "视觉证据非常充分，动作模式单一且清晰。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 6,
+      "evidence": "从拼图网格观察，大约每 8 帧完成一次完整的下拉与回放周期，共计约 6 次重复。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 6,
+  "action_disambiguation": {
+    "selected_evidence": "宽握横杠、上方钢索连接、垂直下拉至胸前的运动轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "划船动作钢索通常从前方水平拉向腹部，而此处钢索明显来自上方。"
+      },
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压通常为窄握且仅有肘关节屈伸，此处为宽握且伴随明显的肩关节内收动作。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,50 @@
+{
+  "user_folder": "9",
+  "action_id": "动作4",
+  "image_path": "graph/9/动作4.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "坐姿绳索划船",
+  "exercise_id": "cable_seated_row",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "坐姿绳索划船",
+      "confidence": 0.92,
+      "support": "可见坐姿脚踏板、钢索及D型把手，用户进行水平拉拽动作。"
+    },
+    {
+      "equipment": "固定器械",
+      "exercise": "固定器械坐姿划船",
+      "confidence": 0.45,
+      "support": "同为划船动作，但画面中钢索特征明显，优先判定为绳索类。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架钢索",
+      "D型把手",
+      "器械脚踏板",
+      "配重片导轨"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "用户双手握住把手，将钢索从前方拉向腹部（BACKWARD），然后受控放回（FORWARD），形成周期性往复。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手及前臂在画面两侧近端操作把手，双脚踩在前方踏板上，动作与相机轻微晃动同步。",
+    "uncertainty_notes": "光线较暗，但器械结构和运动轨迹非常典型，不确定性极低。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "明确的坐姿（可见脚踏和腿部位置）、水平拉拽轨迹、钢索连接的把手，完全符合坐姿绳索划船的定义。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "运动轨迹为水平前后，而非从头顶向下的垂直轨迹。"
+      },
+      {
+        "exercise": "固定器械推胸",
+        "reason": "动作为向身体方向拉回，而非向外推离。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

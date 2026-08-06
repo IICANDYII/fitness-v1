@@ -1,0 +1,48 @@
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作7",
+  "image_path": "graph/张靖义-2026.06.11/动作7.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.1,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_biceps_curl",
+      "confidence": 0.2,
+      "support": "用户站在龙门架前，手部曾接触下方拉柄，但未见动作行程"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_triceps_pushdown",
+      "confidence": 0.15,
+      "support": "龙门架常见动作，但无下压证据"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "滑轮",
+      "钢索"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "全程无周期性往复运动，画面显示用户主要处于站立静止状态，并与前方人员交谈。",
+    "first_person_subject_evidence": "画面下方可见用户手部在起始几帧接触器械，随后双手自然下垂或插兜，身体保持站立。",
+    "uncertainty_notes": "视频记录的 58 帧内未观察到任何有效的训练动作重复，疑似为组间休息、准备阶段或交谈过程。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "关键帧显示用户在整个区间内始终保持站立姿态，与一名身穿灰色 T 恤的男子面对面交谈，无任何抗阻力动作的位移轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_biceps_curl",
+        "reason": "虽身处龙门架前，但未见手臂屈伸及负重移动。"
+      },
+      {
+        "exercise": "cable_triceps_pushdown",
+        "reason": "无下压动作证据，用户双手未持续握持把手。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

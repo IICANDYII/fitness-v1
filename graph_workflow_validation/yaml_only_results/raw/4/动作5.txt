@@ -1,0 +1,44 @@
+{
+  "user_folder": "4",
+  "action_id": "动作5",
+  "image_path": "graph/4/动作5.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.92,
+      "support": "第一人称视角下清晰可见双手抓握高位滑轮连接的黑色双头绳索，进行向下的肘关节伸展动作。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索弯举",
+      "confidence": 0.12,
+      "support": "同属绳索动作，但滑轮位于高位且动作为下压，故排除弯举。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.1,
+      "support": "同为高位向下拉动，但用户为站姿且使用绳索针对手臂三头肌，而非坐姿宽杆下拉。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "双头绳索附件", "滑轮钢索结构"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手在胸前抓握绳索，向下发力延伸至大腿前侧，随后受控回放，形成明显的上下往复周期。",
+    "first_person_subject_evidence": "画面下方直接出现当前用户的左右双手及前臂，并与绳索附件直接接触，视野随动作轻微同步晃动。",
+    "uncertainty_notes": "虽然缺少IMU和光流数据，但第一人称视角下的绳索器械特征和三头肌下压轨迹极其典型，不确定性极低。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "高位固定的双头绳索附件、用户站姿、双手握持并向下做肘关节屈伸（伸肘发力）的视觉闭环。",
+    "rejected_or_close_candidates": [
+      {"exercise": "绳索弯举", "reason": "滑轮位于上方，动作发力方向向下，与弯举的向上卷屈相反。"},
+      {"exercise": "高位下拉", "reason": "用户处于站姿，且双手紧密并拢抓握绳索，属于典型的孤立手臂训练而非背部下拉。"}
+    ]
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,54 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作3",
+  "image_path": "graph/肩背-叶翔/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "cable_triceps_pushdown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_triceps_pushdown",
+      "confidence": 0.85,
+      "support": "第一人称视角下，用户双手握持龙门架横杆，上臂贴近躯干，进行下压动作。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_biceps_curl",
+      "confidence": 0.1,
+      "support": "同样使用龙门架和横杆，但运动方向相反（向上弯举）。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "直杆/曲杆把手", "钢索", "配重片塔"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面中横杆从胸部高度向下移动至腹部/大腿前侧，随后回弹，具有明显的上下往复周期。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "第一人称视角中，用户佩戴运动手表的双手直接握持并操作横杆，且横杆运动与相机视角同步。",
+    "uncertainty_notes": "仅凭拼图无法精确判断每组的呼吸和肌肉发力细节，但动作轨迹和器械非常明确。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 12,
+      "evidence": "拼图显示了从准备到连续下压的过程，目测约有10-12次完整往复。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 12,
+  "action_disambiguation": {
+    "selected_evidence": "用户站姿面对龙门架，双手正握横杆，肘关节做屈伸运动将横杆向下压，符合绳索下压特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_lat_pulldown",
+        "reason": "高位下拉通常为坐姿且下拉幅度更大，此处用户为站姿且动作范围集中在腹部前方。"
+      },
+      {
+        "exercise": "cable_biceps_curl",
+        "reason": "弯举是向上发力，而画面显示钢索连接在上方，用户向下发力。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

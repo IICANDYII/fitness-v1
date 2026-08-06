@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 网格图起始帧显示用户处于坐姿，视角仰视，双手正向上方伸出准备抓握悬挂的宽横杆，背景可见典型的健身房配重塔框架和镜子。
+Step 2 — 器械识别: 观察到宽横杆配件、连接顶部的钢索以及坐姿仰视的视角，符合高位下拉机的标准结构；根据规则 6A，坐姿且从头顶大幅度下拉，判定为高位下拉机。
+Step 3 — 光流验证: 连续帧显示横杆从画面上方拉向镜头（胸前）并随后返回，呈现清晰的垂直往复运动，符合下拉动作的轨迹。
+Step 4 — 动作判定: 综合器械特征（宽横杆、高位滑轮）与动作模式（坐姿、垂直下拉），判定为高位下拉。
+Step 5 — 组次统计: 通过观察横杆在画面中的起伏周期，可识别出约 7 次完整的动作重复，判定为 1 组训练。
+
+{"equipment": "高位下拉机", "exercise": "高位下拉", "exercise_id": "cable_lat_pulldown", "confidence": 0.95, "sets": [{"start_time": "00:00:16", "end_time": "00:03:25", "reps": 7}], "phase1_adjustment": {"expand_before_sec": 0, "expand_after_sec": 0, "reason": "当前区间已完整覆盖动作过程"}, "selected_equipment": "高位下拉机", "selected_exercise": "高位下拉", "selected_confidence": 0.95, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "高位下拉机", "exercise": "高位下拉", "confidence": 0.95, "support": "第一人称视角仰视，使用宽横杆从头顶向下拉至胸前，典型的坐姿高位下拉。"}], "context": {"visible_equipment": ["宽横杆", "钢索", "滑轮", "配重塔"], "body_posture": "seated", "motion_cues_from_grid": "横杆在画面上方与胸前之间做垂直往复运动。", "first_person_subject_evidence": "双手从相机两侧伸出操作横杆，视角随动作有轻微的躯干后仰。", "uncertainty_notes": "时间跨度较长，可能包含较长的准备或结束后的停留时间。"}, "action_disambiguation": {"selected_evidence": "宽横杆配件、垂直向下的拉动轨迹、坐姿仰视视角。", "rejected_or_close_candidates": [{"exercise": "绳索下压", "reason": "绳索下压为站姿，且手部运动范围在胸部以下，此处为头顶到胸部。"}, {"exercise": "坐姿绳索划船", "reason": "划船的绳索来自前方水平方向，此处明显来自头顶上方。"}]}, "needs_manual_review": false}

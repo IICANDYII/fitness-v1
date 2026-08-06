@@ -1,0 +1,54 @@
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作5",
+  "image_path": "graph/肩-秦紫渝/动作5.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "第一人称视角可见双手握持绳索附件（rope attachment），动作轨迹为从上向下按压，符合绳索下压特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.3,
+      "support": "同样是向下牵拉绳索，但通常使用横杆且伴随明显的背部收缩，画面中更像针对肱三头肌的下压。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架钢索", "绳索把手", "配重滑轨"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面显示双手握住绳索从高位向低位（腹部/大腿方向）移动，随后受控回放。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面中心出现用户双手握持绳索，且相机随身体发力有轻微同步震动。",
+    "uncertainty_notes": "仅凭拼图难以判断精确的肘部固定情况，但绳索附件和下压轨迹非常典型。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 3,
+      "evidence": "拼图中可观察到约3次完整的从高位拉下到回弹的周期。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 3,
+  "action_disambiguation": {
+    "selected_evidence": "观察到典型的绳索附件（双头绳）以及由上至下的按压动作，这是肱三头肌绳索下压的标志性特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常使用长横杆且用户处于坐姿，此处为站姿且使用绳索，更符合下压动作。"
+      },
+      {
+        "exercise": "绳索面拉",
+        "reason": "面拉的轨迹是向面部水平拉动，而此处轨迹明显向下。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,63 @@
+Step 1 — 进场帧分析: 进场帧（第1-2帧）显示用户正走向一台 Technogym（泰诺健）品牌的综合训练架或引体向上架，上方有明显的水平横杆结构，前方有大面积镜子。
+Step 2 — 器械识别: 观察第4-10帧，用户双手握住上方横杆。通过镜子（规则五）可以清晰看到用户全身悬挂并向上拉起，身体相对于横杆上升。该器械为引体向上架或综合架的横杆部分。
+Step 3 — 光流验证: 画面中横杆不断靠近相机（胸前），且镜中反射显示身体整体垂直上升，符合 UP/DOWN 运动轨迹，且发力方向为向上拉。
+Step 4 — 动作判定: 综合第一人称视角（横杆靠近胸口）和镜中证据（悬挂、身体上升、无辅助踏板），判定为引体向上。
+Step 5 — 组次统计: 10帧画面覆盖了约18秒，第6帧和第10帧分别为两次动作的顶点，观察到一个完整的往复周期及第二个周期的上升段，预计该片段内包含约 2-3 次动作。
+
+{
+  "user_folder": "1",
+  "action_id": "动作3",
+  "image_path": "graph/1/动作3.jpg",
+  "selected_equipment": "引体向上架",
+  "selected_exercise": "引体向上",
+  "selected_exercise_id": "pullup",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "引体向上架",
+      "exercise": "引体向上",
+      "confidence": 0.85,
+      "support": "第一人称视角下横杆靠近胸部，镜中反射显示用户悬挂并拉起全身。"
+    },
+    {
+      "equipment": "辅助引体向上机",
+      "exercise": "辅助引体向上",
+      "confidence": 0.1,
+      "support": "器械结构相似，但镜中未见明显的配重辅助踏板。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["Technogym 引体向上横杆", "综合训练架", "镜子"],
+    "body_posture": "hanging",
+    "motion_cues_from_grid": "相机（用户胸部）向横杆靠近，镜中显示身体垂直向上位移。",
+    "first_person_subject_evidence": "双手握杠动作与相机运动同步，镜中人动作与第一人称视角完全一致。",
+    "uncertainty_notes": "缺少光流数据，仅凭抽帧判断次数可能存在微小偏差。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜子中清晰的全身运动轨迹排除了坐姿下拉的可能性；横杆的固定状态排除了杠铃类动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉是坐姿且杆向人移动，此处是人向杆移动（镜中可见全身升降）。"
+      },
+      {
+        "exercise": "辅助引体向上",
+        "reason": "镜中观察用户双腿自然下垂，未见辅助配重垫支撑膝盖或脚部。"
+      }
+    ]
+  },
+  "needs_manual_review": false,
+  "sets": [
+    {
+      "start_time": "00:04:23",
+      "end_time": "00:04:41",
+      "reps": 3
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 3,
+    "expand_after_sec": 2,
+    "reason": "引体向上需要起始的悬挂准备和结束的落地缓冲。"
+  }
+}

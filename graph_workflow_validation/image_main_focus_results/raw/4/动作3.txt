@@ -1,0 +1,60 @@
+{
+  "user_folder": "4",
+  "action_id": "动作3",
+  "image_path": "graph/4/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "cable_chest_fly",
+  "selected_confidence": 0.65,
+  "confidence_policy": "multiple_close",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_chest_fly",
+      "confidence": 0.65,
+      "support": "第一人称视角下双手握持绳索手柄，从高位向斜下方做夹胸动作，符合高位绳索夹胸轨迹。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_lat_pulldown",
+      "confidence": 0.4,
+      "support": "双手从高位下拉，但轨迹更偏向身体中线而非垂直下拉，且用户处于站姿而非坐姿。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_triceps_pushdown",
+      "confidence": 0.3,
+      "support": "存在向下按压的动作，但手臂外展幅度较大，更符合夹胸特征。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["绳索手柄", "龙门架框架", "健身长凳（背景）"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "前两排显示双手从高处外侧向低处内侧拉动绳索；第三排起动作停止，用户保持站立。",
+    "movement_direction": "down_down",
+    "first_person_subject_evidence": "画面近端出现用户双臂及手部，且手部动作与相机视角同步移动。",
+    "uncertainty_notes": "动作持续时间极短（仅前两排），后续大部分时间为站立休息，导致动作特征捕捉不充分。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 2,
+      "evidence": "前两排网格中可观察到两次明显的手臂从高位下拉至胸前的往复动作。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 2,
+  "action_disambiguation": {
+    "selected_evidence": "用户站姿，双手握持独立绳索手柄，动作轨迹为从高向低、从外向内的弧线，这是典型的绳索夹胸（High-to-Low Cable Fly）特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_lat_pulldown",
+        "reason": "高位下拉通常使用长杆且为坐姿，画面中为独立手柄且用户站立。"
+      },
+      {
+        "exercise": "cable_triceps_pushdown",
+        "reason": "下压动作通常要求大臂固定在躯干两侧，画面中手臂有明显的水平内收动作。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

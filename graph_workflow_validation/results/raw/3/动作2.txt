@@ -1,0 +1,56 @@
+{
+  "user_folder": "3",
+  "action_id": "动作2",
+  "image_path": "graph/3/动作2.jpg",
+  "selected_equipment": "史密斯机",
+  "selected_exercise": "史密斯卧推",
+  "selected_exercise_id": "smith_bench_press",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯卧推",
+      "confidence": 0.95,
+      "support": "第一人称视角仰卧，可见史密斯机固定导轨及挂钩，杠铃在胸部上方做垂直推举动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "史密斯机导轨",
+      "史密斯机横杆",
+      "挂钩结构",
+      "天花板灯光"
+    ],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "横杆在画面中由近及远（向上推起）再由远及近（向下放回），呈现典型的推举轨迹。",
+    "first_person_subject_evidence": "用户双手握持横杆，相机随胸部起伏，视角完全符合仰卧在史密斯机下的第一人称特征。",
+    "uncertainty_notes": "无光流和IMU数据，但视觉证据极其充分，导轨特征明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "画面中清晰可见横杆连接在两侧的垂直固定导轨上，且带有史密斯机特有的旋转挂钩；相机朝向天花板，证明用户处于仰卧姿态。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "杠铃卧推",
+        "reason": "画面中存在明显的固定导轨，排除了自由杠铃的可能性。"
+      },
+      {
+        "exercise": "史密斯推肩",
+        "reason": "推肩通常为坐姿，相机视角会更偏向前方而非直视正上方天花板，且横杆起始位置更靠近颈部而非胸部正上方。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:01:11",
+      "end_time": "00:01:38",
+      "reps": 5
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 5,
+    "expand_after_sec": 4,
+    "reason": "史密斯卧推需要起杆（旋转解锁）和回位（旋转锁定）的时间，建议前后扩展以包含完整动作周期。"
+  },
+  "needs_manual_review": false
+}

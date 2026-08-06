@@ -1,0 +1,47 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作7",
+  "image_path": "graph/肩背-叶翔/动作7.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.1,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.2,
+      "support": "前两帧显示用户双手握持龙门架绳索附件，处于起始位"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.1,
+      "support": "手部位置较高，但绳索附件通常不用于标准高位下拉"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架/绳索机",
+      "绳索附件 (Rope Attachment)"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "仅在第1-2帧看到手部接触器械，从第3帧起用户松开器械并保持站立、走动或查看手机，无连续周期性运动",
+    "first_person_subject_evidence": "画面前两帧近端出现用户双手握持动作，与相机视角同步",
+    "uncertainty_notes": "视频绝大部分时间处于非训练状态（组间休息或转场），无完整动作次数，无法判定具体练习"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "视频中90%以上的帧显示用户处于站立休息或走动状态，仅开篇有极短的器械接触，不足以构成一个训练组",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_triceps_pushdown",
+        "reason": "虽有绳索附件，但未观察到下压行程及重复次数"
+      },
+      {
+        "exercise": "cable_lat_pulldown",
+        "reason": "器械结构相似，但用户未坐下且附件不符"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

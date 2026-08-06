@@ -1,0 +1,49 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作11",
+  "image_path": "graph/肩背-叶翔/动作11.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "坐姿绳索划船",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "坐姿绳索划船",
+      "confidence": 0.95,
+      "support": "第一人称视角下，用户双手握持V型把手，双脚踩在踏板上，将绳索从前方拉向躯干，符合坐姿划船特征。"
+    },
+    {
+      "equipment": "固定器械",
+      "exercise": "固定器械坐姿划船",
+      "confidence": 0.35,
+      "support": "同为划船动作，但画面中可见明显的钢索和滑轮结构，更符合绳索类器械。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架/绳索划船机",
+      "V型把手",
+      "钢索",
+      "脚踏板"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "从第8帧到第38帧，可以看到把手和钢索在前后方向（靠近/远离相机）做周期性往复运动，伴随手臂的屈伸。",
+    "first_person_subject_evidence": "画面下方出现用户双手握持把手，且相机随躯干有轻微的前后晃动，与划船动作同步。",
+    "uncertainty_notes": "无。动作特征极其典型，器械与动作匹配度高。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到用户处于坐姿，双脚踩在器械踏板上，双手通过V型把手拉动前方连接的钢索向腹部靠拢，这是典型的坐姿绳索划船动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "钢索来自前方而非头顶上方，且运动轨迹为水平前后而非垂直上下。"
+      },
+      {
+        "exercise": "固定器械推胸",
+        "reason": "运动方向为向后拉而非向前推，且器械结构为绳索而非推胸杠杆。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,54 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作5",
+  "image_path": "graph/肩背-叶翔/动作5.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索弯举",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索弯举",
+      "confidence": 0.92,
+      "support": "第一人称视角可见双手握持连接钢索的横杆，镜中反射明确显示用户站姿进行肱二头肌弯举动作。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索直立划船",
+      "confidence": 0.3,
+      "support": "同样是站姿向上拉动横杆，但镜中肘部外展特征不明显，更符合弯举轨迹。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "钢索", "直杆把手", "配重滑轨"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "横杆从画面底部（腰部高度）向上移动至胸前，随后下放，呈现明显的周期性上下运动。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "用户双手始终握持横杆，横杆运动与相机（身体）的轻微晃动同步，镜中反射确认是佩戴者本人。",
+    "uncertainty_notes": "无光流和IMU，但视觉证据（尤其是镜面反射）非常清晰，不确定性极低。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 2,
+      "evidence": "拼图中可观察到两次完整的上升和下降周期（第1-12帧为第一次，第13-18帧为第二次的上升阶段）。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 2,
+  "action_disambiguation": {
+    "selected_evidence": "镜中反射清晰显示用户站姿、上臂固定于躯干两侧、肘关节屈伸带动横杆上升，这是典型的绳索弯举动作。钢索连接在龙门架底部滑轮。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压是从上向下推，而画面中钢索从下方拉起，方向相反。"
+      },
+      {
+        "exercise": "绳索直立划船",
+        "reason": "直立划船通常伴随肘部大幅度向两侧外展且手部高度更高，镜中动作更符合弯举的弧线轨迹。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

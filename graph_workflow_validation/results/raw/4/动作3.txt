@@ -1,0 +1,61 @@
+{
+  "user_folder": "4",
+  "action_id": "动作3",
+  "image_path": "graph/4/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索夹胸",
+  "selected_id": "cable_chest_fly",
+  "selected_confidence": 0.75,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索夹胸",
+      "confidence": 0.75,
+      "support": "站姿，双手持D型把手，绳索从上方高位滑轮引出，双手向胸前下方做合拢动作，符合高位绳索夹胸特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.3,
+      "support": "同样是站姿且绳索从上方来，但画面中手臂摆动幅度大，肘部未固定在身体两侧，更符合夹胸而非三头下压。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架滑轮高度调节杆",
+      "D型把手",
+      "钢索"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "前两排显示双手持握把手从高处向身体中线下方拉动，随后在第三排开始松开器械并站立观察环境。",
+    "first_person_subject_evidence": "第一人称视角下可见双手操作把手，且相机随身体发力有轻微俯仰晃动。",
+    "uncertainty_notes": "缺少光流数据，仅凭视觉判断动作轨迹；动作在视频前半段结束，后半段为组间休息/走动。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到用户处于站姿，双手握住从上方垂下的D型把手，动作轨迹为从身体两侧高位向胸前下方合拢，这是典型的绳索夹胸（高位）动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉通常为坐姿且使用长杆，此处用户为站姿且使用独立D型把手。"
+      },
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压要求肘部固定，此处可见大臂有明显的内收动作，属于胸部训练而非三头肌训练。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:08:16",
+      "end_time": "00:08:34",
+      "reps": 5
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 0,
+    "reason": "动作起始于视频开头，结束于约18秒处，后续均为无效动作，无需向后扩展。"
+  },
+  "needs_manual_review": false
+}

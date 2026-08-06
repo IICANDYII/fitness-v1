@@ -1,0 +1,54 @@
+{
+  "user_folder": "肩-背-秦紫渝",
+  "action_id": "动作4",
+  "image_path": "graph/肩-背-秦紫渝/动作4.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.92,
+      "support": "第一人称视角清晰可见双手握持绳索附件（rope attachment），从胸前位置向下延伸至大腿两侧，符合绳索下压轨迹。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "面拉",
+      "confidence": 0.15,
+      "support": "同样使用绳索附件，但面拉通常向面部拉动且肘部外展，图中轨迹明显向下。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架 (Cable Machine)", "绳索附件 (Rope Attachment)", "配重片"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握住绳索，肘部相对固定在身体两侧，前臂做下压和回放的周期性运动。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面中心下方出现用户双手握持绳索，且随着动作进行，相机（胸前）有轻微的同步震动，背景中其他人处于静止或不同步状态。",
+    "uncertainty_notes": "无光流和IMU数据，但视觉特征极其典型，不确定性极低。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 6,
+      "evidence": "从拼图第一行开始到最后一行，可观察到约6次完整的下压-回弹周期。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 6,
+  "action_disambiguation": {
+    "selected_evidence": "用户双手握持绳索附件，运动轨迹为从上向下延伸，肘关节做屈伸运动，符合肱三头肌训练的绳索下压特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "面拉",
+        "reason": "面拉的拉动方向是向后指向面部，而图中双手最终位置在身体下方。"
+      },
+      {
+        "exercise": "绳索弯举",
+        "reason": "弯举是从下向上拉，图中起始位置在高处。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

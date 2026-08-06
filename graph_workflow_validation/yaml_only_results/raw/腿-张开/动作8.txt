@@ -1,0 +1,40 @@
+```json
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作8",
+  "image_path": "graph/腿-张开/动作8.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.35,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "固定器械",
+      "exercise": "UNKNOWN_ACTION",
+      "confidence": 0.45,
+      "support": "文件夹名‘腿-张开’暗示为腿外展动作（Hip Abduction），画面中可见用户大腿及用于稳定的侧边手柄，但该动作不在标准列表中。"
+    },
+    {
+      "equipment": "固定器械",
+      "exercise": "machine_leg_press",
+      "confidence": 0.2,
+      "support": "坐姿且涉及腿部运动，但无明确的踏板蹬伸证据。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["红色框架的固定器械", "银色D型手柄"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "画面前几帧出现大腿近景及手持手柄稳定身体的动作，随后用户起身离开器械。",
+    "first_person_subject_evidence": "第一人称视角下可见用户自己的大腿（棕色区域）和双手握持器械手柄。",
+    "uncertainty_notes": "画面大部分被遮挡或处于极近距离，无法看清器械全貌；文件夹名提示的动作不在标准动作列表中，导致无法匹配具体exercise_id。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "根据文件夹名‘腿-张开’及画面中出现的坐姿大腿近景，推测为坐姿腿外展（Hip Abduction）。",
+    "rejected_or_close_candidates": [
+      {"exercise": "machine_leg_press", "reason": "虽然同为腿部器械，但‘张开’动作与腿举的蹬伸轨迹不符"},
+      {"exercise": "cable_chest_fly", "reason": "虽然画面中出现了类似D型拉手，但与文件夹‘腿’部标签冲突，且姿态更接近坐姿腿部训练"}
+    ]
+  },
+  "needs_manual_review": true
+}
+```

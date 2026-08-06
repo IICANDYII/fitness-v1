@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness Balance v4 — 3D 曲面</title>
+<style>
+  :root{
+    --bg:#faf9f5;--surface:#fff;--surface2:#f1efe8;--line:rgba(0,0,0,.14);--line2:rgba(0,0,0,.28);
+    --txt:#1f1e1b;--txt2:#5f5e5a;--txt3:#888780;--blue:#185FA5;
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#1f1e1b;--surface:#2c2c2a;--surface2:#262522;--line:rgba(255,255,255,.16);--line2:rgba(255,255,255,.3);
+    --txt:#f1efe8;--txt2:#b4b2a9;--txt3:#888780;--blue:#85B7EB;}}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--txt);padding:24px;line-height:1.5;}
+  .wrap{max-width:1100px;margin:0 auto;}
+  h1{font-size:22px;font-weight:500;margin:0 0 4px;}
+  .sub{color:var(--txt2);font-size:13px;margin:0 0 16px;}
+  .top{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin-bottom:14px;}
+  .top label{font-size:13px;color:var(--txt2);margin-right:6px;}
+  .axbadge{font-size:11px;font-weight:500;padding:2px 7px;border-radius:5px;background:var(--surface2);color:var(--txt2);margin-right:4px;}
+  select{height:34px;border:.5px solid var(--line2);border-radius:8px;background:var(--surface);color:var(--txt);font-size:13px;padding:0 8px;}
+  .panel{background:var(--surface);border:.5px solid var(--line);border-radius:12px;padding:6px;}
+  #plot{width:100%;height:520px;}
+  .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:18px;}
+  .cg{background:var(--surface);border:.5px solid var(--line);border-radius:10px;padding:10px 14px;}
+  .row{display:flex;align-items:center;gap:8px;margin:7px 0;}
+  .row label{font-size:12px;color:var(--txt2);flex:0 0 92px;}
+  .row label.ax{color:var(--blue);font-weight:500;}
+  .row input[type=range]{flex:1;}
+  .row .v{font-size:12px;font-weight:500;min-width:38px;text-align:right;}
+  input[type=range]{-webkit-appearance:none;height:4px;border-radius:4px;background:var(--line2);}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--blue);cursor:pointer;}
+  .chk{font-size:12px;color:var(--txt2);display:inline-flex;align-items:center;gap:6px;cursor:pointer;}
+  .row label{display:flex;align-items:center;}
+  .tip{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;border:.5px solid var(--line2);color:var(--txt3);font-size:9px;cursor:help;position:relative;margin-left:5px;flex:none;}
+  .tip .tipbox{visibility:hidden;opacity:0;position:absolute;z-index:30;bottom:160%;left:-6px;width:235px;background:var(--surface);color:var(--txt);border:.5px solid var(--line2);border-radius:8px;padding:9px 11px;font-size:11px;line-height:1.5;font-weight:400;box-shadow:0 6px 20px rgba(0,0,0,.18);transition:opacity .12s;}
+  .tip .tipbox b{font-weight:500;}
+  .tip:hover .tipbox{visibility:visible;opacity:1;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Fitness Balance v4 — 3D 曲面</h1>
+  <p class="sub">横轴 / 纵轴各选一个输入,曲面高度与颜色 = 最终 Balance。可拖动旋转、滚轮缩放;红点是当前滑块取值。其余变量用下方滑块固定。</p>
+
+  <div class="top">
+    <span><span class="axbadge">X</span><label></label>
+      <select id="xvar">
+        <option value="days">有效天数</option><option value="cov">覆盖肌群</option>
+        <option value="units">总单位</option><option value="dev">S 分布偏差</option>
+        <option value="conf">识别置信</option><option value="plan">计划支持</option>
+        <option value="unit">E 充足unit</option><option value="R">恢复分 R</option>
+      </select>
+    </span>
+    <span><span class="axbadge">Y</span><label></label>
+      <select id="yvar">
+        <option value="days">有效天数</option><option value="cov">覆盖肌群</option>
+        <option value="units" selected>总单位</option><option value="dev">S 分布偏差</option>
+        <option value="conf">识别置信</option><option value="plan">计划支持</option>
+        <option value="unit">E 充足unit</option><option value="R">恢复分 R</option>
+      </select>
+    </span>
+  </div>
+
+  <div class="panel"><div id="plot"></div></div>
+
+  <div class="controls">
+    <div class="cg">
+      <div class="row"><label data-k="days">有效天数<span class="tip">?<span class="tipbox"><b>7 天内有效力量训练的天数</b>(同一天练多个动作只算 1 天)。同时喂 G 的频率项(<b>2 天封顶</b>)和 C 的一致性项(<b>4 天封顶</b>)。</span></span></label><input type="range" id="days" min="0" max="7" step="1" value="3"><span class="v" id="days_v">3</span></div>
+      <div class="row"><label data-k="cov">覆盖肌群<span class="tip">?<span class="tipbox"><b>7 天内被有效训练覆盖的主要肌群数</b>(满分 7:腿/臀/背/核心/胸/肩/臂)。只进 G,与频率取<b>短板</b>(min)。</span></span></label><input type="range" id="cov" min="0" max="7" step="1" value="3"><span class="v" id="cov_v">3</span></div>
+      <div class="row"><label data-k="units">总单位<span class="tip">?<span class="tipbox"><b>7 天所有动作 exercise_unit 之和</b>(1 单位 ≈ 1 组 ≈ 45 秒有效重复)。进 C 的剂量项,<b>8 单位封顶</b>,再多不加分。</span></span></label><input type="range" id="units" min="0" max="16" step="0.5" value="6"><span class="v" id="units_v">6.0</span></div>
+    </div>
+    <div class="cg">
+      <div class="row"><label data-k="dev">S 分布偏差<span class="tip">?<span class="tipbox"><b>实际肌群分布与目标分布的总差异 Σ|实际−目标|。</b><br>0 = 完美匹配偏好,2 = 完全偏离。S = 100×(1 − 0.5×偏差),所以偏差越大 S 越低。</span></span></label><input type="range" id="dev" min="0" max="2" step="0.05" value="0.6"><span class="v" id="dev_v">0.60</span></div>
+      <div class="row"><label data-k="conf">识别置信<span class="tip">?<span class="tipbox"><b>模型对"这是什么动作"的把握(0–1)。</b><br>&lt;0.70 视为无效不计入;同时是肌群曝光(G/S)的乘数,以及 E 的 action_confidence 项。</span></span></label><input type="range" id="conf" min="0" max="1" step="0.05" value="0.85"><span class="v" id="conf_v">0.85</span></div>
+      <div class="row"><label data-k="rep">重复模式<span class="tip">?<span class="tipbox"><b>是否检测到清晰的重复节奏。</b><br><b>1.0</b>=明确重复 / <b>0.5</b>=疑似 / <b>0</b>=无证据。进 E(权重 0.25)。</span></span></label><input type="range" id="rep" min="0" max="1" step="0.05" value="1"><span class="v" id="rep_v">1.00</span></div>
+    </div>
+    <div class="cg">
+      <div class="row"><label data-k="unit">E 充足unit<span class="tip">?<span class="tipbox"><b>代表动作的训练量,用于充足度 min(unit/2,1)。</b><br>2 单位即满分。只影响 E 的充足度项,不影响 C 的总单位。</span></span></label><input type="range" id="unit" min="0" max="4" step="0.25" value="2"><span class="v" id="unit_v">2.00</span></div>
+      <div class="row"><label data-k="plan">计划支持<span class="tip">?<span class="tipbox"><b>外部佐证(E 的 user_or_plan_support 项)。</b><br><b>1.0</b>=用户确认了该动作 / <b>0.7</b>=该动作在训练计划中 / <b>0</b>=都不在。权重 0.15。</span></span></label><input type="range" id="plan" min="0" max="1" step="0.05" value="0.7"><span class="v" id="plan_v">0.70</span></div>
+      <div class="row"><label class="chk" style="flex:auto;"><input type="checkbox" id="rnull"> 无同肌群重复 (R=null)<span class="tip">?<span class="tipbox">勾选 = 7 天内<b>没有</b>同一肌群跨天重复训练。此时无法评估恢复,R=null,<b>Recovery 调整 = 0</b>(不加不减),下方 R 滑块失效。</span></span></label></div>
+      <div class="row"><label data-k="R">恢复分 R<span class="tip">?<span class="tipbox"><b>同肌群相邻训练的恢复间隔质量分(正向)。</b><br>间隔 ≥48h→1.0、24–48h→0.7、&lt;24h→0.3,加权×100。<br>R≥85→<b>+3</b> · 70–85→0 · 50–70→<b>−2</b> · &lt;50→<b>−5</b>。越高=恢复越充分=加分。</span></span></label><input type="range" id="R" min="0" max="100" step="1" value="65"><span class="v" id="R_v">65</span></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.30.0/plotly.min.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+const VARS={
+  days:{label:"有效天数",min:0,max:7},cov:{label:"覆盖肌群",min:0,max:7},
+  units:{label:"总单位",min:0,max:16},dev:{label:"S 分布偏差",min:0,max:2},
+  conf:{label:"识别置信",min:0,max:1},plan:{label:"计划支持",min:0,max:1},
+  unit:{label:"E 充足unit",min:0,max:4},R:{label:"恢复分 R",min:0,max:100}
+};
+function readP(){
+  return {days:+$('days').value,cov:+$('cov').value,units:+$('units').value,dev:+$('dev').value,
+    conf:+$('conf').value,rep:+$('rep').value,unit:+$('unit').value,plan:+$('plan').value,
+    R:+$('R').value,rnull:$('rnull').checked};
+}
+function calc(p){
+  const G=clamp(100*Math.min(Math.min(p.days/2,1),p.cov/7),0,100);
+  const S=clamp(100*(1-0.5*p.dev),0,100);
+  const E=clamp(100*(0.35*p.conf+0.25*p.rep+0.25*Math.min(p.unit/2,1)+0.15*p.plan),0,100);
+  const C=clamp(100*(0.6*Math.min(p.days/4,1)+0.4*Math.min(p.units/8,1)),0,100);
+  const radj=p.rnull?0:(p.R>=85?3:(p.R>=70?0:(p.R>=50?-2:-5)));
+  return clamp(0.15*G+0.40*S+0.20*E+0.25*C+radj,0,100);
+}
+function linspace(v,n){const a=[];for(let i=0;i<=n;i++)a.push(v.min+(v.max-v.min)*i/n);return a;}
+const dark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+const fontc=dark?'#d6d4cc':'#2c2c2a', gridc=dark?'rgba(255,255,255,.15)':'rgba(0,0,0,.12)';
+
+function build(){
+  const p=readP();let xv=$('xvar').value,yv=$('yvar').value;
+  if(xv===yv){yv=Object.keys(VARS).find(k=>k!==xv);$('yvar').value=yv;}
+  const N=44;const xs=linspace(VARS[xv],N),ys=linspace(VARS[yv],N);
+  const z=ys.map(yval=>xs.map(xval=>{const pp=Object.assign({},p);pp[xv]=xval;pp[yv]=yval;return calc(pp);}));
+  const cur=calc(p);
+  const data=[
+    {type:'surface',x:xs,y:ys,z:z,colorscale:'Viridis',cmin:0,cmax:100,opacity:.93,
+     colorbar:{title:{text:'Balance',font:{color:fontc}},tickfont:{color:fontc},len:.7,thickness:14},
+     contours:{z:{show:true,usecolormap:true,highlightcolor:'#fff',project:{z:true}}},
+     hovertemplate:VARS[xv].label+': %{x:.1f}<br>'+VARS[yv].label+': %{y:.1f}<br>Balance: %{z:.0f}<extra></extra>'},
+    {type:'scatter3d',x:[p[xv]],y:[p[yv]],z:[cur],mode:'markers+text',
+     marker:{size:6,color:'#E24B4A',line:{color:'#fff',width:1}},
+     text:['当前 '+Math.round(cur)],textfont:{color:fontc,size:12},textposition:'top center',hoverinfo:'skip'}
+  ];
+  const layout={
+    margin:{l:0,r:0,t:0,b:0},paper_bgcolor:'rgba(0,0,0,0)',font:{color:fontc,family:'sans-serif'},
+    scene:{
+      xaxis:{title:{text:VARS[xv].label},range:[VARS[xv].min,VARS[xv].max],gridcolor:gridc,zerolinecolor:gridc,backgroundcolor:'rgba(0,0,0,0)',showbackground:true},
+      yaxis:{title:{text:VARS[yv].label},range:[VARS[yv].min,VARS[yv].max],gridcolor:gridc,zerolinecolor:gridc,backgroundcolor:'rgba(0,0,0,0)',showbackground:true},
+      zaxis:{title:{text:'Balance'},range:[0,100],gridcolor:gridc,zerolinecolor:gridc,backgroundcolor:'rgba(0,0,0,0)',showbackground:true},
+      camera:{eye:{x:1.5,y:-1.6,z:1.0}}
+    }
+  };
+  Plotly.react('plot',data,layout,{responsive:true,displaylogo:false});
+  document.querySelectorAll('.row label[data-k]').forEach(l=>l.classList.toggle('ax',l.dataset.k===xv||l.dataset.k===yv));
+}
+function init(){
+  document.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',()=>{
+    const vo=$(el.id+'_v');
+    if(vo){const x=parseFloat(el.value);vo.textContent=(['dev','conf','plan','rep','unit'].includes(el.id))?x.toFixed(2):(el.id==='units')?x.toFixed(1):el.value;}
+    build();
+  }));
+  $('xvar').addEventListener('change',build);$('yvar').addEventListener('change',build);
+  build();
+}
+if(window.Plotly)init();else window.addEventListener('load',init);
+</script>
+</body>
+</html>

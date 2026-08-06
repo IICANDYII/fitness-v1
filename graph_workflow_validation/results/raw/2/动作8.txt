@@ -1,0 +1,39 @@
+Step 1 — 进场帧分析: 观察网格图前几帧，用户双手已握住器械把手，把手位于斜上方，连接着粗壮的黑色金属摆臂，背景镜子中隐约可见用户处于坐姿，器械具有典型的高位下拉机结构。
+Step 2 — 器械识别: 采用规则六A判定。用户为坐姿，双手握住上方独立摆臂把手，动作轨迹为从头顶大幅度向下拉至胸前，符合高位下拉机的特征。虽然是固定器械而非纯钢索，但动作本质为高位下拉。
+Step 3 — 光流验证: 画面中双手及把手呈现明显的上下（UP/DOWN）交替运动，且幅度较大，符合高位下拉的垂直拉动模式。
+Step 4 — 动作判定: 综合坐姿、上方来向的阻力以及向下的拉动轨迹，判定为“高位下拉”。
+Step 5 — 组次统计: 观察到约 2.5 个完整的拉放周期（第4-7帧下拉，第8-10帧回放；第11-13帧下拉，第14-16帧回放；第17帧再次开始下拉），计为 1 组 2 次。
+
+{
+  "user_folder": "2",
+  "action_id": "动作8",
+  "image_path": "graph/2/动作8.jpg",
+  "selected_equipment": "高位下拉机",
+  "selected_exercise": "高位下拉",
+  "selected_exercise_id": "cable_lat_pulldown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "高位下拉机",
+      "exercise": "高位下拉",
+      "confidence": 0.85,
+      "support": "坐姿，双手握住上方独立摆臂把手向下大幅度拉动，镜中可见器械全貌。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["高位下拉机独立摆臂", "垂直把手", "配重调节区域（镜中）"],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "双手持握把手从画面上方边缘向中心/下方拉动，随后向上回放，循环往复。",
+    "first_person_subject_evidence": "双手及手臂从相机两侧近端伸出并操作器械，运动与相机视角同步。",
+    "uncertainty_notes": "缺少光流数据，仅凭视觉判断次数可能存在微小偏差。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "坐姿状态下的垂直下拉动作，把手起始位置在头顶上方。",
+    "rejected_or_close_candidates": [
+      {"exercise": "坐姿绳索划船", "reason": "划船为水平拉动，而此动作把手来自上方且轨迹为垂直向下。"},
+      {"exercise": "引体向上", "reason": "引体向上时相机应随身体整体上升，此处相机相对器械框架较稳定，仅手臂运动。"}
+    ]
+  },
+  "needs_manual_review": false
+}

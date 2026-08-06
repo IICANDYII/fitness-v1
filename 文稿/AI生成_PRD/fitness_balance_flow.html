@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness Balance v4 — 公式流程图</title>
+<style>
+  :root{
+    --bg:#faf9f5;--surface:#fff;--surface2:#f1efe8;--line:rgba(0,0,0,.14);--line2:rgba(0,0,0,.28);
+    --txt:#1f1e1b;--txt2:#5f5e5a;--txt3:#888780;
+    --blue:#185FA5;--bluebg:#E6F1FB;--purple:#534AB7;--purplebg:#EEEDFE;
+    --teal:#0F6E56;--tealbg:#E1F5EE;--amber:#854F0B;--amberbg:#FAEEDA;
+    --green:#3B6D11;--greenbg:#EAF3DE;--gray:#5F5E5A;--graybg:#F1EFE8;
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#1f1e1b;--surface:#2c2c2a;--surface2:#262522;--line:rgba(255,255,255,.16);--line2:rgba(255,255,255,.3);
+    --txt:#f1efe8;--txt2:#b4b2a9;--txt3:#888780;
+    --blue:#85B7EB;--bluebg:#0C447C;--purple:#AFA9EC;--purplebg:#3C3489;
+    --teal:#5DCAA5;--tealbg:#085041;--amber:#EF9F27;--amberbg:#633806;
+    --green:#97C459;--greenbg:#27500A;--gray:#B4B2A9;--graybg:#444441;}}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--txt);padding:24px;line-height:1.5;}
+  .wrap{max-width:1180px;margin:0 auto;}
+  h1{font-size:22px;font-weight:500;margin:0 0 4px;}
+  .sub{color:var(--txt2);font-size:13px;margin:0 0 16px;}
+  .panel{background:var(--surface);border:.5px solid var(--line);border-radius:12px;padding:8px;}
+  svg{width:100%;height:auto;display:block;}
+  .nlabel{font-size:12px;fill:var(--txt2);}
+  .nval{font-size:18px;font-weight:500;}
+  .ntitle{font-size:13px;font-weight:500;}
+  .esmall{font-size:11px;fill:var(--txt3);}
+  .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:18px;}
+  .cgroup{background:var(--surface);border:.5px solid var(--line);border-radius:10px;padding:12px 14px;}
+  .cgroup h3{font-size:13px;font-weight:500;margin:0 0 8px;display:flex;align-items:center;gap:6px;}
+  .dot{width:9px;height:9px;border-radius:2px;display:inline-block;}
+  .row{display:flex;align-items:center;gap:8px;margin:7px 0;}
+  .row label{font-size:12px;color:var(--txt2);flex:0 0 96px;}
+  .row input[type=range]{flex:1;}
+  .row .v{font-size:12px;font-weight:500;min-width:38px;text-align:right;}
+  input[type=range]{-webkit-appearance:none;height:4px;border-radius:4px;background:var(--line2);}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--blue);cursor:pointer;}
+  .chk{font-size:12px;color:var(--txt2);display:flex;align-items:center;gap:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Fitness Balance v4 — 公式流程图</h1>
+  <p class="sub">拖动下方滑块,图中各分项数值、连线粗细(= 加权贡献)与最终 Balance 实时变化。连线越粗,该分项对最终分贡献越大。</p>
+
+  <div class="panel">
+    <svg viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fitness Balance 公式流程图">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--line2)"/></marker>
+      </defs>
+
+      <!-- input -> component thin connectors -->
+      <g stroke="var(--line2)" stroke-width="1" fill="none" marker-end="url(#arr)" opacity=".6">
+        <line x1="270" y1="55"  x2="298" y2="55"/>
+        <line x1="270" y1="150" x2="298" y2="150"/>
+        <line x1="270" y1="255" x2="298" y2="255"/>
+        <line x1="270" y1="370" x2="298" y2="370"/>
+        <line x1="270" y1="470" x2="298" y2="470"/>
+      </g>
+
+      <!-- component -> base weighted edges -->
+      <path id="edgeG" d="M420,55  C480,55 470,180 520,182" fill="none" stroke="#185FA5" stroke-width="3"/>
+      <path id="edgeS" d="M420,150 C480,150 470,200 520,200" fill="none" stroke="#534AB7" stroke-width="3"/>
+      <path id="edgeE" d="M420,255 C480,255 470,222 520,222" fill="none" stroke="#0F6E56" stroke-width="3"/>
+      <path id="edgeC" d="M420,370 C480,370 470,240 520,240" fill="none" stroke="#BA7517" stroke-width="3"/>
+      <text id="wG" class="esmall" x="455" y="100">.15×G</text>
+      <text id="wS" class="esmall" x="455" y="168">.40×S</text>
+      <text id="wE" class="esmall" x="455" y="248">.20×E</text>
+      <text id="wC" class="esmall" x="455" y="320">.25×C</text>
+
+      <!-- base -> final -->
+      <line x1="630" y1="210" x2="700" y2="205" stroke="var(--line2)" stroke-width="2" marker-end="url(#arr)"/>
+      <!-- recovery -> final -->
+      <path id="edgeR" d="M420,470 C560,470 640,300 700,250" fill="none" stroke="#BA7517" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+      <text id="wR" class="esmall" x="560" y="400" fill="var(--amber)">±调整</text>
+
+      <!-- INPUT NODES -->
+      <g>
+        <rect x="20" y="38" width="250" height="34" rx="7" fill="var(--bluebg)"/>
+        <text class="nlabel" x="32" y="52" fill="var(--blue)">天数</text><text id="i_days" class="ntitle" x="32" y="67" fill="var(--blue)">3</text>
+        <text class="nlabel" x="150" y="52" fill="var(--blue)">覆盖肌群</text><text id="i_cov" class="ntitle" x="150" y="67" fill="var(--blue)">3</text>
+
+        <rect x="20" y="133" width="250" height="34" rx="7" fill="var(--purplebg)"/>
+        <text class="nlabel" x="32" y="147" fill="var(--purple)">分布偏差 Σ|Δ|</text><text id="i_dev" class="ntitle" x="200" y="155" fill="var(--purple)">0.6</text>
+
+        <rect x="20" y="231" width="250" height="48" rx="7" fill="var(--tealbg)"/>
+        <text class="nlabel" x="32" y="246" fill="var(--teal)">置信</text><text id="i_conf" class="ntitle" x="32" y="262" fill="var(--teal)">.85</text>
+        <text class="nlabel" x="95" y="246" fill="var(--teal)">重复</text><text id="i_rep" class="ntitle" x="95" y="262" fill="var(--teal)">1.0</text>
+        <text class="nlabel" x="160" y="246" fill="var(--teal)">充足unit</text><text id="i_unit" class="ntitle" x="160" y="262" fill="var(--teal)">2.0</text>
+        <text class="nlabel" x="225" y="246" fill="var(--teal)">计划</text><text id="i_plan" class="ntitle" x="225" y="262" fill="var(--teal)">.7</text>
+
+        <rect x="20" y="353" width="250" height="34" rx="7" fill="var(--amberbg)"/>
+        <text class="nlabel" x="32" y="367" fill="var(--amber)">天数(同)</text><text id="i_days2" class="ntitle" x="32" y="382" fill="var(--amber)">3</text>
+        <text class="nlabel" x="150" y="367" fill="var(--amber)">总单位</text><text id="i_units" class="ntitle" x="150" y="382" fill="var(--amber)">6</text>
+
+        <rect x="20" y="453" width="250" height="34" rx="7" fill="var(--graybg)"/>
+        <text class="nlabel" x="32" y="467" fill="var(--gray)">恢复分 R</text><text id="i_R" class="ntitle" x="32" y="482" fill="var(--gray)">65</text>
+        <text id="i_rnull" class="nlabel" x="150" y="474" fill="var(--gray)">有重复肌群</text>
+      </g>
+
+      <!-- COMPONENT NODES -->
+      <g>
+        <rect x="300" y="31" width="120" height="48" rx="8" fill="var(--bluebg)" stroke="#185FA5" stroke-width=".5"/>
+        <text class="nlabel" x="312" y="48" fill="var(--blue)">G · 指南 15%</text><text id="v_G" class="nval" x="312" y="71" fill="var(--blue)">—</text>
+        <rect x="300" y="126" width="120" height="48" rx="8" fill="var(--purplebg)" stroke="#534AB7" stroke-width=".5"/>
+        <text class="nlabel" x="312" y="143" fill="var(--purple)">S · 结构 40%</text><text id="v_S" class="nval" x="312" y="166" fill="var(--purple)">—</text>
+        <rect x="300" y="231" width="120" height="48" rx="8" fill="var(--tealbg)" stroke="#0F6E56" stroke-width=".5"/>
+        <text class="nlabel" x="312" y="248" fill="var(--teal)">E · 证据 20%</text><text id="v_E" class="nval" x="312" y="271" fill="var(--teal)">—</text>
+        <rect x="300" y="346" width="120" height="48" rx="8" fill="var(--amberbg)" stroke="#BA7517" stroke-width=".5"/>
+        <text class="nlabel" x="312" y="363" fill="var(--amber)">C · 剂量 25%</text><text id="v_C" class="nval" x="312" y="386" fill="var(--amber)">—</text>
+        <rect x="300" y="446" width="120" height="48" rx="8" fill="var(--graybg)" stroke="#5F5E5A" stroke-width=".5"/>
+        <text class="nlabel" x="312" y="463" fill="var(--gray)">Recovery 调整</text><text id="v_R" class="nval" x="312" y="486" fill="var(--gray)">—</text>
+      </g>
+
+      <!-- BASE -->
+      <rect x="520" y="150" width="110" height="120" rx="10" fill="var(--surface2)" stroke="var(--line2)" stroke-width=".5"/>
+      <text class="nlabel" x="535" y="172" fill="var(--txt2)">base</text>
+      <text id="v_base" class="nval" x="535" y="202" fill="var(--txt)" style="font-size:26px;">—</text>
+      <text class="esmall" x="535" y="226">ΣwᵢXᵢ</text>
+      <text class="esmall" x="535" y="244">(clamp 前)</text>
+
+      <!-- FINAL -->
+      <rect x="700" y="150" width="180" height="120" rx="12" fill="var(--greenbg)" stroke="var(--green)" stroke-width="1.5"/>
+      <text class="nlabel" x="718" y="174" fill="var(--green)">Fitness Balance</text>
+      <text id="v_final" class="nval" x="718" y="226" fill="var(--green)" style="font-size:44px;">—</text>
+      <text id="v_status" class="esmall" x="718" y="252" fill="var(--green)">status: active</text>
+    </svg>
+  </div>
+
+  <div class="controls">
+    <div class="cgroup">
+      <h3><span class="dot" style="background:#185FA5;"></span>G 输入 → 指南参考 15%</h3>
+      <div class="row"><label>有效天数</label><input type="range" id="days" min="0" max="7" step="1" value="3"><span class="v" id="days_v">3</span></div>
+      <div class="row"><label>覆盖肌群</label><input type="range" id="cov" min="0" max="7" step="1" value="3"><span class="v" id="cov_v">3</span></div>
+    </div>
+    <div class="cgroup">
+      <h3><span class="dot" style="background:#534AB7;"></span>S 输入 → 结构 40%</h3>
+      <div class="row"><label>分布偏差 Σ|Δ|</label><input type="range" id="dev" min="0" max="2" step="0.05" value="0.6"><span class="v" id="dev_v">0.60</span></div>
+      <p class="esmall" style="margin:2px 0 0;color:var(--txt3);">S = 100×(1 − 0.5×偏差);0=完美匹配,2=完全偏离</p>
+    </div>
+    <div class="cgroup">
+      <h3><span class="dot" style="background:#0F6E56;"></span>E 输入 → 证据 20%</h3>
+      <div class="row"><label>识别置信</label><input type="range" id="conf" min="0" max="1" step="0.05" value="0.85"><span class="v" id="conf_v">0.85</span></div>
+      <div class="row"><label>重复模式</label><input type="range" id="rep" min="0" max="1" step="0.05" value="1"><span class="v" id="rep_v">1.00</span></div>
+      <div class="row"><label>充足 unit</label><input type="range" id="unit" min="0" max="4" step="0.25" value="2"><span class="v" id="unit_v">2.00</span></div>
+      <div class="row"><label>计划支持</label><input type="range" id="plan" min="0" max="1" step="0.05" value="0.7"><span class="v" id="plan_v">0.70</span></div>
+    </div>
+    <div class="cgroup">
+      <h3><span class="dot" style="background:#BA7517;"></span>C 输入 → 剂量 25%</h3>
+      <div class="row"><label>总单位</label><input type="range" id="units" min="0" max="16" step="0.5" value="6"><span class="v" id="units_v">6.0</span></div>
+      <p class="esmall" style="margin:2px 0 0;color:var(--txt3);">天数沿用 G;C = 100×(0.6×min(天/4,1)+0.4×min(单位/8,1))</p>
+    </div>
+    <div class="cgroup">
+      <h3><span class="dot" style="background:#5F5E5A;"></span>Recovery → 直接加减</h3>
+      <div class="row"><label class="chk"><input type="checkbox" id="rnull"> 无同肌群重复(R=null)</label></div>
+      <div class="row"><label>恢复分 R</label><input type="range" id="R" min="0" max="100" step="1" value="65"><span class="v" id="R_v">65</span></div>
+      <p class="esmall" style="margin:2px 0 0;color:var(--txt3);">R≥85→+3 · 70–85→0 · 50–70→−2 · &lt;50→−5</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
+function n(id){return parseFloat($(id).value)||0;}
+
+function update(){
+  const days=n('days'),cov=n('cov'),dev=n('dev'),units=n('units');
+  const G=100*Math.min(Math.min(days/2,1),cov/7);
+  const S=100*(1-0.5*dev);
+  const E=100*(0.35*n('conf')+0.25*n('rep')+0.25*Math.min(n('unit')/2,1)+0.15*n('plan'));
+  const C=100*(0.6*Math.min(days/4,1)+0.4*Math.min(units/8,1));
+  const rnull=$('rnull').checked, R=n('R');
+  let radj=rnull?0:(R>=85?3:(R>=70?0:(R>=50?-2:-5)));
+  const base=0.15*G+0.40*S+0.20*E+0.25*C;
+  const fin=clamp(base+radj,0,100);
+
+  // input node mirrors
+  $('i_days').textContent=days;$('i_days2').textContent=days;$('i_cov').textContent=cov;
+  $('i_dev').textContent=dev.toFixed(2);$('i_units').textContent=units%1?units.toFixed(1):units;
+  $('i_conf').textContent=n('conf').toFixed(2);$('i_rep').textContent=n('rep').toFixed(1);
+  $('i_unit').textContent=n('unit').toFixed(1);$('i_plan').textContent=n('plan').toFixed(2);
+  $('i_R').textContent=R;$('i_rnull').textContent=rnull?'无重复肌群':'有重复肌群';
+
+  // component values
+  $('v_G').textContent=Math.round(G);$('v_S').textContent=Math.round(S);
+  $('v_E').textContent=Math.round(E);$('v_C').textContent=Math.round(C);
+  $('v_R').textContent=(radj>=0?'+':'')+radj;
+  $('v_base').textContent=Math.round(base);$('v_final').textContent=Math.round(fin);
+
+  // weighted contribution labels + edge thickness
+  const cG=0.15*G,cS=0.40*S,cE=0.20*E,cC=0.25*C;
+  $('wG').textContent='+'+cG.toFixed(1);$('wS').textContent='+'+cS.toFixed(1);
+  $('wE').textContent='+'+cE.toFixed(1);$('wC').textContent='+'+cC.toFixed(1);
+  const sw=c=>Math.max(1,1+c*0.22).toFixed(2);
+  $('edgeG').setAttribute('stroke-width',sw(cG));$('edgeS').setAttribute('stroke-width',sw(cS));
+  $('edgeE').setAttribute('stroke-width',sw(cE));$('edgeC').setAttribute('stroke-width',sw(cC));
+  $('edgeR').setAttribute('stroke-width',Math.max(1,Math.abs(radj)*0.8+1).toFixed(2));
+  $('wR').textContent=(radj>=0?'+':'')+radj;
+  $('edgeR').setAttribute('stroke',radj<0?'#A32D2D':'#BA7517');
+  $('wR').setAttribute('fill',radj<0?'var(--txt3)':'var(--amber)');
+}
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>{
+  const v=$(el.id+'_v');
+  if(v){const x=parseFloat(el.value);v.textContent=(el.id==='dev'||el.id==='conf'||el.id==='plan')?x.toFixed(2):(el.id==='rep'||el.id==='unit')?x.toFixed(2):(el.id==='units')?x.toFixed(1):el.value;}
+  update();
+}));
+update();
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作3",
+  "image_path": "graph/肩背-叶翔/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "exercise_id": "cable_lat_pulldown",
+  "selected_confidence": 0.8,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "exercise_id": "cable_lat_pulldown",
+      "confidence": 0.8,
+      "support": "用户使用龙门架高位滑轮和长横杆，动作轨迹为从上向下向胸部拉动，且文件夹名为‘肩背’，符合背部训练逻辑。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "exercise_id": "cable_triceps_pushdown",
+      "confidence": 0.55,
+      "support": "用户呈站姿进行下压动作，轨迹与三头下压相似，但横杆较宽且伴随明显的肘部后移。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "高位滑轮",
+      "长横杆",
+      "钢索"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "横杆从上方起始，被拉至胸前高度，随后受控回放，呈现明显的上下周期性运动。",
+    "first_person_subject_evidence": "第一人称视角下双手握持横杆，横杆的远近和上下运动与相机视角高度同步。",
+    "uncertainty_notes": "用户采用站姿而非标准的坐姿进行下拉，这在健身中常用于‘站姿直臂下拉’或‘站姿高位下拉’，在给定列表中‘高位下拉’最为匹配。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "高位滑轮连接长横杆，用户双手宽握并向下拉至胸口，动作过程中肘关节有明显的下沉和后收，符合背部下拉特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "虽然同为站姿高位动作，但画面中横杆较宽，且动作幅度涉及肩关节大幅度伸展，更倾向于背部训练而非单纯的三头肌训练。"
+      },
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "钢索来自上方而非前方，且用户为站姿。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,47 @@
+{
+  "user_folder": "1",
+  "action_id": "动作1",
+  "image_path": "graph/1/动作1.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.3,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "跑步机",
+      "exercise": "treadmill_walk_run",
+      "confidence": 0.4,
+      "support": "画面中可见 Technogym Live 健身康索屏，第一帧左侧可见类似跑步机扶手的结构。"
+    },
+    {
+      "equipment": "健身车",
+      "exercise": "stationary_bike",
+      "confidence": 0.2,
+      "support": "用户躯干极其稳定，无跑步时的重心起伏，可能为坐姿有氧。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "Technogym 电子显示屏",
+      "跑步机侧边扶手（疑似）"
+    ],
+    "body_posture": "unknown",
+    "motion_cues_from_grid": "用户在整个区间内主要在操作屏幕或观察屏幕，躯干（相机）无明显的周期性位移或震动，缺乏有氧运动的典型光流特征。",
+    "first_person_subject_evidence": "画面中心为操作屏幕的双手，且视角随用户头部/躯干微调，确认为第一人称视角。",
+    "uncertainty_notes": "虽然器械品牌和类型（有氧器械）较明确，但用户在 131 秒内几乎没有表现出走、跑或骑行的运动轨迹，更多是在进行系统设置或观看视频，无法判定是否处于有效训练状态。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户长时间面对 Technogym 屏幕并有点击动作，背景窗帘完全静止，表明用户并未进行产生位移的运动。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "treadmill_walk_run",
+        "reason": "虽然器械外观像跑步机，但画面缺乏跑步或走路带来的相机抖动和节奏感。"
+      },
+      {
+        "exercise": "stationary_bike",
+        "reason": "虽然姿态稳定符合骑行特征，但无法从第一人称视角确认腿部踩踏动作。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

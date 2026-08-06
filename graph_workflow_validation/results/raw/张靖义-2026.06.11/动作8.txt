@@ -1,0 +1,39 @@
+Step 1 — 进场帧分析: 画面前几帧显示用户站在龙门架（电缆交叉训练机）前，前方有一名教练面对用户站立，龙门架的滑轮设置在中高位，挂有D型把手。
+Step 2 — 器械识别: 用户处于站姿，双手握住来自两侧高位的绳索把手，符合龙门架（cable machine）的使用特征。
+Step 3 — 光流验证: 观察连续帧，用户双臂从身体两侧向胸前中线合拢（水平内收），随后向两侧打开，光流呈现明显的 LEFT/RIGHT 对称向中心汇聚的模式，符合夹胸动作特征。
+Step 4 — 动作判定: 综合站姿、龙门架器械以及双臂由外向内的夹击动作，判定为绳索夹胸（cable_chest_fly）。
+Step 5 — 组次统计: 画面中可见约 4 次完整的双臂开合周期，判定为 1 组 4 次。
+
+{
+  "user_folder": "张靖义-2026.06.11",
+  "action_id": "动作8",
+  "image_path": "graph/张靖义-2026.06.11/动作8.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索夹胸",
+  "selected_exercise_id": "cable_chest_fly",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索夹胸",
+      "confidence": 0.85,
+      "support": "站姿，双手握住两侧高位绳索把手，双臂做水平内收动作，教练在前方辅助。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架立柱", "绳索", "D型把手", "配重塔"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双臂从身体两侧向胸前合拢再张开，具有明显的周期性。",
+    "first_person_subject_evidence": "画面两侧出现的双臂与相机运动同步，且直接操作绳索把手。",
+    "uncertainty_notes": "教练距离极近且双手接触用户手部，可能存在手动抗阻或辅助，但不影响动作类型判定。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "站姿龙门架，绳索从两侧高位拉向胸前中线，典型的水平内收轨迹。",
+    "rejected_or_close_candidates": [
+      {"exercise": "固定器械推胸", "reason": "推胸动作光流应以前后为主，且通常为坐姿，此处为站姿且光流为左右开合。"},
+      {"exercise": "绳索下压", "reason": "绳索下压是肘关节屈伸，此处是肩关节主导的水平内收。"}
+    ]
+  },
+  "needs_manual_review": false
+}

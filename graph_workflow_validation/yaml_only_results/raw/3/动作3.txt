@@ -1,0 +1,44 @@
+{
+  "user_folder": "3",
+  "action_id": "动作3",
+  "image_path": "graph/3/动作3.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃卧推",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "dumbbell_bench_press",
+      "confidence": 0.85,
+      "support": "镜中可见用户仰卧在长凳上，双手持哑铃进行胸前推举，肘部有明显屈伸轨迹。"
+    },
+    {
+      "equipment": "哑铃",
+      "exercise": "dumbbell_shoulder_press",
+      "confidence": 0.1,
+      "support": "同为哑铃推举类动作，但镜中姿态明显为仰卧而非坐姿。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃", "卧推凳", "镜子"],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "哑铃从画面两侧/下方推向中心上方（远离相机方向），镜中反射显示完整的仰卧推举过程。",
+    "first_person_subject_evidence": "画面近端可见用户双手握持哑铃，且动作与镜中反射的身体运动完全同步。",
+    "uncertainty_notes": "由于标准动作列表中缺少‘哑铃飞鸟’，若动作轨迹带有弧度，则‘哑铃卧推’为最接近的合规选项。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜中反射明确显示用户处于仰卧（supine）姿态，正在操作哑铃进行垂直于躯干的推举动作，符合哑铃卧推特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "dumbbell_shoulder_press",
+        "reason": "推肩通常为坐姿或站姿，镜中证据排除了垂直坐姿的可能性。"
+      },
+      {
+        "exercise": "dumbbell_biceps_curl",
+        "reason": "弯举通常在站姿或坐姿下进行，且运动轨迹为肘关节屈伸，而非此处的肩胸主导推举。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

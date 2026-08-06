@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 画面前几帧显示用户正面对一个大型电子控制面板，面板上有明显的触控界面和运动数据展示，符合跑步机或大型有氧器械的特征。
+Step 2 — 器械识别: 根据规则四和六B，大型控制面板正对镜头，且画面中没有出现椭圆机的动臂或动感单车的低位车把，判定为跑步机。
+Step 3 — 光流验证: 观察网格图中背景（橙色条纹墙面）在连续帧中存在明显的上下节奏性晃动和模糊，符合跑步时相机的运动规律。
+Step 4 — 动作判定: 综合器械特征和画面动态，判定为跑步机步行或跑步。
+Step 5 — 组次统计: 该片段为连续的有氧运动，计为 1 组。
+
+{"user_folder": "8", "action_id": "动作1", "image_path": "graph/8/动作1.jpg", "selected_equipment": "跑步机", "selected_exercise": "跑步机", "selected_confidence": 0.95, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "跑步机", "exercise": "跑步机", "confidence": 0.95, "support": "大型控制面板正对镜头，画面有明显的上下节奏性晃动"}], "context": {"visible_equipment": ["跑步机控制面板", "显示屏"], "body_posture": "standing", "motion_cues_from_grid": "画面持续上下起伏，背景条纹产生垂直方向模糊", "first_person_subject_evidence": "用户双手在画面中操作控制面板，视角随身体跑动节奏晃动", "uncertainty_notes": "缺少IMU数据无法精确判断步频，但视觉特征极度明确"}, "action_disambiguation": {"selected_evidence": "正对镜头的跑步机仪表盘及典型的跑步晃动视角", "rejected_or_close_candidates": [{"exercise": "登阶机/爬楼机", "reason": "虽然也有面板，但画面晃动幅度更接近跑步，且面板布局更符合主流跑步机"}, {"exercise": "健身车/动感单车", "reason": "视角为站立平视而非俯视，且无车把可见"}]}, "needs_manual_review": false}

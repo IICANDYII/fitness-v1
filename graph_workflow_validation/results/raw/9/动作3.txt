@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 进场帧显示用户站在龙门架（综合训练架）前，双手向上伸出抓握连接在高位滑轮上的短直杆把手。画面中可见明显的金属立柱和配重塔结构。
+Step 2 — 器械识别: 根据规则三，用户处于站姿，绳索从头顶上方的高位滑轮垂下。用户抓握把手后，肘部固定在身体两侧，仅前臂向下做推压动作。判定器械为龙门架。
+Step 3 — 光流验证: 画面中可见把手和用户前臂在垂直方向上做周期性的上下往复运动（UP/DOWN），且发力方向向下，符合推压特征。
+Step 4 — 动作判定: 结合站姿、高位绳索来向、肘部贴身固定、向下推压的动作特征，判定为绳索下压（cable_triceps_pushdown）。
+Step 5 — 组次统计: 观察到约 4 次完整的下压动作周期。
+
+{"user_folder": "9", "action_id": "动作3", "image_path": "graph/9/动作3.jpg", "selected_equipment": "龙门架", "selected_exercise": "绳索下压", "selected_confidence": 0.85, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "龙门架", "exercise": "绳索下压", "confidence": 0.85, "support": "站姿，高位滑轮，肘部固定，手向下推压"}], "context": {"visible_equipment": ["龙门架立柱", "高位滑轮", "短直杆把手"], "body_posture": "standing", "motion_cues_from_grid": "双手抓握把手从胸前高度向下推至大腿高度，肘部保持不动", "first_person_subject_evidence": "第一人称视角下双手操作把手，动作与相机轻微晃动同步", "uncertainty_notes": "缺少光流和IMU数据，仅凭视觉判断次数可能存在±1误差"}, "action_disambiguation": {"selected_evidence": "站姿且绳索从上方引出，发力方向向下，肘部不参与大幅度位移", "rejected_or_close_candidates": [{"exercise": "高位下拉", "reason": "高位下拉通常为坐姿且有大幅度背部参与，此处为站姿且仅前臂运动"}, {"exercise": "绳索弯举", "reason": "绳索弯举需从低位滑轮向上拉，方向相反"}]}, "needs_manual_review": false}

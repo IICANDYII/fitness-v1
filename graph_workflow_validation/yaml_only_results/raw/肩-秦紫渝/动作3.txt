@@ -1,0 +1,38 @@
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作3",
+  "image_path": "graph/肩-秦紫渝/动作3.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.7,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "UNKNOWN_ACTION",
+      "confidence": 0.7,
+      "support": "视觉证据高度符合面拉（Face Pull），但该动作不在标准列表中"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_triceps_pushdown",
+      "confidence": 0.3,
+      "support": "同为高位绳索拉动动作，但肘部姿态与拉动方向不符"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "绳索附件 (Rope Attachment)"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户站姿面对龙门架，双手握住高位绳索附件，将其拉向面部高度，肘部向身体两侧张开，随后受控回放。",
+    "first_person_subject_evidence": "画面下方出现用户双手握持绳索，且绳索的拉伸与配重块的升降与相机运动同步。",
+    "uncertainty_notes": "主要不确定性源于标准动作列表未包含‘面拉 (Face Pull)’，导致无法匹配到具体的 exercise_id。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "用户使用龙门架高位绳索进行站姿拉动，肘部明显外展且拉向面部，这是典型的面拉（Face Pull）动作特征。考虑到文件夹名为‘肩’，该动作作为后束/中束训练非常合理。",
+    "rejected_or_close_candidates": [
+      {"exercise": "cable_triceps_pushdown", "reason": "绳索下压通常要求肘部贴近躯干且向下推至大腿前侧，而画面中肘部大幅外展且向后拉。"},
+      {"exercise": "cable_lat_pulldown", "reason": "高位下拉通常为坐姿并使用长杆，且拉动方向更偏向垂直向下而非向后。"}
+    ]
+  },
+  "needs_manual_review": true
+}

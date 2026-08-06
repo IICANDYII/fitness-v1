@@ -1,0 +1,50 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作1",
+  "image_path": "graph/肩背-叶翔/动作1.jpg",
+  "selected_equipment": "跑步机",
+  "selected_exercise": "跑步机",
+  "exercise_id": "treadmill_walk_run",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.95,
+      "support": "可见典型的跑步机仪表盘、显示屏及两侧固定扶手，用户处于站立位操作机器。"
+    },
+    {
+      "equipment": "椭圆机",
+      "exercise": "椭圆机",
+      "confidence": 0.15,
+      "support": "部分椭圆机具有相似仪表盘，但缺乏移动扶手的证据。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "跑步机仪表盘",
+      "电子显示屏",
+      "侧边扶手",
+      "紧急停止拉绳位置"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户双手在画面下方出现，初期在操作手机，后期手部扶在跑步机边缘或操作面板，身体重心相对器械稳定。",
+    "first_person_subject_evidence": "第一人称视角，用户双手从相机下方伸出操作器械，视线正对器械控制台。",
+    "uncertainty_notes": "虽然未直接拍到下方的跑带，但器械控制面板的布局和扶手特征高度符合商用跑步机。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "画面中清晰可见带有'RELAX'标识的跑步机控制台、坡度/速度调节快捷键以及典型的跑步机扶手结构。用户姿态为站立，视线水平对准显示屏。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "椭圆机",
+        "reason": "椭圆机通常伴随手柄的前后大幅度摆动，且仪表盘位置通常更高，画面中未见摆动杆。"
+      },
+      {
+        "exercise": "健身车/动感单车",
+        "reason": "健身车通常为坐姿，视角会更低且仪表盘倾斜角度不同，且通常没有这种宽大的跑步机扶手。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

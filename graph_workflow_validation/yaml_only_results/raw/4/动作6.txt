@@ -1,0 +1,49 @@
+{
+  "user_folder": "4",
+  "action_id": "动作6",
+  "image_path": "graph/4/动作6.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "cable_chest_fly",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_chest_fly",
+      "confidence": 0.85,
+      "support": "用户双手握持龙门架绳索手柄，动作轨迹从身体两侧低位向胸前中线合拢，符合低位绳索夹胸特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_biceps_curl",
+      "confidence": 0.35,
+      "support": "同样使用绳索，但画面中手臂整体上抬趋势更接近夹胸而非单纯肘屈伸。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架 (Cable Machine)",
+      "绳索手柄 (D-handles)",
+      "滑轮组",
+      "配重片导轨"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "从第1帧到第9帧，用户双手从身体两侧斜下方位置向斜上方/胸前中心位置靠拢，呈现明显的水平内收/对角线向心运动。",
+    "first_person_subject_evidence": "画面下方出现用户双手及前臂，手柄与用户动作同步，背景中其他人处于远端且无互动。",
+    "uncertainty_notes": "缺少光流和IMU数据，仅凭静态拼图判断，无法完全排除动作末端的细微变化。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "入场及关键帧显示用户站在龙门架中间，双手握住低位拉出的绳索手柄，并向胸前做合拢动作，这是典型的绳索夹胸（Cable Fly）轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_biceps_curl",
+        "reason": "弯举通常保持上臂相对固定，而图中可见整条手臂随肩关节内收向上运动，更符合夹胸特征。"
+      },
+      {
+        "exercise": "cable_lateral_raise",
+        "reason": "侧平举动作方向应为向身体两侧外展，而图中手柄轨迹是向中心合拢。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

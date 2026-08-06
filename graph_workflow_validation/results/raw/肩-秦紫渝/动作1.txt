@@ -1,0 +1,59 @@
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作1",
+  "image_path": "graph/肩-秦紫渝/动作1.jpg",
+  "selected_equipment": "登阶机/爬楼机",
+  "selected_exercise": "登阶机/爬楼机",
+  "selected_exercise_id": "stepmill",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "登阶机/爬楼机",
+      "exercise": "登阶机/爬楼机",
+      "confidence": 0.95,
+      "support": "大型控制面板正对镜头，可见红色急停按钮，双手握住固定扶手，画面随踏步产生明显的上下节奏性起伏。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "大型电子控制面板",
+      "红色紧急停止按钮",
+      "固定侧扶手栏杆"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面呈现持续且有节奏的上下起伏，符合登阶或踏步的运动特征。",
+    "first_person_subject_evidence": "用户双手始终握在画面两侧的固定扶手上，视角随身体重心上下移动。",
+    "uncertainty_notes": "无光流和IMU数据，但视觉特征（面板、急停按钮、固定扶手、上下起伏）极其符合规则6B中登阶机的定义。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "符合规则6B：大型控制面板正对面部 + 红色急停按钮 + 身体直立 + 无车座 + 明显的上下节奏性起伏。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "跑步机",
+        "reason": "跑步机通常伴随前后跑动感，且上下起伏幅度通常小于登阶机，此画面垂直位移特征更明显。"
+      },
+      {
+        "exercise": "椭圆机",
+        "reason": "画面中未见随身体前后摆动的长臂动杆，双手握持的是固定不动的扶手。"
+      },
+      {
+        "exercise": "健身车/动感单车",
+        "reason": "用户为站立姿态，且控制面板处于平视高位而非低头俯视位，无车座可见。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:00:24",
+      "end_time": "00:03:48",
+      "reps": 1
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 0,
+    "expand_after_sec": 0,
+    "reason": "当前区间已完整覆盖有氧运动过程。"
+  },
+  "needs_manual_review": false
+}

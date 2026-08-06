@@ -1,0 +1,1740 @@
+{
+  "created_at": "2026-06-25T16:18:35.256869",
+  "note": "Manual corrected ground truth from user review. Original shared ground_truth.json files are not modified.",
+  "manual_corrections": {
+    "3": {
+      "1": {
+        "label": "史密斯卧推"
+      },
+      "2": {
+        "label": "史密斯卧推"
+      },
+      "5": {
+        "label": "哑铃卧推"
+      },
+      "6": {
+        "label": "哑铃卧推"
+      },
+      "10": {
+        "label": "绳索下拉"
+      },
+      "11": {
+        "label": "绳索下拉"
+      }
+    },
+    "4": {
+      "3": {
+        "label": "反握器械高位下拉"
+      },
+      "4": {
+        "label": "反握器械高位下拉"
+      },
+      "5": {
+        "label": "绳索锤式弯举"
+      },
+      "6": {
+        "label": "绳索锤式弯举"
+      },
+      "7": {
+        "label": "杠铃弯举"
+      },
+      "8": {
+        "label": "杠铃弯举"
+      },
+      "9": {
+        "label": "哑铃弯举"
+      },
+      "10": {
+        "label": "哑铃弯举"
+      }
+    },
+    "8": {
+      "4": {
+        "label": "史密斯卧推"
+      },
+      "5": {
+        "label": "史密斯卧推"
+      },
+      "8": {
+        "label": "划船"
+      },
+      "9": {
+        "label": "夹胸"
+      }
+    },
+    "健身-高孟琦": {
+      "1": {
+        "label": "哑铃深蹲"
+      },
+      "2": {
+        "label": "高位直杆下拉"
+      },
+      "3": {
+        "label": "绳索下压"
+      }
+    },
+    "肩-秦紫渝": {
+      "4": {
+        "label": "单臂绳索下拉"
+      },
+      "5": {
+        "label": "单臂绳索下拉"
+      }
+    },
+    "肩-背-秦紫渝": {
+      "4": {
+        "label": "绳索划船"
+      },
+      "5": {
+        "label": "拉伸/跑步机"
+      }
+    },
+    "肩背-叶翔": {
+      "2": {
+        "label": "直杆高位下拉"
+      },
+      "3": {
+        "label": "直杆高位下拉"
+      },
+      "4": {
+        "label": "直杆高位下拉"
+      },
+      "5": {
+        "label": "直杆高位下拉"
+      },
+      "6": {
+        "label": "绳索面拉"
+      },
+      "7": {
+        "label": "绳索面拉"
+      },
+      "8": {
+        "label": "绳索面拉"
+      },
+      "9": {
+        "label": "绳索面拉"
+      },
+      "10": {
+        "label": "坐姿划船"
+      },
+      "11": {
+        "label": "坐姿划船"
+      }
+    },
+    "腿-张开": {
+      "1": {
+        "label": "跑步机"
+      },
+      "2": {
+        "label": "杠铃深蹲"
+      },
+      "3": {
+        "label": "杠铃深蹲"
+      },
+      "4": {
+        "label": "杠铃深蹲"
+      },
+      "5": {
+        "label": "坐姿腿屈伸"
+      },
+      "6": {
+        "label": "未知动作"
+      },
+      "7": {
+        "label": "倒蹬机"
+      },
+      "8": {
+        "label": "未知动作"
+      }
+    }
+  },
+  "rows": [
+    {
+      "folder": "3",
+      "action_id": "动作1",
+      "action_number": 1,
+      "graph_image_path": "graph/3/动作1.jpg",
+      "corrected_ground_truth_label": "史密斯卧推",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "史密斯机",
+      "prediction_exercise": "史密斯卧推",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "3",
+      "action_id": "动作2",
+      "action_number": 2,
+      "graph_image_path": "graph/3/动作2.jpg",
+      "corrected_ground_truth_label": "史密斯卧推",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "史密斯机",
+      "prediction_exercise": "史密斯卧推",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "3",
+      "action_id": "动作3",
+      "action_number": 3,
+      "graph_image_path": "graph/3/动作3.jpg",
+      "corrected_ground_truth_label": "水平哑铃卧推",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "哑铃",
+      "prediction_exercise": "哑铃卧推",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "3",
+      "action_id": "动作4",
+      "action_number": 4,
+      "graph_image_path": "graph/3/动作4.jpg",
+      "corrected_ground_truth_label": "水平哑铃卧推",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "哑铃",
+      "prediction_exercise": "哑铃卧推",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "3",
+      "action_id": "动作5",
+      "action_number": 5,
+      "graph_image_path": "graph/3/动作5.jpg",
+      "corrected_ground_truth_label": "哑铃卧推",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "哑铃",
+      "prediction_exercise": "哑铃卧推",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "3",
+      "action_id": "动作6",
+      "action_number": 6,
+      "graph_image_path": "graph/3/动作6.jpg",
+      "corrected_ground_truth_label": "哑铃卧推",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "哑铃",
+      "prediction_exercise": "哑铃卧推",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "3",
+      "action_id": "动作7",
+      "action_number": 7,
+      "graph_image_path": "graph/3/动作7.jpg",
+      "corrected_ground_truth_label": "上斜 30 度哑铃卧推",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "史密斯机",
+      "prediction_exercise": "史密斯卧推",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "3",
+      "action_id": "动作8",
+      "action_number": 8,
+      "graph_image_path": "graph/3/动作8.jpg",
+      "corrected_ground_truth_label": "哑铃卧推",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "3",
+      "action_id": "动作9",
+      "action_number": 9,
+      "graph_image_path": "graph/3/动作9.jpg",
+      "corrected_ground_truth_label": "上斜史密斯卧推",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "高位下拉机",
+      "prediction_exercise": "高位下拉",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "3",
+      "action_id": "动作10",
+      "action_number": 10,
+      "graph_image_path": "graph/3/动作10.jpg",
+      "corrected_ground_truth_label": "绳索下拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "3",
+      "action_id": "动作11",
+      "action_number": 11,
+      "graph_image_path": "graph/3/动作11.jpg",
+      "corrected_ground_truth_label": "绳索下拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "4",
+      "action_id": "动作1",
+      "action_number": 1,
+      "graph_image_path": "graph/4/动作1.jpg",
+      "corrected_ground_truth_label": "宽距高位下拉",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "高位下拉机",
+      "prediction_exercise": "高位下拉",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "4",
+      "action_id": "动作2",
+      "action_number": 2,
+      "graph_image_path": "graph/4/动作2.jpg",
+      "corrected_ground_truth_label": "坐姿划船",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "坐姿划船机",
+      "prediction_exercise": "坐姿绳索划船",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "4",
+      "action_id": "动作3",
+      "action_number": 3,
+      "graph_image_path": "graph/4/动作3.jpg",
+      "corrected_ground_truth_label": "反握器械高位下拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索夹胸",
+      "prediction_confidence": 0.75,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "4",
+      "action_id": "动作4",
+      "action_number": 4,
+      "graph_image_path": "graph/4/动作4.jpg",
+      "corrected_ground_truth_label": "反握器械高位下拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "高位下拉",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "4",
+      "action_id": "动作5",
+      "action_number": 5,
+      "graph_image_path": "graph/4/动作5.jpg",
+      "corrected_ground_truth_label": "绳索锤式弯举",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "4",
+      "action_id": "动作6",
+      "action_number": 6,
+      "graph_image_path": "graph/4/动作6.jpg",
+      "corrected_ground_truth_label": "绳索锤式弯举",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "4",
+      "action_id": "动作7",
+      "action_number": 7,
+      "graph_image_path": "graph/4/动作7.jpg",
+      "corrected_ground_truth_label": "杠铃弯举",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "杠铃",
+      "prediction_exercise": "杠铃弯举",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "4",
+      "action_id": "动作8",
+      "action_number": 8,
+      "graph_image_path": "graph/4/动作8.jpg",
+      "corrected_ground_truth_label": "杠铃弯举",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "UNKNOWN_EQUIPMENT",
+      "prediction_exercise": "UNKNOWN_ACTION",
+      "prediction_confidence": 0.2,
+      "prediction_policy": "insufficient_evidence"
+    },
+    {
+      "folder": "4",
+      "action_id": "动作9",
+      "action_number": 9,
+      "graph_image_path": "graph/4/动作9.jpg",
+      "corrected_ground_truth_label": "哑铃弯举",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "哑铃",
+      "prediction_exercise": "哑铃侧平举",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "4",
+      "action_id": "动作10",
+      "action_number": 10,
+      "graph_image_path": "graph/4/动作10.jpg",
+      "corrected_ground_truth_label": "哑铃弯举",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "哑铃",
+      "prediction_exercise": "哑铃罗马尼亚硬拉",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "8",
+      "action_id": "动作1",
+      "action_number": 1,
+      "graph_image_path": "graph/8/动作1.jpg",
+      "corrected_ground_truth_label": "跑步",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "跑步机",
+      "prediction_exercise": "跑步机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "8",
+      "action_id": "动作2",
+      "action_number": 2,
+      "graph_image_path": "graph/8/动作2.jpg",
+      "corrected_ground_truth_label": "跑步",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "跑步机",
+      "prediction_exercise": "跑步机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "8",
+      "action_id": "动作3",
+      "action_number": 3,
+      "graph_image_path": "graph/8/动作3.jpg",
+      "corrected_ground_truth_label": "爬楼",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "固定器械坐姿划船机",
+      "prediction_exercise": "固定器械坐姿划船",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "8",
+      "action_id": "动作4",
+      "action_number": 4,
+      "graph_image_path": "graph/8/动作4.jpg",
+      "corrected_ground_truth_label": "史密斯卧推",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "高位下拉机",
+      "prediction_exercise": "高位下拉",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "8",
+      "action_id": "动作5",
+      "action_number": 5,
+      "graph_image_path": "graph/8/动作5.jpg",
+      "corrected_ground_truth_label": "史密斯卧推",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "高位下拉机",
+      "prediction_exercise": "高位下拉",
+      "prediction_confidence": 0.92,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "8",
+      "action_id": "动作6",
+      "action_number": 6,
+      "graph_image_path": "graph/8/动作6.jpg",
+      "corrected_ground_truth_label": "杠铃弯举",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "8",
+      "action_id": "动作7",
+      "action_number": 7,
+      "graph_image_path": "graph/8/动作7.jpg",
+      "corrected_ground_truth_label": "史密斯卧推",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "高位下拉机",
+      "prediction_exercise": "高位下拉",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "8",
+      "action_id": "动作8",
+      "action_number": 8,
+      "graph_image_path": "graph/8/动作8.jpg",
+      "corrected_ground_truth_label": "划船",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "跑步机",
+      "prediction_exercise": "跑步机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "8",
+      "action_id": "动作9",
+      "action_number": 9,
+      "graph_image_path": "graph/8/动作9.jpg",
+      "corrected_ground_truth_label": "夹胸",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "固定器械推胸机",
+      "prediction_exercise": "固定器械推胸",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "健身-高孟琦",
+      "action_id": "动作1",
+      "action_number": 1,
+      "graph_image_path": "graph/健身-高孟琦/动作1.jpg",
+      "corrected_ground_truth_label": "哑铃深蹲",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "UNKNOWN_EQUIPMENT",
+      "prediction_exercise": "UNKNOWN_ACTION",
+      "prediction_confidence": 0.1,
+      "prediction_policy": "insufficient_evidence"
+    },
+    {
+      "folder": "健身-高孟琦",
+      "action_id": "动作2",
+      "action_number": 2,
+      "graph_image_path": "graph/健身-高孟琦/动作2.jpg",
+      "corrected_ground_truth_label": "高位直杆下拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "史密斯机",
+      "prediction_exercise": "史密斯卧推",
+      "prediction_confidence": 0.9,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "健身-高孟琦",
+      "action_id": "动作3",
+      "action_number": 3,
+      "graph_image_path": "graph/健身-高孟琦/动作3.jpg",
+      "corrected_ground_truth_label": "绳索下压",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "action_id": "动作1",
+      "action_number": 1,
+      "graph_image_path": "graph/肩-秦紫渝/动作1.jpg",
+      "corrected_ground_truth_label": "跑步",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "登阶机/爬楼机",
+      "prediction_exercise": "登阶机/爬楼机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "action_id": "动作2",
+      "action_number": 2,
+      "graph_image_path": "graph/肩-秦紫渝/动作2.jpg",
+      "corrected_ground_truth_label": "绳索下拉",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "action_id": "动作3",
+      "action_number": 3,
+      "graph_image_path": "graph/肩-秦紫渝/动作3.jpg",
+      "corrected_ground_truth_label": "绳索下拉",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "action_id": "动作4",
+      "action_number": 4,
+      "graph_image_path": "graph/肩-秦紫渝/动作4.jpg",
+      "corrected_ground_truth_label": "单臂绳索下拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "action_id": "动作5",
+      "action_number": 5,
+      "graph_image_path": "graph/肩-秦紫渝/动作5.jpg",
+      "corrected_ground_truth_label": "单臂绳索下拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "action_id": "动作6",
+      "action_number": 6,
+      "graph_image_path": "graph/肩-秦紫渝/动作6.jpg",
+      "corrected_ground_truth_label": "绳索下拉",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "action_id": "动作1",
+      "action_number": 1,
+      "graph_image_path": "graph/肩-背-秦紫渝/动作1.jpg",
+      "corrected_ground_truth_label": "热身（跑步机）",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "跑步机",
+      "prediction_exercise": "跑步机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "action_id": "动作2",
+      "action_number": 2,
+      "graph_image_path": "graph/肩-背-秦紫渝/动作2.jpg",
+      "corrected_ground_truth_label": "高位下拉",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "高位下拉机",
+      "prediction_exercise": "高位下拉",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "action_id": "动作3",
+      "action_number": 3,
+      "graph_image_path": "graph/肩-背-秦紫渝/动作3.jpg",
+      "corrected_ground_truth_label": "高位下拉",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "高位下拉机",
+      "prediction_exercise": "高位下拉",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "action_id": "动作4",
+      "action_number": 4,
+      "graph_image_path": "graph/肩-背-秦紫渝/动作4.jpg",
+      "corrected_ground_truth_label": "绳索划船",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "action_id": "动作5",
+      "action_number": 5,
+      "graph_image_path": "graph/肩-背-秦紫渝/动作5.jpg",
+      "corrected_ground_truth_label": "拉伸/跑步机",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "登阶机",
+      "prediction_exercise": "登阶机/爬楼机",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_id": "动作1",
+      "action_number": 1,
+      "graph_image_path": "graph/肩背-叶翔/动作1.jpg",
+      "corrected_ground_truth_label": "爬楼机",
+      "correction_status": "base_ground_truth_kept",
+      "prediction_equipment": "登阶机",
+      "prediction_exercise": "登阶机/爬楼机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_id": "动作2",
+      "action_number": 2,
+      "graph_image_path": "graph/肩背-叶翔/动作2.jpg",
+      "corrected_ground_truth_label": "直杆高位下拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "高位下拉机",
+      "prediction_exercise": "高位下拉",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_id": "动作3",
+      "action_number": 3,
+      "graph_image_path": "graph/肩背-叶翔/动作3.jpg",
+      "corrected_ground_truth_label": "直杆高位下拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.8,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_id": "动作4",
+      "action_number": 4,
+      "graph_image_path": "graph/肩背-叶翔/动作4.jpg",
+      "corrected_ground_truth_label": "直杆高位下拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_id": "动作5",
+      "action_number": 5,
+      "graph_image_path": "graph/肩背-叶翔/动作5.jpg",
+      "corrected_ground_truth_label": "直杆高位下拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索弯举",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_id": "动作6",
+      "action_number": 6,
+      "graph_image_path": "graph/肩背-叶翔/动作6.jpg",
+      "corrected_ground_truth_label": "绳索面拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_id": "动作7",
+      "action_number": 7,
+      "graph_image_path": "graph/肩背-叶翔/动作7.jpg",
+      "corrected_ground_truth_label": "绳索面拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.55,
+      "prediction_policy": "insufficient_evidence"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_id": "动作8",
+      "action_number": 8,
+      "graph_image_path": "graph/肩背-叶翔/动作8.jpg",
+      "corrected_ground_truth_label": "绳索面拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.92,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_id": "动作9",
+      "action_number": 9,
+      "graph_image_path": "graph/肩背-叶翔/动作9.jpg",
+      "corrected_ground_truth_label": "绳索面拉",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索下压",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_id": "动作10",
+      "action_number": 10,
+      "graph_image_path": "graph/肩背-叶翔/动作10.jpg",
+      "corrected_ground_truth_label": "坐姿划船",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "坐姿绳索划船",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_id": "动作11",
+      "action_number": 11,
+      "graph_image_path": "graph/肩背-叶翔/动作11.jpg",
+      "corrected_ground_truth_label": "坐姿划船",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "坐姿绳索划船",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "腿-张开",
+      "action_id": "动作1",
+      "action_number": 1,
+      "graph_image_path": "graph/腿-张开/动作1.jpg",
+      "corrected_ground_truth_label": "跑步机",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "椭圆机",
+      "prediction_exercise": "椭圆机",
+      "prediction_confidence": 0.85,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "腿-张开",
+      "action_id": "动作2",
+      "action_number": 2,
+      "graph_image_path": "graph/腿-张开/动作2.jpg",
+      "corrected_ground_truth_label": "杠铃深蹲",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "史密斯机",
+      "prediction_exercise": "史密斯深蹲",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "腿-张开",
+      "action_id": "动作3",
+      "action_number": 3,
+      "graph_image_path": "graph/腿-张开/动作3.jpg",
+      "corrected_ground_truth_label": "杠铃深蹲",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "杠铃",
+      "prediction_exercise": "杠铃深蹲",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "腿-张开",
+      "action_id": "动作4",
+      "action_number": 4,
+      "graph_image_path": "graph/腿-张开/动作4.jpg",
+      "corrected_ground_truth_label": "杠铃深蹲",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "杠铃",
+      "prediction_exercise": "杠铃深蹲",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "腿-张开",
+      "action_id": "动作5",
+      "action_number": 5,
+      "graph_image_path": "graph/腿-张开/动作5.jpg",
+      "corrected_ground_truth_label": "坐姿腿屈伸",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "坐姿腿屈伸机",
+      "prediction_exercise": "坐姿腿屈伸",
+      "prediction_confidence": 0.92,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "腿-张开",
+      "action_id": "动作6",
+      "action_number": 6,
+      "graph_image_path": "graph/腿-张开/动作6.jpg",
+      "corrected_ground_truth_label": "未知动作",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "UNKNOWN_EQUIPMENT",
+      "prediction_exercise": "UNKNOWN_ACTION",
+      "prediction_confidence": 0.45,
+      "prediction_policy": "insufficient_evidence"
+    },
+    {
+      "folder": "腿-张开",
+      "action_id": "动作7",
+      "action_number": 7,
+      "graph_image_path": "graph/腿-张开/动作7.jpg",
+      "corrected_ground_truth_label": "倒蹬机",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "腿举机",
+      "prediction_exercise": "腿举",
+      "prediction_confidence": 0.95,
+      "prediction_policy": "single_clear"
+    },
+    {
+      "folder": "腿-张开",
+      "action_id": "动作8",
+      "action_number": 8,
+      "graph_image_path": "graph/腿-张开/动作8.jpg",
+      "corrected_ground_truth_label": "未知动作",
+      "correction_status": "corrected_by_user",
+      "prediction_equipment": "龙门架",
+      "prediction_exercise": "绳索夹胸",
+      "prediction_confidence": 0.75,
+      "prediction_policy": "single_clear"
+    }
+  ],
+  "groups": [
+    {
+      "folder": "3",
+      "action_ids": [
+        "动作1",
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作1.jpg",
+        "graph/3/动作2.jpg"
+      ],
+      "corrected_ground_truth_label": "史密斯卧推",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "史密斯卧推",
+          "confidence": 0.9
+        },
+        {
+          "exercise": "史密斯卧推",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "3",
+      "action_ids": [
+        "动作3",
+        "动作4"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作3.jpg",
+        "graph/3/动作4.jpg"
+      ],
+      "corrected_ground_truth_label": "水平哑铃卧推",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "哑铃卧推",
+          "confidence": 0.85
+        },
+        {
+          "exercise": "哑铃卧推",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "3",
+      "action_ids": [
+        "动作5",
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作5.jpg",
+        "graph/3/动作6.jpg"
+      ],
+      "corrected_ground_truth_label": "哑铃卧推",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "哑铃卧推",
+          "confidence": 0.85
+        },
+        {
+          "exercise": "哑铃卧推",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "3",
+      "action_ids": [
+        "动作7"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作7.jpg"
+      ],
+      "corrected_ground_truth_label": "上斜 30 度哑铃卧推",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "史密斯卧推",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "3",
+      "action_ids": [
+        "动作8"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作8.jpg"
+      ],
+      "corrected_ground_truth_label": "哑铃卧推",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "3",
+      "action_ids": [
+        "动作9"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作9.jpg"
+      ],
+      "corrected_ground_truth_label": "上斜史密斯卧推",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "高位下拉",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "3",
+      "action_ids": [
+        "动作10",
+        "动作11"
+      ],
+      "graph_image_paths": [
+        "graph/3/动作10.jpg",
+        "graph/3/动作11.jpg"
+      ],
+      "corrected_ground_truth_label": "绳索下拉",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.95
+        },
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "4",
+      "action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作1.jpg"
+      ],
+      "corrected_ground_truth_label": "宽距高位下拉",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "高位下拉",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "4",
+      "action_ids": [
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作2.jpg"
+      ],
+      "corrected_ground_truth_label": "坐姿划船",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "坐姿绳索划船",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "folder": "4",
+      "action_ids": [
+        "动作3",
+        "动作4"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作3.jpg",
+        "graph/4/动作4.jpg"
+      ],
+      "corrected_ground_truth_label": "反握器械高位下拉",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "绳索夹胸",
+          "confidence": 0.75
+        },
+        {
+          "exercise": "高位下拉",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "4",
+      "action_ids": [
+        "动作5",
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作5.jpg",
+        "graph/4/动作6.jpg"
+      ],
+      "corrected_ground_truth_label": "绳索锤式弯举",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.95
+        },
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "folder": "4",
+      "action_ids": [
+        "动作7",
+        "动作8"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作7.jpg",
+        "graph/4/动作8.jpg"
+      ],
+      "corrected_ground_truth_label": "杠铃弯举",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "杠铃弯举",
+          "confidence": 0.9
+        },
+        {
+          "exercise": "UNKNOWN_ACTION",
+          "confidence": 0.2
+        }
+      ]
+    },
+    {
+      "folder": "4",
+      "action_ids": [
+        "动作9",
+        "动作10"
+      ],
+      "graph_image_paths": [
+        "graph/4/动作9.jpg",
+        "graph/4/动作10.jpg"
+      ],
+      "corrected_ground_truth_label": "哑铃弯举",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "哑铃侧平举",
+          "confidence": 0.85
+        },
+        {
+          "exercise": "哑铃罗马尼亚硬拉",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "8",
+      "action_ids": [
+        "动作1",
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作1.jpg",
+        "graph/8/动作2.jpg"
+      ],
+      "corrected_ground_truth_label": "跑步",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "跑步机",
+          "confidence": 0.95
+        },
+        {
+          "exercise": "跑步机",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "8",
+      "action_ids": [
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作3.jpg"
+      ],
+      "corrected_ground_truth_label": "爬楼",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "固定器械坐姿划船",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "8",
+      "action_ids": [
+        "动作4",
+        "动作5"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作4.jpg",
+        "graph/8/动作5.jpg"
+      ],
+      "corrected_ground_truth_label": "史密斯卧推",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "高位下拉",
+          "confidence": 0.9
+        },
+        {
+          "exercise": "高位下拉",
+          "confidence": 0.92
+        }
+      ]
+    },
+    {
+      "folder": "8",
+      "action_ids": [
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作6.jpg"
+      ],
+      "corrected_ground_truth_label": "杠铃弯举",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "8",
+      "action_ids": [
+        "动作7"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作7.jpg"
+      ],
+      "corrected_ground_truth_label": "史密斯卧推",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "高位下拉",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "8",
+      "action_ids": [
+        "动作8"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作8.jpg"
+      ],
+      "corrected_ground_truth_label": "划船",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "跑步机",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "8",
+      "action_ids": [
+        "动作9"
+      ],
+      "graph_image_paths": [
+        "graph/8/动作9.jpg"
+      ],
+      "corrected_ground_truth_label": "夹胸",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "固定器械推胸",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "健身-高孟琦",
+      "action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/健身-高孟琦/动作1.jpg"
+      ],
+      "corrected_ground_truth_label": "哑铃深蹲",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "UNKNOWN_ACTION",
+          "confidence": 0.1
+        }
+      ]
+    },
+    {
+      "folder": "健身-高孟琦",
+      "action_ids": [
+        "动作2"
+      ],
+      "graph_image_paths": [
+        "graph/健身-高孟琦/动作2.jpg"
+      ],
+      "corrected_ground_truth_label": "高位直杆下拉",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "史密斯卧推",
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "folder": "健身-高孟琦",
+      "action_ids": [
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/健身-高孟琦/动作3.jpg"
+      ],
+      "corrected_ground_truth_label": "绳索下压",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/肩-秦紫渝/动作1.jpg"
+      ],
+      "corrected_ground_truth_label": "跑步",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "登阶机/爬楼机",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "action_ids": [
+        "动作2",
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/肩-秦紫渝/动作2.jpg",
+        "graph/肩-秦紫渝/动作3.jpg"
+      ],
+      "corrected_ground_truth_label": "绳索下拉",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.85
+        },
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "action_ids": [
+        "动作4",
+        "动作5"
+      ],
+      "graph_image_paths": [
+        "graph/肩-秦紫渝/动作4.jpg",
+        "graph/肩-秦紫渝/动作5.jpg"
+      ],
+      "corrected_ground_truth_label": "单臂绳索下拉",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.85
+        },
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "肩-秦紫渝",
+      "action_ids": [
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/肩-秦紫渝/动作6.jpg"
+      ],
+      "corrected_ground_truth_label": "绳索下拉",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/肩-背-秦紫渝/动作1.jpg"
+      ],
+      "corrected_ground_truth_label": "热身（跑步机）",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "跑步机",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "action_ids": [
+        "动作2",
+        "动作3"
+      ],
+      "graph_image_paths": [
+        "graph/肩-背-秦紫渝/动作2.jpg",
+        "graph/肩-背-秦紫渝/动作3.jpg"
+      ],
+      "corrected_ground_truth_label": "高位下拉",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "高位下拉",
+          "confidence": 0.95
+        },
+        {
+          "exercise": "高位下拉",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "action_ids": [
+        "动作4"
+      ],
+      "graph_image_paths": [
+        "graph/肩-背-秦紫渝/动作4.jpg"
+      ],
+      "corrected_ground_truth_label": "绳索划船",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "肩-背-秦紫渝",
+      "action_ids": [
+        "动作5"
+      ],
+      "graph_image_paths": [
+        "graph/肩-背-秦紫渝/动作5.jpg"
+      ],
+      "corrected_ground_truth_label": "拉伸/跑步机",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "登阶机/爬楼机",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/肩背-叶翔/动作1.jpg"
+      ],
+      "corrected_ground_truth_label": "爬楼机",
+      "correction_status": "base_ground_truth_kept",
+      "predictions": [
+        {
+          "exercise": "登阶机/爬楼机",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_ids": [
+        "动作2",
+        "动作3",
+        "动作4",
+        "动作5"
+      ],
+      "graph_image_paths": [
+        "graph/肩背-叶翔/动作2.jpg",
+        "graph/肩背-叶翔/动作3.jpg",
+        "graph/肩背-叶翔/动作4.jpg",
+        "graph/肩背-叶翔/动作5.jpg"
+      ],
+      "corrected_ground_truth_label": "直杆高位下拉",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "高位下拉",
+          "confidence": 0.95
+        },
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.8
+        },
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.85
+        },
+        {
+          "exercise": "绳索弯举",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_ids": [
+        "动作6",
+        "动作7",
+        "动作8",
+        "动作9"
+      ],
+      "graph_image_paths": [
+        "graph/肩背-叶翔/动作6.jpg",
+        "graph/肩背-叶翔/动作7.jpg",
+        "graph/肩背-叶翔/动作8.jpg",
+        "graph/肩背-叶翔/动作9.jpg"
+      ],
+      "corrected_ground_truth_label": "绳索面拉",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.85
+        },
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.55
+        },
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.92
+        },
+        {
+          "exercise": "绳索下压",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "肩背-叶翔",
+      "action_ids": [
+        "动作10",
+        "动作11"
+      ],
+      "graph_image_paths": [
+        "graph/肩背-叶翔/动作10.jpg",
+        "graph/肩背-叶翔/动作11.jpg"
+      ],
+      "corrected_ground_truth_label": "坐姿划船",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "坐姿绳索划船",
+          "confidence": 0.95
+        },
+        {
+          "exercise": "坐姿绳索划船",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "腿-张开",
+      "action_ids": [
+        "动作1"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作1.jpg"
+      ],
+      "corrected_ground_truth_label": "跑步机",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "椭圆机",
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "folder": "腿-张开",
+      "action_ids": [
+        "动作2",
+        "动作3",
+        "动作4"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作2.jpg",
+        "graph/腿-张开/动作3.jpg",
+        "graph/腿-张开/动作4.jpg"
+      ],
+      "corrected_ground_truth_label": "杠铃深蹲",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "史密斯深蹲",
+          "confidence": 0.95
+        },
+        {
+          "exercise": "杠铃深蹲",
+          "confidence": 0.95
+        },
+        {
+          "exercise": "杠铃深蹲",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "腿-张开",
+      "action_ids": [
+        "动作5"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作5.jpg"
+      ],
+      "corrected_ground_truth_label": "坐姿腿屈伸",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "坐姿腿屈伸",
+          "confidence": 0.92
+        }
+      ]
+    },
+    {
+      "folder": "腿-张开",
+      "action_ids": [
+        "动作6"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作6.jpg"
+      ],
+      "corrected_ground_truth_label": "未知动作",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "UNKNOWN_ACTION",
+          "confidence": 0.45
+        }
+      ]
+    },
+    {
+      "folder": "腿-张开",
+      "action_ids": [
+        "动作7"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作7.jpg"
+      ],
+      "corrected_ground_truth_label": "倒蹬机",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "腿举",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "folder": "腿-张开",
+      "action_ids": [
+        "动作8"
+      ],
+      "graph_image_paths": [
+        "graph/腿-张开/动作8.jpg"
+      ],
+      "corrected_ground_truth_label": "未知动作",
+      "correction_status": "corrected_by_user",
+      "predictions": [
+        {
+          "exercise": "绳索夹胸",
+          "confidence": 0.75
+        }
+      ]
+    }
+  ]
+}

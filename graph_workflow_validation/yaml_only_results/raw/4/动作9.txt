@@ -1,0 +1,45 @@
+{
+  "user_folder": "4",
+  "action_id": "动作9",
+  "image_path": "graph/4/动作9.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃侧平举",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃侧平举",
+      "confidence": 0.95,
+      "support": "第一人称视角可见双手持哑铃，镜中显示站姿，双臂向两侧做外展平举动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "哑铃",
+      "镜子"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "从第25帧开始，双手持哑铃从身体两侧向上、向外做弧线运动，至肩高后下放，呈现明显的侧平举轨迹。",
+    "first_person_subject_evidence": "画面下方出现持哑铃的双臂，且运动与相机视角同步；镜中可见佩戴相机的黑衣用户正在进行训练。",
+    "uncertainty_notes": "无"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "站姿状态下，哑铃从大腿两侧向身体远端侧向抬起，肘部微屈且角度固定，符合哑铃侧平举特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "哑铃推肩",
+        "reason": "未见哑铃从肩部向头顶上方的推举动作，轨迹为侧向外展。"
+      },
+      {
+        "exercise": "哑铃弯举",
+        "reason": "运动由肩关节主导而非肘关节屈伸。"
+      },
+      {
+        "exercise": "哑铃卧推",
+        "reason": "用户处于站立姿态，而非仰卧在长凳上。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

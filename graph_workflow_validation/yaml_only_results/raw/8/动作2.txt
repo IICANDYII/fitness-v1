@@ -1,0 +1,43 @@
+{
+  "user_folder": "8",
+  "action_id": "动作2",
+  "image_path": "graph/8/动作2.jpg",
+  "selected_equipment": "健身车",
+  "selected_exercise": "健身车",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "健身车",
+      "exercise": "健身车",
+      "exercise_id": "stationary_bike",
+      "confidence": 0.95,
+      "support": "画面中清晰可见健身车（动感单车）的电子控制面板、红色阻力调节旋钮以及典型的弯曲固定把手。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "健身车控制面板",
+      "红色阻力调节旋钮",
+      "固定把手"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "用户双手握持把手，躯干相对器械保持稳定，符合骑行姿态；前几帧可见用户在操作控制面板。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手从画面两侧伸出操作器械，且相机随用户身体重心稳定在车座上。",
+    "uncertainty_notes": "无明显不确定性，器械特征极其典型。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "器械具有动感单车特有的红色下压式刹车/阻力旋钮，且把手形状与控制面板布局完全符合健身车特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "椭圆机",
+        "reason": "椭圆机通常有活动的纵向长手柄，且控制面板高度和结构与此不同。"
+      },
+      {
+        "exercise": "跑步机",
+        "reason": "未见跑步带，且把手和控制面板的紧凑结构属于单车而非跑步机。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

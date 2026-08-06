@@ -1,0 +1,49 @@
+{
+  "user_folder": "9",
+  "action_id": "动作2",
+  "image_path": "graph/9/动作2.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "坐姿绳索划船",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "坐姿绳索划船",
+      "confidence": 0.85,
+      "support": "画面中可见典型的龙门架/绳索机结构，用户双手抓握把手并向躯干方向做水平拉拽动作，符合坐姿划船特征。"
+    },
+    {
+      "equipment": "固定器械",
+      "exercise": "固定器械坐姿划船",
+      "confidence": 0.45,
+      "support": "同为划船动作，但画面中可见明显的钢索和滑轮，更倾向于绳索类器械。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "绳索",
+      "把手",
+      "配重塔"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "用户双手从前方伸出抓握把手（如第2行第4帧），随后向后拉向身体（如第3行第4帧），呈现明显的前后水平往复运动。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手直接出现在画面中心操作把手，且相机随躯干有轻微的前后晃动，与划船动作同步。",
+    "uncertainty_notes": "环境光线较暗，但器械的轮廓和动作的轨迹足以判定为划船类动作。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到用户操作连接在龙门架上的绳索把手，运动轨迹为水平拉向腹部/胸部，且姿态为坐姿，完全符合坐姿绳索划船的定义。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "高位下拉",
+        "reason": "高位下拉的运动轨迹应为从头顶上方垂直向下，而本视频中把手位于用户正前方，轨迹为水平前后。"
+      },
+      {
+        "exercise": "固定器械推胸",
+        "reason": "推胸动作是向外推离身体，而画面显示用户是在向后拉回把手。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

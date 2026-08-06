@@ -1,0 +1,47 @@
+{
+  "user_folder": "手臂-胸-杨博宇",
+  "action_id": "动作3",
+  "image_path": "graph/手臂-胸-杨博宇/动作3.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "dumbbell_bench_press",
+  "selected_confidence": 0.9,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "dumbbell_bench_press",
+      "confidence": 0.9,
+      "support": "第一人称视角显示用户处于仰卧位（相机直对天花板），右手握持哑铃在胸部上方做垂直推举动作。"
+    },
+    {
+      "equipment": "哑铃",
+      "exercise": "dumbbell_shoulder_press",
+      "confidence": 0.3,
+      "support": "同为推举动作，但相机视角表明用户并非坐姿或站姿。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "哑铃",
+      "哑铃架"
+    ],
+    "body_posture": "supine",
+    "motion_cues_from_grid": "哑铃在画面中呈现周期性的由近及远（推起）和由远及近（下放）的运动，轨迹位于胸部正上方。",
+    "first_person_subject_evidence": "画面下方出现用户右手握持哑铃，且运动与相机视角同步，符合第一人称胸前相机特征。",
+    "uncertainty_notes": "虽然负重较轻（2.5KG），但动作模式完全符合哑铃卧推。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "相机视角垂直向上对准天花板，确认用户为仰卧姿态；哑铃在胸前做线性推举运动，符合卧推特征。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "dumbbell_shoulder_press",
+        "reason": "推肩通常为坐姿或站姿，此时相机应水平看向前方而非垂直看向天花板。"
+      },
+      {
+        "exercise": "dumbbell_biceps_curl",
+        "reason": "弯举动作轨迹通常在身体两侧或胸前下方，不会在仰卧位时出现在面部/胸部正上方。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

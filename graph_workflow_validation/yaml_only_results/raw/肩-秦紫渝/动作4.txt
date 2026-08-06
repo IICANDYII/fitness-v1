@@ -1,0 +1,49 @@
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作4",
+  "image_path": "graph/肩-秦紫渝/动作4.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "可见高位滑轮连接绳索附件，用户双手握持绳索并向下进行臂屈伸动作，肘部相对固定。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "UNKNOWN_ACTION",
+      "confidence": 0.35,
+      "support": "考虑到文件夹名为‘肩’，动作可能为绳索面部拉引（Face Pull），但画面显示手部轨迹最终向下延伸至腰部，更符合下压特征。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架 (Cable Machine)",
+      "绳索附件 (Rope Attachment)",
+      "滑轮",
+      "配重片"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "从第13帧开始，双手握住绳索从胸部高度向下推展至大腿前侧，呈现明显的周期性上下往复运动。",
+    "first_person_subject_evidence": "第一人称视角下，用户双手始终握持绳索，且相机的轻微晃动与动作节奏完全同步。",
+    "uncertainty_notes": "虽然文件夹名为‘肩’，但视觉证据（向下推展的轨迹和肘部动作）强力指向肱三头肌的绳索下压动作。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "高位绳索附件、站姿、双手向下推展至手臂完全伸直，这是典型的绳索下压（Triceps Pushdown）动作模式。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_lat_pulldown",
+        "reason": "高位下拉通常使用长横杆并拉至胸前，此处使用绳索且动作范围主要在腹部至大腿之间。"
+      },
+      {
+        "exercise": "cable_face_pull",
+        "reason": "面部拉引的终点应在面部或颈部高度，而画面中手部明显下压至身体下方。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

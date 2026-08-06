@@ -1,0 +1,50 @@
+{
+  "user_folder": "8",
+  "action_id": "动作6",
+  "image_path": "graph/8/动作6.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "exercise_id": "cable_lat_pulldown",
+      "confidence": 0.85,
+      "support": "起始帧显示双手向上抓握高位把手，随后进行向下的拉引动作，符合高位下拉的运动轨迹。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "exercise_id": "cable_triceps_pushdown",
+      "confidence": 0.35,
+      "support": "同为向下的绳索动作，但画面中上臂有明显摆动，更符合背部训练而非单纯的肱三头肌孤立动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "钢索",
+      "D型把手/横杠"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "用户双手向上伸展抓取器械，随后右手（及同步的左手）在画面中呈现明显的上下往复拉动，周期性稳定。",
+    "first_person_subject_evidence": "第一人称视角下，用户手臂从画面两侧伸向器械，且手臂的拉伸动作与背景中钢索的张力变化完全同步。",
+    "uncertainty_notes": "由于是胸前相机，无法完全看清背部肌肉收缩，但根据手臂运动幅度和起始抓握高度可判定为高位下拉。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "起始帧（第一行前两张）明确显示双手向上方抓握器械，随后的运动轨迹是典型的由高向低的拉引，符合高位下拉（Lat Pulldown）的标准动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压通常要求上臂固定在身体两侧，而画面中用户上臂随动作有明显的上下移动，属于多关节的拉类动作。"
+      },
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "坐姿划船的运动主轴是水平的前后方向，而本动作主轴为垂直的上下方向。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

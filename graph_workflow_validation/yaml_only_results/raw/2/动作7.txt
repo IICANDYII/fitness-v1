@@ -1,0 +1,48 @@
+{
+  "user_folder": "2",
+  "action_id": "动作7",
+  "image_path": "graph/2/动作7.jpg",
+  "selected_equipment": "固定器械",
+  "selected_exercise": "machine_chest_press",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "固定器械",
+      "exercise": "machine_chest_press",
+      "confidence": 0.85,
+      "support": "镜中反射显示用户坐姿操作推胸机，双手握持把手向前推举，伴随明显的肘部屈伸。"
+    },
+    {
+      "equipment": "固定器械",
+      "exercise": "machine_shoulder_press",
+      "confidence": 0.35,
+      "support": "同为固定器械推举类动作，但轨迹更偏向前方而非正上方。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "固定器械推胸机",
+      "把手",
+      "配重臂"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "用户双手握住把手，将器械臂向前推离身体（如第3-4帧，第11-12帧），随后受控返回。",
+    "first_person_subject_evidence": "第一人称视角可见用户双手伸向把手，且镜中反射的人物动作、衣着及胸前相机位置与当前视角完全同步。",
+    "uncertainty_notes": "仅凭视觉判断，推胸与推肩在某些器械上轨迹接近，但本器械结构更符合水平推胸。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜中反射清晰显示用户处于坐姿，双臂在胸前做水平推举动作，器械为典型的固定路径推胸机。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "machine_shoulder_press",
+        "reason": "推举方向为身体前方而非头顶上方，且器械靠背角度支持推胸动作。"
+      },
+      {
+        "exercise": "machine_chest_fly",
+        "reason": "动作轨迹为直线推举而非圆弧夹胸，肘关节有明显的伸展过程。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

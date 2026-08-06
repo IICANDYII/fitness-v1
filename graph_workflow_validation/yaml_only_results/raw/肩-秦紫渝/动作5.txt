@@ -1,0 +1,47 @@
+{
+  "user_folder": "肩-秦紫渝",
+  "action_id": "动作5",
+  "image_path": "graph/肩-秦紫渝/动作5.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "绳索下压",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.85,
+      "support": "第一人称视角可见双手握持绳索附件（rope attachment），动作轨迹为从胸前向下推伸至身体两侧，符合绳索下压特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "面拉",
+      "confidence": 0.3,
+      "support": "同样使用绳索附件，但面拉通常向面部方向拉动，当前轨迹明显向下。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架钢索",
+      "绳索附件 (Rope Attachment)"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握住绳索，从上方起始位置向下发力推至大腿两侧，伴随肘关节伸展，呈现明显的上下周期性运动。",
+    "first_person_subject_evidence": "画面下方出现用户双手及佩戴的手表，动作与相机视角同步，确认为佩戴者本人操作。",
+    "uncertainty_notes": "由于缺乏光流和IMU数据，具体的次数统计仅能通过关键帧周期估算。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到典型的绳索附件，用户双手在胸前握住绳索并向下推伸，肘部作为支点，这是绳索下压（Cable Triceps Pushdown）的标准动作模式。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索面拉",
+        "reason": "面拉的轨迹是向后拉向面部，而视频中轨迹是向下推向地面。"
+      },
+      {
+        "exercise": "绳索弯举",
+        "reason": "弯举的受力方向相反，是从下向上拉，当前动作明显是向下推。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

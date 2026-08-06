@@ -1,0 +1,42 @@
+{
+  "user_folder": "8",
+  "action_id": "动作3",
+  "image_path": "graph/8/动作3.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_ACTION",
+  "selected_confidence": 0.2,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "UNKNOWN_ACTION",
+      "confidence": 0.2,
+      "support": "画面前半段用户站在龙门架前，但从镜子中可见双手正持手机/相机，未进行训练动作。"
+    },
+    {
+      "equipment": "杠铃",
+      "exercise": "barbell_bench_press",
+      "confidence": 0.1,
+      "support": "画面后半段出现卧推架与杠铃，但用户处于站立走动状态，无试举动作。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "杠铃", "卧推凳"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面前半段用户在镜前站立，随后出现剧烈的相机晃动和视角转动，表明用户正在走动或转身。",
+    "movement_direction": "unknown",
+    "first_person_subject_evidence": "镜中可见佩戴相机的用户（紫色上衣），双手持握拍摄设备，动作与相机位移同步。",
+    "uncertainty_notes": "拼图中未观察到任何周期性的力量训练动作，主要为站立、调整设备或在器械间走动。"
+  },
+  "sets": [],
+  "total_sets": 0,
+  "total_reps": 0,
+  "action_disambiguation": {
+    "selected_evidence": "镜面反射显示用户双手持手机位于胸前，且全过程伴随非训练性质的位移（走动），无器械操作轨迹。",
+    "rejected_or_close_candidates": [
+      {"exercise": "cable_chest_fly", "reason": "虽站在龙门架前，但双手未抓握把手，而是在操作拍摄设备"},
+      {"exercise": "barbell_bench_press", "reason": "画面后期虽靠近卧推架，但用户保持站立姿态并走动，未就位"}
+    ]
+  },
+  "needs_manual_review": true
+}

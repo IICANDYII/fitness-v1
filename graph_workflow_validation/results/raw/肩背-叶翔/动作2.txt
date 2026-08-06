@@ -1,0 +1,55 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作2",
+  "image_path": "graph/肩背-叶翔/动作2.jpg",
+  "selected_equipment": "高位下拉机",
+  "selected_exercise": "高位下拉",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "高位下拉机",
+      "exercise": "高位下拉",
+      "confidence": 0.95,
+      "support": "进场帧可见高位滑轮挂载宽横杆，训练过程中横杆从头顶大幅度拉至胸前，符合坐姿高位下拉特征。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "高位滑轮",
+      "宽横杆",
+      "钢索",
+      "配重塔框架"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "宽横杆在画面中轴线上方出现，并垂直向下运动至相机（胸前）位置，随后返回，循环往复。",
+    "first_person_subject_evidence": "横杆在画面近端中心做大幅度运动，且相机视角随拉动动作有轻微的同步起伏。",
+    "uncertainty_notes": "无光流和IMU数据，但视觉证据极其充分，动作模式单一明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "高位滑轮来源、宽横杆配件、坐姿视角以及从上往下的拉动轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压通常使用短杆或绳索，且动作幅度较小，主要在腹部前方活动，而此动作横杆从头顶拉下。"
+      },
+      {
+        "exercise": "坐姿绳索划船",
+        "reason": "划船动作绳索应从正前方水平拉来，而非从斜上方垂下。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:06:03",
+      "end_time": "00:06:46",
+      "reps": 8
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 3,
+    "expand_after_sec": 2,
+    "reason": "增加起始抓杆准备和结束放回横杆的完整性。"
+  },
+  "needs_manual_review": false
+}

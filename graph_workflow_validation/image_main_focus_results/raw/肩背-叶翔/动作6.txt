@@ -1,0 +1,48 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作6",
+  "image_path": "graph/肩背-叶翔/动作6.jpg",
+  "selected_equipment": "UNKNOWN_EQUIPMENT",
+  "selected_exercise": "UNKNOWN_EXERCISE",
+  "selected_confidence": 0.3,
+  "confidence_policy": "insufficient_evidence",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_triceps_pushdown",
+      "confidence": 0.4,
+      "support": "用户走向龙门架并伸手抓握绳索附件，符合绳索下压的起始准备姿态。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架", "绳索附件"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户在健身房内行走，随后停在龙门架前，双手伸向绳索附件进行抓握。",
+    "movement_direction": "unknown",
+    "first_person_subject_evidence": "画面末尾出现用户本人的双手抓握器械附件，且相机随步行晃动。",
+    "uncertainty_notes": "整个片段主要记录了用户走向器械和准备抓握的过程，未观察到任何完整的动作重复周期（reps）。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 0,
+      "evidence": "仅见入场与抓握准备动作，无有效次数。"
+    }
+  ],
+  "total_sets": 0,
+  "total_reps": 0,
+  "action_disambiguation": {
+    "selected_evidence": "视频片段主要为用户在健身房走动并接近龙门架的过程，末尾仅显示抓握动作，无运动轨迹。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_triceps_pushdown",
+        "reason": "虽有抓握绳索动作，但未见向下推下的完整行程，无法判定为已开始训练。"
+      },
+      {
+        "exercise": "cable_seated_row",
+        "reason": "画面中虽有他人进行坐姿划船，但当前用户本人处于站立位且正在走动，应予忽略。"
+      }
+    ]
+  },
+  "needs_manual_review": true
+}

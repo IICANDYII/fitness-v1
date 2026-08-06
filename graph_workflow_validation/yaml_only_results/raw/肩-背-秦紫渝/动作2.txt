@@ -1,0 +1,50 @@
+{
+  "user_folder": "肩-背-秦紫渝",
+  "action_id": "动作2",
+  "image_path": "graph/肩-背-秦紫渝/动作2.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "exercise_id": "cable_lat_pulldown",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.95,
+      "support": "第一人称视角下可见典型的高位下拉横杆，双手握持并从头顶上方拉至胸前，伴随明显的上下周期性运动。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.15,
+      "support": "同为龙门架动作，但下压通常起始于胸部高度，且横杆较短，与画面中长杆从高处下拉不符。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "高位下拉横杆",
+      "钢索",
+      "滑轮结构"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "横杆从画面顶部（头顶上方）向相机方向（胸部）下拉，随后受控回升，形成完整的垂直往复周期。",
+    "first_person_subject_evidence": "画面中可见用户双手对称握持横杆，横杆的运动轨迹与相机视角高度关联，背景中配重块的升降与横杆动作同步。",
+    "uncertainty_notes": "无明显不确定性，器械特征与动作轨迹非常典型。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到长型下拉横杆从高位起始，用户双手宽握并将其拉向胸前，符合高位下拉的标准动作模式；背景中的滑轮和钢索连接至上方，排除了水平划船的可能性。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压的起始位置通常在胸口，且主要涉及肘关节屈伸将杆压向大腿，而此动作是肩关节主导的下拉。"
+      },
+      {
+        "exercise": "引体向上",
+        "reason": "引体向上中横杆是固定的，画面中横杆相对于背景有明显的位移，确定为器械下拉动作。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

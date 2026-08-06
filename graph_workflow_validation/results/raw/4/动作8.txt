@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析: 画面前几帧（1-4帧）显示用户正站在一台带有红色靠背和坐垫的挂片式固定器械（疑似悍马机）前，但并未就坐或开始训练。
+Step 2 — 器械识别: 随后画面（5-7帧）显示用户在健身房内走动，经过一个黄色落地扇，最终在第8帧停在哑铃架前，双手正准备抓取一对哑铃。
+Step 3 — 光流验证: 画面整体呈现平移光流，反映的是相机的位移（行走），而非器械或肢体的周期性运动。
+Step 4 — 动作判定: 整个片段记录的是用户在器械间行走及准备抓取哑铃的过程，未观察到任何符合标准动作定义的重复性训练行程。
+Step 5 — 组次统计: 由于无有效动作发生，组数和次数均为0。
+
+{"equipment": "UNKNOWN_EQUIPMENT", "exercise": "UNKNOWN_ACTION", "exercise_id": "", "selected_equipment": "UNKNOWN_EQUIPMENT", "selected_exercise": "UNKNOWN_ACTION", "selected_confidence": 0.2, "confidence_policy": "insufficient_evidence", "top_candidates": [{"equipment": "哑铃", "exercise": "UNKNOWN_ACTION", "confidence": 0.3, "support": "画面最后显示用户手部接触哑铃，可能正准备开始某项哑铃训练"}], "context": {"visible_equipment": ["挂片式固定器械", "哑铃架", "落地扇"], "body_posture": "standing", "motion_cues_from_grid": "用户在健身房内行走，最后停在哑铃架前伸手抓取哑铃", "first_person_subject_evidence": "第一人称视角，画面同步显示用户手部伸向哑铃架", "uncertainty_notes": "片段内仅包含行走和准备动作，无任何训练动作的完整行程"}, "action_disambiguation": {"selected_evidence": "画面中无周期性运动，仅见用户走向并接触哑铃", "rejected_or_close_candidates": [{"exercise": "哑铃弯举", "reason": "仅见抓取哑铃动作，无法预判后续具体训练内容"}]}, "needs_manual_review": true, "sets": [], "phase1_adjustment": {"expand_before_sec": 0, "expand_after_sec": 10, "reason": "当前片段仅为准备阶段，需向后扩展以观察实际训练动作"}}

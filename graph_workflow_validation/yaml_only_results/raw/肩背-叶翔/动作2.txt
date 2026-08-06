@@ -1,0 +1,59 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作2",
+  "image_path": "graph/肩背-叶翔/动作2.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "高位下拉",
+  "exercise_id": "cable_lat_pulldown",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "高位下拉",
+      "confidence": 0.95,
+      "support": "第一人称视角下，高位下拉横杆从上方拉至胸前，钢索连接清晰可见，符合坐姿高位下拉特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "绳索下压",
+      "confidence": 0.3,
+      "support": "同为绳索器械，但运动轨迹是从上方拉至胸前，而非从胸前压至腰部。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "龙门架",
+      "高位下拉横杆",
+      "钢索",
+      "配重滑轨"
+    ],
+    "body_posture": "seated",
+    "motion_cues_from_grid": "横杆在画面中呈现明显的上下往复运动，从画面顶端出现并向相机（胸前）靠近，随后返回。",
+    "first_person_subject_evidence": "横杆位于画面近端，其运动与相机视角高度同步，且双手握持位置符合第一人称操作逻辑。",
+    "uncertainty_notes": "无明显不确定性，器械与动作特征极度匹配。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "观察到典型的高位下拉长杆，且运动方向为自上而下至胸前，用户处于坐姿，符合 cable_lat_pulldown 定义。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "绳索下压",
+        "reason": "绳索下压通常使用短杆或绳索，且起始位置在胸部，向下压至大腿；此动作起始位置更高，且横杆较长。"
+      },
+      {
+        "exercise": "引体向上",
+        "reason": "引体向上中横杆是固定的，画面中横杆相对于背景和机器框架在移动，说明是器械运动而非身体上升。"
+      }
+    ]
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "start_time": "00:06:00",
+      "end_time": "00:06:48",
+      "reps": 4,
+      "rep_source": "visual_count"
+    }
+  ],
+  "needs_manual_review": false
+}

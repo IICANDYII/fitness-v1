@@ -1,0 +1,7 @@
+Step 1 — 进场帧分析：网格图前几帧显示用户已坐在器械上，正对镜子。镜中可见用户穿着紫色上衣，双手握住前方的器械把手，器械具有座椅和垂直的配重结构，属于典型的坐姿划船类器械。
+Step 2 — 器械识别：通过镜中全身姿态观察，用户处于坐姿，双脚踩在踏板上，双手将把手水平向后拉向腹部。根据规则三和规则六，这符合坐姿划船的特征。由于镜中可见明显的固定框架而非单纯的龙门架钢索，判定为固定器械坐姿划船机。
+Step 3 — 光流验证：画面前四行显示明显的周期性运动，手部和器械把手在画面中做前后往复运动（FORWARD/BACKWARD），符合“拉”的动作轨迹，验证了划船动作。
+Step 4 — 动作判定：综合坐姿、水平拉动轨迹以及固定器械特征，判定动作为“固定器械坐姿划船”。
+Step 5 — 组次统计：从第1帧开始到第30帧左右，用户完成了约8次重复动作，随后起身离开器械。
+
+{"user_folder": "8", "action_id": "动作3", "image_path": "graph/8/动作3.jpg", "selected_equipment": "固定器械坐姿划船机", "selected_exercise": "固定器械坐姿划船", "selected_confidence": 0.85, "confidence_policy": "single_clear", "top_candidates": [{"equipment": "固定器械坐姿划船机", "exercise": "固定器械坐姿划船", "confidence": 0.85, "support": "镜中可见清晰的坐姿划船动作，手部水平拉动，器械结构完整。"}], "context": {"visible_equipment": ["固定器械坐姿划船机", "镜子", "配重塔"], "body_posture": "seated", "motion_cues_from_grid": "前30帧可见明显的手部前后拉伸动作，随后用户起身行走。", "first_person_subject_evidence": "镜中人物动作与第一人称视角下的手臂运动完全同步。", "uncertainty_notes": "缺少光流数据，仅凭视觉判断次数可能存在1-2次误差。"}, "action_disambiguation": {"selected_evidence": "镜中反射出的坐姿划船姿态及手部水平拉动的运动轨迹。", "rejected_or_close_candidates": [{"exercise": "坐姿绳索划船", "reason": "镜中器械结构更接近带有固定连杆的独立划船机而非单纯的龙门架钢索。"}, {"exercise": "高位下拉", "reason": "运动轨迹为水平向后拉，而非从头顶向下。"}]}, "needs_manual_review": false, "exercise_id": "machine_seated_row", "sets": [{"start_time": "00:13:35", "end_time": "00:14:05", "reps": 8}], "phase1_adjustment": {"expand_before_sec": 0, "expand_after_sec": 5, "reason": "用户在30秒后起身，后续为走动，无需大幅扩展。"}}

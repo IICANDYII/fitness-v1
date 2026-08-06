@@ -1,0 +1,54 @@
+{
+  "user_folder": "肩背-叶翔",
+  "action_id": "动作9",
+  "image_path": "graph/肩背-叶翔/动作9.jpg",
+  "selected_equipment": "龙门架",
+  "selected_exercise": "cable_triceps_pushdown",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_triceps_pushdown",
+      "confidence": 0.85,
+      "support": "第一人称视角下可见双手握持绳索附件（rope attachment），动作轨迹为从高处向下按压，且在底部有明显的绳索向两侧分开（split）的动作，符合绳索下压特征。"
+    },
+    {
+      "equipment": "龙门架",
+      "exercise": "cable_lat_pulldown",
+      "confidence": 0.4,
+      "support": "同样是高位向下的拉力动作，但通常使用横杆且伴随坐姿，画面中更像站姿且使用了绳索。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["龙门架钢索", "绳索附件", "配重架（背景）"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手握住绳索从头高位置向下推至胸腹部高度，随后受控回放。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "画面两侧出现的双臂与相机运动同步，且直接操作前方的绳索附件。",
+    "uncertainty_notes": "由于没有侧面视角，无法完全排除是直臂下压，但从手部动作看更像肘关节屈伸的绳索下压。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 2,
+      "evidence": "第3-5帧为第一次下压，第11-13帧为第二次下压。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 2,
+  "action_disambiguation": {
+    "selected_evidence": "可见明显的绳索附件（Rope）以及向下按压时双手向两侧分开的典型三头肌训练动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "cable_lat_pulldown",
+        "reason": "高位下拉通常使用长杆且为坐姿，绳索附件更多用于下压或面拉。"
+      },
+      {
+        "exercise": "cable_face_pull",
+        "reason": "面拉的轨迹是向面部拉动，而画面中手部最终位置在胸部以下，属于向下按压。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

@@ -1,0 +1,49 @@
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作3",
+  "image_path": "graph/腿-张开/动作3.jpg",
+  "selected_equipment": "杠铃",
+  "selected_exercise": "杠铃深蹲",
+  "exercise_id": "barbell_squat",
+  "selected_confidence": 0.92,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "杠铃",
+      "exercise": "杠铃深蹲",
+      "confidence": 0.92,
+      "support": "第一人称视角可见双手握持自由杠铃，背景镜子反射显示用户在深蹲架内进行完整的下蹲与起立动作。"
+    },
+    {
+      "equipment": "史密斯机",
+      "exercise": "史密斯深蹲",
+      "confidence": 0.20,
+      "support": "同为深蹲动作，但画面中未见史密斯机特有的垂直导轨结构。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "杠铃",
+      "深蹲架",
+      "配重片"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "从第8帧到第12帧，镜中反射显示用户身体重心明显下降后回升，符合深蹲的UP/DOWN运动模式。",
+    "first_person_subject_evidence": "画面前几帧可见用户双手从两侧握住杠铃，且相机高度随镜中人物下蹲同步降低。",
+    "uncertainty_notes": "仅凭视觉拼图，无法精确判断具体的呼吸节奏或微小的足部位置变化，但大类动作非常明确。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜中反射提供了清晰的全身动作证据，确认是背负杠铃的深蹲；起始帧显示杠铃从开放式挂钩取出，确认为自由杠铃而非史密斯机。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "史密斯深蹲",
+        "reason": "未观察到固定导轨，且杠铃在取出时有明显的向后退步动作，符合自由杠铃深蹲特征。"
+      },
+      {
+        "exercise": "杠铃硬拉",
+        "reason": "杠铃位于用户肩背部（高位或低位），而非双手自然下垂提拉。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

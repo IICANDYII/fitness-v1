@@ -1,0 +1,49 @@
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作1",
+  "image_path": "graph/腿-张开/动作1.jpg",
+  "selected_equipment": "爬楼机",
+  "selected_exercise": "登阶机/爬楼机",
+  "exercise_id": "stepmill",
+  "selected_confidence": 0.95,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "爬楼机",
+      "exercise": "登阶机/爬楼机",
+      "confidence": 0.95,
+      "support": "画面中可见典型的大型爬楼机（Stepmill）控制面板，用户双手握持侧边固定扶手，身体随步进动作有规律地上下起伏。"
+    },
+    {
+      "equipment": "跑步机",
+      "exercise": "跑步机",
+      "confidence": 0.25,
+      "support": "控制面板风格相似，但手部抓握位置和身体垂直位移特征更符合爬楼机。"
+    }
+  ],
+  "context": {
+    "visible_equipment": [
+      "Matrix品牌大型电子控制面板",
+      "侧边固定扶手",
+      "显示屏（显示运动曲线和数据）"
+    ],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "用户双手始终扶在两侧扶手上，视角随步进动作呈现明显的、有节奏的上下晃动，前方屏幕显示持续运动状态。",
+    "first_person_subject_evidence": "第一人称胸前视角，用户双手出现在画面两侧并握住器械扶手，视角晃动频率与步进节奏完全同步。",
+    "uncertainty_notes": "虽然文件夹名为“腿-张开”，可能指用户在爬楼机上采用了宽距步法，但器械本身特征（面板、扶手、位移）明确指向爬楼机。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "器械控制面板的高度、固定扶手的形状以及用户身体明显的垂直位移节奏是判定爬楼机的核心证据。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "跑步机",
+        "reason": "跑步机通常不需要长时间双手高位抓握侧扶手，且身体重心位移模式以水平为主，垂直起伏较小。"
+      },
+      {
+        "exercise": "椭圆机",
+        "reason": "椭圆机通常配有前后摆动的活动手柄，而图中用户握持的是静止的侧边扶手。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}

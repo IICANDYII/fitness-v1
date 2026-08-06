@@ -1,0 +1,51 @@
+Step 1 — 进场帧分析: 网格图前几帧显示用户从地面的哑铃架上拿起一对哑铃，背景可见哑铃架、镜子以及其他固定健身器械。
+Step 2 — 器械识别: 用户双手各持一只哑铃，且在后续动作中保持握持，判定器械为“哑铃”。
+Step 3 — 光流验证: 画面中哑铃从画面下方（腰部位置）向两侧上方移动，随后返回。背景镜子中的反射（如第4行第7列、第5行第6列）清晰显示用户双臂向身体两侧外展至肩高，符合侧平举的轨迹。
+Step 4 — 动作判定: 综合站姿姿态、双手持哑铃以及镜中观察到的手臂外展动作，判定为“哑铃侧平举”。
+Step 5 — 组次统计: 动作从第26帧左右开始，至第45帧结束，观察到约4次完整的上下往复周期。
+
+{
+  "user_folder": "4",
+  "action_id": "动作9",
+  "image_path": "graph/4/动作9.jpg",
+  "selected_equipment": "哑铃",
+  "selected_exercise": "哑铃侧平举",
+  "selected_exercise_id": "dumbbell_lateral_raise",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "哑铃",
+      "exercise": "哑铃侧平举",
+      "confidence": 0.85,
+      "support": "进场帧显示拿起哑铃，镜中反射明确显示双臂向两侧外展至肩高的动作轨迹。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["哑铃", "哑铃架", "镜子"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "双手持哑铃从画面下方往复升降，镜中可见手臂侧向外展。",
+    "first_person_subject_evidence": "双手及哑铃在第一人称视角近端同步运动，镜中动作与相机位移完全一致。",
+    "uncertainty_notes": "缺少光流和IMU数据，主要依赖视觉及镜面反射判断。"
+  },
+  "action_disambiguation": {
+    "selected_evidence": "镜子反射提供了关键的侧向视角，确认手臂是向两侧外展（Abduction）而非向前或向上推举。",
+    "rejected_or_close_candidates": [
+      {"exercise": "哑铃弯举", "reason": "镜中可见手臂整体外展，而非单纯的肘关节屈伸。"},
+      {"exercise": "哑铃推肩", "reason": "动作起点在腰部而非肩部，且哑铃未推过头顶。"}
+    ]
+  },
+  "sets": [
+    {
+      "start_time": "00:18:49",
+      "end_time": "00:19:08",
+      "reps": 4
+    }
+  ],
+  "phase1_adjustment": {
+    "expand_before_sec": 2,
+    "expand_after_sec": 2,
+    "reason": "扩展以包含拿起哑铃的准备动作和结束后的放下动作。"
+  },
+  "needs_manual_review": false
+}

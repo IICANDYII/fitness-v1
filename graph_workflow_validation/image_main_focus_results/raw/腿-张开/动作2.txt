@@ -1,0 +1,54 @@
+{
+  "user_folder": "腿-张开",
+  "action_id": "动作2",
+  "image_path": "graph/腿-张开/动作2.jpg",
+  "selected_equipment": "杠铃",
+  "selected_exercise": "barbell_squat",
+  "selected_confidence": 0.85,
+  "confidence_policy": "single_clear",
+  "top_candidates": [
+    {
+      "equipment": "杠铃",
+      "exercise": "barbell_squat",
+      "confidence": 0.85,
+      "support": "第一人称视角下，用户双手握持自由杠铃，身体伴随杠铃进行明显的上下升降运动，且处于深蹲架环境中。"
+    },
+    {
+      "equipment": "史密斯机",
+      "exercise": "smith_squat",
+      "confidence": 0.4,
+      "support": "虽然在深蹲架内，但需排除是否为带导轨的史密斯机，目前视觉更倾向于自由杠铃。"
+    }
+  ],
+  "context": {
+    "visible_equipment": ["杠铃", "深蹲架", "杠铃片", "镜子"],
+    "body_posture": "standing",
+    "motion_cues_from_grid": "画面显示用户扛起杠铃后，身体重心及相机高度发生明显的下沉与升起循环。",
+    "movement_direction": "up_down",
+    "first_person_subject_evidence": "用户双手从画面两侧伸出握住杠铃杆，且镜中反射的动作与相机运动同步。",
+    "uncertainty_notes": "仅凭图片难以百分之百确认杠铃是否完全自由（无隐蔽导轨），但从架子结构看自由杠铃概率极大。"
+  },
+  "sets": [
+    {
+      "set_number": 1,
+      "reps": 3,
+      "evidence": "从拼图中可观察到约3次完整的下蹲与站起周期。"
+    }
+  ],
+  "total_sets": 1,
+  "total_reps": 3,
+  "action_disambiguation": {
+    "selected_evidence": "用户双手握持杠铃，在深蹲架前进行垂直位移，镜中影像证实了深蹲动作。",
+    "rejected_or_close_candidates": [
+      {
+        "exercise": "smith_squat",
+        "reason": "画面中未见明显的史密斯机固定导轨，更符合自由杠铃深蹲架特征。"
+      },
+      {
+        "exercise": "barbell_deadlift",
+        "reason": "杠铃位置始终在肩背部高度而非垂于体前，且身体直立程度符合深蹲。"
+      }
+    ]
+  },
+  "needs_manual_review": false
+}
